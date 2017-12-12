@@ -3,6 +3,8 @@ package com.github.sellersj.artifactchecker;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.junit.Test;
 
@@ -31,6 +33,18 @@ public class InventoryFileUtilTest {
 
         AppInventory fromDisk = InventoryFileUtil.read(file);
         assertEquals(1, fromDisk.getApps().size());
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testWriteBadFile() throws Exception {
+        Path dir = Files.createTempDirectory("testWriteBadFile");
+        InventoryFileUtil.write(dir.toFile(), null);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testReadBadFile() throws Exception {
+        Path dir = Files.createTempDirectory("testReadBadFile");
+        InventoryFileUtil.read(dir.toFile());
     }
 
 }
