@@ -2,6 +2,8 @@ package com.github.sellersj.artifactchecker.model;
 
 import java.util.Map;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 public class App {
 
     private static final String EAR_PACKAGING = "ear";
@@ -30,6 +32,11 @@ public class App {
             artifactId + seperator + //
             version + seperator + //
             packaging;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 
     /**

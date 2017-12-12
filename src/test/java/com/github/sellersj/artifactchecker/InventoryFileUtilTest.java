@@ -3,8 +3,11 @@ package com.github.sellersj.artifactchecker;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Set;
 
 import org.junit.Test;
 
@@ -45,6 +48,14 @@ public class InventoryFileUtilTest {
     public void testReadBadFile() throws Exception {
         Path dir = Files.createTempDirectory("testReadBadFile");
         InventoryFileUtil.read(dir.toFile());
+    }
+
+    @Test
+    public void testReadMergedPomProperties() throws Exception {
+        URL url = this.getClass().getResource("/merged-pom.properties");
+        File file = new File(url.toURI());
+
+        Set<App> apps = InventoryFileUtil.readMergedPomProperties(file);
     }
 
 }
