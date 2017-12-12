@@ -5,7 +5,9 @@ package com.github.sellersj.artifactchecker;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
 import java.nio.charset.Charset;
+import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -46,22 +48,33 @@ public class InventoryFileUtil {
      * @return a filled out list.
      */
     public static Set<App> readMergedPomProperties(File file) {
-        TreeSet<App> bob = new TreeSet<>(new AppGAVComparator());
+        TreeSet<App> apps = new TreeSet<>(new AppGAVComparator());
 
         try {
             String contents = FileUtils.readFileToString(file, Charset.defaultCharset());
-            String[] chunks = contents.split("#");
+            // split the code, keeping the separator of hash #
+            String[] chunks = contents.split("(?=#)");
             for (String string : chunks) {
-                System.out.println(string);
-                System.out.println("===============");
+
+                // take the string, toss it into a properties object and ignore the empty objects
+                Properties p = new Properties();
+                p.load(new StringReader(string));
+                if (!p.isEmpty()) {
+
+                    App app = new App();
+                    app.setGroupId(p.getProperty("groupId"));
+                    app.setArtifactId(p.getProperty("artifactId"));
+                    app.setVersion(p.getProperty("version"));
+
+                    apps.add(app);
+                }
             }
-            
 
         } catch (IOException e) {
             throw new RuntimeException("Couldn't read file: " + file, e);
         }
 
-        return bob;
+        return apps;
     }
 
 }

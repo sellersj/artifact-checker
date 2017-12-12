@@ -1,9 +1,9 @@
 package com.github.sellersj.artifactchecker;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,7 +31,6 @@ public class InventoryFileUtilTest {
         appInventory.add(app);
 
         File file = File.createTempFile("appInventory", ".json");
-        System.out.println(file.getAbsolutePath());
         InventoryFileUtil.write(file, appInventory);
 
         AppInventory fromDisk = InventoryFileUtil.read(file);
@@ -56,6 +55,15 @@ public class InventoryFileUtilTest {
         File file = new File(url.toURI());
 
         Set<App> apps = InventoryFileUtil.readMergedPomProperties(file);
+        assertEquals(2, apps.size());
+
+        for (App app : apps) {
+            assertEquals("com.fasterxml.jackson.core", app.getGroupId());
+            assertEquals("2.9.3", app.getVersion());
+
+            assertTrue("jackson-core".equals(app.getArtifactId()) //
+                || "jackson-databind".equals(app.getArtifactId()));
+        }
     }
 
 }
