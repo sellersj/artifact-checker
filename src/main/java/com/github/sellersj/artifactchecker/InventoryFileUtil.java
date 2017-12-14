@@ -50,8 +50,8 @@ public class InventoryFileUtil {
 
         try {
             String contents = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
-            // split the file on a double new line
-            String[] chunks = contents.split("\\n\\n");
+            // split the file on a the manifest header, while keeping the header
+            String[] chunks = contents.split("(?=Manifest-Version)");
 
             for (String string : chunks) {
 
