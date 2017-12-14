@@ -40,9 +40,9 @@ public class InventoryFileUtil {
 
     /**
      * This will read a file of merged pom.properties from maven artifacts.
-     * 
+     *
      * It will return a list of partially filled apps, containing on their GAV info.
-     * 
+     *
      * @param file to read
      * @return a filled out list.
      */
@@ -57,7 +57,8 @@ public class InventoryFileUtil {
             for (String string : chunks) {
 
                 // take the string, toss it into a properties object and ignore the empty objects
-                Manifest manifest = new Manifest(IOUtils.toInputStream(string, StandardCharsets.UTF_8));
+                Manifest manifest = readToManifest(string);
+
                 // get the object to load
                 ArtifactAttributes attributes = new ArtifactAttributes();
 
@@ -73,6 +74,15 @@ public class InventoryFileUtil {
         }
 
         return inventory;
+    }
+
+    private static Manifest readToManifest(String string) {
+        try {
+            Manifest manifest = new Manifest(IOUtils.toInputStream(string, StandardCharsets.UTF_8));
+            return manifest;
+        } catch (IOException e) {
+            throw new RuntimeException("Couldn't read manifest chunk " + string, e);
+        }
     }
 
 }
