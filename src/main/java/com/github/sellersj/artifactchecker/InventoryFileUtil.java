@@ -5,7 +5,6 @@ package com.github.sellersj.artifactchecker;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Map.Entry;
 import java.util.jar.Manifest;
@@ -50,13 +49,13 @@ public class InventoryFileUtil {
         AppInventory inventory = new AppInventory();
 
         try {
-            String contents = FileUtils.readFileToString(file, Charset.defaultCharset());
+            String contents = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
             // split the file on a double new line
             String[] chunks = contents.split("\\n\\n");
 
             for (String string : chunks) {
 
-                // take the string, toss it into a properties object and ignore the empty objects
+                // read the chunk into a manifest object so it can deal with the manifest quirks
                 Manifest manifest = readToManifest(string);
 
                 // get the object to load
@@ -81,7 +80,7 @@ public class InventoryFileUtil {
             Manifest manifest = new Manifest(IOUtils.toInputStream(string, StandardCharsets.UTF_8));
             return manifest;
         } catch (IOException e) {
-            throw new RuntimeException("Couldn't read manifest chunk " + string, e);
+            throw new RuntimeException("Couldn't read manifest chunk: " + string, e);
         }
     }
 

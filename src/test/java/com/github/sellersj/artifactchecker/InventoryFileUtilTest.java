@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.net.URL;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Iterator;
@@ -31,7 +31,7 @@ public class InventoryFileUtilTest {
         File file = File.createTempFile("appInventory", ".json");
         InventoryFileUtil.write(file, appInventory);
 
-        String contents = FileUtils.readFileToString(file, Charset.defaultCharset());
+        String contents = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
         System.out.println(contents);
 
         AppInventory fromDisk = InventoryFileUtil.read(file);
