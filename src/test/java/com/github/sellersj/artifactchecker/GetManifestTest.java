@@ -12,7 +12,7 @@ public class GetManifestTest {
 
     @Test
     public void getMainAtributes() throws Exception {
-        String fileName = "/Users/sellersj/.m2/repository/junit/junit/4.12/junit-4.12.jar";
+        String fileName = System.getProperty("user.home") + "/.m2/repository/junit/junit/4.12/junit-4.12.jar";
 
         Map<String, String> attributes = GetManifest.getMainAttributes(fileName);
 

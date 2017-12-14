@@ -20,7 +20,7 @@ public class InventoryFileUtilTest {
     @Test
     public void testWriteRead() throws Exception {
         // this will probably fail if maven repo in different location
-        String fileName = "/Users/sellersj/.m2/repository/junit/junit/4.12/junit-4.12.jar";
+        String fileName = System.getProperty("user.home") + "/.m2/repository/junit/junit/4.12/junit-4.12.jar";
 
         ArtifactAttributes attributes = new ArtifactAttributes();
         attributes.setManifest(GetManifest.getMainAttributes(fileName));
