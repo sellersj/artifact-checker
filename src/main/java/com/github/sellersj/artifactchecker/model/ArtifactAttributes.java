@@ -1,5 +1,6 @@
 package com.github.sellersj.artifactchecker.model;
 
+import java.beans.Transient;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -18,15 +19,18 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     private SortedMap<String, String> manifest = new TreeMap<>();
 
+    @Transient
     public String getGroupId() {
         return manifest.get("Implementation-Vendor-Id");
     }
 
+    @Transient
     public String getArtifactId() {
         System.out.println("getArtifactId is not done yet");
         return manifest.get("Implementation-Vendor-Id");
     }
 
+    @Transient
     public String getVersion() {
         return manifest.get("Implementation-Version");
     }

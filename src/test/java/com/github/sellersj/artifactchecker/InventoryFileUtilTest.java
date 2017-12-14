@@ -1,13 +1,13 @@
 package com.github.sellersj.artifactchecker;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Iterator;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
@@ -58,13 +58,16 @@ public class InventoryFileUtilTest {
         AppInventory gavs = InventoryFileUtil.readMergedManifests(file);
         assertEquals(2, gavs.getApps().size());
 
-        for (ArtifactAttributes gav : gavs.getApps()) {
-            assertEquals("junit", gav.getGroupId());
-            assertEquals("4.12", gav.getVersion());
+        Iterator<ArtifactAttributes> iterator = gavs.getApps().iterator();
+        ArtifactAttributes artifact1 = iterator.next();
+        assertEquals("junit", artifact1.getGroupId());
+        assertEquals("junit", artifact1.getArtifactId());
+        assertEquals("4.12", artifact1.getVersion());
 
-            assertTrue("junit".equals(gav.getArtifactId()) //
-                || "jackson-databind".equals(gav.getArtifactId()));
-        }
+        ArtifactAttributes artifact2 = iterator.next();
+        assertEquals("ca.canada.ised.wet.cdts", artifact2.getGroupId());
+        assertEquals("ca.canada.ised.wet.cdts", artifact2.getArtifactId());
+        assertEquals("4.0.25.2-SNAPSHOT", artifact2.getVersion());
     }
 
 }
