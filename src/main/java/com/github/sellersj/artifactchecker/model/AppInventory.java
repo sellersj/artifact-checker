@@ -4,15 +4,22 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 public class AppInventory {
 
     private String env = "prod";
 
     private Set<ArtifactAttributes> apps = new HashSet<>();
 
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
+
     /**
      * Add an app
-     * 
+     *
      * @param app to be added
      */
     public void add(ArtifactAttributes attributes) {
