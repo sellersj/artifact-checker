@@ -5,11 +5,13 @@ package com.github.sellersj.artifactchecker;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.StringReader;
 import java.nio.charset.Charset;
-import java.util.Properties;
+import java.nio.charset.StandardCharsets;
+import java.util.Map.Entry;
+import java.util.jar.Manifest;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.sellersj.artifactchecker.model.AppInventory;
@@ -49,25 +51,21 @@ public class InventoryFileUtil {
 
         try {
             String contents = FileUtils.readFileToString(file, Charset.defaultCharset());
-            // split the code, keeping the separator of hash #
-            // String[] chunks = contents.split("(?=#)");
+            // split the file on a double new line
             String[] chunks = contents.split("\\n\\n");
 
             for (String string : chunks) {
 
                 // take the string, toss it into a properties object and ignore the empty objects
-                Properties p = new Properties();
-                p.load(new StringReader(string));
-                if (!p.isEmpty()) {
+                Manifest manifest = new Manifest(IOUtils.toInputStream(string, StandardCharsets.UTF_8));
+                // get the object to load
+                ArtifactAttributes attributes = new ArtifactAttributes();
 
-                    ArtifactAttributes attributes = new ArtifactAttributes();
-
-                    for (final String name : p.stringPropertyNames()) {
-                        attributes.getManifest().put(name, p.getProperty(name));
-                    }
-
-                    inventory.add(attributes);
+                for (Entry<Object, Object> entry : manifest.getMainAttributes().entrySet()) {
+                    attributes.getManifest().put(String.valueOf(entry.getKey()), String.valueOf(entry.getValue()));
                 }
+
+                inventory.add(attributes);
             }
 
         } catch (IOException e) {
