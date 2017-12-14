@@ -2,18 +2,18 @@ package com.github.sellersj.artifactchecker;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 import java.util.Map.Entry;
+import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
 public class GetManifest {
 
-    public static Map<String, String> getMainAttributes(String fileName) {
+    public static SortedMap<String, String> getMainAttributes(String fileName) {
 
         File file = new File(fileName);
-        Map<String, String> attributes = new TreeMap<>();
+        SortedMap<String, String> attributes = new TreeMap<>();
 
         try {
             try (JarFile jarFile = new JarFile(file)) {

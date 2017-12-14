@@ -8,15 +8,12 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.nio.charset.Charset;
 import java.util.Properties;
-import java.util.Set;
-import java.util.TreeSet;
 
 import org.apache.commons.io.FileUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.sellersj.artifactchecker.model.App;
-import com.github.sellersj.artifactchecker.model.AppGAVComparator;
 import com.github.sellersj.artifactchecker.model.AppInventory;
+import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 
 public class InventoryFileUtil {
 
@@ -47,13 +44,15 @@ public class InventoryFileUtil {
      * @param file to read
      * @return a filled out list.
      */
-    public static Set<App> readMergedPomProperties(File file) {
-        TreeSet<App> apps = new TreeSet<>(new AppGAVComparator());
+    public static AppInventory readMergedManifests(File file) {
+        AppInventory inventory = new AppInventory();
 
         try {
             String contents = FileUtils.readFileToString(file, Charset.defaultCharset());
             // split the code, keeping the separator of hash #
-            String[] chunks = contents.split("(?=#)");
+            // String[] chunks = contents.split("(?=#)");
+            String[] chunks = contents.split("\\n\\n");
+
             for (String string : chunks) {
 
                 // take the string, toss it into a properties object and ignore the empty objects
@@ -61,12 +60,13 @@ public class InventoryFileUtil {
                 p.load(new StringReader(string));
                 if (!p.isEmpty()) {
 
-                    App app = new App();
-                    app.setGroupId(p.getProperty("groupId"));
-                    app.setArtifactId(p.getProperty("artifactId"));
-                    app.setVersion(p.getProperty("version"));
+                    ArtifactAttributes attributes = new ArtifactAttributes();
 
-                    apps.add(app);
+                    for (final String name : p.stringPropertyNames()) {
+                        attributes.getManifest().put(name, p.getProperty(name));
+                    }
+
+                    inventory.add(attributes);
                 }
             }
 
@@ -74,7 +74,7 @@ public class InventoryFileUtil {
             throw new RuntimeException("Couldn't read file: " + file, e);
         }
 
-        return apps;
+        return inventory;
     }
 
 }

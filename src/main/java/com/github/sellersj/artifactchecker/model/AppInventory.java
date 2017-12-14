@@ -1,22 +1,22 @@
 package com.github.sellersj.artifactchecker.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.SortedSet;
 
 public class AppInventory {
 
     private String env = "prod";
 
-    // TODO this should be sorted by GAV
-    private List<App> apps = new ArrayList<>();
+    private Set<ArtifactAttributes> apps = new HashSet<>();
 
     /**
      * Add an app
      * 
      * @param app to be added
      */
-    public void add(App app) {
-        apps.add(app);
+    public void add(ArtifactAttributes attributes) {
+        apps.add(attributes);
     }
 
     /**
@@ -36,14 +36,14 @@ public class AppInventory {
     /**
      * @return the apps
      */
-    public List<App> getApps() {
+    public Set<ArtifactAttributes> getApps() {
         return apps;
     }
 
     /**
      * @param apps the apps to set
      */
-    public void setApps(List<App> apps) {
+    public void setApps(SortedSet<ArtifactAttributes> apps) {
         this.apps = apps;
     }
 

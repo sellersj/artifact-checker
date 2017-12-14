@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Implementation-Vendor: Pivotal Software, Inc.
+Implementation-Title: WET CDTS Spring Boot Thymeleaf Starter
+Implementation-Version: 4.0.25.2-SNAPSHOT
+Implementation-Vendor-Id: ca.canada.ised.wet.cdts
+Built-By: sellersj
+Build-Jdk: 1.7.0_51
+Created-By: Apache Maven 3.3.9
+Archiver-Version: Plexus Archiver
+
+Manifest-Version: 1.0
+Implementation-Vendor: JUnit
+Implementation-Title: JUnit
+Implementation-Version: 4.12
+Implementation-Vendor-Id: junit
+Built-By: jenkins
+Build-Jdk: 1.6.0_45
+Created-By: Apache Maven 3.0.4
+Archiver-Version: Plexus Archiver
