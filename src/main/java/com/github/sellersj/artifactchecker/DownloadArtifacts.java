@@ -4,6 +4,11 @@
 package com.github.sellersj.artifactchecker;
 
 import java.io.File;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+
+import org.apache.commons.io.FileUtils;
 
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 
@@ -16,10 +21,8 @@ public class DownloadArtifacts {
 
     private static final String WORKING_DIR = "target/cloned-projects/";
 
-    public static void main(String[] args) throws Exception {
-        DownloadArtifacts downloadArtifats = new DownloadArtifacts();
-        downloadArtifats.cloneAndCheckProject(null);
-    }
+    /** The list of dependencies that have issues with java 8. */
+    private List<String> java8Issues = null;
 
     public DownloadArtifacts() {
         System.out.println("OS is: " + System.getProperty("os.name"));
@@ -30,6 +33,26 @@ public class DownloadArtifacts {
         } else {
             osPrefix = "";
         }
+
+    }
+
+    private List<String> buildJava8Issues() {
+        if (null != java8Issues) {
+            return java8Issues;
+        }
+
+        try {
+            URL url = this.getClass().getResource("/artifacts-java-8-issues.txt");
+            File file = new File(url.toURI());
+
+            List<String> lines = FileUtils.readLines(file, StandardCharsets.UTF_8);
+            java8Issues = lines;
+
+            return java8Issues;
+        } catch (Exception e) {
+            throw new RuntimeException("Couldn't generate java 8 issues", e);
+        }
+
     }
 
     public void cloneAndCheckProject(ArtifactAttributes gav) {
@@ -59,6 +82,9 @@ public class DownloadArtifacts {
         run(gitCheckoutHash);
 
         // run dependency tree
+        // TODO figure out how to properly filter for java 8 issues here
+        buildJava8Issues();
+
         ProcessBuilder mvnDepTree = new ProcessBuilder(osPrefix + "mvn", "dependency:tree");
         mvnDepTree.directory(projectDir);
         run(mvnDepTree);
