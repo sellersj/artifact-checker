@@ -71,7 +71,10 @@ public class DownloadArtifacts {
         // check out the project
         ProcessBuilder gitClone = new ProcessBuilder(osPrefix + "git", "clone", gav.buildGitCloneUrl());
         gitClone.directory(new File(repoWorkingDir));
-        run(gitClone);
+        if (0 != run(gitClone)) {
+            System.err.println("Could not clone project: " + gav);
+            return;
+        }
 
         // the directory of the actual project
         File projectDir = new File(repoWorkingDir + File.separator + gav.getScmRepo());
@@ -90,7 +93,7 @@ public class DownloadArtifacts {
         run(mvnDepTree);
     }
 
-    private void run(ProcessBuilder builder) {
+    private int run(ProcessBuilder builder) {
         if (!builder.directory().exists()) {
             System.out.println("Making directory: " + builder.directory().getAbsolutePath());
             builder.directory().mkdirs();
@@ -100,6 +103,7 @@ public class DownloadArtifacts {
         try {
             Process process = builder.start();
             process.waitFor();
+            return process.exitValue();
         } catch (Exception e) {
             throw new RuntimeException("Couldn't run process: " + builder, e);
         }
