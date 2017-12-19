@@ -44,7 +44,19 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     @Transient
     public String buildGitCloneUrl() {
-        return "git@github.com:" + getScmProject() + "/" + getScmRepo() + ".git";
+        String cloneUrl;
+
+        if (github) {
+            cloneUrl = "git@github.com:" + getScmProject() + "/" + getScmRepo() + ".git";
+        } else {
+            String toolsHost = System.getenv("TOOLS_HOST");
+            if (StringUtils.isBlank(toolsHost)) {
+                throw new RuntimeException("The 'TOOLS_HOST' env variable has to be set");
+            }
+            cloneUrl = "ssh://git@" + toolsHost + ":7999/" + getScmProject() + "/" + getScmRepo() + ".git";
+        }
+
+        return cloneUrl;
     }
 
     @Transient

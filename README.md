@@ -44,3 +44,9 @@ And configured with the plugin that extracts git info like this:
   </configuration>
 </plugin>
 ```
+
+## Running tests pointing to TOOLS_HOST
+For some tests or code to work, it assumes that a TOOLS_HOST env variable is set.
+1) To override this in a junit test in eclipse, open the "Run Configurations" 
+2) Click on the "Environment" tab
+3) Click "New", enter in the name "TOOLS_HOST" and the value 
