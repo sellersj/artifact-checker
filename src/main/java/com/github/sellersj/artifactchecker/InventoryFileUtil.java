@@ -24,6 +24,7 @@ public class InventoryFileUtil {
 
     public static void write(File file, AppInventory appInventory) {
         try {
+            System.out.println("Writing app inventory to : " + file.getAbsolutePath());
             mapper.writerWithDefaultPrettyPrinter().writeValue(file, appInventory);
         } catch (IOException e) {
             throw new RuntimeException("Could not write file: " + file, e);

@@ -52,10 +52,7 @@ public class InventoryFileUtilTest {
 
     @Test
     public void testReadMergedManifests() throws Exception {
-        URL url = this.getClass().getResource("/merged-manifests.txt");
-        File file = new File(url.toURI());
-
-        AppInventory gavs = InventoryFileUtil.readMergedManifests(file);
+        AppInventory gavs = getTestAppInventory(this);
         assertEquals(2, gavs.getApps().size());
 
         Iterator<ArtifactAttributes> iterator = gavs.getApps().iterator();
@@ -68,6 +65,18 @@ public class InventoryFileUtilTest {
         assertEquals("ca.canada.ised.wet.cdts", artifact2.getGroupId());
         assertEquals("ca.canada.ised.wet.cdts", artifact2.getArtifactId());
         assertEquals("4.0.25.2-SNAPSHOT", artifact2.getVersion());
+    }
+
+    public static AppInventory getTestAppInventory(Object obj) {
+        try {
+            URL url = obj.getClass().getResource("/merged-manifests.txt");
+            File file = new File(url.toURI());
+
+            AppInventory gavs = InventoryFileUtil.readMergedManifests(file);
+            return gavs;
+        } catch (Exception e) {
+            throw new RuntimeException("Couldn't load the merged manifest test file", e);
+        }
     }
 
 }

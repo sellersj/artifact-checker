@@ -11,7 +11,14 @@ import com.github.sellersj.artifactchecker.model.AppInventory;
 
 public class ReportBuilder {
 
-    public static void buildJsonReport(String location, String targetLocation) {
+    public static void buildJsonReport(AppInventory gavs, String targetLocation) {
+        System.out.println("The number of apps is at least " + gavs.getApps().size());
+
+        File outFile = new File(targetLocation);
+        InventoryFileUtil.write(outFile, gavs);
+    }
+
+    public static AppInventory generateAppInventory(String location) {
         URL url;
         try {
             url = new URL(location);
@@ -20,11 +27,6 @@ public class ReportBuilder {
         }
 
         AppInventory gavs = InventoryFileUtil.readMergedManifests(url);
-
-        System.out.println("The number of apps is at least " + gavs.getApps().size());
-
-        File outFile = new File(targetLocation);
-        InventoryFileUtil.write(outFile, gavs);
+        return gavs;
     }
-
 }
