@@ -30,8 +30,6 @@
       <artifactId>commons-io</artifactId>
       <version>2.6</version>
     </dependency>
-
-
     <!-- TODO switch to junit 5 -->
     <dependency>
       <groupId>junit</groupId>
@@ -40,4 +38,79 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>com.github.koraktor</groupId>
+                    <artifactId>mavanagaiata</artifactId>
+                    <versionRange>[0.8.2,)</versionRange>
+                    <goals>
+                      <goal>commit</goal>
+                      <goal>branch</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore />
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>com.github.koraktor</groupId>
+        <artifactId>mavanagaiata</artifactId>
+        <version>0.8.2</version>
+        <executions>
+          <execution>
+            <id>load-git-branch</id>
+            <goals>
+              <goal>commit</goal>
+              <goal>branch</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <dateFormat>yyyy-MM-dd hh:mm a Z</dateFormat>
+          <skipNoGit>true</skipNoGit>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.0.2</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+            </manifest>
+            <manifestEntries>
+              <Build-Time>${maven.build.timestamp}</Build-Time>
+              <Implementation-Artifact-Id>${project.artifactId}</Implementation-Artifact-Id>
+              <Issue-System>${project.issueManagement.system}</Issue-System>
+              <Issue-Tracking>${project.issueManagement.url}</Issue-Tracking>
+              <Scm-Sha1>${mavanagaiata.commit.sha}</Scm-Sha1>
+              <Scm-Sha1-Abbrev>${mavanagaiata.commit.abbrev}</Scm-Sha1-Abbrev>
+              <Scm-branch>${mavanagaiata.branch}</Scm-branch>
+              <Scm-Commit-Date>${mavanagaiata.commit.committer.date}</Scm-Commit-Date>
+              <Scm-Project-Id>${git.project.id}</Scm-Project-Id>
+              <Scm-Repo-Name>${git.repo.name}</Scm-Repo-Name>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
