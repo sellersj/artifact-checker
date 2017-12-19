@@ -29,4 +29,17 @@ public class DownloadArtifactsTest {
         // TODO check the content of the attributes
     }
 
+    @Test
+    public void testcloneAndCheckProjectTestProject() {
+        ArtifactAttributes gav = new ArtifactAttributes();
+        gav.getManifest().put(ArtifactAttributes.SCM_PROJECT, "sandbox");
+        gav.getManifest().put(ArtifactAttributes.SCM_REPO, "sis-test-project");
+        gav.getManifest().put(ArtifactAttributes.SCM_HASH, "c8e6aa1828945fb7db31762f1c39dccd16cd3e34");
+
+        DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
+        downloadArtifacts.cloneAndCheckProject(gav);
+
+        // TODO check the content of the attributes
+    }
+
 }
