@@ -2,7 +2,6 @@ package com.github.sellersj.artifactchecker;
 
 import static org.junit.Assert.assertNotNull;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
@@ -10,14 +9,11 @@ import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 public class DownloadArtifactsTest {
 
     @Test
-    @Ignore("Needs to be refactored")
     public void testDownloadAndReadManifest() {
         ArtifactAttributes gav = new ArtifactAttributes();
-        gav.getManifest();
-        // gav.setGroupId("junit");
-        // gav.setArtifactId("junit");
-        // gav.setVersion("4.12");
-        // gav.setPackaging("jar");
+        gav.getManifest().put(ArtifactAttributes.SCM_PROJECT, "sellersj");
+        gav.getManifest().put(ArtifactAttributes.SCM_REPO, "artifact-checker");
+        gav.getManifest().put(ArtifactAttributes.SCM_HASH, "1c6c1006f11661902b6f48cddbfa8b3ba2cc7385");
 
         DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
         ArtifactAttributes attributes = downloadArtifacts.downloadAndReadManifest(gav);

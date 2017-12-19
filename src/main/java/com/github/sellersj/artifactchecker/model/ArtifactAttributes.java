@@ -17,7 +17,34 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
+    /** The project or user that a git repo is stored under. */
+    public final static String SCM_PROJECT = "SCM-PROJECT";
+
+    /** The git repo name. */
+    public static final String SCM_REPO = "SCM-SCM_REPO";
+
+    /** The git hash that we want to checkout. */
+    public static final String SCM_HASH = "SCM-HAS";
+
+    /** If this is a githug host. */
+    private boolean github = false;
+
     private SortedMap<String, String> manifest = new TreeMap<>();
+
+    @Transient
+    public String buildGitCloneUrl() {
+        return "git@github.com:" + getScmProject() + "/" + getScmRepo() + ".git";
+    }
+
+    @Transient
+    public String getScmProject() {
+        return manifest.get(SCM_PROJECT);
+    }
+
+    @Transient
+    public String getScmRepo() {
+        return manifest.get(SCM_REPO);
+    }
 
     @Transient
     public String getGroupId() {
@@ -67,6 +94,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public void setManifest(SortedMap<String, String> manifest) {
         this.manifest = manifest;
+    }
+
+    /**
+     * @return the github
+     */
+    public boolean isGithub() {
+        return github;
+    }
+
+    /**
+     * @param github the github to set
+     */
+    public void setGithub(boolean github) {
+        this.github = github;
     }
 
 }
