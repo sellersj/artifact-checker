@@ -75,12 +75,16 @@ public class DownloadArtifacts {
 
         String repoWorkingDir = WORKING_DIR + gav.getScmProject();
 
-        // check out the project
-        ProcessBuilder gitClone = new ProcessBuilder(osPrefix + "git", "clone", gav.buildGitCloneUrl());
-        gitClone.directory(new File(repoWorkingDir));
-        if (0 != run(gitClone)) {
-            System.err.println("Could not clone project: " + gav);
-            return;
+        // check out the project, only if it doesn't exist
+        if (new File(repoWorkingDir).exists()) {
+            System.out.println("Directory '" + repoWorkingDir + "' already exists. Not going to try to clone again. ");
+        } else {
+            ProcessBuilder gitClone = new ProcessBuilder(osPrefix + "git", "clone", gav.buildGitCloneUrl());
+            gitClone.directory(new File(repoWorkingDir));
+            if (0 != run(gitClone)) {
+                System.err.println("Could not clone project: " + gav);
+                return;
+            }
         }
 
         // the directory of the actual project
@@ -95,7 +99,8 @@ public class DownloadArtifacts {
         // TODO figure out how to properly filter for java 8 issues here
         buildJava8Issues();
 
-        ProcessBuilder mvnDepTree = new ProcessBuilder(osPrefix + "mvn" + osSuffix, "--batch-mode", "dependency:tree");
+        ProcessBuilder mvnDepTree = new ProcessBuilder(osPrefix + "mvn" + osSuffix, "--batch-mode", "dependency:tree",
+            "-DoutputFile=tree.txt");
         mvnDepTree.directory(projectDir);
         run(mvnDepTree);
     }
