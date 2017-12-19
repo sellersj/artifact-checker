@@ -53,6 +53,7 @@ public class DownloadArtifacts {
         // the directory of the actual project
         File projectDir = new File(repoWorkingDir + File.separator + gav.getScmRepo());
 
+        // switch git to the specific hash that we're targeting
         ProcessBuilder gitCheckoutHash = new ProcessBuilder(osPrefix + "git", "checkout", gav.getScmHash());
         gitCheckoutHash.directory(projectDir);
         run(gitCheckoutHash);
