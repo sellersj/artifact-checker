@@ -19,7 +19,8 @@ public class DownloadArtifactsTest {
         // gav.setVersion("4.12");
         // gav.setPackaging("jar");
 
-        ArtifactAttributes attributes = DownloadArtifacts.downloadAndReadManifest(gav);
+        DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
+        ArtifactAttributes attributes = downloadArtifacts.downloadAndReadManifest(gav);
 
         assertNotNull("manifest should be filled out", attributes);
         // TODO check the content of the attributes

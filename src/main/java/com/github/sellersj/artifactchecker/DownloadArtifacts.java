@@ -3,39 +3,39 @@
  */
 package com.github.sellersj.artifactchecker;
 
-import java.io.File;
-import java.util.Map.Entry;
-
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 
 public class DownloadArtifacts {
 
+    /**
+     * We're dealing with mac giving a limited PATH to eclipse and linking directly to homebrew.
+     */
+    private String osPrefix;
+
     public static void main(String[] args) throws Exception {
-        // TODO figure out how to call maven command line
-
-        ProcessBuilder builder = new ProcessBuilder("ls", "-la");
-        builder.inheritIO();
-
-        Process process = builder.start();
-        process.waitFor();
+        DownloadArtifacts downloadArtifats = new DownloadArtifacts();
+        downloadArtifats.downloadAndReadManifest(null);
     }
 
-    public static ArtifactAttributes downloadAndReadManifest(ArtifactAttributes gav) {
+    public DownloadArtifacts() {
+        System.out.println("OS is: " + System.getProperty("os.name"));
+        String os = System.getProperty("os.name").toLowerCase();
 
-        // ProcessBuilder builder = new ProcessBuilder("/usr/local/bin/mvn", "help:effective-settings");
-        ProcessBuilder builder = new ProcessBuilder("mvn", "help:effective-settings");
-        builder.inheritIO();
-        String path = "/usr/local/bin/" + File.pathSeparator + builder.environment().get("PATH");
-        builder.environment().put("PATH", path);
-
-        for (Entry<String, String> entry : builder.environment().entrySet()) {
-            System.out.println(entry);
+        if (os.contains("mac")) {
+            osPrefix = "/usr/local/bin/";
+        } else {
+            osPrefix = "";
         }
+    }
+
+    public ArtifactAttributes downloadAndReadManifest(ArtifactAttributes gav) {
+
+        ProcessBuilder builder = new ProcessBuilder(osPrefix + "mvn", "help:effective-settings");
+        builder.inheritIO();
 
         try {
             Process process = builder.start();
             process.waitFor();
-
         } catch (Exception e) {
             throw new RuntimeException("Couldn't download: " + gav, e);
         }
