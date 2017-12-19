@@ -13,19 +13,19 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Any attributes that we will track for an artifact.
- * 
+ *
  * @author sellersj
  */
 public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** The project or user that a git repo is stored under. */
-    public final static String SCM_PROJECT = "SCM-PROJECT";
+    public final static String SCM_PROJECT = "Scm-Project-Id";
 
     /** The git repo name. */
-    public static final String SCM_REPO = "SCM-SCM_REPO";
+    public static final String SCM_REPO = "Scm-Repo-Name";
 
     /** The git hash that we want to checkout. */
-    public static final String SCM_HASH = "SCM-HAS";
+    public static final String SCM_HASH = "Scm-Sha1";
 
     /** If this is a githug host. */
     private boolean github = false;
@@ -33,7 +33,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     private SortedMap<String, String> manifest = new TreeMap<>();
 
     /**
-     * 
+     *
      * @return true if the has the scm project, repo, and hash.
      */
     public boolean hasRequiredGitInfo() {
@@ -69,8 +69,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     @Transient
     public String getArtifactId() {
-        System.out.println("getArtifactId is not done yet");
-        return manifest.get("Implementation-Vendor-Id");
+        return manifest.get("Implementation-Artifact-Id");
     }
 
     @Transient
