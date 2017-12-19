@@ -12,7 +12,17 @@ import org.apache.commons.io.FileUtils;
 
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 
+/**
+ * If doing this on a computer that hasn't updated the owasp dependency check data, it be can be done by calling the
+ * <code>org.owasp:dependency-check-maven:3.0.2:update-only</code>
+ *
+ * @author sellersj
+ *
+ */
 public class DownloadArtifacts {
+
+    /** The version of owasp dependency check to use. */
+    private static final String OWASP_DEP_CHECK_VERSION = "3.0.2";
 
     /**
      * We're dealing with mac giving a limited PATH to eclipse and linking directly to homebrew.
@@ -103,6 +113,19 @@ public class DownloadArtifacts {
             "-DoutputFile=tree.txt");
         mvnDepTree.directory(projectDir);
         run(mvnDepTree);
+
+        // run owasp dependency check
+        ProcessBuilder mvnOwaspCheck = new ProcessBuilder(osPrefix + "mvn" + osSuffix, "--batch-mode",
+            "org.owasp:dependency-check-maven:" + OWASP_DEP_CHECK_VERSION + ":check", //
+            "org.owasp:dependency-check-maven:" + OWASP_DEP_CHECK_VERSION + ":aggregate", //
+            "-Dformat=ALL", "-DskipProvidedScope=true", //
+            "-DautoUpdate=false", //
+            "-DnuspecAnalyzerEnabled=false", //
+            "-DassemblyAnalyzerEnabled=false", //
+            "-DnspAnalyzerEnabled=false"//
+        );
+        mvnOwaspCheck.directory(projectDir);
+        run(mvnOwaspCheck);
     }
 
     private int run(ProcessBuilder builder) {
