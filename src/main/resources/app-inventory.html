@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/3.3.2/css/tabulator.min.css" rel="stylesheet">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/3.3.2/js/tabulator.min.js"></script>
+</head>
+
+<h1>Applications in prod</h1>
+
+<div id="apps-table"></div>
+
+<script type="text/javascript">
+  // Tabulator.extendExtension("ajax", "defaultConfig", {
+  //   type:"POST",
+  //   contentType : "application/json; charset=utf-8"
+  // });
+
+  $("#apps-table").tabulator({
+    "setData" : "TOOLS_HOST/projectsites/app-inventory.json",
+    columns : [ {
+      field : "apps.manifest['Implementation-Title']",
+      title : "App name"
+    }, ],
+  });
+</script>
+</html>
