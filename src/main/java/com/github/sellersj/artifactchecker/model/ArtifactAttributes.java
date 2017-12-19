@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -31,6 +32,16 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     private SortedMap<String, String> manifest = new TreeMap<>();
 
+    /**
+     * 
+     * @return true if the has the scm project, repo, and hash.
+     */
+    public boolean hasRequiredGitInfo() {
+        return StringUtils.isNotBlank(getScmProject()) && //
+            StringUtils.isNotBlank(getScmRepo()) && //
+            StringUtils.isNotBlank(getScmHash());
+    }
+
     @Transient
     public String buildGitCloneUrl() {
         return "git@github.com:" + getScmProject() + "/" + getScmRepo() + ".git";
@@ -44,6 +55,11 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     @Transient
     public String getScmRepo() {
         return manifest.get(SCM_REPO);
+    }
+
+    @Transient
+    public String getScmHash() {
+        return manifest.get(SCM_HASH);
     }
 
     @Transient

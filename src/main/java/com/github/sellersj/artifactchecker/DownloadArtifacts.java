@@ -18,7 +18,7 @@ public class DownloadArtifacts {
 
     public static void main(String[] args) throws Exception {
         DownloadArtifacts downloadArtifats = new DownloadArtifacts();
-        downloadArtifats.downloadAndReadManifest(null);
+        downloadArtifats.cloneAndCheckProject(null);
     }
 
     public DownloadArtifacts() {
@@ -32,23 +32,35 @@ public class DownloadArtifacts {
         }
     }
 
-    public ArtifactAttributes downloadAndReadManifest(ArtifactAttributes gav) {
+    public void cloneAndCheckProject(ArtifactAttributes gav) {
+        if (!gav.hasRequiredGitInfo()) {
+            System.err.println("###########");
+            System.err.println("Project doesn't have enough info to clone and check: " + gav);
+            System.err.println("###########");
+            return;
+        }
+
         // init the working temp dir
         new File(WORKING_DIR).mkdirs();
 
-        String repoWorkingDir = WORKING_DIR + gav.getScmProject() + File.separator + gav.getScmRepo();
+        String repoWorkingDir = WORKING_DIR + gav.getScmProject();
 
         // check out the project
-        ProcessBuilder builder = new ProcessBuilder(osPrefix + "git", "clone", gav.buildGitCloneUrl());
-        builder.directory(new File(repoWorkingDir));
-        run(builder);
+        ProcessBuilder gitClone = new ProcessBuilder(osPrefix + "git", "clone", gav.buildGitCloneUrl());
+        gitClone.directory(new File(repoWorkingDir));
+        run(gitClone);
+
+        // the directory of the actual project
+        File projectDir = new File(repoWorkingDir + File.separator + gav.getScmRepo());
+
+        ProcessBuilder gitCheckoutHash = new ProcessBuilder(osPrefix + "git", "checkout", gav.getScmHash());
+        gitCheckoutHash.directory(projectDir);
+        run(gitCheckoutHash);
 
         // run dependency tree
         ProcessBuilder mvnDepTree = new ProcessBuilder(osPrefix + "mvn", "dependency:tree");
-        mvnDepTree.directory(new File(repoWorkingDir + File.separator + gav.getScmRepo()));
+        mvnDepTree.directory(projectDir);
         run(mvnDepTree);
-
-        return gav;
     }
 
     private void run(ProcessBuilder builder) {
