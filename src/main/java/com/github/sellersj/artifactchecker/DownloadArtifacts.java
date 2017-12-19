@@ -19,6 +19,11 @@ public class DownloadArtifacts {
      */
     private String osPrefix;
 
+    /**
+     * Ah windows...
+     */
+    private String osSuffix;
+
     private static final String WORKING_DIR = "target/cloned-projects/";
 
     /** The list of dependencies that have issues with java 8. */
@@ -30,8 +35,10 @@ public class DownloadArtifacts {
 
         if (os.contains("mac")) {
             osPrefix = "/usr/local/bin/";
+            osSuffix = "";
         } else {
             osPrefix = "";
+            osSuffix = ".cmd";
         }
 
     }
@@ -88,7 +95,7 @@ public class DownloadArtifacts {
         // TODO figure out how to properly filter for java 8 issues here
         buildJava8Issues();
 
-        ProcessBuilder mvnDepTree = new ProcessBuilder(osPrefix + "mvn", "dependency:tree");
+        ProcessBuilder mvnDepTree = new ProcessBuilder(osPrefix + "mvn" + osSuffix, "--batch-mode", "dependency:tree");
         mvnDepTree.directory(projectDir);
         run(mvnDepTree);
     }
