@@ -43,4 +43,11 @@ public class DownloadArtifactsTest {
         // TODO check the content of the attributes
     }
 
+    @Test
+    public void testCopyFiles() {
+        // smoke test
+        DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
+        downloadArtifacts.copyFiles();
+    }
+
 }

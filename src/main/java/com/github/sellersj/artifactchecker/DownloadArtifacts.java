@@ -4,8 +4,14 @@
 package com.github.sellersj.artifactchecker;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -83,7 +89,8 @@ public class DownloadArtifacts {
         // init the working temp dir
         new File(WORKING_DIR).mkdirs();
 
-        String repoWorkingDir = WORKING_DIR + gav.getScmProject();
+        String repoWorkingDir = WORKING_DIR + gav.getScmProject() + File.separator + gav.getScmRepo() + File.separator
+            + gav.getScmHash();
 
         // check out the project, only if it doesn't exist
         if (new File(repoWorkingDir).exists()) {
@@ -126,6 +133,19 @@ public class DownloadArtifacts {
         );
         mvnOwaspCheck.directory(projectDir);
         run(mvnOwaspCheck);
+
+        // copy all required files we want to a different locationcopyFiles()
+        copyFiles();
+
+        // delete the repo to save space if it exists
+        try {
+            System.out.println("Deleting " + repoWorkingDir);
+            Files.walk(Paths.get(repoWorkingDir)).sorted(Comparator.reverseOrder()).map(Path::toFile)
+                .forEach(File::delete);
+        } catch (IOException e) {
+            throw new RuntimeException("Couldnm't delete directory for cleanup " + repoWorkingDir, e);
+        }
+
     }
 
     private int run(ProcessBuilder builder) {
@@ -141,6 +161,42 @@ public class DownloadArtifacts {
             return process.exitValue();
         } catch (Exception e) {
             throw new RuntimeException("Couldn't run process: " + builder, e);
+        }
+    }
+
+    public void copyFiles() {
+        // have a place to copy, create it if it's not there
+        File target = new File("target/files-generated/");
+        if (!target.exists()) {
+            target.mkdirs();
+        }
+
+        try {
+            Path path = Paths.get(WORKING_DIR);
+            Files.walk(path)//
+                .filter(p -> p.getFileName().toString().startsWith("dependency-check-")
+                    || "tree.txt".equals(p.getFileName().toString()))
+                // .peek(System.out::println) //
+                .forEach(p -> moveUnchecked(p));
+
+        } catch (IOException e) {
+            throw new RuntimeException("Could not copy file to new directory", e);
+        }
+    }
+
+    public static Path moveUnchecked(Path source) {
+        Path target = Paths.get(source.toAbsolutePath().toString().replaceAll("cloned-projects", "files-generated"));
+        System.out.println("Going to move to: " + target);
+
+        // make the target directory if it doesn't exist
+        if (!target.getParent().toFile().exists()) {
+            target.getParent().toFile().mkdirs();
+        }
+
+        try {
+            return Files.move(source, target, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new RuntimeException("Couldn't move " + source + " to " + target, e);
         }
     }
 }
