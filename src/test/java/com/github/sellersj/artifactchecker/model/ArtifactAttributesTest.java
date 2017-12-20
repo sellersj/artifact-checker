@@ -1,6 +1,8 @@
 package com.github.sellersj.artifactchecker.model;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -20,6 +22,16 @@ public class ArtifactAttributesTest {
 
         gav.getManifest().put(ArtifactAttributes.SCM_HASH, "1c6c1006f11661902b6f48cddbfa8b3ba2cc7385");
         assertTrue("should show as cloneable", gav.hasRequiredGitInfo());
+    }
+
+    @Test
+    public void getScmProjectDefaultsOnlyWhenOtherInfoFilledOut() {
+        assertNull(new ArtifactAttributes().getScmProject());
+
+        ArtifactAttributes art = new ArtifactAttributes();
+        art.getManifest().put(ArtifactAttributes.SCM_REPO, "bob");
+        art.getManifest().put(ArtifactAttributes.SCM_HASH, "akshfkjashfkasjhf");
+        assertEquals("ICAPPS", art.getScmProject());
     }
 
 }

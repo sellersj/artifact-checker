@@ -63,7 +63,10 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     public String getScmProject() {
         String scmProject = manifest.get(SCM_PROJECT);
 
-        if (StringUtils.isBlank(scmProject)) {
+        // only default it if it's the only info missing
+        if (StringUtils.isBlank(scmProject) && StringUtils.isNotBlank(getScmRepo())
+            && StringUtils.isNotBlank(getScmHash())) {
+
             scmProject = "ICAPPS";
             System.err.println("Defaulting project name to: " + scmProject);
         }
