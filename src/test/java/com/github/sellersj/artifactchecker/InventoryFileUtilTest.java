@@ -3,7 +3,6 @@ package com.github.sellersj.artifactchecker;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -52,7 +51,7 @@ public class InventoryFileUtilTest {
 
     @Test
     public void testReadMergedManifests() throws Exception {
-        AppInventory gavs = getTestAppInventory(this);
+        AppInventory gavs = getTestAppInventory();
         assertEquals(2, gavs.getApps().size());
 
         Iterator<ArtifactAttributes> iterator = gavs.getApps().iterator();
@@ -68,11 +67,9 @@ public class InventoryFileUtilTest {
         assertEquals("4.12", artifact1.getVersion());
     }
 
-    public static AppInventory getTestAppInventory(Object obj) {
+    public static AppInventory getTestAppInventory() {
         try {
-            URL url = obj.getClass().getResource("/merged-manifests.txt");
-            File file = new File(url.toURI());
-
+            File file = TestUtil.getFileOnClasspath("/merged-manifests.txt");
             AppInventory gavs = InventoryFileUtil.readMergedManifests(file);
             return gavs;
         } catch (Exception e) {

@@ -49,7 +49,7 @@ public class ReportBuilderTest {
         File target = File.createTempFile("app-inventory-", ".json");
         target.deleteOnExit();
 
-        AppInventory inventory = InventoryFileUtilTest.getTestAppInventory(this);
+        AppInventory inventory = InventoryFileUtilTest.getTestAppInventory();
         ReportBuilder.buildJsonReport(inventory, target);
     }
 
