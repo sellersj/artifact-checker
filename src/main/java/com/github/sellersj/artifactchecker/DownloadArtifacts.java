@@ -139,7 +139,7 @@ public class DownloadArtifacts {
         mvnOwaspCheck.directory(projectDir);
         run(mvnOwaspCheck);
 
-        // copy all required files we want to a different locationcopyFiles()
+        // copy all required files we want to a different location
         copyFiles();
 
         // delete the repo to save space if it exists
