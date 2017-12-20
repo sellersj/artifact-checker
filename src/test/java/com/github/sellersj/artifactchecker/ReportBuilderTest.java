@@ -6,11 +6,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.github.sellersj.artifactchecker.model.AppInventory;
-import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 
 public class ReportBuilderTest {
 
@@ -36,23 +34,6 @@ public class ReportBuilderTest {
         String target = "/data00/bamboo/projectsites/app-inventory.json";
         AppInventory inventory = InventoryFileUtilTest.getTestAppInventory(this);
         ReportBuilder.buildJsonReport(inventory, target);
-    }
-
-    @Test
-    @Ignore
-    public void generateProdReportFull() {
-        String location = "https://" + toolsHost + "/deployed-to/manifest-combined.txt";
-        AppInventory inventory = ReportBuilder.generateAppInventory(location);
-
-        DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
-
-        for (ArtifactAttributes gav : inventory.getApps()) {
-            downloadArtifacts.cloneAndCheckProject(gav);
-        }
-
-        String target = "/data00/bamboo/projectsites/app-inventory.json";
-        ReportBuilder.buildJsonReport(inventory, target);
-
     }
 
 }

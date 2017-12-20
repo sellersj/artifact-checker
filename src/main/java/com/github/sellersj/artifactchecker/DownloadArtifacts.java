@@ -42,6 +42,9 @@ public class DownloadArtifacts {
 
     private static final String WORKING_DIR = "target/cloned-projects/";
 
+    /** The place where we store the files we've generated from the project, the ones we care about. */
+    public static final String FILES_GENERATED = "target/files-generated/";
+
     /** The list of dependencies that have issues with java 8. */
     private List<String> java8Issues = null;
 
@@ -124,7 +127,7 @@ public class DownloadArtifacts {
         // run owasp dependency check
         ProcessBuilder mvnOwaspCheck = new ProcessBuilder(osPrefix + "mvn" + osSuffix, "--batch-mode",
             "org.owasp:dependency-check-maven:" + OWASP_DEP_CHECK_VERSION + ":check", //
-            "org.owasp:dependency-check-maven:" + OWASP_DEP_CHECK_VERSION + ":aggregate", //
+            // "org.owasp:dependency-check-maven:" + OWASP_DEP_CHECK_VERSION + ":aggregate", //
             "-Dformat=ALL", "-DskipProvidedScope=true", //
             "-DautoUpdate=false", //
             "-DnuspecAnalyzerEnabled=false", //
@@ -166,7 +169,7 @@ public class DownloadArtifacts {
 
     public void copyFiles() {
         // have a place to copy, create it if it's not there
-        File target = new File("target/files-generated/");
+        File target = new File(FILES_GENERATED);
         if (!target.exists()) {
             target.mkdirs();
         }
