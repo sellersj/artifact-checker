@@ -55,11 +55,13 @@ public class DownloadArtifacts {
         if (os.contains("mac")) {
             osPrefix = "/usr/local/bin/";
             osSuffix = "";
-        } else {
+        } else if (os.contains("windows")) {
             osPrefix = "";
             osSuffix = ".cmd";
+        } else {
+            osPrefix = "";
+            osSuffix = "";
         }
-
     }
 
     private List<String> buildJava8Issues() {
