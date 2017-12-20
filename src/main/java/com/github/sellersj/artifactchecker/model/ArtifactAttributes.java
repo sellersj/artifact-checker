@@ -61,7 +61,14 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     @Transient
     public String getScmProject() {
-        return manifest.get(SCM_PROJECT);
+        String scmProject = manifest.get(SCM_PROJECT);
+
+        if (StringUtils.isBlank(scmProject)) {
+            scmProject = "ICAPPS";
+            System.err.println("Defaulting project name to: " + scmProject);
+        }
+
+        return scmProject;
     }
 
     @Transient
