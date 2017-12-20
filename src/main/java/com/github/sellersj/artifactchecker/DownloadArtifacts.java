@@ -40,7 +40,7 @@ public class DownloadArtifacts {
      */
     private String osSuffix;
 
-    private static final String WORKING_DIR = "target/cloned-projects/";
+    public static final String WORKING_DIR = "target/cloned-projects/";
 
     /** The place where we store the files we've generated from the project, the ones we care about. */
     public static final String FILES_GENERATED = "target/files-generated/";

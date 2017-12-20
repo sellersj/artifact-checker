@@ -1,5 +1,7 @@
 package com.github.sellersj.artifactchecker;
 
+import java.io.File;
+
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -47,6 +49,10 @@ public class DownloadArtifactsTest {
 
     @Test
     public void testCopyFiles() {
+        // create the "from" directory is it doesn't exist for this unit test.
+        // TODO ensure that there is actually data in that directory
+        new File(DownloadArtifacts.WORKING_DIR).mkdirs();
+
         // smoke test
         DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
         downloadArtifacts.copyFiles();
