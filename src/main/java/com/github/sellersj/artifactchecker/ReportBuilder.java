@@ -41,12 +41,12 @@ public class ReportBuilder {
 
         DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
 
-        for (ArtifactAttributes gav : inventory.getApps()) {
+        for (ArtifactAttributes gav : inventory.getAppsFilteredByCloneUrl()) {
             downloadArtifacts.cloneAndCheckProject(gav);
         }
 
         File srcDir = new File(DownloadArtifacts.FILES_GENERATED);
-        File destDir = new File("/data00/bamboo/projectsites/");
+        File destDir = new File("/data00/bamboo/projectsites/app-inventory/");
         try {
             FileUtils.copyDirectory(srcDir, destDir);
             System.out.println("Copied files from " + srcDir + " to " + destDir);

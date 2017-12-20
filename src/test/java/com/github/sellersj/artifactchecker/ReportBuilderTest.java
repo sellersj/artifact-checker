@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.github.sellersj.artifactchecker.model.AppInventory;
+import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 
 public class ReportBuilderTest {
 
@@ -29,6 +30,18 @@ public class ReportBuilderTest {
         AppInventory inventory = ReportBuilder.generateAppInventory(location);
         assertNotNull("inventory shouldn't be null", inventory);
         assertFalse("inventory should have a bunch of manifest files", inventory.getApps().isEmpty());
+
+        int appSize = inventory.getApps().size();
+        int appFilteredSize = inventory.getAppsFilteredByCloneUrl().size();
+        assertTrue("The filtering should have removed some apps. Comparing " + appSize + " to " + appFilteredSize,
+            appSize > appFilteredSize);
+
+        System.out.println("Number of apps: " + inventory.getApps().size());
+        for (ArtifactAttributes artifactAttributes : inventory.getApps()) {
+            if ("ca.gc.ised.quickpay.app".equals(artifactAttributes.getGroupId())) {
+                System.out.println(artifactAttributes);
+            }
+        }
     }
 
     @Test

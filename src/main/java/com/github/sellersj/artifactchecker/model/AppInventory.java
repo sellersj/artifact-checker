@@ -12,6 +12,37 @@ public class AppInventory {
 
     private Set<ArtifactAttributes> apps = new HashSet<>();
 
+    /**
+     * Some projects have multiple ears deployed to prod, but the same git repository. This will filter based on the
+     * clone url.
+     *
+     * @return
+     */
+    public Set<ArtifactAttributes> getAppsFilteredByCloneUrl() {
+        Set<ArtifactAttributes> filtered = new HashSet<>();
+
+        HashSet<String> trackedCloneUrls = new HashSet<>();
+
+        for (ArtifactAttributes artifactAttributes : apps) {
+            // only check if it's a duplicate if it's got the git info
+            if (artifactAttributes.hasRequiredGitInfo()) {
+
+                String cloneUrl = artifactAttributes.buildGitCloneUrl();
+                if (trackedCloneUrls.contains(cloneUrl)) {
+                    System.out.println("Not going to clone already tracking project " + artifactAttributes);
+                } else {
+                    trackedCloneUrls.add(cloneUrl);
+                    filtered.add(artifactAttributes);
+                }
+
+            } else {
+                filtered.add(artifactAttributes);
+            }
+        }
+
+        return filtered;
+    }
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
