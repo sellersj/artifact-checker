@@ -129,7 +129,7 @@ public class DownloadArtifacts {
         // run owasp dependency check
         ProcessBuilder mvnOwaspCheck = new ProcessBuilder(osPrefix + "mvn" + osSuffix, "--batch-mode",
             "org.owasp:dependency-check-maven:" + OWASP_DEP_CHECK_VERSION + ":check", //
-            // "org.owasp:dependency-check-maven:" + OWASP_DEP_CHECK_VERSION + ":aggregate", //
+            "org.owasp:dependency-check-maven:" + OWASP_DEP_CHECK_VERSION + ":aggregate", //
             "-Dformat=ALL", "-DskipProvidedScope=true", //
             "-DautoUpdate=false", //
             "-DnuspecAnalyzerEnabled=false", //
