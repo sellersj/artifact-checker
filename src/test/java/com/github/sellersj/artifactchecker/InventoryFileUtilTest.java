@@ -56,15 +56,16 @@ public class InventoryFileUtilTest {
         assertEquals(2, gavs.getApps().size());
 
         Iterator<ArtifactAttributes> iterator = gavs.getApps().iterator();
+
+        ArtifactAttributes artifact2 = iterator.next();
+        assertEquals("ca.canada.ised.wet.cdts", artifact2.getGroupId());
+        assertEquals("wet-cdts-spring-boot-thymeleaf-starter", artifact2.getArtifactId());
+        assertEquals("4.0.25.2-SNAPSHOT", artifact2.getVersion());
+
         ArtifactAttributes artifact1 = iterator.next();
         assertEquals("junit", artifact1.getGroupId());
         assertEquals("junit", artifact1.getArtifactId());
         assertEquals("4.12", artifact1.getVersion());
-
-        ArtifactAttributes artifact2 = iterator.next();
-        assertEquals("ca.canada.ised.wet.cdts", artifact2.getGroupId());
-        assertEquals("ca.canada.ised.wet.cdts", artifact2.getArtifactId());
-        assertEquals("4.0.25.2-SNAPSHOT", artifact2.getVersion());
     }
 
     public static AppInventory getTestAppInventory(Object obj) {

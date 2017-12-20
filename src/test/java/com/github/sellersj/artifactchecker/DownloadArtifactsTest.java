@@ -17,12 +17,13 @@ public class DownloadArtifactsTest {
     }
 
     @Test
+    // @Ignore("this messes up eclipse by switching the whole project to it.")
     public void testcloneAndCheckProject() {
         ArtifactAttributes gav = new ArtifactAttributes();
         gav.setGithub(true);
         gav.getManifest().put(ArtifactAttributes.SCM_PROJECT, "sellersj");
-        gav.getManifest().put(ArtifactAttributes.SCM_REPO, "artifact-checker");
-        gav.getManifest().put(ArtifactAttributes.SCM_HASH, "1c6c1006f11661902b6f48cddbfa8b3ba2cc7385");
+        gav.getManifest().put(ArtifactAttributes.SCM_REPO, "tomcat-extractor");
+        gav.getManifest().put(ArtifactAttributes.SCM_HASH, "e507b001c2a170c6f7c50169a48aaa76ad3b4c3f");
 
         DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
         downloadArtifacts.cloneAndCheckProject(gav);
