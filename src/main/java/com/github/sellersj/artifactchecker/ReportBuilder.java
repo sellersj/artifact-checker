@@ -15,7 +15,7 @@ import com.github.sellersj.artifactchecker.model.AppInventory;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 
 /**
- * If you want to run this from maven, then you can
+ * If you want to run this from maven, then you can (maybe not with quotes)
  * <code>exec:java -Dexec.mainClass="com.github.sellersj.artifactchecker.ReportBuilder"</code>
  *
  * @author sellersj
