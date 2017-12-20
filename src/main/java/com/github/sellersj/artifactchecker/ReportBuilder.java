@@ -54,14 +54,12 @@ public class ReportBuilder {
             throw new RuntimeException("Couldn't copy files from " + srcDir + " to " + destDir, e);
         }
 
-        String target = "/data00/bamboo/projectsites/app-inventory.json";
+        File target = new File("/data00/bamboo/projectsites/app-inventory.json");
         ReportBuilder.buildJsonReport(inventory, target);
     }
 
-    public static void buildJsonReport(AppInventory gavs, String targetLocation) {
+    public static void buildJsonReport(AppInventory gavs, File outFile) {
         System.out.println("The number of apps is at least " + gavs.getApps().size());
-
-        File outFile = new File(targetLocation);
         InventoryFileUtil.write(outFile, gavs);
     }
 

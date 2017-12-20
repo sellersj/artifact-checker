@@ -4,6 +4,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,8 +32,10 @@ public class ReportBuilderTest {
     }
 
     @Test
-    public void buildJsonReport() {
-        String target = "/data00/bamboo/projectsites/app-inventory.json";
+    public void buildJsonReport() throws Exception {
+        File target = File.createTempFile("app-inventory-", ".json");
+        target.deleteOnExit();
+
         AppInventory inventory = InventoryFileUtilTest.getTestAppInventory(this);
         ReportBuilder.buildJsonReport(inventory, target);
     }
