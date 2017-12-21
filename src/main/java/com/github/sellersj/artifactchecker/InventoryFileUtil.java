@@ -128,7 +128,7 @@ public class InventoryFileUtil {
      */
     public static File getFileOnClasspath(String filename) {
         try {
-            URL url = InventoryFileUtilTest.class.getResource(filename);
+            URL url = InventoryFileUtil.class.getResource(filename);
             return new File(url.toURI());
         } catch (Exception e) {
             throw new RuntimeException("Couldn't load the file " + filename, e);
