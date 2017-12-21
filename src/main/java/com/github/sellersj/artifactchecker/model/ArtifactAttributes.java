@@ -122,6 +122,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /**
      * @return the build date if it exists and is parsable.
      */
+    @Transient
     public Date getBuildDate() {
         String string = manifest.get(BUILD_TIME);
         Date date = null;
