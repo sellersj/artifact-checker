@@ -69,7 +69,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
             && StringUtils.isNotBlank(getScmHash())) {
 
             scmProject = "ICAPPS";
-            System.err.println("Defaulting project name to: " + scmProject);
+            System.out.println("Defaulting project name to: " + scmProject + " for " + getScmRepo());
         }
 
         return scmProject;
