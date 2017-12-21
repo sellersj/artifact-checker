@@ -82,7 +82,11 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     @Transient
     public String getScmHash() {
-        return manifest.get(SCM_HASH);
+        String hash = manifest.get(SCM_HASH);
+        if (StringUtils.isNotBlank(hash) && hash.endsWith("-dirty")) {
+            hash = hash.replaceAll("-dirty", "");
+        }
+        return hash;
     }
 
     @Transient

@@ -34,4 +34,26 @@ public class ArtifactAttributesTest {
         assertEquals("ICAPPS", art.getScmProject());
     }
 
+    @Test
+    public void getScmHashEmptyHash() {
+        ArtifactAttributes art = new ArtifactAttributes();
+        assertEquals(null, art.getScmHash());
+    }
+
+    @Test
+    public void getScmHashNormalHash() {
+        String hash = "1c6c1006f11661902b6f48cddbfa8b3ba2cc7385";
+        ArtifactAttributes art = new ArtifactAttributes();
+        art.getManifest().put(ArtifactAttributes.SCM_HASH, hash);
+        assertEquals(hash, art.getScmHash());
+    }
+
+    @Test
+    public void getScmHashWithDirtyFlag() {
+        String hash = "1c6c1006f11661902b6f48cddbfa8b3ba2cc7385";
+        ArtifactAttributes art = new ArtifactAttributes();
+        art.getManifest().put(ArtifactAttributes.SCM_HASH, hash + "-dirty");
+        assertEquals(hash, art.getScmHash());
+    }
+
 }
