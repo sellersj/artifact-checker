@@ -5,6 +5,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
@@ -12,6 +14,7 @@ import org.junit.Test;
 
 import com.github.sellersj.artifactchecker.model.AppInventory;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
+import com.github.sellersj.artifactchecker.model.ScmCorrection;
 
 public class ReportBuilderTest {
 
@@ -37,11 +40,24 @@ public class ReportBuilderTest {
             appSize > appFilteredSize);
 
         System.out.println("Number of apps: " + inventory.getApps().size());
+
+        List<ScmCorrection> titles = new ArrayList<ScmCorrection>();
         for (ArtifactAttributes artifactAttributes : inventory.getApps()) {
-            if ("ca.gc.ised.quickpay.app".equals(artifactAttributes.getGroupId())) {
+
+            if (!artifactAttributes.hasRequiredGitInfo() && StringUtils.isNotBlank(artifactAttributes.getScmHash())) {
                 System.out.println(artifactAttributes);
+
+                ScmCorrection correction = new ScmCorrection();
+                correction.setImplementationTitle(artifactAttributes.getManifest().get("Implementation-Title"));
+                titles.add(correction);
             }
         }
+
+        System.out.println("Size is apps missing titles: " + titles.size());
+        for (ScmCorrection correction : titles) {
+            System.out.println(correction.getImplementationTitle());
+        }
+
     }
 
     @Test

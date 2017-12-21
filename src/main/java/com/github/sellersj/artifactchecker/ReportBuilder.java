@@ -60,7 +60,7 @@ public class ReportBuilder {
 
     public static void buildJsonReport(AppInventory gavs, File outFile) {
         System.out.println("The number of apps is at least " + gavs.getApps().size());
-        InventoryFileUtil.write(outFile, gavs);
+        InventoryFileUtil.writeAppInventory(outFile, gavs);
     }
 
     public static AppInventory generateAppInventory(String location) {
@@ -71,7 +71,13 @@ public class ReportBuilder {
             throw new RuntimeException("Couldn't make a url from " + location, e);
         }
 
-        AppInventory gavs = InventoryFileUtil.readMergedManifests(url);
+        AppInventory gavs = fillInMissingScmInfo(InventoryFileUtil.readMergedManifests(url));
         return gavs;
     }
+
+    /** Fills in scm info that's missing for a best guess. */
+    public static AppInventory fillInMissingScmInfo(AppInventory original) {
+        return original;
+    }
+
 }

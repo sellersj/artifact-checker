@@ -28,25 +28,25 @@ public class InventoryFileUtilTest {
         appInventory.add(attributes);
 
         File file = File.createTempFile("appInventory", ".json");
-        InventoryFileUtil.write(file, appInventory);
+        InventoryFileUtil.writeAppInventory(file, appInventory);
 
         String contents = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
         System.out.println(contents);
 
-        AppInventory fromDisk = InventoryFileUtil.read(file);
+        AppInventory fromDisk = InventoryFileUtil.readAppInventory(file);
         assertEquals(1, fromDisk.getApps().size());
     }
 
     @Test(expected = RuntimeException.class)
     public void testWriteBadFile() throws Exception {
         Path dir = Files.createTempDirectory("testWriteBadFile");
-        InventoryFileUtil.write(dir.toFile(), null);
+        InventoryFileUtil.writeAppInventory(dir.toFile(), null);
     }
 
     @Test(expected = RuntimeException.class)
     public void testReadBadFile() throws Exception {
         Path dir = Files.createTempDirectory("testReadBadFile");
-        InventoryFileUtil.read(dir.toFile());
+        InventoryFileUtil.readAppInventory(dir.toFile());
     }
 
     @Test
@@ -69,7 +69,7 @@ public class InventoryFileUtilTest {
 
     public static AppInventory getTestAppInventory() {
         try {
-            File file = TestUtil.getFileOnClasspath("/merged-manifests.txt");
+            File file = InventoryFileUtil.getFileOnClasspath("/merged-manifests.txt");
             AppInventory gavs = InventoryFileUtil.readMergedManifests(file);
             return gavs;
         } catch (Exception e) {

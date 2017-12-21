@@ -15,7 +15,7 @@ public class FindJava8IssuesTest {
 
     @Test
     public void checkTreeForJava8Issues() throws IOException {
-        File file = TestUtil.getFileOnClasspath("/testproject-tree.txt");
+        File file = InventoryFileUtil.getFileOnClasspath("/testproject-tree.txt");
         FindJava8Issues.checkTreeForJava8Issues(file.toPath());
     }
 

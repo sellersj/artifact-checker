@@ -22,7 +22,7 @@ public class InventoryFileUtil {
 
     private static final ObjectMapper mapper = new ObjectMapper();
 
-    public static void write(File file, AppInventory appInventory) {
+    public static void writeAppInventory(File file, AppInventory appInventory) {
         try {
             System.out.println("Writing app inventory to : " + file.getAbsolutePath());
             mapper.writerWithDefaultPrettyPrinter().writeValue(file, appInventory);
@@ -31,7 +31,7 @@ public class InventoryFileUtil {
         }
     }
 
-    public static AppInventory read(File file) {
+    public static AppInventory readAppInventory(File file) {
         try {
             AppInventory appInventory = mapper.readValue(file, AppInventory.class);
             return appInventory;
@@ -106,6 +106,19 @@ public class InventoryFileUtil {
             return manifest;
         } catch (IOException e) {
             throw new RuntimeException("Couldn't read manifest chunk: " + string, e);
+        }
+    }
+
+    /**
+     * @param filename should start with leading slash
+     * @return the file handle
+     */
+    public static File getFileOnClasspath(String filename) {
+        try {
+            URL url = InventoryFileUtilTest.class.getResource(filename);
+            return new File(url.toURI());
+        } catch (Exception e) {
+            throw new RuntimeException("Couldn't load the file " + filename, e);
         }
     }
 
