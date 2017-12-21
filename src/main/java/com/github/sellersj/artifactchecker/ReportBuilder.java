@@ -71,13 +71,8 @@ public class ReportBuilder {
             throw new RuntimeException("Couldn't make a url from " + location, e);
         }
 
-        AppInventory gavs = fillInMissingScmInfo(InventoryFileUtil.readMergedManifests(url));
+        AppInventory gavs = InventoryFileUtil.readMergedManifests(url);
         return gavs;
-    }
-
-    /** Fills in scm info that's missing for a best guess. */
-    public static AppInventory fillInMissingScmInfo(AppInventory original) {
-        return original;
     }
 
 }

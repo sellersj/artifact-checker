@@ -28,8 +28,17 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** The git hash that we want to checkout. */
     public static final String SCM_HASH = "Scm-Sha1";
 
+    /** The Implementation-Title from the manifest. */
+    public static final String IMPLEMENTATION_TITLE = "Implementation-Title";
+
     /** If this is a githug host. */
     private boolean github = false;
+
+    /** Our corrected scm project from a static file. */
+    private String correctedScmProject;
+
+    /** Our corrected scm repo from a static file. */
+    private String correctedScmRepo;
 
     private SortedMap<String, String> manifest = new TreeMap<>();
 
@@ -64,10 +73,13 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     public String getScmProject() {
         String scmProject = manifest.get(SCM_PROJECT);
 
-        // only default it if it's the only info missing
-        if (StringUtils.isBlank(scmProject) && StringUtils.isNotBlank(getScmRepo())
+        if (StringUtils.isNotBlank(correctedScmProject)) {
+            scmProject = correctedScmProject;
+
+        } else if (StringUtils.isBlank(scmProject) && StringUtils.isNotBlank(getScmRepo())
             && StringUtils.isNotBlank(getScmHash())) {
 
+            // only default it if it's the only info missing
             scmProject = "ICAPPS";
             System.out.println("Defaulting project name to: " + scmProject + " for " + getScmRepo());
         }
@@ -77,7 +89,13 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     @Transient
     public String getScmRepo() {
-        return manifest.get(SCM_REPO);
+        String repo = manifest.get(SCM_REPO);
+
+        if (StringUtils.isNotBlank(correctedScmRepo)) {
+            repo = correctedScmRepo;
+        }
+
+        return repo;
     }
 
     @Transient
@@ -102,6 +120,11 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     @Transient
     public String getVersion() {
         return manifest.get("Implementation-Version");
+    }
+
+    @Transient
+    public String getTitle() {
+        return manifest.get(IMPLEMENTATION_TITLE);
     }
 
     @Override
@@ -150,6 +173,34 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public void setGithub(boolean github) {
         this.github = github;
+    }
+
+    /**
+     * @return the correctedScmProject
+     */
+    public String getCorrectedScmProject() {
+        return correctedScmProject;
+    }
+
+    /**
+     * @param correctedScmProject the correctedScmProject to set
+     */
+    public void setCorrectedScmProject(String correctedScmProject) {
+        this.correctedScmProject = correctedScmProject;
+    }
+
+    /**
+     * @return the correctedScmRepo
+     */
+    public String getCorrectedScmRepo() {
+        return correctedScmRepo;
+    }
+
+    /**
+     * @param correctedScmRepo the correctedScmRepo to set
+     */
+    public void setCorrectedScmRepo(String correctedScmRepo) {
+        this.correctedScmRepo = correctedScmRepo;
     }
 
 }

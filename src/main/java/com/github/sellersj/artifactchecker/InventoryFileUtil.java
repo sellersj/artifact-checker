@@ -8,12 +8,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.jar.Manifest;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -90,6 +93,7 @@ public class InventoryFileUtil {
      * @return a filled out list.
      */
     public static AppInventory readMergedManifests(String contents) {
+
         AppInventory inventory = new AppInventory();
 
         // split the file on a the manifest header, while keeping the header
@@ -110,7 +114,46 @@ public class InventoryFileUtil {
             inventory.add(attributes);
         }
 
+        // fix any manifests we can find
+        fillInMissingScmInfo(inventory);
+
         return inventory;
+    }
+
+    /** Fills in scm info that's missing for a best guess. */
+    public static AppInventory fillInMissingScmInfo(AppInventory original) {
+
+        // TODO can the return type be cahnged to void
+
+        Map<String, ScmCorrection> mapOfCorrections = getCorrections();
+
+        for (ArtifactAttributes app : original.getApps()) {
+            if (StringUtils.isNotBlank(app.getScmHash()) && !app.hasRequiredGitInfo()) {
+
+                if (mapOfCorrections.containsKey(app.getTitle())) {
+                    ScmCorrection correction = mapOfCorrections.get(app.getTitle());
+
+                    System.out.println("Correcting repo and name for " + app.getTitle() + " to "
+                        + correction.getScmProject() + " and " + correction.getScmRepo());
+
+                    app.setCorrectedScmProject(correction.getScmProject());
+                    app.setCorrectedScmRepo(correction.getScmRepo());
+                }
+            }
+        }
+
+        return original;
+    }
+
+    private static Map<String, ScmCorrection> getCorrections() {
+        File file = getFileOnClasspath("/scm-corrections.json");
+        List<ScmCorrection> correction = readScmCorrection(file);
+        Map<String, ScmCorrection> mapOfCorrections = new HashMap<>();
+        for (ScmCorrection scmCorrection : correction) {
+            mapOfCorrections.put(scmCorrection.getImplementationTitle(), scmCorrection);
+        }
+
+        return mapOfCorrections;
     }
 
     private static Manifest readToManifest(String string) {
