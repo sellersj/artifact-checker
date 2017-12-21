@@ -28,7 +28,7 @@ public class InventoryFileUtilTest {
         appInventory.add(attributes);
 
         File file = File.createTempFile("appInventory", ".json");
-        InventoryFileUtil.writeAppInventory(file, appInventory);
+        InventoryFileUtil.write(file, appInventory);
 
         String contents = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
         System.out.println(contents);
@@ -40,7 +40,7 @@ public class InventoryFileUtilTest {
     @Test(expected = RuntimeException.class)
     public void testWriteBadFile() throws Exception {
         Path dir = Files.createTempDirectory("testWriteBadFile");
-        InventoryFileUtil.writeAppInventory(dir.toFile(), null);
+        InventoryFileUtil.write(dir.toFile(), null);
     }
 
     @Test(expected = RuntimeException.class)

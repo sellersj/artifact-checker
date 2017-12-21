@@ -60,7 +60,7 @@ public class ReportBuilder {
 
     public static void buildJsonReport(AppInventory gavs, File outFile) {
         System.out.println("The number of apps is at least " + gavs.getApps().size());
-        InventoryFileUtil.writeAppInventory(outFile, gavs);
+        InventoryFileUtil.write(outFile, gavs);
     }
 
     public static AppInventory generateAppInventory(String location) {

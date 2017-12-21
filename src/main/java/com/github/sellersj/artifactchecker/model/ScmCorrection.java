@@ -1,15 +1,46 @@
 package com.github.sellersj.artifactchecker.model;
 
-public class ScmCorrection {
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+public class ScmCorrection implements Comparable<ScmCorrection> {
 
     /** The title that is captured in the manifest. */
     private String implementationTitle;
 
     /** The proper scm project. */
-    private String scmProject;
+    private String scmProject = "";
 
     /** The proper scm repo. */
-    private String scmRepo;
+    private String scmRepo = "";
+
+    @Override
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
+
+    @Override
+    public int compareTo(ScmCorrection rhs) {
+        CompareToBuilder builder = new CompareToBuilder();
+
+        builder.append(getImplementationTitle(), rhs.getImplementationTitle());
+        builder.append(getScmProject(), rhs.getScmProject());
+        builder.append(getScmRepo(), rhs.getScmRepo());
+
+        return builder.toComparison();
+    }
 
     /**
      * @return the implementationTitle

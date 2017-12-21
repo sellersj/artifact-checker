@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -54,10 +55,14 @@ public class ReportBuilderTest {
         }
 
         System.out.println("Size is apps missing titles: " + titles.size());
+        Collections.sort(titles);
         for (ScmCorrection correction : titles) {
             System.out.println(correction.getImplementationTitle());
         }
 
+        File output = new File("target/scm-corrections.json");
+        System.out.println("writing file with corrections to: " + output.getAbsolutePath());
+        InventoryFileUtil.write(output, titles);
     }
 
     @Test

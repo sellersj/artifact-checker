@@ -8,24 +8,27 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.jar.Manifest;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.sellersj.artifactchecker.model.AppInventory;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
+import com.github.sellersj.artifactchecker.model.ScmCorrection;
 
 public class InventoryFileUtil {
 
     private static final ObjectMapper mapper = new ObjectMapper();
 
-    public static void writeAppInventory(File file, AppInventory appInventory) {
+    public static void write(File file, Object objectToWrite) {
         try {
             System.out.println("Writing app inventory to : " + file.getAbsolutePath());
-            mapper.writerWithDefaultPrettyPrinter().writeValue(file, appInventory);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(file, objectToWrite);
         } catch (IOException e) {
             throw new RuntimeException("Could not write file: " + file, e);
         }
@@ -35,6 +38,16 @@ public class InventoryFileUtil {
         try {
             AppInventory appInventory = mapper.readValue(file, AppInventory.class);
             return appInventory;
+        } catch (IOException e) {
+            throw new RuntimeException("Couldn't read file: " + file, e);
+        }
+    }
+
+    public static List<ScmCorrection> readScmCorrection(File file) {
+        try {
+            List<ScmCorrection> corrections = mapper.readValue(file, new TypeReference<List<ScmCorrection>>() {
+            });
+            return corrections;
         } catch (IOException e) {
             throw new RuntimeException("Couldn't read file: " + file, e);
         }
