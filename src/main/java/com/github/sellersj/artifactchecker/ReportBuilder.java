@@ -47,7 +47,11 @@ public class ReportBuilder {
 
         File srcDir = new File(DownloadArtifacts.FILES_GENERATED);
         File destDir = new File("/data00/bamboo/projectsites/app-inventory/");
+
         try {
+            // delete the target directory to clear out old files
+            FileUtils.deleteDirectory(destDir);
+
             FileUtils.copyDirectory(srcDir, destDir);
             System.out.println("Copied files from " + srcDir + " to " + destDir);
         } catch (IOException e) {
