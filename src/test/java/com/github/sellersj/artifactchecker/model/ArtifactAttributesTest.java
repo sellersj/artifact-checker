@@ -2,8 +2,12 @@ package com.github.sellersj.artifactchecker.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import org.junit.Test;
 
@@ -54,6 +58,54 @@ public class ArtifactAttributesTest {
         ArtifactAttributes art = new ArtifactAttributes();
         art.getManifest().put(ArtifactAttributes.SCM_HASH, hash + "-dirty");
         assertEquals(hash, art.getScmHash());
+    }
+
+    @Test
+    public void getBuildDateNullValue() {
+        String dateString = null;
+        ArtifactAttributes art = new ArtifactAttributes();
+        art.getManifest().put(ArtifactAttributes.BUILD_TIME, dateString);
+        assertEquals(null, art.getBuildDate());
+    }
+
+    @Test
+    public void getBuildDateOldDateFormat() {
+        String dateString = "20130731-1130";
+        ArtifactAttributes art = new ArtifactAttributes();
+        art.getManifest().put(ArtifactAttributes.BUILD_TIME, dateString);
+
+        Date date = art.getBuildDate();
+        assertNotNull(date);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        assertEquals(2013, calendar.get(Calendar.YEAR));
+        // Calendar.MONTH is zero based
+        assertEquals(6, calendar.get(Calendar.MONTH));
+        assertEquals(31, calendar.get(Calendar.DAY_OF_MONTH));
+
+        assertEquals(11, calendar.get(Calendar.HOUR_OF_DAY));
+        assertEquals(30, calendar.get(Calendar.MINUTE));
+    }
+
+    @Test
+    public void getBuildDateNewDateFormat() {
+        String dateString = "2016-08-31T13:56:45Z";
+        ArtifactAttributes art = new ArtifactAttributes();
+        art.getManifest().put(ArtifactAttributes.BUILD_TIME, dateString);
+
+        Date date = art.getBuildDate();
+        assertNotNull(date);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        assertEquals(2016, calendar.get(Calendar.YEAR));
+        // Calendar.MONTH is zero based
+        assertEquals(7, calendar.get(Calendar.MONTH));
+        assertEquals(31, calendar.get(Calendar.DAY_OF_MONTH));
+
+        assertEquals(13, calendar.get(Calendar.HOUR_OF_DAY));
+        assertEquals(56, calendar.get(Calendar.MINUTE));
     }
 
 }

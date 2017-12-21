@@ -1,6 +1,9 @@
 package com.github.sellersj.artifactchecker.model;
 
 import java.beans.Transient;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -30,6 +33,15 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** The Implementation-Title from the manifest. */
     public static final String IMPLEMENTATION_TITLE = "Implementation-Title";
+
+    /** The Build-Time from the manifest. */
+    public static final String BUILD_TIME = "Build-Time";
+
+    /** The maven date format. */
+    private static final SimpleDateFormat MAVEN_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+    /** The old maven date format. */
+    private static final SimpleDateFormat MAVEN_OLD_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd-HHmm");
 
     /** If this is a githug host. */
     private boolean github = false;
@@ -105,6 +117,40 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
             hash = hash.replaceAll("-dirty", "");
         }
         return hash;
+    }
+
+    /**
+     * @return the build date if it exists and is parsable.
+     */
+    public Date getBuildDate() {
+        String string = manifest.get(BUILD_TIME);
+        Date date = null;
+
+        if (StringUtils.isNotBlank(string)) {
+
+            // try the first date format
+            try {
+                date = MAVEN_DATE_FORMAT.parse(string);
+            } catch (ParseException e) {
+                // don't log
+            }
+
+            // if it didn't work, try the older format
+            if (null == date) {
+                try {
+                    date = MAVEN_OLD_DATE_FORMAT.parse(string);
+                } catch (ParseException e) {
+                    // don't log
+                }
+            }
+
+            // if it's not blank and we can't parse either date format, something is wrong
+            if (null == date) {
+                System.err.println("Could not parse date : " + string);
+            }
+        }
+
+        return date;
     }
 
     @Transient
