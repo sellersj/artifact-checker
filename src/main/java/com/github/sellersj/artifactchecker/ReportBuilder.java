@@ -82,6 +82,7 @@ public class ReportBuilder {
 
                 String cloneUrl = artifactAttributes.buildGitCloneUrl();
                 if (trackedCloneUrls.contains(cloneUrl)) {
+                    artifactAttributes.setAlreadyTrackedByAnother(true);
                     System.out.println("Not going to clone already tracking project " + artifactAttributes);
                 } else {
                     trackedCloneUrls.add(cloneUrl);
