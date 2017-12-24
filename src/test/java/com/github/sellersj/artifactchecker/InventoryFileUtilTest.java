@@ -7,11 +7,13 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Iterator;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 
-import com.github.sellersj.artifactchecker.model.AppInventory;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 
 public class InventoryFileUtilTest {
@@ -24,7 +26,7 @@ public class InventoryFileUtilTest {
         ArtifactAttributes attributes = new ArtifactAttributes();
         attributes.setManifest(GetManifest.getMainAttributes(fileName));
 
-        AppInventory appInventory = new AppInventory();
+        Set<ArtifactAttributes> appInventory = new TreeSet<>();
         appInventory.add(attributes);
 
         File file = File.createTempFile("appInventory", ".json");
@@ -32,9 +34,7 @@ public class InventoryFileUtilTest {
 
         String contents = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
         System.out.println(contents);
-
-        AppInventory fromDisk = InventoryFileUtil.readAppInventory(file);
-        assertEquals(1, fromDisk.getApps().size());
+        // TODO probably should check the contents of the file
     }
 
     @Test(expected = RuntimeException.class)
@@ -43,18 +43,13 @@ public class InventoryFileUtilTest {
         InventoryFileUtil.write(dir.toFile(), null);
     }
 
-    @Test(expected = RuntimeException.class)
-    public void testReadBadFile() throws Exception {
-        Path dir = Files.createTempDirectory("testReadBadFile");
-        InventoryFileUtil.readAppInventory(dir.toFile());
-    }
-
     @Test
+    @Ignore("don't think we need to read this file at this point")
     public void testReadMergedManifests() throws Exception {
-        AppInventory gavs = getTestAppInventory();
-        assertEquals(2, gavs.getApps().size());
+        Set<ArtifactAttributes> apps = getTestAppInventory();
+        assertEquals(2, apps.size());
 
-        Iterator<ArtifactAttributes> iterator = gavs.getApps().iterator();
+        Iterator<ArtifactAttributes> iterator = apps.iterator();
 
         ArtifactAttributes artifact2 = iterator.next();
         assertEquals("ca.canada.ised.wet.cdts", artifact2.getGroupId());
@@ -67,11 +62,11 @@ public class InventoryFileUtilTest {
         assertEquals("4.12", artifact1.getVersion());
     }
 
-    public static AppInventory getTestAppInventory() {
+    public static Set<ArtifactAttributes> getTestAppInventory() {
         try {
             File file = InventoryFileUtil.getFileOnClasspath("/merged-manifests.txt");
-            AppInventory gavs = InventoryFileUtil.readMergedManifests(file);
-            return gavs;
+            Set<ArtifactAttributes> apps = InventoryFileUtil.readMergedManifests(file);
+            return apps;
         } catch (Exception e) {
             throw new RuntimeException("Couldn't load the merged manifest test file", e);
         }

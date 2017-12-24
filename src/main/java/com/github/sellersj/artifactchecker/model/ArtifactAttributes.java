@@ -1,6 +1,5 @@
 package com.github.sellersj.artifactchecker.model;
 
-import java.beans.Transient;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -52,6 +51,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** Our corrected scm repo from a static file. */
     private String correctedScmRepo;
 
+    /** Flag for if this artficat's repo was already checked by another artifact (e.g. 1 repo, 2 ears). */
+    private boolean alreadyTrackedByAnother = false;
+
     private SortedMap<String, String> manifest = new TreeMap<>();
 
     /**
@@ -64,7 +66,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
             StringUtils.isNotBlank(getScmHash());
     }
 
-    @Transient
+    // @Transient
     public String buildGitCloneUrl() {
         String cloneUrl;
 
@@ -81,7 +83,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         return cloneUrl;
     }
 
-    @Transient
+    // @Transient
     public String getScmProject() {
         String scmProject = manifest.get(SCM_PROJECT);
 
@@ -99,7 +101,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         return scmProject;
     }
 
-    @Transient
+    // @Transient
     public String getScmRepo() {
         String repo = manifest.get(SCM_REPO);
 
@@ -110,7 +112,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         return repo;
     }
 
-    @Transient
+    // @Transient
     public String getScmHash() {
         String hash = manifest.get(SCM_HASH);
         if (StringUtils.isNotBlank(hash) && hash.endsWith("-dirty")) {
@@ -122,7 +124,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /**
      * @return the build date if it exists and is parsable.
      */
-    @Transient
+    // @Transient
     public Date getBuildDate() {
         String string = manifest.get(BUILD_TIME);
         Date date = null;
@@ -154,22 +156,22 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         return date;
     }
 
-    @Transient
+    // @Transient
     public String getGroupId() {
         return manifest.get("Implementation-Vendor-Id");
     }
 
-    @Transient
+    // @Transient
     public String getArtifactId() {
         return manifest.get("Implementation-Artifact-Id");
     }
 
-    @Transient
+    // @Transient
     public String getVersion() {
         return manifest.get("Implementation-Version");
     }
 
-    @Transient
+    // @Transient
     public String getTitle() {
         return manifest.get(IMPLEMENTATION_TITLE);
     }
@@ -248,6 +250,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public void setCorrectedScmRepo(String correctedScmRepo) {
         this.correctedScmRepo = correctedScmRepo;
+    }
+
+    /**
+     * @return the alreadyTrackedByAnother
+     */
+    public boolean isAlreadyTrackedByAnother() {
+        return alreadyTrackedByAnother;
+    }
+
+    /**
+     * @param alreadyTrackedByAnother the alreadyTrackedByAnother to set
+     */
+    public void setAlreadyTrackedByAnother(boolean alreadyTrackedByAnother) {
+        this.alreadyTrackedByAnother = alreadyTrackedByAnother;
     }
 
 }

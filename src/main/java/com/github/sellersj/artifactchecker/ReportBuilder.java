@@ -7,11 +7,12 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import com.github.sellersj.artifactchecker.model.AppInventory;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 
 /**
@@ -37,11 +38,13 @@ public class ReportBuilder {
         }
 
         String location = "https://" + toolsHost + "/deployed-to/manifest-combined.txt";
-        AppInventory inventory = ReportBuilder.generateAppInventory(location);
+        Set<ArtifactAttributes> apps = ReportBuilder.generateAppInventory(location);
 
         DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
 
-        for (ArtifactAttributes gav : inventory.getAppsFilteredByCloneUrl()) {
+        Set<ArtifactAttributes> filtered = getAppsFilteredByCloneUrl(apps);
+
+        for (ArtifactAttributes gav : filtered) {
             downloadArtifacts.cloneAndCheckProject(gav);
         }
 
@@ -59,15 +62,46 @@ public class ReportBuilder {
         }
 
         File target = new File("/data00/bamboo/projectsites/app-inventory.json");
-        ReportBuilder.buildJsonReport(inventory, target);
+        ReportBuilder.buildJsonReport(apps, target);
     }
 
-    public static void buildJsonReport(AppInventory gavs, File outFile) {
-        System.out.println("The number of apps is at least " + gavs.getApps().size());
-        InventoryFileUtil.write(outFile, gavs);
+    /**
+     * Some projects have multiple ears deployed to prod, but the same git repository. This will filter based on the
+     * clone url.
+     *
+     * @return
+     */
+    public static Set<ArtifactAttributes> getAppsFilteredByCloneUrl(Set<ArtifactAttributes> apps) {
+        Set<ArtifactAttributes> filtered = new HashSet<>();
+
+        HashSet<String> trackedCloneUrls = new HashSet<>();
+
+        for (ArtifactAttributes artifactAttributes : apps) {
+            // only check if it's a duplicate if it's got the git info
+            if (artifactAttributes.hasRequiredGitInfo()) {
+
+                String cloneUrl = artifactAttributes.buildGitCloneUrl();
+                if (trackedCloneUrls.contains(cloneUrl)) {
+                    System.out.println("Not going to clone already tracking project " + artifactAttributes);
+                } else {
+                    trackedCloneUrls.add(cloneUrl);
+                    filtered.add(artifactAttributes);
+                }
+
+            } else {
+                filtered.add(artifactAttributes);
+            }
+        }
+
+        return filtered;
     }
 
-    public static AppInventory generateAppInventory(String location) {
+    public static void buildJsonReport(Set<ArtifactAttributes> apps, File outFile) {
+        System.out.println("The number of apps is at least " + apps.size());
+        InventoryFileUtil.write(outFile, apps);
+    }
+
+    public static Set<ArtifactAttributes> generateAppInventory(String location) {
         URL url;
         try {
             url = new URL(location);
@@ -75,8 +109,8 @@ public class ReportBuilder {
             throw new RuntimeException("Couldn't make a url from " + location, e);
         }
 
-        AppInventory gavs = InventoryFileUtil.readMergedManifests(url);
-        return gavs;
+        Set<ArtifactAttributes> apps = InventoryFileUtil.readMergedManifests(url);
+        return apps;
     }
 
 }

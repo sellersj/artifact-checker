@@ -9,9 +9,11 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.jar.Manifest;
 
 import org.apache.commons.io.FileUtils;
@@ -20,7 +22,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.sellersj.artifactchecker.model.AppInventory;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.ScmCorrection;
 
@@ -37,15 +38,6 @@ public class InventoryFileUtil {
         }
     }
 
-    public static AppInventory readAppInventory(File file) {
-        try {
-            AppInventory appInventory = mapper.readValue(file, AppInventory.class);
-            return appInventory;
-        } catch (IOException e) {
-            throw new RuntimeException("Couldn't read file: " + file, e);
-        }
-    }
-
     public static List<ScmCorrection> readScmCorrection(File file) {
         try {
             List<ScmCorrection> corrections = mapper.readValue(file, new TypeReference<List<ScmCorrection>>() {
@@ -56,7 +48,7 @@ public class InventoryFileUtil {
         }
     }
 
-    public static AppInventory readMergedManifests(URL url) {
+    public static Set<ArtifactAttributes> readMergedManifests(URL url) {
         try (InputStream in = url.openStream()) {
             String contents = IOUtils.toString(in, StandardCharsets.UTF_8);
             return readMergedManifests(contents);
@@ -74,7 +66,7 @@ public class InventoryFileUtil {
      * @param file to read
      * @return a filled out list.
      */
-    public static AppInventory readMergedManifests(File file) {
+    public static Set<ArtifactAttributes> readMergedManifests(File file) {
         try {
             String contents = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
             return readMergedManifests(contents);
@@ -92,9 +84,9 @@ public class InventoryFileUtil {
      * @param contents to read
      * @return a filled out list.
      */
-    public static AppInventory readMergedManifests(String contents) {
+    public static Set<ArtifactAttributes> readMergedManifests(String contents) {
 
-        AppInventory inventory = new AppInventory();
+        Set<ArtifactAttributes> apps = new HashSet<>();
 
         // split the file on a the manifest header, while keeping the header
         String[] chunks = contents.split("(?=Manifest-Version)");
@@ -111,23 +103,23 @@ public class InventoryFileUtil {
                 attributes.getManifest().put(String.valueOf(entry.getKey()), String.valueOf(entry.getValue()));
             }
 
-            inventory.add(attributes);
+            apps.add(attributes);
         }
 
         // fix any manifests we can find
-        fillInMissingScmInfo(inventory);
+        fillInMissingScmInfo(apps);
 
-        return inventory;
+        return apps;
     }
 
     /** Fills in scm info that's missing for a best guess. */
-    public static AppInventory fillInMissingScmInfo(AppInventory original) {
+    public static void fillInMissingScmInfo(Set<ArtifactAttributes> apps) {
 
         // TODO can the return type be cahnged to void
 
         Map<String, ScmCorrection> mapOfCorrections = getCorrections();
 
-        for (ArtifactAttributes app : original.getApps()) {
+        for (ArtifactAttributes app : apps) {
             if (StringUtils.isNotBlank(app.getScmHash()) && !app.hasRequiredGitInfo()) {
 
                 if (mapOfCorrections.containsKey(app.getTitle())) {
@@ -141,8 +133,6 @@ public class InventoryFileUtil {
                 }
             }
         }
-
-        return original;
     }
 
     private static Map<String, ScmCorrection> getCorrections() {

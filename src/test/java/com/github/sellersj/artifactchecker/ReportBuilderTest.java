@@ -1,19 +1,18 @@
 package com.github.sellersj.artifactchecker;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.github.sellersj.artifactchecker.model.AppInventory;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.ScmCorrection;
 
@@ -31,19 +30,18 @@ public class ReportBuilderTest {
     public void generateAppInventory() {
         String location = "https://" + toolsHost + "/deployed-to/manifest-combined.txt";
 
-        AppInventory inventory = ReportBuilder.generateAppInventory(location);
-        assertNotNull("inventory shouldn't be null", inventory);
-        assertFalse("inventory should have a bunch of manifest files", inventory.getApps().isEmpty());
+        Set<ArtifactAttributes> apps = ReportBuilder.generateAppInventory(location);
+        assertFalse("inventory should have a bunch of manifest files", apps.isEmpty());
 
-        int appSize = inventory.getApps().size();
-        int appFilteredSize = inventory.getAppsFilteredByCloneUrl().size();
+        int appSize = apps.size();
+        int appFilteredSize = ReportBuilder.getAppsFilteredByCloneUrl(apps).size();
         assertTrue("The filtering should have removed some apps. Comparing " + appSize + " to " + appFilteredSize,
             appSize > appFilteredSize);
 
-        System.out.println("Number of apps: " + inventory.getApps().size());
+        System.out.println("Number of apps: " + apps.size());
 
         List<ScmCorrection> titles = new ArrayList<ScmCorrection>();
-        for (ArtifactAttributes artifactAttributes : inventory.getApps()) {
+        for (ArtifactAttributes artifactAttributes : apps) {
 
             if (!artifactAttributes.hasRequiredGitInfo() && StringUtils.isNotBlank(artifactAttributes.getScmHash())) {
                 System.out.println(artifactAttributes);
@@ -70,8 +68,8 @@ public class ReportBuilderTest {
         File target = File.createTempFile("app-inventory-", ".json");
         target.deleteOnExit();
 
-        AppInventory inventory = InventoryFileUtilTest.getTestAppInventory();
-        ReportBuilder.buildJsonReport(inventory, target);
+        Set<ArtifactAttributes> apps = InventoryFileUtilTest.getTestAppInventory();
+        ReportBuilder.buildJsonReport(apps, target);
     }
 
 }
