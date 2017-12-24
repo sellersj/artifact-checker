@@ -1,32 +1,57 @@
-<!DOCTYPE html>
 <html>
-<head>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
-
-<link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/3.3.2/css/tabulator.min.css" rel="stylesheet">
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/3.3.2/js/tabulator.min.js"></script>
-</head>
-
-<h1>Applications in prod</h1>
-
-<div id="apps-table"></div>
-
-<script type="text/javascript">
-  // Tabulator.extendExtension("ajax", "defaultConfig", {
-  //   type:"POST",
-  //   contentType : "application/json; charset=utf-8"
-  // });
-
-  $("#apps-table").tabulator({
-    "setData" : "TOOLS_HOST/projectsites/app-inventory.json",
-    columns : [ {
-      field : "apps.manifest['Implementation-Title']",
-      title : "App name"
-    }, ],
-  });
-</script>
+  <head>
+    <title>Tabulator</title>
+    <script src="data/app-inventory.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/3.3.2/css/tabulator.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/3.3.2/js/tabulator.min.js"></script>
+    <script type="text/javascript">
+    var appData = [];
+    
+    for (var i=0; i < appInventory.apps.length; i++) {
+    		appData[i] = appInventory.apps[i].manifest;
+    }
+    
+    $(function() {
+      $("#example-table").tabulator({
+          //height:205, // set height of table, this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
+          layout:"fitColumns", //fit columns to width of table (optional)
+          columns:[ //Define Table Columns
+              {title:"Group Id", field:"Implementation-Vendor-Id"},
+              {title:"Artifact Id", field:"Implementation-Artifact-Id"},
+              {title:"Version", field:"Implementation-Version"},
+              {title:"Title", field:"Implementation-Title"},
+              //{title:"Archiver-Version", field:"Archiver-Version", width:150},
+              {title:"Build Jdk", field:"Build-Jdk" },
+              {title:"Build Time", field:"Build-Time"},
+              //{title:"Built By", field:"Built-By"},
+              {title:"Maven Version", field:"Created-By"},
+              //{title:"Implementation-URL", field:"Implementation-URL"},
+              //{title:"Implementation-Vendor", field:"Implementation-Vendor"},
+              //{title:"Issue-System", field:"Issue-System"},
+              {title:"JIRA", field:"Issue-Tracking"},
+              //{title:"Manifest-Version", field:"Manifest-Version"},
+              {title:"Scm-Project-Id", field:"Scm-Project-Id"},
+              {title:"Scm-Commit-Date", field:"Scm-Commit-Date"},
+              {title:"Scm-Repo-Name", field:"Scm-Repo-Name"},
+              {title:"Scm-Sha1", field:"Scm-Sha1"},
+              //{title:"Scm-Sha1-Abbrev", field:"Scm-Sha1-Abbrev"},
+              {title:"Scm-branch", field:"Scm-branch"},
+          ],
+          rowClick:function(e, row){ //trigger an alert message when the row is clicked
+              //alert("Row " + row.getData().id + " Clicked!!!!");
+          },
+      });
+  
+      //load sample data into the table
+      $("#example-table").tabulator("setData", appData);
+    });
+    </script> 
+  </head>
+  <body>
+    <p>This is where Jim's super awesome table goes.</p>
+    <br />
+    <div id="example-table"></div>
+  </body>
 </html>
