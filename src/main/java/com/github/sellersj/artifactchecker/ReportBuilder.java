@@ -48,9 +48,23 @@ public class ReportBuilder {
             downloadArtifacts.cloneAndCheckProject(gav);
         }
 
+        // make the output json
+        File target = new File(DownloadArtifacts.FILES_GENERATED + "/app-inventory.json");
+        ReportBuilder.buildJsonReport(apps, target);
+
+        // copy the html report file
+        String htmlFilename = "/app-inventory.html";
+        File htmlFile = InventoryFileUtil.getFileOnClasspath(htmlFilename);
+        try {
+            FileUtils.copyFile(htmlFile, new File(DownloadArtifacts.FILES_GENERATED + htmlFilename));
+        } catch (IOException e) {
+            throw new RuntimeException(
+                "Couldn't copy files from " + htmlFile + " to " + DownloadArtifacts.FILES_GENERATED + htmlFilename, e);
+        }
+
+        // move all the files in the output directory into the final place to be picked up by apache
         File srcDir = new File(DownloadArtifacts.FILES_GENERATED);
         File destDir = new File("/data00/bamboo/projectsites/app-inventory/");
-
         try {
             // delete the target directory to clear out old files
             FileUtils.deleteDirectory(destDir);
@@ -60,9 +74,6 @@ public class ReportBuilder {
         } catch (IOException e) {
             throw new RuntimeException("Couldn't copy files from " + srcDir + " to " + destDir, e);
         }
-
-        File target = new File("/data00/bamboo/projectsites/app-inventory.json");
-        ReportBuilder.buildJsonReport(apps, target);
     }
 
     /**
