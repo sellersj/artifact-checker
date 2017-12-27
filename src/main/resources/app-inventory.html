@@ -15,8 +15,8 @@
         	  {title:"App Name", field:"title"},
               {title:"Group Id", field:"groupId"},
               {title:"Artifact Id", field:"artifactId"},
-              {title:"JIRA", field:"manifest.Issue-Tracking"},
               {title:"Version", field:"version"},
+              {title:"JIRA", field:"manifest.Issue-Tracking", formatter:"link"},
               {title:"Build Date", field:"buildDate"},
           ],
           rowClick:function(e, row){ //trigger an alert message when the row is clicked
