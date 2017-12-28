@@ -26,6 +26,11 @@
                   var url = cell.getRow().getData()["jiraUrl"]
                   return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
                }},
+               {title:"SCM", field:"scmHashAbbrev", formatter:function(cell, formatterParams) {
+                   var value = this.sanitizeHTML(cell.getValue());
+                   var url = cell.getRow().getData()["scmUrl"]
+                   return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
+                }},
               {title:"Build Date", field:"buildDate"},
           ],
           rowClick:function(e, row){ //trigger an alert message when the row is clicked
