@@ -6,10 +6,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
 
 public class FindJava8Issues {
+
+    /** A pattern for all libraries that have known issues with java 8. */
+    private static final String REGEX_BLACKLIST = ".*(" + //
+        "cglib:cglib:jar:3.1|" + //
+        "httpclient:jar:4.3|" + //
+        "hibernate-core:jar:4.2" + //
+        ").*";
 
     public static void createFilesThatIdentifyJava8Issues(String rootLocation) {
 
@@ -29,7 +37,9 @@ public class FindJava8Issues {
         try {
             List<String> lines = FileUtils.readLines(path.toFile(), StandardCharsets.UTF_8);
             for (String string : lines) {
-                System.out.println(string);
+                if (Pattern.matches(REGEX_BLACKLIST, string)) {
+                    System.out.println(string);
+                }
             }
         } catch (IOException e) {
             throw new RuntimeException("could not read file " + path, e);
