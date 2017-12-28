@@ -22,7 +22,7 @@ public class ReportBuilderTest {
 
     @Before
     public void checkToolsHostSet() {
-        toolsHost = System.getenv("TOOLS_HOST");
+        toolsHost = System.getenv(Constants.TOOLS_HOST);
         assertTrue("The TOOLS_HOST variable has to be set", StringUtils.isNotBlank(toolsHost));
     }
 

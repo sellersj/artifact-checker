@@ -31,7 +31,7 @@ public class ReportBuilder {
      * @param args
      */
     public static void main(String[] args) {
-        String toolsHost = System.getenv("TOOLS_HOST");
+        String toolsHost = System.getenv(Constants.TOOLS_HOST);
         if (StringUtils.isBlank(toolsHost)) {
             System.err.println("The env variable TOOLS_HOST has to be set. Exiting");
             return;

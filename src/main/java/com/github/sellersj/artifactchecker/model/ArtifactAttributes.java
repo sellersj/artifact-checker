@@ -14,6 +14,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.github.sellersj.artifactchecker.Constants;
+
 /**
  * Any attributes that we will track for an artifact.
  *
@@ -74,7 +76,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         if (github) {
             cloneUrl = "git@github.com:" + getScmProject() + "/" + getScmRepo() + ".git";
         } else {
-            String toolsHost = System.getenv("TOOLS_HOST");
+            String toolsHost = System.getenv(Constants.TOOLS_HOST);
             if (StringUtils.isBlank(toolsHost)) {
                 throw new RuntimeException("The 'TOOLS_HOST' env variable has to be set");
             }
@@ -112,7 +114,41 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     }
 
     public String getScmHash() {
-        String hash = manifest.get(SCM_HASH);
+        return cleanHash(manifest.get(SCM_HASH));
+    }
+
+    public String getScmHashAbbrev() {
+        return cleanHash(manifest.get("Scm-Sha1-Abbrev"));
+    }
+
+    /**
+     * This will build a url to the commit in source control.
+     * 
+     * @return the link to the scm commit, or blank if we don't have enough info
+     */
+    public String getScmUrl() {
+        String url = "";
+
+        // only build the url if we have the needed data
+        if (StringUtils.isNotBlank(getScmProject()) && //
+            StringUtils.isNotBlank(getScmRepo()) && //
+            StringUtils.isNotBlank(getScmHash()) //
+        ) {
+            String toolsHost = System.getenv(Constants.TOOLS_HOST);
+            url = "https://" + toolsHost + "/scm/projects/" + getScmProject() + "/repos/" + getScmRepo() + "/"
+                + getScmHash();
+        }
+
+        return url;
+    }
+
+    /**
+     * Removes the "-dirty" text that some older versions had added.
+     * 
+     * @param hash to be cleaned
+     * @return a clean hash
+     */
+    private String cleanHash(String hash) {
         if (StringUtils.isNotBlank(hash) && hash.endsWith("-dirty")) {
             hash = hash.replaceAll("-dirty", "");
         }
