@@ -58,6 +58,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** Flag for if this artficat's repo was already checked by another artifact (e.g. 1 repo, 2 ears). */
     private boolean alreadyTrackedByAnother = false;
 
+    /** Flag for if we can run this on java 8. */
+    private boolean java8Ready = false;
+
     private SortedMap<String, String> manifest = new TreeMap<>();
 
     /**
@@ -309,6 +312,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public void setAlreadyTrackedByAnother(boolean alreadyTrackedByAnother) {
         this.alreadyTrackedByAnother = alreadyTrackedByAnother;
+    }
+
+    /**
+     * @return the java8Ready
+     */
+    public boolean isJava8Ready() {
+        return java8Ready;
+    }
+
+    /**
+     * @param java8Ready the java8Ready to set
+     */
+    public void setJava8Ready(boolean java8Ready) {
+        this.java8Ready = java8Ready;
     }
 
 }

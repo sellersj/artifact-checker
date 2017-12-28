@@ -5,16 +5,12 @@ package com.github.sellersj.artifactchecker;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Comparator;
 import java.util.List;
-
-import org.apache.commons.io.FileUtils;
 
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 
@@ -45,9 +41,6 @@ public class DownloadArtifacts {
     /** The place where we store the files we've generated from the project, the ones we care about. */
     public static final String FILES_GENERATED = "target/files-generated/";
 
-    /** The list of dependencies that have issues with java 8. */
-    private List<String> java8Issues = null;
-
     public DownloadArtifacts() {
         System.out.println("OS is: " + System.getProperty("os.name"));
         String os = System.getProperty("os.name").toLowerCase();
@@ -64,23 +57,11 @@ public class DownloadArtifacts {
         }
     }
 
-    private List<String> buildJava8Issues() {
-        if (null != java8Issues) {
-            return java8Issues;
+    private void buildJava8Issues(ArtifactAttributes gav, String treeOutputFile) {
+        List<String> issues = FindJava8Issues.checkTreeForJava8Issues(treeOutputFile);
+        if (issues.isEmpty()) {
+            gav.setJava8Ready(true);
         }
-
-        try {
-            URL url = this.getClass().getResource("/artifacts-java-8-issues.txt");
-            File file = new File(url.toURI());
-
-            List<String> lines = FileUtils.readLines(file, StandardCharsets.UTF_8);
-            java8Issues = lines;
-
-            return java8Issues;
-        } catch (Exception e) {
-            throw new RuntimeException("Couldn't generate java 8 issues", e);
-        }
-
     }
 
     public void cloneAndCheckProject(ArtifactAttributes gav) {
@@ -117,14 +98,16 @@ public class DownloadArtifacts {
         gitCheckoutHash.directory(projectDir);
         run(gitCheckoutHash);
 
-        // run dependency tree
-        // TODO figure out how to properly filter for java 8 issues here
-        buildJava8Issues();
-
+        // generate 1 tree file per project rather than 1 per module
+        String treeOutputFile = projectDir.getAbsolutePath() + "/tree.txt";
         ProcessBuilder mvnDepTree = new ProcessBuilder(osPrefix + "mvn" + osSuffix, "--batch-mode", "dependency:tree",
-            "-DoutputFile=tree.txt");
+            "-DoutputFile=" + treeOutputFile, "-DappendOutput=true");
         mvnDepTree.directory(projectDir);
         run(mvnDepTree);
+
+        // run dependency tree
+        // TODO figure out how to properly filter for java 8 issues here
+        buildJava8Issues(gav, treeOutputFile);
 
         // run owasp dependency check
         ProcessBuilder mvnOwaspCheck = new ProcessBuilder(osPrefix + "mvn" + osSuffix, "--batch-mode",

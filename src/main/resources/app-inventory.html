@@ -31,6 +31,7 @@
                    var url = cell.getRow().getData()["scmUrl"]
                    return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
                 }},
+              {title:"Java 8 Ready", field:"java8Ready", formatter:"tick"},
               {title:"Build Date", field:"buildDate"},
           ],
           rowClick:function(e, row){ //trigger an alert message when the row is clicked

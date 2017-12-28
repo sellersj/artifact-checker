@@ -1,10 +1,12 @@
 package com.github.sellersj.artifactchecker;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -44,7 +46,26 @@ public class FindJava8Issues {
         } catch (IOException e) {
             throw new RuntimeException("could not read file " + path, e);
         }
-
     }
 
+    public static List<String> checkTreeForJava8Issues(String treeOutputFile) {
+        File treeFile = new File(treeOutputFile);
+        File java8IssuesFile = new File(treeFile.getParent() + "/java8-issues.txt");
+        List<String> issues = new ArrayList<>();
+
+        try {
+            List<String> lines = FileUtils.readLines(treeFile, StandardCharsets.UTF_8);
+            for (String string : lines) {
+                if (Pattern.matches(REGEX_BLACKLIST, string)) {
+                    issues.add(string);
+                }
+            }
+
+            // write the issues we found
+            FileUtils.writeLines(java8IssuesFile, issues);
+            return issues;
+        } catch (IOException e) {
+            throw new RuntimeException("Couldn't check file for java 8 issues " + treeOutputFile, e);
+        }
+    }
 }
