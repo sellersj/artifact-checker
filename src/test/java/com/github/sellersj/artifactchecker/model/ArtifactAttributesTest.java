@@ -108,4 +108,18 @@ public class ArtifactAttributesTest {
         assertEquals(56, calendar.get(Calendar.MINUTE));
     }
 
+    @Test
+    public void getJiraKeyNoKey() {
+        ArtifactAttributes art = new ArtifactAttributes();
+        art.getManifest().put(ArtifactAttributes.ISSUE_TRACKING, "");
+        assertEquals("", art.getJiraKey());
+    }
+
+    @Test
+    public void getJiraKeyWithKey() {
+        ArtifactAttributes art = new ArtifactAttributes();
+        art.getManifest().put(ArtifactAttributes.ISSUE_TRACKING, "http://jira.example.com/browse/TEST");
+        assertEquals("TEST", art.getJiraKey());
+    }
+
 }

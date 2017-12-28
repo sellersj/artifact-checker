@@ -21,6 +21,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
+    public static final String ISSUE_TRACKING = "Issue-Tracking";
+
     /** The project or user that a git repo is stored under. */
     public final static String SCM_PROJECT = "Scm-Project-Id";
 
@@ -66,7 +68,6 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
             StringUtils.isNotBlank(getScmHash());
     }
 
-    // @Transient
     public String buildGitCloneUrl() {
         String cloneUrl;
 
@@ -83,7 +84,6 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         return cloneUrl;
     }
 
-    // @Transient
     public String getScmProject() {
         String scmProject = manifest.get(SCM_PROJECT);
 
@@ -101,7 +101,6 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         return scmProject;
     }
 
-    // @Transient
     public String getScmRepo() {
         String repo = manifest.get(SCM_REPO);
 
@@ -112,7 +111,6 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         return repo;
     }
 
-    // @Transient
     public String getScmHash() {
         String hash = manifest.get(SCM_HASH);
         if (StringUtils.isNotBlank(hash) && hash.endsWith("-dirty")) {
@@ -124,7 +122,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /**
      * @return the build date if it exists and is parsable.
      */
-    // @Transient
+
     public Date getBuildDate() {
         String string = manifest.get(BUILD_TIME);
         Date date = null;
@@ -156,24 +154,35 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         return date;
     }
 
-    // @Transient
     public String getGroupId() {
         return manifest.get("Implementation-Vendor-Id");
     }
 
-    // @Transient
     public String getArtifactId() {
         return manifest.get("Implementation-Artifact-Id");
     }
 
-    // @Transient
     public String getVersion() {
         return manifest.get("Implementation-Version");
     }
 
-    // @Transient
     public String getTitle() {
         return manifest.get(IMPLEMENTATION_TITLE);
+    }
+
+    public String getJiraKey() {
+        String url = manifest.get(ISSUE_TRACKING);
+        String key = "";
+
+        if (StringUtils.isNotBlank(url)) {
+            key = url.substring(url.lastIndexOf("/") + 1);
+        }
+
+        return key;
+    }
+
+    public String getJiraUrl() {
+        return manifest.get(ISSUE_TRACKING);
     }
 
     @Override

@@ -21,7 +21,11 @@
                       {title:"Version", field:"version"},
                   ],
               },
-              {title:"JIRA", field:"manifest.Issue-Tracking", formatter:"link"},
+              {title:"JIRA", field:"jiraKey", formatter:function(cell, formatterParams) {
+                  var value = this.sanitizeHTML(cell.getValue());
+                  var url = cell.getRow().getData()["jiraUrl"]
+                  return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
+               }},
               {title:"Build Date", field:"buildDate"},
           ],
           rowClick:function(e, row){ //trigger an alert message when the row is clicked
