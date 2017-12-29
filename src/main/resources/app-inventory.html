@@ -18,8 +18,11 @@
                   columns:[
                       {title:"Group Id", field:"groupId"},
                       {title:"Artifact Id", field:"artifactId"},
-                      {title:"Version", field:"version"},
-                      {title:"Nexus", field:"nexusUrl"},
+                      {title:"Version", field:"version", formatter:function(cell, formatterParams) {
+                          var value = this.sanitizeHTML(cell.getValue());
+                          var url = cell.getRow().getData()["nexusUrl"]
+                          return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
+                       }},
                   ],
               },
                {title:"Source Control",

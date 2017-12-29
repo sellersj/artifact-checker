@@ -219,9 +219,11 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
         return key;
     }
-    
+
     public String getNexusUrl() {
-        return "";
+        String toolsHost = System.getenv(Constants.TOOLS_HOST);
+        return "https://" + toolsHost + "/maven-proxy/search?g=" + getGroupId() + "&a=" + getArtifactId() + "&v="
+            + getVersion();
     }
 
     public String getJiraUrl() {
