@@ -26,7 +26,9 @@
                   var url = cell.getRow().getData()["jiraUrl"]
                   return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
                }},
-               {title:"SCM", field:"scmHashAbbrev", formatter:function(cell, formatterParams) {
+               
+               {title:"SCM Project", field:"scmProject"},
+               {title:"SCM / Bitbucket", field:"scmHashAbbrev", formatter:function(cell, formatterParams) {
                    var value = this.sanitizeHTML(cell.getValue());
                    var url = cell.getRow().getData()["scmUrl"]
                    return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
