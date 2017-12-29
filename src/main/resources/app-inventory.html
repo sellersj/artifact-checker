@@ -14,26 +14,31 @@
           columns:[ //Define Table Columns
         	  {title:"App Name", field:"title"},
               {//create column group
-                  title:"Maven GAV",
+                  title:"Artifact info",
                   columns:[
                       {title:"Group Id", field:"groupId"},
                       {title:"Artifact Id", field:"artifactId"},
                       {title:"Version", field:"version"},
+                      {title:"Nexus", field:"nexusUrl"},
                   ],
               },
+               {title:"Source Control",
+            	   columns:[
+                 {title:"Project", field:"scmProject"},
+                 {title:"Repo", field:"scmRepo"},
+                 {title:"Hash", field:"scmHashAbbrev", formatter:function(cell, formatterParams) {
+                     var value = this.sanitizeHTML(cell.getValue());
+                     var url = cell.getRow().getData()["scmUrl"]
+                     return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
+                  }}
+               ]
+               },
+              {title:"Java 8 Ready", field:"java8Ready", formatter:"tick"},
               {title:"JIRA", field:"jiraKey", formatter:function(cell, formatterParams) {
                   var value = this.sanitizeHTML(cell.getValue());
                   var url = cell.getRow().getData()["jiraUrl"]
                   return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
                }},
-               
-               {title:"SCM Project", field:"scmProject"},
-               {title:"SCM / Bitbucket", field:"scmHashAbbrev", formatter:function(cell, formatterParams) {
-                   var value = this.sanitizeHTML(cell.getValue());
-                   var url = cell.getRow().getData()["scmUrl"]
-                   return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
-                }},
-              {title:"Java 8 Ready", field:"java8Ready", formatter:"tick"},
               {title:"Build Date", field:"buildDate"},
           ],
           rowClick:function(e, row){ //trigger an alert message when the row is clicked

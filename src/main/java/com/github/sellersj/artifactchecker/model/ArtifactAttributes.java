@@ -219,6 +219,10 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
         return key;
     }
+    
+    public String getNexusUrl() {
+        return "";
+    }
 
     public String getJiraUrl() {
         return manifest.get(ISSUE_TRACKING);
