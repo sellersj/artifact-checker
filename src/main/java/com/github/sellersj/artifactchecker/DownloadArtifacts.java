@@ -163,7 +163,8 @@ public class DownloadArtifacts {
             Path path = Paths.get(WORKING_DIR);
             Files.walk(path)//
                 .filter(p -> p.getFileName().toString().startsWith("dependency-check-")
-                    || "tree.txt".equals(p.getFileName().toString()))
+                    || "tree.txt".equals(p.getFileName().toString())
+                    || Constants.JAVA8_ISSUES_FILENAME.equals(p.getFileName().toString()))
                 // .peek(System.out::println) //
                 .forEach(p -> moveUnchecked(p));
 

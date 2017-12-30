@@ -228,13 +228,34 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** A link to the file that has the issues with java 8. */
     public String getJava8Url() {
-        // FIXME this needs a proper link
-        return getScmProject() + "/" + getScmRepo() + "/" + getScmHash() + "/" + getArtifactId() + "/tree.txt";
+        String baseUrl = getBaseUrl();
+        if (null == baseUrl) {
+            return "#";
+        } // else
+        return baseUrl + "/" + Constants.JAVA8_ISSUES_FILENAME;
     }
 
     /** A link to the dependency tree. */
     public String getDependencyTree() {
-        return getScmProject() + "/" + getScmRepo() + "/" + getScmHash() + "/" + getArtifactId() + "/tree.txt";
+        String baseUrl = getBaseUrl();
+        if (null == baseUrl) {
+            return "#";
+        } // else
+        return baseUrl + "/tree.txt";
+    }
+
+    private String getBaseUrl() {
+        // default to null
+        String url = null;
+
+        if (StringUtils.isNotBlank(getScmProject()) && //
+            StringUtils.isNotBlank(getScmRepo()) && //
+            StringUtils.isNotBlank(getScmHash())) {
+
+            url = getScmProject() + "/" + getScmRepo() + "/" + getScmHash() + "/" + getArtifactId();
+        }
+
+        return url;
     }
 
     public String getJiraUrl() {

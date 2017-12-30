@@ -50,7 +50,7 @@ public class FindJava8Issues {
 
     public static List<String> checkTreeForJava8Issues(String treeOutputFile) {
         File treeFile = new File(treeOutputFile);
-        File java8IssuesFile = new File(treeFile.getParent() + "/java8-issues.txt");
+        File java8IssuesFile = new File(treeFile.getParent() + "/" + Constants.JAVA8_ISSUES_FILENAME);
         List<String> issues = new ArrayList<>();
 
         try {
