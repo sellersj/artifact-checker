@@ -12,13 +12,13 @@
           //height:205, // set height of table, this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
           layout:"fitColumns", //fit columns to width of table (optional)
           columns:[ //Define Table Columns
-        	  {title:"App Name", field:"title"},
+        	  {title:"App Name", field:"title", headerFilter:"input"},
               {//create column group
                   title:"Artifact info",
                   columns:[
-                      {title:"Group Id", field:"groupId"},
-                      {title:"Artifact Id", field:"artifactId"},
-                      {title:"Version", field:"version", formatter:function(cell, formatterParams) {
+                      {title:"Group Id", field:"groupId", headerFilter:"input"},
+                      {title:"Artifact Id", field:"artifactId", headerFilter:"input"},
+                      {title:"Version", field:"version", headerFilter:"input", formatter:function(cell, formatterParams) {
                           var value = this.sanitizeHTML(cell.getValue());
                           var url = cell.getRow().getData()["nexusUrl"]
                           return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
@@ -27,8 +27,8 @@
               },
                {title:"Source Control",
             	   columns:[
-                 {title:"Project", field:"scmProject"},
-                 {title:"Repo", field:"scmRepo"},
+                 {title:"Project", field:"scmProject", headerFilter:"input"},
+                 {title:"Repo", field:"scmRepo", headerFilter:"input"},
                  {title:"Hash", field:"scmHashAbbrev", formatter:function(cell, formatterParams) {
                      var value = this.sanitizeHTML(cell.getValue());
                      var url = cell.getRow().getData()["scmUrl"]
@@ -36,13 +36,13 @@
                   }}
                ]
                },
-              {title:"Java 8 Ready", field:"java8Ready", formatter:"tick"},
-              {title:"JIRA", field:"jiraKey", formatter:function(cell, formatterParams) {
+              {title:"Java 8 Ready", field:"java8Ready", formatter:"tick", headerFilter:"input"},
+              {title:"JIRA", field:"jiraKey", headerFilter:"input", formatter:function(cell, formatterParams) {
                   var value = this.sanitizeHTML(cell.getValue());
                   var url = cell.getRow().getData()["jiraUrl"]
                   return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
                }},
-              {title:"Build Date", field:"buildDate"},
+              {title:"Build Date", field:"buildDate", headerFilter:"input"},
           ],
           rowClick:function(e, row){ //trigger an alert message when the row is clicked
               //alert("Row " + row.getData().id + " Clicked!!!!");
