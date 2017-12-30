@@ -226,6 +226,17 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
             + getVersion();
     }
 
+    /** A link to the file that has the issues with java 8. */
+    public String getJava8Url() {
+        // FIXME this needs a proper link
+        return getScmProject() + "/" + getScmRepo() + "/" + getScmHash() + "/" + getArtifactId() + "/tree.txt";
+    }
+
+    /** A link to the dependency tree. */
+    public String getDependencyTree() {
+        return getScmProject() + "/" + getScmRepo() + "/" + getScmHash() + "/" + getArtifactId() + "/tree.txt";
+    }
+
     public String getJiraUrl() {
         return manifest.get(ISSUE_TRACKING);
     }

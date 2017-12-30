@@ -36,7 +36,11 @@
                   }}
                ]
                },
-              {title:"Java 8 Ready", field:"java8Ready", formatter:"tick", headerFilter:"input"},
+              {title:"Java 8 Ready", field:"java8Ready", headerFilter:"input", formatter:function(cell, formatterParams) {
+                  var value = this.sanitizeHTML(cell.getValue());
+                  var url = cell.getRow().getData()["java8Url"]
+                  return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
+               }},
               {title:"JIRA", field:"jiraKey", headerFilter:"input", formatter:function(cell, formatterParams) {
                   var value = this.sanitizeHTML(cell.getValue());
                   var url = cell.getRow().getData()["jiraUrl"]
