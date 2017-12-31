@@ -2,7 +2,9 @@ package com.github.sellersj.artifactchecker.model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -15,6 +17,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.github.sellersj.artifactchecker.Constants;
+import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
 /**
  * Any attributes that we will track for an artifact.
@@ -61,7 +64,11 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** Flag for if we can run this on java 8. */
     private boolean java8Ready = false;
 
+    /** The manifest associated with this artifact. */
     private SortedMap<String, String> manifest = new TreeMap<>();
+
+    /** A list of all the vulnerabilties found with this artifact. */
+    private List<Vulnerability> vulnerabilities = new ArrayList<>();
 
     /**
      *
@@ -364,6 +371,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public void setJava8Ready(boolean java8Ready) {
         this.java8Ready = java8Ready;
+    }
+
+    /**
+     * @return the vulnerabilities
+     */
+    public List<Vulnerability> getVulnerabilities() {
+        return vulnerabilities;
+    }
+
+    /**
+     * @param vulnerabilities the vulnerabilities to set
+     */
+    public void setVulnerabilities(List<Vulnerability> vulnerabilities) {
+        this.vulnerabilities = vulnerabilities;
     }
 
 }

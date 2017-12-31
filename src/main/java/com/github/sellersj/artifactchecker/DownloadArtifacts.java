@@ -9,10 +9,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
+import com.github.sellersj.artifactchecker.model.owasp.Dependency;
+import com.github.sellersj.artifactchecker.model.owasp.DependencyCheck;
+import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
 /**
  * If doing this on a computer that hasn't updated the owasp dependency check data, it be can be done by calling the
@@ -122,6 +127,9 @@ public class DownloadArtifacts {
         mvnOwaspCheck.directory(projectDir);
         run(mvnOwaspCheck);
 
+        // grather the info we want from the owasp dependency check
+        processDependencyCheckInfo(gav, projectDir);
+
         // copy all required files we want to a different location
         copyFiles();
 
@@ -134,6 +142,33 @@ public class DownloadArtifacts {
             throw new RuntimeException("Couldnm't delete directory for cleanup " + repoWorkingDir, e);
         }
 
+    }
+
+    public void processDependencyCheckInfo(ArtifactAttributes gav, File projectDir) {
+        // let's check if the file exists before trying to parse it
+        File file = new File(
+            projectDir.getAbsolutePath() + "/" + gav.getArtifactId() + "/target/dependency-check-report.json");
+        if (!file.exists()) {
+            System.err
+                .println("Could not find the owasp file on path " + file.getAbsolutePath() + ". Not gathering info.");
+            return;
+        }
+
+        // gather all the vul's and add them to the artifact
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            DependencyCheck check = mapper.readValue(file, DependencyCheck.class);
+            List<Vulnerability> vulnerabilities = new ArrayList<>();
+
+            for (Dependency dep : check.getDependencies()) {
+                vulnerabilities.addAll(dep.getVulnerabilities());
+            }
+
+            // TODO do we need to sort and filter the vulnerabilities
+            gav.getVulnerabilities().addAll(vulnerabilities);
+        } catch (IOException e) {
+            throw new RuntimeException("Couldnm't read owasp file " + file.getAbsolutePath(), e);
+        }
     }
 
     private int run(ProcessBuilder builder) {
