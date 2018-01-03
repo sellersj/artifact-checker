@@ -36,12 +36,31 @@
                   }}
                ]
                },
+               {title:"CVE Security Issues",
+            	   columns:[
+            		 {title:"High", field:"cveSeverityCountHigh", headerFilter:"input", formatter:function(cell, formatterParams) {
+                           var value = this.sanitizeHTML(cell.getValue());
+                           var url = cell.getRow().getData()["owaspDependencyCheckUrl"]
+                           return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
+                  }},
+                  {title:"Medium", field:"cveSeverityCountMedium", headerFilter:"input", formatter:function(cell, formatterParams) {
+                      var value = this.sanitizeHTML(cell.getValue());
+                      var url = cell.getRow().getData()["owaspDependencyCheckUrl"]
+                      return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
+                   }},
+                 {title:"Low", field:"cveSeverityCountLow", headerFilter:"input", formatter:function(cell, formatterParams) {
+                     var value = this.sanitizeHTML(cell.getValue());
+                     var url = cell.getRow().getData()["owaspDependencyCheckUrl"]
+                     return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
+                  }}
+               ]
+               },
               {title:"Java 8 Ready", field:"java8Ready", headerFilter:"input", formatter:function(cell, formatterParams) {
                   var value = this.sanitizeHTML(cell.getValue());
                   var url = cell.getRow().getData()["java8Url"]
                   return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
                }},
-              {title:"JIRA", field:"jiraKey", headerFilter:"input", formatter:function(cell, formatterParams) {
+               {title:"JIRA", field:"jiraKey", headerFilter:"input", formatter:function(cell, formatterParams) {
                   var value = this.sanitizeHTML(cell.getValue());
                   var url = cell.getRow().getData()["jiraUrl"]
                   return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";

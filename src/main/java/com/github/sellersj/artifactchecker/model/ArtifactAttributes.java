@@ -269,6 +269,54 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         return manifest.get(ISSUE_TRACKING);
     }
 
+    /** A link to the owasp dependency check report. */
+    public String getOwaspDependencyCheckUrl() {
+        String baseUrl = getBaseUrl();
+        if (null == baseUrl) {
+            return "#";
+        } // else
+        return baseUrl + "/target/dependency-check-report.html";
+    }
+
+    /**
+     * @return the number of cve's with severity of Low.
+     */
+    public int getCveSeverityCountLow() {
+        int count = 0;
+        for (Vulnerability vulnerability : vulnerabilities) {
+            if ("Low".equals(vulnerability.getSeverity())) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * @return the number of cve's with severity of Medium.
+     */
+    public int getCveSeverityCountMedium() {
+        int count = 0;
+        for (Vulnerability vulnerability : vulnerabilities) {
+            if ("Medium".equals(vulnerability.getSeverity())) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * @return the number of cve's with severity of High.
+     */
+    public int getCveSeverityCountHigh() {
+        int count = 0;
+        for (Vulnerability vulnerability : vulnerabilities) {
+            if ("High".equals(vulnerability.getSeverity())) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
