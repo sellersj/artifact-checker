@@ -49,6 +49,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** The old maven date format. */
     private static final SimpleDateFormat MAVEN_OLD_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd-HHmm");
 
+    /** The date format with just the year. */
+    private static final SimpleDateFormat SHORT_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+
     /** If this is a githug host. */
     private boolean github = false;
 
@@ -198,6 +201,18 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         }
 
         return date;
+    }
+
+    /**
+     * @return a short formatted build date
+     */
+    public String getBuildDateFormatted() {
+        String result = "";
+        Date date = getBuildDate();
+        if (null != date) {
+            result = SHORT_DATE_FORMAT.format(date);
+        }
+        return result;
     }
 
     public String getGroupId() {

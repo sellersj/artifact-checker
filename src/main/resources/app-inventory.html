@@ -65,7 +65,7 @@
                   var url = cell.getRow().getData()["jiraUrl"]
                   return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
                }},
-              {title:"Build Date", field:"buildDate", headerFilter:"input"},
+              {title:"Build Date", field:"buildDateFormatted", headerFilter:"input"},
           ],
           rowClick:function(e, row){ //trigger an alert message when the row is clicked
               //alert("Row " + row.getData().id + " Clicked!!!!");
