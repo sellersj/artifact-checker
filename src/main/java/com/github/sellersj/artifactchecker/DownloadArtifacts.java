@@ -31,6 +31,9 @@ public class DownloadArtifacts {
     /** The version of owasp dependency check to use. */
     private static final String OWASP_DEP_CHECK_VERSION = "3.0.2";
 
+    /** The version of maven-dependency-plugin to use. */
+    private static final String MAVEN_DEP_PLUGIN_VERSION = "3.0.2";
+
     /**
      * We're dealing with mac giving a limited PATH to eclipse and linking directly to homebrew.
      */
@@ -105,7 +108,8 @@ public class DownloadArtifacts {
 
         // generate 1 tree file per project rather than 1 per module
         String treeOutputFile = projectDir.getAbsolutePath() + "/tree.txt";
-        ProcessBuilder mvnDepTree = new ProcessBuilder(osPrefix + "mvn" + osSuffix, "--batch-mode", "dependency:tree",
+        ProcessBuilder mvnDepTree = new ProcessBuilder(osPrefix + "mvn" + osSuffix, "--batch-mode",
+            "org.apache.maven.plugins:maven-dependency-plugin:" + MAVEN_DEP_PLUGIN_VERSION + ":tree",
             "-DoutputFile=" + treeOutputFile, "-DappendOutput=true");
         mvnDepTree.directory(projectDir);
         run(mvnDepTree);
