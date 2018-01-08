@@ -166,7 +166,7 @@ public class DownloadArtifacts {
 
             // TODO do we need to sort and filter the vulnerabilities
             gav.getVulnerabilities().addAll(vulnerabilities);
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException("Couldnm't read owasp file " + file.getAbsolutePath(), e);
         }
     }
