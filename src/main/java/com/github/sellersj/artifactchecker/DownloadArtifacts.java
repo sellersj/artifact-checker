@@ -160,14 +160,21 @@ public class DownloadArtifacts {
             DependencyCheck check = mapper.readValue(file, DependencyCheck.class);
             List<Vulnerability> vulnerabilities = new ArrayList<>();
 
-            for (Dependency dep : check.getDependencies()) {
-                vulnerabilities.addAll(dep.getVulnerabilities());
+            // guard against not having any dependencies
+            List<Dependency> dependencies = check.getDependencies();
+            if (null != dependencies) {
+                for (Dependency dep : dependencies) {
+                    List<Vulnerability> depsVuls = dep.getVulnerabilities();
+                    if (null != depsVuls) {
+                        vulnerabilities.addAll(depsVuls);
+                    }
+                }
             }
 
             // TODO do we need to sort and filter the vulnerabilities
             gav.getVulnerabilities().addAll(vulnerabilities);
         } catch (Exception e) {
-            throw new RuntimeException("Couldnm't read owasp file " + file.getAbsolutePath(), e);
+            throw new RuntimeException("Couldnm't read owas" + "p file " + file.getAbsolutePath(), e);
         }
     }
 
