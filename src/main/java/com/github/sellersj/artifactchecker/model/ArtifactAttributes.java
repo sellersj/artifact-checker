@@ -244,6 +244,13 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     public String getNexusUrl() {
         String toolsHost = System.getenv(Constants.TOOLS_HOST);
+
+        // default it to a blank string if we don't have the the artifactId
+        String artifactId = getArtifactId();
+        if (null == artifactId) {
+            artifactId = "";
+        }
+
         return "https://" + toolsHost + "/maven-proxy/#nexus-search;gav~" + getGroupId() + "~" + getArtifactId() + "~"
             + getVersion() + "~~";
 
