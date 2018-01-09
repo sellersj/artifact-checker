@@ -150,8 +150,7 @@ public class DownloadArtifacts {
 
     public void processDependencyCheckInfo(ArtifactAttributes gav, File projectDir) {
         // let's check if the file exists before trying to parse it
-        File file = new File(
-            projectDir.getAbsolutePath() + "/" + gav.getArtifactId() + "/target/dependency-check-report.json");
+        File file = new File(projectDir.getAbsolutePath() + "/target/dependency-check-report.json");
         if (!file.exists()) {
             System.err
                 .println("Could not find the owasp file on path " + file.getAbsolutePath() + ". Not gathering info.");
