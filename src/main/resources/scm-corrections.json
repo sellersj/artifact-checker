@@ -117,7 +117,7 @@
 	{
 		"implementationTitle": "ICGCPD - IC_GC_ProactiveDisclosure Admin EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": ""
+		"scmRepo": "icgcpd-cas-ic-proactive-disclosure-gs-and-cs"
 	},
 	{
 		"implementationTitle": "ICGCPD - IC_GC_ProactiveDisclosure Public EAR",
