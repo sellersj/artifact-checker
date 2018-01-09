@@ -55,7 +55,7 @@
                   }}
                ]
                },
-              {title:"Needs Work for Java 8", field:"java8Ready", headerFilter:"input", formatter:function(cell, formatterParams) {
+              {title:"Java 8 Ready", field:"java8Ready", headerFilter:"input", formatter:function(cell, formatterParams) {
                   var value = this.sanitizeHTML(cell.getValue());
                   var url = cell.getRow().getData()["java8Url"]
                   return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
