@@ -251,7 +251,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
             artifactId = "";
         }
 
-        return "https://" + toolsHost + "/maven-proxy/#nexus-search;gav~" + getGroupId() + "~" + getArtifactId() + "~"
+        return "https://" + toolsHost + "/maven-proxy/#nexus-search;gav~" + getGroupId() + "~" + artifactId + "~"
             + getVersion() + "~~";
 
     }
