@@ -1,22 +1,54 @@
 package com.github.sellersj.artifactchecker;
 
-import java.io.File;
-import java.io.IOException;
+import static org.junit.Assert.assertEquals;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
+@RunWith(Parameterized.class)
 public class FindJava8IssuesTest {
 
-    @Test
-    public void createFilesThatIdentifyJava8Issues() {
-        // smoke test
-        FindJava8Issues.createFilesThatIdentifyJava8Issues(DownloadArtifacts.FILES_GENERATED);
+    @Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][]{ //
+            {Arrays.asList("+- asm:asm:jar:3.3.1:compile"), 1}, //
+            {Arrays.asList("org.easymock:easymock:jar:3.3.0:compile"), 1}, //
+            {Arrays.asList("cglib:cglib:3.1"), 1}, //
+            {Arrays.asList("org.springframework:spring-core:3.2.8:compile"), 1}, //
+
+            // all the ones that should pass
+            {Arrays.asList("org.apache.commons:commons-lang3:jar:3.7:compile"), 0}, //
+            {Arrays.asList("org.easymock:easymock:jar:3.3.1:compile"), 0}, //
+            {Arrays.asList("cglib:cglib:3.2"), 0}, //
+            {Arrays.asList("org.springframework:spring-core:3.2.9:compile"), 0}, //
+            {Arrays.asList("org.springframework:spring-core:4.3.6:compile"), 0} //
+        });
+    }
+
+    /** The lines to test. */
+    private List<String> lines;
+
+    /** The expected number of lines that have issues. */
+    private int expectedSize;
+
+    public FindJava8IssuesTest(List<String> lines, int expected) {
+        this.lines = lines;
+        this.expectedSize = expected;
     }
 
     @Test
-    public void checkTreeForJava8Issues() throws IOException {
-        File file = InventoryFileUtil.getFileOnClasspath("/testproject-tree.txt");
-        FindJava8Issues.checkTreeForJava8Issues(file.toPath());
+    public void testCheckTreeForJava8Issues() {
+        List<String> issues = FindJava8Issues.checkTreeForJava8Issues(lines);
+        if (expectedSize != issues.size()) {
+            System.out.println(issues);
+        }
+        assertEquals("For lines: " + lines, expectedSize, issues.size());
     }
 
 }
