@@ -48,6 +48,9 @@ public class ReportBuilder {
             downloadArtifacts.cloneAndCheckProject(gav);
         }
 
+        // populate the artifacts that we've not actually cloned
+        updateAppsTrackedByAnotherArtifact(apps);
+
         // make the output json
         File target = new File(DownloadArtifacts.FILES_GENERATED + "/app-inventory.json");
         ReportBuilder.buildJsonReport(apps, target);
@@ -74,6 +77,38 @@ public class ReportBuilder {
         } catch (IOException e) {
             throw new RuntimeException("Couldn't copy files from " + srcDir + " to " + destDir, e);
         }
+    }
+
+    /**
+     * This will check the apps that are marked as being covered by another artifact, and then find it and copy their
+     * reports (cve, java 8, etc) over.
+     *
+     * @param apps
+     */
+    public static void updateAppsTrackedByAnotherArtifact(Set<ArtifactAttributes> apps) {
+        for (ArtifactAttributes app : apps) {
+
+            if (app.isAlreadyTrackedByAnother()) {
+
+                for (ArtifactAttributes unfiltered : apps) {
+
+                    // if we've found the unfiltered repo and it matches all the scm info, we should have a match
+                    if (!unfiltered.isAlreadyTrackedByAnother() && unfiltered.hasRequiredGitInfo() && //
+                        unfiltered.getScmProject().equals(app.getScmProject()) && //
+                        unfiltered.getScmRepo().equals(app.getScmRepo()) && //
+                        unfiltered.getScmHash().equals(app.getScmHash()) //
+                    ) {
+
+                        // since we've found the artifact that's been checked, copy over the cve and java 8 stuff
+                        app.setVulnerabilities(unfiltered.getVulnerabilities());
+                        app.setJava8Ready(unfiltered.isJava8Ready());
+                    }
+
+                }
+            }
+
+        }
+
     }
 
     /**
