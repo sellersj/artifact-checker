@@ -42,7 +42,7 @@ public class ReportBuilder {
 
         DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
 
-        Set<ArtifactAttributes> filtered = getAppsFilteredByCloneUrl(apps);
+        Set<ArtifactAttributes> filtered = getAppsFilteredByCloneUrlAndHash(apps);
 
         for (ArtifactAttributes gav : filtered) {
             downloadArtifacts.cloneAndCheckProject(gav);
@@ -78,11 +78,11 @@ public class ReportBuilder {
 
     /**
      * Some projects have multiple ears deployed to prod, but the same git repository. This will filter based on the
-     * clone url.
+     * clone url and commit hash.
      *
      * @return
      */
-    public static Set<ArtifactAttributes> getAppsFilteredByCloneUrl(Set<ArtifactAttributes> apps) {
+    public static Set<ArtifactAttributes> getAppsFilteredByCloneUrlAndHash(Set<ArtifactAttributes> apps) {
         Set<ArtifactAttributes> filtered = new HashSet<>();
 
         HashSet<String> trackedCloneUrls = new HashSet<>();
@@ -91,12 +91,12 @@ public class ReportBuilder {
             // only check if it's a duplicate if it's got the git info
             if (artifactAttributes.hasRequiredGitInfo()) {
 
-                String cloneUrl = artifactAttributes.buildGitCloneUrl();
-                if (trackedCloneUrls.contains(cloneUrl)) {
+                String cloneUrlWithHash = artifactAttributes.buildGitCloneUrl() + "+" + artifactAttributes.getScmHash();
+                if (trackedCloneUrls.contains(cloneUrlWithHash)) {
                     artifactAttributes.setAlreadyTrackedByAnother(true);
                     System.out.println("Not going to clone already tracking project " + artifactAttributes);
                 } else {
-                    trackedCloneUrls.add(cloneUrl);
+                    trackedCloneUrls.add(cloneUrlWithHash);
                     filtered.add(artifactAttributes);
                 }
 

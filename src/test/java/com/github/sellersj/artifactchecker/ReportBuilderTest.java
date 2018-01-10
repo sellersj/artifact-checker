@@ -1,11 +1,13 @@
 package com.github.sellersj.artifactchecker;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -34,7 +36,7 @@ public class ReportBuilderTest {
         assertFalse("inventory should have a bunch of manifest files", apps.isEmpty());
 
         int appSize = apps.size();
-        int appFilteredSize = ReportBuilder.getAppsFilteredByCloneUrl(apps).size();
+        int appFilteredSize = ReportBuilder.getAppsFilteredByCloneUrlAndHash(apps).size();
         assertTrue("The filtering should have removed some apps. Comparing " + appSize + " to " + appFilteredSize,
             appSize > appFilteredSize);
 
@@ -70,6 +72,52 @@ public class ReportBuilderTest {
 
         Set<ArtifactAttributes> apps = InventoryFileUtilTest.getTestAppInventory();
         ReportBuilder.buildJsonReport(apps, target);
+    }
+
+    @Test
+    public void getAppsFilteredByCloneUrlAndHash_SameProjectSameHash() {
+        Set<ArtifactAttributes> apps = new HashSet<>();
+        String scmProject = "myScmProject";
+        String scmRepo = "myScmRepo";
+        String scmHash = "3447763c6149c832408ad292ec8f4657ef9c879b";
+
+        for (int i = 0; i < 2; i++) {
+            ArtifactAttributes app = new ArtifactAttributes();
+            app.getManifest().put(ArtifactAttributes.SCM_PROJECT, scmProject);
+            app.getManifest().put(ArtifactAttributes.SCM_REPO, scmRepo);
+            app.getManifest().put(ArtifactAttributes.SCM_HASH, scmHash);
+
+            app.getManifest().put(ArtifactAttributes.IMPLEMENTATION_TITLE, "myAppTitle" + i);
+
+            apps.add(app);
+        }
+
+        Set<ArtifactAttributes> filtered = ReportBuilder.getAppsFilteredByCloneUrlAndHash(apps);
+        assertEquals("should have been filtered to 1 but was " + filtered, 1, filtered.size());
+    }
+
+    @Test
+    public void getAppsFilteredByCloneUrlAndHash_SameProjectDifferentHash() {
+        Set<ArtifactAttributes> apps = new HashSet<>();
+        String scmProject = "myScmProject";
+        String scmRepo = "myScmRepo";
+        String scmHash = "3447763c6149c832408ad292ec8f4657ef9c879b";
+
+        for (int i = 0; i < 2; i++) {
+            ArtifactAttributes app = new ArtifactAttributes();
+            app.getManifest().put(ArtifactAttributes.SCM_PROJECT, scmProject);
+            app.getManifest().put(ArtifactAttributes.SCM_REPO, scmRepo);
+
+            // set a different hash per loop
+            app.getManifest().put(ArtifactAttributes.SCM_HASH, scmHash + i);
+
+            app.getManifest().put(ArtifactAttributes.IMPLEMENTATION_TITLE, "myAppTitle" + i);
+
+            apps.add(app);
+        }
+
+        Set<ArtifactAttributes> filtered = ReportBuilder.getAppsFilteredByCloneUrlAndHash(apps);
+        assertEquals("should have been filtered to but was " + filtered, apps.size(), filtered.size());
     }
 
 }
