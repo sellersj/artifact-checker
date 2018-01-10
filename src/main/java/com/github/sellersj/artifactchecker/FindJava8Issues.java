@@ -52,7 +52,9 @@ public class FindJava8Issues {
         "org.eclipse.jdt.core.*:3.10.0|" + //
         "org.springframework:spring-.*:3.2.9|" + //
         "org.springframework:spring-.*:3.2.1[0-9]|" + //
-        "org.springframework:spring-.*:4" + //
+        "org.springframework:spring-.*:4|" + //
+        ":provided|" + //
+        ":test" + //
         // make sure above line doesn't end with a pipe character |
         ").*";
 
