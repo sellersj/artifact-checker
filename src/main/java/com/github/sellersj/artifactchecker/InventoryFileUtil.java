@@ -115,22 +115,26 @@ public class InventoryFileUtil {
     /** Fills in scm info that's missing for a best guess. */
     public static void fillInMissingScmInfo(Set<ArtifactAttributes> apps) {
 
-        // TODO can the return type be cahnged to void
-
         Map<String, ScmCorrection> mapOfCorrections = getCorrections();
 
         for (ArtifactAttributes app : apps) {
-            if (StringUtils.isNotBlank(app.getScmHash()) && !app.hasRequiredGitInfo()) {
+            if (mapOfCorrections.containsKey(app.getTitle())) {
+                ScmCorrection correction = mapOfCorrections.get(app.getTitle());
 
-                if (mapOfCorrections.containsKey(app.getTitle())) {
-                    ScmCorrection correction = mapOfCorrections.get(app.getTitle());
-
+                // correct the git info
+                if (StringUtils.isNotBlank(app.getScmHash()) && !app.hasRequiredGitInfo()) {
                     System.out.println("Correcting repo and name for " + app.getTitle() + " to "
                         + correction.getScmProject() + " and " + correction.getScmRepo());
 
                     app.setCorrectedScmProject(correction.getScmProject());
                     app.setCorrectedScmRepo(correction.getScmRepo());
                 }
+
+                // TODO consider checking this seperatly with a double check of the version number
+                // correct the artifactId if we can
+                System.out
+                    .println("Adding corrected artifactId for " + app.getTitle() + " to " + correction.getArtifactId());
+                app.setCorrectedArtifactId(correction.getArtifactId());
             }
         }
     }

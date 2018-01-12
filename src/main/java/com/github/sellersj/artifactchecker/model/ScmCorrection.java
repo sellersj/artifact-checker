@@ -16,6 +16,9 @@ public class ScmCorrection implements Comparable<ScmCorrection> {
     /** The proper scm repo. */
     private String scmRepo = "";
 
+    /** The proper artifactId. */
+    private String artifactId = "";
+
     @Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
@@ -38,6 +41,7 @@ public class ScmCorrection implements Comparable<ScmCorrection> {
         builder.append(getImplementationTitle(), rhs.getImplementationTitle());
         builder.append(getScmProject(), rhs.getScmProject());
         builder.append(getScmRepo(), rhs.getScmRepo());
+        builder.append(getArtifactId(), rhs.getArtifactId());
 
         return builder.toComparison();
     }
@@ -82,6 +86,20 @@ public class ScmCorrection implements Comparable<ScmCorrection> {
      */
     public void setScmRepo(String scmRepo) {
         this.scmRepo = scmRepo;
+    }
+
+    /**
+     * @return the artifactId
+     */
+    public String getArtifactId() {
+        return artifactId;
+    }
+
+    /**
+     * @param artifactId the artifactId to set
+     */
+    public void setArtifactId(String artifactId) {
+        this.artifactId = artifactId;
     }
 
 }

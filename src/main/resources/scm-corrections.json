@@ -2,211 +2,253 @@
 	{
 		"implementationTitle": "ALSC - ALSC_AdminEAR",
 		"scmProject": "SIS",
-		"scmRepo": "alsc-alsc-admin"
+		"scmRepo": "alsc-alsc-admin",
+		"correctedArtifactId": "ALSC_AdminEAR"
 	},
 	{
 		"implementationTitle": "ART - IC_ReportingWebEAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "art-ic-reporting"
+		"scmRepo": "art-ic-reporting",
+		"correctedArtifactId": "IC_ReportingWebEAR"
 	},
 	{
 		"implementationTitle": "BBCS - CIRS_Business-Based_Classification_Structure_EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "bbcs-imb-business-based-classification-structure"
+		"scmRepo": "bbcs-imb-business-based-classification-structure",
+		"correctedArtifactId": "CIRS_Business-Based_Classification_Structure_EAR"
 	},
 	{
 		"implementationTitle": "CASS - CASS-EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "cass-ic-co-operative-administrative-and-statistical-system"
+		"scmRepo": "cass-ic-co-operative-administrative-and-statistical-system",
+		"correctedArtifactId": "CASS-EAR"
 	},
 	{
 		"implementationTitle": "CBW - IMBS CCC Web Services EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "cbw-ims-canadian-company-capability-services"
+		"scmRepo": "cbw-ims-canadian-company-capability-services",
+		"correctedArtifactId": "IMBS_CCCServicesEAR"
 	},
 	{
 		"implementationTitle": "CCAA - OSB - Companies Creditors Arrangement Act (CCAA) Internal EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "ccaa-osb-companies-creditors-arrangement-act"
+		"scmRepo": "ccaa-osb-companies-creditors-arrangement-act",
+		"correctedArtifactId": "CCAA_Internal_EAR"
 	},
 	{
 		"implementationTitle": "CDB - OCA_ConsumerResearchDBAdminEAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "cdb-oca-consumer-research-database"
+		"scmRepo": "cdb-oca-consumer-research-database",
+		"correctedArtifactId": "OCA_ConsumerResearchDBAdminEAR"
 	},
 	{
 		"implementationTitle": "CFSRV - SITT_CFS_Report_and_Verification_ApplicationEAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "cfsrv-napd-cfs-report-and-verification-application"
+		"scmRepo": "cfsrv-napd-cfs-report-and-verification-application",
+		"correctedArtifactId": "SITT_CFS_Report_and_Verification_ApplicationEAR"
 	},
 	{
 		"implementationTitle": "CIPOQBS - CIPO - Querium Term Translator EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "cipoqbs-cipo-querium"
+		"scmRepo": "cipoqbs-cipo-querium",
+		"correctedArtifactId": "CIPO_QueriumEAR"
 	},
 	{
 		"implementationTitle": "CSBFPAUT - IdentityManagementProvisioningEAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "csbfpaut-sbb-csbfp-authentication"
+		"scmRepo": "csbfpaut-sbb-csbfp-authentication",
+		"correctedArtifactId": "IdentityManagementProvisioningEAR"
 	},
 	{
 		"implementationTitle": "ECOMCPP - ASB Ecommerce Postback config EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "ecomcpp-ic-e-commerce-common-payment-processing-system"
+		"scmRepo": "ecomcpp-ic-e-commerce-common-payment-processing-system",
+		"correctedArtifactId": "ASB_Ecommerce_PostbackConfigEAR"
 	},
 	{
 		"implementationTitle": "ECOMCPP - ASB_Ecommerce_ListenerEAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "ecomcpp-ic-e-commerce-common-payment-processing-system"
+		"scmRepo": "ecomcpp-ic-e-commerce-common-payment-processing-system",
+		"correctedArtifactId": "ASB_Ecommerce_ListenerEAR"
 	},
 	{
 		"implementationTitle": "ECOMCPP - ASB_Ecommerce_RedirectEAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "ecomcpp-ic-e-commerce-common-payment-processing-system"
+		"scmRepo": "ecomcpp-ic-e-commerce-common-payment-processing-system",
+		"correctedArtifactId": "ASB_Ecommerce_RedirectEAR"
 	},
 	{
 		"implementationTitle": "EPTT - SITT - Event Participation Tracking Tool EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "eptt-sitt-event-participation-tracking-tool"
+		"scmRepo": "eptt-sitt-event-participation-tracking-tool",
+		"correctedArtifactId": "SITT_EPTT_EAR"
 	},
 	{
 		"implementationTitle": "ETDS - SITT_ETDS_EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "etds-sitt-emergency-telecommunications-data-system"
+		"scmRepo": "etds-sitt-emergency-telecommunications-data-system",
+		"correctedArtifactId": "SITT_ETDS_EAR"
 	},
 	{
 		"implementationTitle": "FDOCPD - FedDev Ontario Proactive Disclosure Contracts Admin EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "fdocpd-feddev-ontario-proactive-disclosure-contracts"
+		"scmRepo": "fdocpd-feddev-ontario-proactive-disclosure-contracts",
+		"correctedArtifactId": "FDO_ContractingActivitiesReportingAdminEAR"
 	},
 	{
 		"implementationTitle": "FDOCPD - FedDev Ontario Proactive Disclosure Contracts Public EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "fdocpd-feddev-ontario-proactive-disclosure-contracts"
+		"scmRepo": "fdocpd-feddev-ontario-proactive-disclosure-contracts",
+		"correctedArtifactId": "FDO_ContractingActivitiesReportingPublicEAR"
 	},
 	{
 		"implementationTitle": "FDOGCPD - Fed Dev Ontario Proactive Disclosure Grants And Contributions Admin EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "fdogcpd-feddev-ontario-proactive-disclosure-grants-contributions"
+		"scmRepo": "fdogcpd-feddev-ontario-proactive-disclosure-grants-contributions",
+		"correctedArtifactId": "FDO_GC_ProactiveDisclosureAdminEAR"
 	},
 	{
 		"implementationTitle": "FDOGCPD - Fed Dev Ontario Proactive Disclosure Grants And Contributions Public EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "fdogcpd-feddev-ontario-proactive-disclosure-grants-contributions"
+		"scmRepo": "fdogcpd-feddev-ontario-proactive-disclosure-grants-contributions",
+		"correctedArtifactId": "FDO_GC_ProactiveDisclosurePublicEAR"
 	},
 	{
 		"implementationTitle": "FDOPDFS - FDOGC_PDFSubmissionEAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "fdopdfs-feddev-ontario-pdf-submissions"
+		"scmRepo": "fdopdfs-feddev-ontario-pdf-submissions",
+		"correctedArtifactId": "FDOGC_PDFSubmissionEAR"
 	},
 	{
 		"implementationTitle": "FDORPD - FedDev Ontario Reclassification Proactive Disclosure Admin EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "fdorpd-feddev-ontario-reclassification-proactive-disclosure"
+		"scmRepo": "fdorpd-feddev-ontario-reclassification-proactive-disclosure",
+		"correctedArtifactId": "FDO_ReclassificationProactiveDisclosureAdminEAR"
 	},
 	{
 		"implementationTitle": "FDORPD - FedDev Ontario Reclassification Proactive Disclosure Public EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "fdorpd-feddev-ontario-reclassification-proactive-disclosure"
+		"scmRepo": "fdorpd-feddev-ontario-reclassification-proactive-disclosure",
+		"correctedArtifactId": "FDO_ReclassificationProactiveDisclosurePublicEAR"
 	},
 	{
 		"implementationTitle": "FDOTHD - FDOTHD - FedDev Ontario Travel And Hospitality Disclosure Admin EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "fdothd-feddev-ontario-travel-hospitality-disclosure"
+		"scmRepo": "fdothd-feddev-ontario-travel-hospitality-disclosure",
+		"correctedArtifactId": ""
 	},
 	{
 		"implementationTitle": "ICGCPD - IC_GC_ProactiveDisclosure Admin EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "icgcpd-cas-ic-proactive-disclosure-gs-and-cs"
+		"scmRepo": "icgcpd-cas-ic-proactive-disclosure-gs-and-cs",
+		"correctedArtifactId": ""
 	},
 	{
 		"implementationTitle": "ICGCPD - IC_GC_ProactiveDisclosure Public EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "icgcpd-cas-ic-proactive-disclosure-gs-and-cs"
+		"scmRepo": "icgcpd-cas-ic-proactive-disclosure-gs-and-cs",
+		"correctedArtifactId": ""
 	},
 	{
 		"implementationTitle": "ICPDC - IC Contracting Activities Reporting External EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "icgcpd-cas-ic-proactive-disclosure-gs-and-cs"
+		"scmRepo": "icgcpd-cas-ic-proactive-disclosure-gs-and-cs",
+		"correctedArtifactId": ""
 	},
 	{
 		"implementationTitle": "ICPDC - IC Contracting Activities Reporting Internal EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "icpdc-cas-proactive-disclosure-contracts"
+		"scmRepo": "icpdc-cas-proactive-disclosure-contracts",
+		"correctedArtifactId": ""
 	},
 	{
 		"implementationTitle": "MSD - CBSC -  Multi-Channel Service Delivery Assistant Ear",
 		"scmProject": "ICAPPS",
-		"scmRepo": "msd-sdp-cbsc-msda"
+		"scmRepo": "msd-sdp-cbsc-msda",
+		"correctedArtifactId": ""
 	},
 	{
 		"implementationTitle": "OHW - FM OHWS OnLine Training EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "ohw-cas-facilities-management-ohws-training"
+		"scmRepo": "ohw-cas-facilities-management-ohws-training",
+		"correctedArtifactId": ""
 	},
 	{
 		"implementationTitle": "OSBTR - OSB_TrusteeRenewalEAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "osbtr-trustee-renewal"
+		"scmRepo": "osbtr-trustee-renewal",
+		"correctedArtifactId": ""
 	},
 	{
 		"implementationTitle": "OUD - OSB_UnclaimedDividendsEAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "oud-osb---unclaimed-dividends"
+		"scmRepo": "oud-osb---unclaimed-dividends",
+		"correctedArtifactId": ""
 	},
 	{
 		"implementationTitle": "PCOCDD - PCO_CabinetDocumentsDatabaseEAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "pcocdd-cabinet-documents-database"
+		"scmRepo": "pcocdd-cabinet-documents-database",
+		"correctedArtifactId": ""
 	},
 	{
 		"implementationTitle": "RFAXAPI - IC_RightFax_ProxyEAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "rfaxapi-rightfax-api"
+		"scmRepo": "rfaxapi-rightfax-api",
+		"correctedArtifactId": ""
 	},
 	{
 		"implementationTitle": "RFAXAPID - IC RightFax - Proxy Demo - Client Demo EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "rfaxapi-rightfax-api-demo-app"
+		"scmRepo": "rfaxapi-rightfax-api-demo-app",
+		"correctedArtifactId": ""
 	},
 	{
 		"implementationTitle": "RGOFLDOC - CORP_RGCDocRepositoryEAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "rgofldoc-corp-registrar-general-of-canada-official-document-repo"
+		"scmRepo": "rgofldoc-corp-registrar-general-of-canada-official-document-repo",
+		"correctedArtifactId": ""
 	},
 	{
 		"implementationTitle": "RGOFLDOC - CORP_RGCDocRepositoryPublicEAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "rgofldoc-corp-registrar-general-of-canada-official-document-repo"
+		"scmRepo": "rgofldoc-corp-registrar-general-of-canada-official-document-repo",
+		"correctedArtifactId": ""
 	},
 	{
 		"implementationTitle": "RPD - HRB Reclassification Proactive Disclosure Admin EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "rpd-hrb-reclassification-proactive-disclosure"
+		"scmRepo": "rpd-hrb-reclassification-proactive-disclosure",
+		"correctedArtifactId": ""
 	},
 	{
 		"implementationTitle": "RPD - HRB Reclassification Proactive Disclosure Public EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "rpd-hrb-reclassification-proactive-disclosure"
+		"scmRepo": "rpd-hrb-reclassification-proactive-disclosure",
+		"correctedArtifactId": ""
 	},
 	{
 		"implementationTitle": "SIS - TestProjectEAR",
 		"scmProject": "SANDBOX",
-		"scmRepo": "sis-test-project"
+		"scmRepo": "sis-test-project",
+		"correctedArtifactId": ""
 	},
 	{
 		"implementationTitle": "SRSFC - SRSFC_RadioSpectrumFeeCalculatorEAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "srsfc-sitt-radio-and-spectrum-fee-calculator"
+		"scmRepo": "srsfc-sitt-radio-and-spectrum-fee-calculator",
+		"correctedArtifactId": ""
 	},
 	{
 		"implementationTitle": "THD - CFO Travel Hospitality Disclosure Admin EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "thd-cas-cfo-travel-hospitality-disclosure"
+		"scmRepo": "thd-cas-cfo-travel-hospitality-disclosure",
+		"correctedArtifactId": ""
 	},
 	{
 		"implementationTitle": "THD - CFO Travel Hospitality Disclosure Public EAR",
 		"scmProject": "ICAPPS",
-		"scmRepo": "thd-cas-cfo-travel-hospitality-disclosure"
+		"scmRepo": "thd-cas-cfo-travel-hospitality-disclosure",
+		"correctedArtifactId": ""
 	}
 ]

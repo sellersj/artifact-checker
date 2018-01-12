@@ -122,4 +122,30 @@ public class ArtifactAttributesTest {
         assertEquals("TEST", art.getJiraKey());
     }
 
+    @Test
+    public void getArtifactIdNoCorrectionNeeded() {
+        String artifactId = "myArtifactId";
+        ArtifactAttributes art = new ArtifactAttributes();
+        art.getManifest().put(ArtifactAttributes.ARTIFACT_ID, artifactId);
+        assertEquals(artifactId, art.getArtifactId());
+    }
+
+    @Test
+    public void getArtifactIdCorrectionNeeded() {
+        String artifactId = "myArtifactId";
+        ArtifactAttributes art = new ArtifactAttributes();
+        art.getManifest().put(ArtifactAttributes.ARTIFACT_ID, "");
+        art.setCorrectedArtifactId(artifactId);
+        assertEquals(artifactId, art.getArtifactId());
+    }
+
+    @Test
+    public void getArtifactIdBothSetButUsingManifest() {
+        String artifactId = "myArtifactId";
+        ArtifactAttributes art = new ArtifactAttributes();
+        art.getManifest().put(ArtifactAttributes.ARTIFACT_ID, artifactId);
+        art.setCorrectedArtifactId("myCorrectedArtifactId");
+        assertEquals(artifactId, art.getArtifactId());
+    }
+
 }

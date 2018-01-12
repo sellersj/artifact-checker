@@ -43,6 +43,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** The Build-Time from the manifest. */
     public static final String BUILD_TIME = "Build-Time";
 
+    /** The Implementation-Artifact-Id from the manifest which is used for the artifactId. */
+    public static final String ARTIFACT_ID = "Implementation-Artifact-Id";
+
     /** The maven date format. */
     private static final SimpleDateFormat MAVEN_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
@@ -60,6 +63,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** Our corrected scm repo from a static file. */
     private String correctedScmRepo;
+
+    /** Our corrected artifactId from a static file. */
+    private String correctedArtifactId;
 
     /** Flag for if this artficat's repo was already checked by another artifact (e.g. 1 repo, 2 ears). */
     private boolean alreadyTrackedByAnother = false;
@@ -219,8 +225,17 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         return manifest.get("Implementation-Vendor-Id");
     }
 
+    /**
+     * @return the artifactId if we have it in the manifest, or the corrected one otherwise.
+     */
     public String getArtifactId() {
-        return manifest.get("Implementation-Artifact-Id");
+        String artifactId = manifest.get(ARTIFACT_ID);
+
+        if (StringUtils.isBlank(artifactId)) {
+            artifactId = correctedArtifactId;
+        }
+
+        return artifactId;
     }
 
     public String getVersion() {
@@ -456,6 +471,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public void setVulnerabilities(List<Vulnerability> vulnerabilities) {
         this.vulnerabilities = vulnerabilities;
+    }
+
+    /**
+     * @return the correctedArtifactId
+     */
+    public String getCorrectedArtifactId() {
+        return correctedArtifactId;
+    }
+
+    /**
+     * @param correctedArtifactId the correctedArtifactId to set
+     */
+    public void setCorrectedArtifactId(String correctedArtifactId) {
+        this.correctedArtifactId = correctedArtifactId;
     }
 
 }
