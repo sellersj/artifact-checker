@@ -1,16 +1,20 @@
 package com.github.sellersj.artifactchecker;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
@@ -58,6 +62,29 @@ public class InventoryFileUtilTest {
         assertEquals("junit", artifact1.getGroupId());
         assertEquals("junit", artifact1.getArtifactId());
         assertEquals("4.12", artifact1.getVersion());
+    }
+
+    @Test
+    public void testReadMergedManifestsNoEmptyProject() throws Exception {
+        Set<ArtifactAttributes> apps = getTestAppInventory();
+        assertFalse("should be checking some apps", apps.isEmpty());
+
+        for (ArtifactAttributes artifactAttributes : apps) {
+
+            // the app should have _at least one_ value in the manifest for us to not ignore it
+            boolean hasValues = false;
+            for (Entry<String, String> entry : artifactAttributes.getManifest().entrySet()) {
+
+                // ignore the manifest declaration
+                if (!"Manifest-Version".equals(entry.getKey()) && //
+                    StringUtils.isNotBlank(entry.getValue())) {
+                    // System.out.println(entry.getValue());
+                    hasValues = true;
+                }
+            }
+
+            assertTrue("should have found at least one entry in the manifest: " + artifactAttributes, hasValues);
+        }
     }
 
     public static Set<ArtifactAttributes> getTestAppInventory() {

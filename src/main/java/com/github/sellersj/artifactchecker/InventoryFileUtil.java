@@ -98,20 +98,48 @@ public class InventoryFileUtil {
             // read the chunk into a manifest object so it can deal with the manifest quirks
             Manifest manifest = readToManifest(string);
 
-            // get the object to load
-            ArtifactAttributes attributes = new ArtifactAttributes();
+            if (doesManifestHaveValues(manifest)) {
+                // get the object to load
+                ArtifactAttributes attributes = new ArtifactAttributes();
 
-            for (Entry<Object, Object> entry : manifest.getMainAttributes().entrySet()) {
-                attributes.getManifest().put(String.valueOf(entry.getKey()), String.valueOf(entry.getValue()));
+                for (Entry<Object, Object> entry : manifest.getMainAttributes().entrySet()) {
+                    attributes.getManifest().put(String.valueOf(entry.getKey()), String.valueOf(entry.getValue()));
+                }
+
+                apps.add(attributes);
             }
-
-            apps.add(attributes);
         }
 
         // fix any manifests we can find
         fillInMissingScmInfo(apps);
 
         return apps;
+    }
+
+    /**
+     * @param manifest to check
+     * @return true if any of the main values have values
+     */
+    public static boolean doesManifestHaveValues(Manifest manifest) {
+        // skip creating an artifact is there none of the manifest entries contain a value
+        boolean hasValues = false;
+
+        for (Entry<Object, Object> entry : manifest.getMainAttributes().entrySet()) {
+            String key = String.valueOf(entry.getKey());
+            String value = String.valueOf(entry.getValue());
+
+            if (!"Manifest-Version".equals(key) && //
+                StringUtils.isNotBlank(value)) {
+                hasValues = true;
+                break;
+            }
+        }
+
+        if (!hasValues) {
+            System.out.println("Ignoring an empty manifest");
+        }
+
+        return hasValues;
     }
 
     /** Fills in scm info that's missing for a best guess. */
@@ -122,7 +150,7 @@ public class InventoryFileUtil {
         Collection<String> unneededCorrections = getUnneededCorrections(apps, mapOfCorrections);
         if (!unneededCorrections.isEmpty()) {
             System.err.println("******************************");
-            System.err.println("Unneeded corrections include:");
+            System.err.println("Unneeded corrections in scm-corrections.json include:");
             for (String string : unneededCorrections) {
                 System.err.println(string);
             }
