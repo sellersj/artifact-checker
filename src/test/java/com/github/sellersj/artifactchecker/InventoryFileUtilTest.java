@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
@@ -44,7 +43,6 @@ public class InventoryFileUtilTest {
     }
 
     @Test
-    @Ignore("don't think we need to read this file at this point")
     public void testReadMergedManifests() throws Exception {
         Set<ArtifactAttributes> apps = getTestAppInventory();
         assertEquals(2, apps.size());

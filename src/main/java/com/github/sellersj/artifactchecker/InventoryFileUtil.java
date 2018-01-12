@@ -8,12 +8,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.jar.Manifest;
 
 import org.apache.commons.io.FileUtils;
@@ -117,6 +119,16 @@ public class InventoryFileUtil {
 
         Map<String, ScmCorrection> mapOfCorrections = getCorrections();
 
+        Collection<String> unneededCorrections = getUnneededCorrections(apps, mapOfCorrections);
+        if (!unneededCorrections.isEmpty()) {
+            System.err.println("******************************");
+            System.err.println("Unneeded corrections include:");
+            for (String string : unneededCorrections) {
+                System.err.println(string);
+            }
+            System.err.println("******************************");
+        }
+
         for (ArtifactAttributes app : apps) {
             if (mapOfCorrections.containsKey(app.getTitle())) {
                 ScmCorrection correction = mapOfCorrections.get(app.getTitle());
@@ -137,6 +149,31 @@ public class InventoryFileUtil {
                 app.setCorrectedArtifactId(correction.getArtifactId());
             }
         }
+    }
+
+    /**
+     *
+     * @param apps from the scraped sources
+     * @param mapOfCorrections the corrections
+     * @return all names that are in the corrected list but not in the apps
+     */
+    public static Collection<String> getUnneededCorrections(Set<ArtifactAttributes> apps,
+                                                            Map<String, ScmCorrection> mapOfCorrections) {
+
+        // get all the titles
+        HashSet<String> titles = new HashSet<>();
+        for (ArtifactAttributes artifactAttributes : apps) {
+            titles.add(artifactAttributes.getTitle());
+        }
+
+        // get all the corrections
+        TreeSet<String> unneeded = new TreeSet<>();
+        unneeded.addAll(mapOfCorrections.keySet());
+        // remove all the titles that we we care about
+        unneeded.removeAll(titles);
+
+        // we should be left with all the values that are in the corrections file but no longer in prod
+        return unneeded;
     }
 
     private static Map<String, ScmCorrection> getCorrections() {
