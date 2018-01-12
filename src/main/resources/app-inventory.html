@@ -18,7 +18,7 @@
                   columns:[
                       {title:"Group Id", field:"groupId", headerFilter:"input"},
                       {title:"Artifact Id", field:"artifactId", headerFilter:"input"},
-                      {title:"Version", field:"version", headerFilter:"input", formatter:function(cell, formatterParams) {
+                      {title:"Version", field:"version", width:125, headerFilter:"input", formatter:function(cell, formatterParams) {
                           var value = this.sanitizeHTML(cell.getValue());
                           var url = cell.getRow().getData()["nexusUrl"]
                           return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
