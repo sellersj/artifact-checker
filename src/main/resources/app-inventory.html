@@ -1,7 +1,6 @@
 <html>
   <head>
     <title>Maven Applications in production</title>
-    <script src="data/app-inventory.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/3.3.3/css/tabulator.min.css" rel="stylesheet">
@@ -28,9 +27,9 @@
               },
                {title:"Source Control",
             	   columns:[
-                 {title:"Project", field:"scmProject", headerFilter:"input"},
+                 {title:"Project", field:"scmProject", width:100, headerFilter:"input"},
                  {title:"Repo", field:"scmRepo", headerFilter:"input"},
-                 {title:"Hash", field:"scmHashAbbrev", formatter:function(cell, formatterParams) {
+                 {title:"Hash", field:"scmHashAbbrev", width:75, formatter:function(cell, formatterParams) {
                      var value = this.sanitizeHTML(cell.getValue());
                      var url = cell.getRow().getData()["scmUrl"]
                      return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
@@ -39,34 +38,34 @@
                },
                {title:"CVE Security Issues",
             	   columns:[
-            		 {title:"High", field:"cveSeverityCountHigh", headerFilter:"input", formatter:function(cell, formatterParams) {
+            		 {title:"High", field:"cveSeverityCountHigh", headerFilter:"input", width:50, formatter:function(cell, formatterParams) {
                            var value = this.sanitizeHTML(cell.getValue());
                            var url = cell.getRow().getData()["owaspDependencyCheckUrl"]
                            return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
                   }},
-                  {title:"Medium", field:"cveSeverityCountMedium", headerFilter:"input", formatter:function(cell, formatterParams) {
+                  {title:"Medium", field:"cveSeverityCountMedium", headerFilter:"input", width:50, formatter:function(cell, formatterParams) {
                       var value = this.sanitizeHTML(cell.getValue());
                       var url = cell.getRow().getData()["owaspDependencyCheckUrl"]
                       return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
                    }},
-                 {title:"Low", field:"cveSeverityCountLow", headerFilter:"input", formatter:function(cell, formatterParams) {
+                 {title:"Low", field:"cveSeverityCountLow", headerFilter:"input", width:50, formatter:function(cell, formatterParams) {
                      var value = this.sanitizeHTML(cell.getValue());
                      var url = cell.getRow().getData()["owaspDependencyCheckUrl"]
                      return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
                   }}
                ]
                },
-              {title:"Java 8 Ready", field:"java8Ready", headerFilter:"input", formatter:function(cell, formatterParams) {
+              {title:"Java 8 Ready", field:"java8Ready", headerFilter:"input", width:100, formatter:function(cell, formatterParams) {
                   var value = this.sanitizeHTML(cell.getValue());
                   var url = cell.getRow().getData()["java8Url"]
                   return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
                }},
-               {title:"JIRA", field:"jiraKey", headerFilter:"input", formatter:function(cell, formatterParams) {
+               {title:"JIRA", field:"jiraKey", headerFilter:"input", width:120, formatter:function(cell, formatterParams) {
                   var value = this.sanitizeHTML(cell.getValue());
                   var url = cell.getRow().getData()["jiraUrl"]
                   return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
                }},
-              {title:"Build Date", field:"buildDateFormatted", headerFilter:"input"},
+              {title:"Build Date", field:"buildDateFormatted", width:100, headerFilter:"input"},
           ],
           rowClick:function(e, row){ //trigger an alert message when the row is clicked
               //alert("Row " + row.getData().id + " Clicked!!!!");
