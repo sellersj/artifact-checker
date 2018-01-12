@@ -135,97 +135,97 @@
 		"implementationTitle": "FDOTHD - FDOTHD - FedDev Ontario Travel And Hospitality Disclosure Admin EAR",
 		"scmProject": "ICAPPS",
 		"scmRepo": "fdothd-feddev-ontario-travel-hospitality-disclosure",
-		"correctedArtifactId": ""
+		"correctedArtifactId": "FDO_TravelHospitalityDisclosureAdminEAR"
 	},
 	{
 		"implementationTitle": "ICGCPD - IC_GC_ProactiveDisclosure Admin EAR",
 		"scmProject": "ICAPPS",
 		"scmRepo": "icgcpd-cas-ic-proactive-disclosure-gs-and-cs",
-		"correctedArtifactId": ""
+		"correctedArtifactId": "IC_GC_ProactiveDisclosureAdminEAR"
 	},
 	{
 		"implementationTitle": "ICGCPD - IC_GC_ProactiveDisclosure Public EAR",
 		"scmProject": "ICAPPS",
 		"scmRepo": "icgcpd-cas-ic-proactive-disclosure-gs-and-cs",
-		"correctedArtifactId": ""
+		"correctedArtifactId": "IC_GC_ProactiveDisclosurePublicEAR"
 	},
 	{
 		"implementationTitle": "ICPDC - IC Contracting Activities Reporting External EAR",
 		"scmProject": "ICAPPS",
 		"scmRepo": "icgcpd-cas-ic-proactive-disclosure-gs-and-cs",
-		"correctedArtifactId": ""
+		"correctedArtifactId": "IC_ContractingActivitiesReporting_External_EAR"
 	},
 	{
 		"implementationTitle": "ICPDC - IC Contracting Activities Reporting Internal EAR",
 		"scmProject": "ICAPPS",
 		"scmRepo": "icpdc-cas-proactive-disclosure-contracts",
-		"correctedArtifactId": ""
+		"correctedArtifactId": "IC_ContractingActivitiesReporting_Internal_EAR"
 	},
 	{
 		"implementationTitle": "MSD - CBSC -  Multi-Channel Service Delivery Assistant Ear",
 		"scmProject": "ICAPPS",
 		"scmRepo": "msd-sdp-cbsc-msda",
-		"correctedArtifactId": ""
+		"correctedArtifactId": "CBSC_MSDAEar"
 	},
 	{
 		"implementationTitle": "OHW - FM OHWS OnLine Training EAR",
 		"scmProject": "ICAPPS",
 		"scmRepo": "ohw-cas-facilities-management-ohws-training",
-		"correctedArtifactId": ""
+		"correctedArtifactId": "FM_OHWSTrainingEar"
 	},
 	{
 		"implementationTitle": "OSBTR - OSB_TrusteeRenewalEAR",
 		"scmProject": "ICAPPS",
 		"scmRepo": "osbtr-trustee-renewal",
-		"correctedArtifactId": ""
+		"correctedArtifactId": "OSB_TrusteeRenewalEAR"
 	},
 	{
 		"implementationTitle": "OUD - OSB_UnclaimedDividendsEAR",
 		"scmProject": "ICAPPS",
 		"scmRepo": "oud-osb---unclaimed-dividends",
-		"correctedArtifactId": ""
+		"correctedArtifactId": "OSB_UnclaimedDividendsEAR"
 	},
 	{
 		"implementationTitle": "PCOCDD - PCO_CabinetDocumentsDatabaseEAR",
 		"scmProject": "ICAPPS",
 		"scmRepo": "pcocdd-cabinet-documents-database",
-		"correctedArtifactId": ""
+		"correctedArtifactId": "PCO_CabinetDocumentsDatabaseEAR"
 	},
 	{
 		"implementationTitle": "RFAXAPI - IC_RightFax_ProxyEAR",
 		"scmProject": "ICAPPS",
 		"scmRepo": "rfaxapi-rightfax-api",
-		"correctedArtifactId": ""
+		"correctedArtifactId": "IC_RightFax_ProxyEAR"
 	},
 	{
 		"implementationTitle": "RFAXAPID - IC RightFax - Proxy Demo - Client Demo EAR",
 		"scmProject": "ICAPPS",
 		"scmRepo": "rfaxapi-rightfax-api-demo-app",
-		"correctedArtifactId": ""
+		"correctedArtifactId": "IC_RightFax_ClientDemo_EAR"
 	},
 	{
 		"implementationTitle": "RGOFLDOC - CORP_RGCDocRepositoryEAR",
 		"scmProject": "ICAPPS",
 		"scmRepo": "rgofldoc-corp-registrar-general-of-canada-official-document-repo",
-		"correctedArtifactId": ""
+		"correctedArtifactId": "CORP_RGCDocRepositoryEAR"
 	},
 	{
 		"implementationTitle": "RGOFLDOC - CORP_RGCDocRepositoryPublicEAR",
 		"scmProject": "ICAPPS",
 		"scmRepo": "rgofldoc-corp-registrar-general-of-canada-official-document-repo",
-		"correctedArtifactId": ""
+		"correctedArtifactId": "CORP_RGCDocRepositoryPublicEAR"
 	},
 	{
 		"implementationTitle": "RPD - HRB Reclassification Proactive Disclosure Admin EAR",
 		"scmProject": "ICAPPS",
 		"scmRepo": "rpd-hrb-reclassification-proactive-disclosure",
-		"correctedArtifactId": ""
+		"correctedArtifactId": "HRB_ReclassificationProactiveDisclosureAdminEAR"
 	},
 	{
 		"implementationTitle": "RPD - HRB Reclassification Proactive Disclosure Public EAR",
 		"scmProject": "ICAPPS",
 		"scmRepo": "rpd-hrb-reclassification-proactive-disclosure",
-		"correctedArtifactId": ""
+		"correctedArtifactId": "HRB_ReclassificationProactiveDisclosurePublicEAR"
 	},
 	{
 		"implementationTitle": "SIS - TestProjectEAR",
@@ -243,12 +243,12 @@
 		"implementationTitle": "THD - CFO Travel Hospitality Disclosure Admin EAR",
 		"scmProject": "ICAPPS",
 		"scmRepo": "thd-cas-cfo-travel-hospitality-disclosure",
-		"correctedArtifactId": ""
+		"correctedArtifactId": "CFO_TravelHospitalityDisclosureAdminEAR"
 	},
 	{
 		"implementationTitle": "THD - CFO Travel Hospitality Disclosure Public EAR",
 		"scmProject": "ICAPPS",
 		"scmRepo": "thd-cas-cfo-travel-hospitality-disclosure",
-		"correctedArtifactId": ""
+		"correctedArtifactId": "CFO_TravelHospitalityDisclosurePublicEAR"
 	}
 ]
