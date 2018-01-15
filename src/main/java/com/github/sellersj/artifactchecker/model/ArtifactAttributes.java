@@ -46,6 +46,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** The Implementation-Artifact-Id from the manifest which is used for the artifactId. */
     public static final String ARTIFACT_ID = "Implementation-Artifact-Id";
 
+    /** The tag we're looking for the version with. */
+    public static final String VERSION = "Implementation-Version";
+
     /** The maven date format. */
     private static final SimpleDateFormat MAVEN_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
@@ -80,13 +83,17 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     private List<Vulnerability> vulnerabilities = new ArrayList<>();
 
     /**
-     *
-     * @return true if the has the scm project, repo, and hash.
+     * The scm tag if an artifact doesn't have the hash.
+     */
+    private String scmTag = "";
+
+    /**
+     * @return true if the has the scm project, repo, and (hash or version).
      */
     public boolean hasRequiredGitInfo() {
         return StringUtils.isNotBlank(getScmProject()) && //
             StringUtils.isNotBlank(getScmRepo()) && //
-            StringUtils.isNotBlank(getScmHash());
+            (StringUtils.isNotBlank(getScmHash()) || StringUtils.isNotBlank(getVersion()));
     }
 
     public String buildGitCloneUrl() {
@@ -239,7 +246,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     }
 
     public String getVersion() {
-        return manifest.get("Implementation-Version");
+        return manifest.get(VERSION);
     }
 
     public String getTitle() {
@@ -295,9 +302,14 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
         if (StringUtils.isNotBlank(getScmProject()) && //
             StringUtils.isNotBlank(getScmRepo()) && //
-            StringUtils.isNotBlank(getScmHash())) {
+            (StringUtils.isNotBlank(getScmHash()) || StringUtils.isNotBlank(getVersion()))) {
 
-            url = getScmProject() + "/" + getScmRepo() + "/" + getScmHash() + "/" + getScmRepo();
+            url = getScmProject() + "/" + getScmRepo() + "/" + getScmHash() + "/";
+            if (StringUtils.isBlank(getScmHash())) {
+                url += getVersion();
+            } else {
+                url += getScmHash();
+            }
         }
 
         return url;
@@ -485,6 +497,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public void setCorrectedArtifactId(String correctedArtifactId) {
         this.correctedArtifactId = correctedArtifactId;
+    }
+
+    /**
+     * @return the scmTag
+     */
+    public String getScmTag() {
+        return scmTag;
+    }
+
+    /**
+     * @param scmTag the scmTag to set
+     */
+    public void setScmTag(String scmTag) {
+        this.scmTag = scmTag;
     }
 
 }

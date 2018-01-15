@@ -29,6 +29,21 @@ public class ArtifactAttributesTest {
     }
 
     @Test
+    public void hasRequiredGitInfoNoHashButVersion() {
+        ArtifactAttributes gav = new ArtifactAttributes();
+        assertFalse("nothing set", gav.hasRequiredGitInfo());
+
+        gav.getManifest().put(ArtifactAttributes.SCM_PROJECT, "sellersj");
+        assertFalse("only project set", gav.hasRequiredGitInfo());
+
+        gav.getManifest().put(ArtifactAttributes.SCM_REPO, "artifact-checker");
+        assertFalse("only project and repo set", gav.hasRequiredGitInfo());
+
+        gav.getManifest().put(ArtifactAttributes.VERSION, "1.2.3");
+        assertTrue("should show as cloneable", gav.hasRequiredGitInfo());
+    }
+
+    @Test
     public void getScmProjectDefaultsOnlyWhenOtherInfoFilledOut() {
         assertNull(new ArtifactAttributes().getScmProject());
 

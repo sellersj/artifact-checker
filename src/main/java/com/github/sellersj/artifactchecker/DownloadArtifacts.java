@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.owasp.Dependency;
@@ -83,8 +85,7 @@ public class DownloadArtifacts {
         // init the working temp dir
         new File(WORKING_DIR).mkdirs();
 
-        String repoWorkingDir = WORKING_DIR + gav.getScmProject() + File.separator + gav.getScmRepo() + File.separator
-            + gav.getScmHash();
+        String repoWorkingDir = getRepoWorkingDirectory(gav);
 
         // check out the project, only if it doesn't exist
         if (new File(repoWorkingDir).exists()) {
@@ -102,9 +103,7 @@ public class DownloadArtifacts {
         File projectDir = new File(repoWorkingDir + File.separator + gav.getScmRepo());
 
         // switch git to the specific hash that we're targeting
-        ProcessBuilder gitCheckoutHash = new ProcessBuilder(osPrefix + "git", "checkout", gav.getScmHash());
-        gitCheckoutHash.directory(projectDir);
-        run(gitCheckoutHash);
+        switchToCommit(gav, projectDir);
 
         // generate 1 tree file per project rather than 1 per module
         String treeOutputFile = projectDir.getAbsolutePath() + "/tree.txt";
@@ -146,6 +145,33 @@ public class DownloadArtifacts {
             throw new RuntimeException("Couldnm't delete directory for cleanup " + repoWorkingDir, e);
         }
 
+    }
+
+    /**
+     * This will switch to the commit hash, or try to switch to the version tag.
+     *
+     * @param gav for info about what to switch to
+     * @param projectDir where to clone the project
+     */
+    public void switchToCommit(ArtifactAttributes gav, File projectDir) {
+        if (StringUtils.isNotBlank(gav.getScmHash())) {
+            ProcessBuilder gitCheckoutHash = new ProcessBuilder(osPrefix + "git", "checkout", gav.getScmHash());
+            gitCheckoutHash.directory(projectDir);
+            run(gitCheckoutHash);
+        } else {
+            // TODO try to get a list of the tags, see if we have 1 unique version that ends with the version, and then
+            // try to switch to that.
+        }
+    }
+
+    /** Gets a unique dir, hopefully based on the scm hash. */
+    public String getRepoWorkingDirectory(ArtifactAttributes gav) {
+        String uniquePart = gav.getScmHash();
+        if (StringUtils.isBlank(uniquePart)) {
+            uniquePart = gav.getVersion();
+        }
+
+        return WORKING_DIR + gav.getScmProject() + File.separator + gav.getScmRepo() + File.separator + uniquePart;
     }
 
     public void processDependencyCheckInfo(ArtifactAttributes gav, File projectDir) {
