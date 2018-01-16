@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.StopWatch;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
@@ -95,8 +96,13 @@ public class DownloadArtifacts {
         if (new File(repoWorkingDir).exists()) {
             System.out.println("Directory '" + repoWorkingDir + "' already exists. Not going to try to clone again. ");
         } else {
+            StopWatch watch = new StopWatch();
+            watch.start();
             ProcessBuilder gitClone = new ProcessBuilder(osPrefix + "git", "clone", gav.buildGitCloneUrl());
             gitClone.directory(new File(repoWorkingDir));
+            watch.stop();
+            System.out.println("Clone for " + gav.getScmProject() + " " + gav.getScmRepo() + " took " + watch);
+
             if (0 != run(gitClone)) {
                 System.err.println("Could not clone project: " + gav);
                 return;
