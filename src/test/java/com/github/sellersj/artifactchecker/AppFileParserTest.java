@@ -1,12 +1,12 @@
 package com.github.sellersj.artifactchecker;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.github.sellersj.artifactchecker.model.App;
@@ -14,7 +14,6 @@ import com.github.sellersj.artifactchecker.model.App;
 public class AppFileParserTest {
 
     @Test
-    @Ignore("Fix this so that it will parse out properly")
     public void parseAppFile() {
         AppFileParser parser = new AppFileParser();
 
@@ -22,14 +21,16 @@ public class AppFileParserTest {
         List<App> parseAppFile = parser.parseAppFile(file);
         assertNotNull(parseAppFile);
 
-        // TODO put this back in
-        // assertEquals("size", 2, parseAppFile.size());
+        assertEquals("size", 4, parseAppFile.size());
 
         for (App app : parseAppFile) {
             System.out.println(app);
 
             checkKey(app, "APP");
             checkKey(app, "SERVER");
+
+            List<String> nodes = app.getAttributes().get("NODE");
+            assertEquals("wrong number of nodes " + nodes, 2, nodes.size());
         }
     }
 

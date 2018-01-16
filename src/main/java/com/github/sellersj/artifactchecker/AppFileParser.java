@@ -34,7 +34,12 @@ public class AppFileParser {
         String[] chunks = contents.split("(?=\\[APP\\])");
 
         for (String chunk : chunks) {
-            result.add(getApp(chunk));
+            App app = getApp(chunk);
+
+            // ignore empty apps (e.g. it's the break line)
+            if (!app.getAttributes().isEmpty()) {
+                result.add(app);
+            }
         }
 
         return result;
@@ -47,9 +52,19 @@ public class AppFileParser {
         for (String string : lines) {
             int splitIndex = string.indexOf("]");
             String key = string.substring(1, splitIndex);
-            String value = string.substring(splitIndex);
+            String value = string.substring(splitIndex + 1);
 
-            app.getAttributes().put(key, value);
+            if (!"BREAK".equals(key)) {
+                List<String> items = app.getAttributes().get(key);
+
+                // if the list is missing, add it in
+                if (null == items) {
+                    items = new ArrayList<>();
+                    app.getAttributes().put(key, items);
+                }
+
+                items.add(value);
+            }
         }
 
         return app;
