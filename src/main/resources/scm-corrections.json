@@ -250,5 +250,77 @@
 		"scmProject": "ICAPPS",
 		"scmRepo": "thd-cas-cfo-travel-hospitality-disclosure",
 		"artifactId": "CFO_TravelHospitalityDisclosurePublicEAR"
+	},
+	{
+		"implementationTitle": "CIPO-ec-payment-app",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-ec-payment",
+		"artifactId": "CIPO-ec-payment-app"
+	},
+	{
+		"implementationTitle": "CIPO-ec-payment-ws-app",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-ec-payment-ws",
+		"artifactId": "CIPO-ec-payment-ws-app"
+	},
+	{
+		"implementationTitle": "CIPO-ec-pb-pct-filing-app",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-ec-pb-pct-filing",
+		"artifactId": "CIPO-ec-pb-pct-filing-app"
+	},
+	{
+		"implementationTitle": "CIPO-ec-tm-agent-renewal-app",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-ec-tm-agent-renewal",
+		"artifactId": "CIPO-ec-tm-agent-renewal-app"
+	},
+	{
+		"implementationTitle": "CIPO-ec-tm-filing-app",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-ec-tm-filing",
+		"artifactId": "CIPO-ec-tm-filing-app"
+	},
+	{
+		"implementationTitle": "CIPO-ec-tm-reg-renewal-app",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-ec-tm-reg-renewal",
+		"artifactId": "CIPO-ec-tm-reg-renewal-app"
+	},
+	{
+		"implementationTitle": "CIPO-ec-tm-ws-app",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-ec-tm-ws",
+		"artifactId": "CIPO-ec-tm-ws-app"
+	},
+	{
+		"implementationTitle": "CIPO-ec-wet-common-app",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-ec-wet-common",
+		"artifactId": "CIPO-ec-wet-common-app"
+	},
+	{
+		"implementationTitle": "CIPO-filing-a-grant-of-interest-app - Enterprise Application",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-filing-a-grant-of-interest",
+		"artifactId": "CIPO-filing-a-grant-of-interest-app"
+	},
+	{
+		"implementationTitle": "CIPO-fitt-app",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-fitt",
+		"artifactId": "CIPO-fitt-app"
+	},
+	{
+		"implementationTitle": "CIPO-tm-agent-name-list-app - Enterprise Application",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-tm-agent-name-list",
+		"artifactId": "CIPO-tm-agent-name-list-app"
+	},
+	{
+		"implementationTitle": "General Correspondence - Enterprise Application",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-general-correspondence",
+		"artifactId": "CIPO-general-correspondence-app"
 	}
 ]
