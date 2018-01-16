@@ -5,14 +5,18 @@ package com.github.sellersj.artifactchecker;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.ProcessBuilder.Redirect;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -159,9 +163,66 @@ public class DownloadArtifacts {
             gitCheckoutHash.directory(projectDir);
             run(gitCheckoutHash);
         } else {
-            // TODO try to get a list of the tags, see if we have 1 unique version that ends with the version, and then
-            // try to switch to that.
+            switchToTag(gav, projectDir);
         }
+    }
+
+    /**
+     * try to get a list of the tags, see if we have 1 unique version that ends with the version, and then try to switch
+     * to that.
+     *
+     * @param gav to switch to
+     * @param projectDir where the project is already cloned to
+     */
+    public void switchToTag(ArtifactAttributes gav, File projectDir) {
+        System.out.println("Using the version to checkout for project " + gav);
+
+        ProcessBuilder gitCheckoutVersion = new ProcessBuilder(osPrefix + "git", "tag", "-l",
+            "\"*-" + gav.getVersion() + "\"");
+        gitCheckoutVersion.directory(projectDir);
+
+        // since we want the normal output, we have to redirect the system err ourselves
+        gitCheckoutVersion.redirectError(Redirect.INHERIT);
+
+        try {
+            Process process = gitCheckoutVersion.start();
+            String output = IOUtils.toString(process.getInputStream(), StandardCharsets.UTF_8);
+
+            process.waitFor();
+            process.exitValue();
+
+            List<String> matchingTags = getMatchingTags(output);
+            if (1 == matchingTags.size()) {
+                String tag = matchingTags.get(0);
+                gav.setScmTag(tag);
+
+                // switch to this tag
+                ProcessBuilder gitCheckoutTag = new ProcessBuilder(osPrefix + "git", "checkout", "tags/" + tag);
+                gitCheckoutTag.directory(projectDir);
+                Process tagProcess = gitCheckoutTag.start();
+
+                tagProcess.waitFor();
+                tagProcess.exitValue();
+
+                System.out.println("Switched to tag '" + tag + "' for " + gav);
+
+            } else {
+                // TODO maybe throw an exception here?
+                System.err.println("Found more than 1 tag for the checkout for project " + gav);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Couldn't run process: " + gitCheckoutVersion, e);
+        }
+    }
+
+    /**
+     * Parse the output by new lines and put them into a list.
+     *
+     * @param tags
+     * @return
+     */
+    public List<String> getMatchingTags(String tags) {
+        return Arrays.asList(tags.split("\\r?\\n"));
     }
 
     /** Gets a unique dir, hopefully based on the scm hash. */

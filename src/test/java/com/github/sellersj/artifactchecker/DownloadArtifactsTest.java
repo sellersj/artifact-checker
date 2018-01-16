@@ -1,6 +1,9 @@
 package com.github.sellersj.artifactchecker;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
+import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -56,6 +59,47 @@ public class DownloadArtifactsTest {
         // smoke test
         DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
         downloadArtifacts.copyFiles();
+    }
+
+    @Test
+    @Ignore
+    public void testSwitchToCommitNoHash() {
+        // TODO refactor this test
+        File directory = new File("E:/Workspaces/IC_Eclipse_44/TestProject");
+        if (!directory.exists()) {
+            System.err.println(directory.getAbsolutePath() + " doesn't exist. Exiting test");
+            return;
+        }
+
+        ArtifactAttributes gav = new ArtifactAttributes();
+        gav.getManifest().put(ArtifactAttributes.VERSION, "1.5.11");
+
+        DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
+        downloadArtifacts.switchToCommit(gav, directory);
+
+    }
+
+    @Test
+    public void getMatchingTagsOneLine() {
+        String tags = "1.5.11\n";
+
+        DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
+        List<String> matchingTags = downloadArtifacts.getMatchingTags(tags);
+        assertEquals("size", 1, matchingTags.size());
+        assertEquals("1.5.11", matchingTags.get(0));
+    }
+
+    @Test
+    public void getMatchingTagsManyLine() {
+        int size = 4;
+        String tags = "";
+        for (int i = 0; i < size; i++) {
+            tags += "1.5.1" + i + "\n";
+        }
+
+        DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
+        List<String> matchingTags = downloadArtifacts.getMatchingTags(tags);
+        assertEquals("size", size, matchingTags.size());
     }
 
 }
