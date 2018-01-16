@@ -163,4 +163,34 @@ public class ArtifactAttributesTest {
         assertEquals(artifactId, art.getArtifactId());
     }
 
+    @Test
+    public void getBaseUrlHasHash() {
+        String scmProject = "myProject";
+        String scmRepo = "myRepo";
+        String scmHash = "faaa0e7";
+
+        ArtifactAttributes art = new ArtifactAttributes();
+        art.getManifest().put(ArtifactAttributes.SCM_PROJECT, scmProject);
+        art.getManifest().put(ArtifactAttributes.SCM_REPO, scmRepo);
+        art.getManifest().put(ArtifactAttributes.SCM_HASH, scmHash);
+
+        String expected = scmProject + "/" + scmRepo + "/" + scmHash + "/" + scmRepo;
+        assertEquals(expected, art.getBaseUrl());
+    }
+
+    @Test
+    public void getBaseUrlHasVersion() {
+        String scmProject = "myProject";
+        String scmRepo = "myRepo";
+        String version = "1.2.3";
+
+        ArtifactAttributes art = new ArtifactAttributes();
+        art.getManifest().put(ArtifactAttributes.SCM_PROJECT, scmProject);
+        art.getManifest().put(ArtifactAttributes.SCM_REPO, scmRepo);
+        art.getManifest().put(ArtifactAttributes.VERSION, version);
+
+        String expected = scmProject + "/" + scmRepo + "/" + version + "/" + scmRepo;
+        assertEquals(expected, art.getBaseUrl());
+    }
+
 }

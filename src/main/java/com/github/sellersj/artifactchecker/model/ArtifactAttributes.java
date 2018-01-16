@@ -300,7 +300,10 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         return baseUrl + "/tree.txt";
     }
 
-    private String getBaseUrl() {
+    /**
+     * @return a base url where the files are stored
+     */
+    /* package */ String getBaseUrl() {
         // default to null
         String url = null;
 
@@ -308,12 +311,13 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
             StringUtils.isNotBlank(getScmRepo()) && //
             (StringUtils.isNotBlank(getScmHash()) || StringUtils.isNotBlank(getVersion()))) {
 
-            url = getScmProject() + "/" + getScmRepo() + "/" + getScmHash() + "/";
+            url = getScmProject() + "/" + getScmRepo() + "/";
             if (StringUtils.isBlank(getScmHash())) {
                 url += getVersion();
             } else {
                 url += getScmHash();
             }
+            url += "/" + getScmRepo();
         }
 
         return url;
