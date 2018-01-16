@@ -172,9 +172,11 @@ public class InventoryFileUtil {
 
                 // TODO consider checking this separately with a double check of the version number
                 // correct the artifactId if we can
-                System.out
-                    .println("Adding corrected artifactId for " + app.getTitle() + " to " + correction.getArtifactId());
-                app.setCorrectedArtifactId(correction.getArtifactId());
+                if (StringUtils.isBlank(app.getArtifactId())) {
+                    System.out.println(
+                        "Adding corrected artifactId for " + app.getTitle() + " to " + correction.getArtifactId());
+                    app.setCorrectedArtifactId(correction.getArtifactId());
+                }
             }
         }
     }
