@@ -100,13 +100,14 @@ public class DownloadArtifacts {
             watch.start();
             ProcessBuilder gitClone = new ProcessBuilder(osPrefix + "git", "clone", gav.buildGitCloneUrl());
             gitClone.directory(new File(repoWorkingDir));
-            watch.stop();
-            System.out.println("Clone for " + gav.getScmProject() + " " + gav.getScmRepo() + " took " + watch);
 
             if (0 != run(gitClone)) {
                 System.err.println("Could not clone project: " + gav);
                 return;
             }
+
+            watch.stop();
+            System.out.println("Clone for " + gav.getScmProject() + " " + gav.getScmRepo() + " took " + watch);
         }
 
         // the directory of the actual project
