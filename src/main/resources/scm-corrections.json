@@ -264,6 +264,54 @@
 		"artifactId": "CFO_TravelHospitalityDisclosurePublicEAR"
 	},
 	{
+		"implementationTitle": "CCR - CIPO - Copyright DD EAR",
+		"scmProject": "ICAPPS",
+		"scmRepo": "ccr-cipo-copyright-dd",
+		"artifactId": "CIPO_CopyrightDDEAR"
+	},
+	{
+		"implementationTitle": "MCG - MC Gravity Calculator EAR",
+		"scmProject": "ICAPPS",
+		"scmRepo": "mcg-mc-gravity-calculator",
+		"artifactId": "MC_Gravity_Calculator_EAR"
+	},
+	{
+		"implementationTitle": "ICR - IC_Registration_InternalEAR",
+		"scmProject": "ICAPPS",
+		"scmRepo": "icr-asd---ic-registration",
+		"artifactId": "IC_Registration_InternalEAR"
+	},
+	{
+		"implementationTitle": "SPNDSMRT - OCA_Spending_Smarter_CalculatorsEAR",
+		"scmProject": "ICAPPS",
+		"scmRepo": "spndsmrt-oca-spending-smarter-calculators",
+		"artifactId": "OCA_Spending_Smarter_CalculatorsEAR"
+	},
+	{
+		"implementationTitle": "SPNDSMRT - OCA_Spending_Smarter_CalculatorsEAR",
+		"scmProject": "ICAPPS",
+		"scmRepo": "spndsmrt-oca-spending-smarter-calculators",
+		"artifactId": "OCA_Spending_Smarter_CalculatorsEAR"
+	},
+	{
+		"implementationTitle": "TDS - OSB_Trustee_Directory_SearchEAR",
+		"scmProject": "ICAPPS",
+		"scmRepo": "tds-osb-trustee-directory",
+		"artifactId": "OSB_Trustee_Directory_SearchEAR"
+	},
+	{
+		"implementationTitle": "MCR - MC_RandomSamplingEAR",
+		"scmProject": "ICAPPS",
+		"scmRepo": "mcr-pseudo-random-sampling-application",
+		"artifactId": "MC_RandomSamplingEAR"
+	},
+	{
+		"implementationTitle": "ODE - TPC - Online Document Exchange EAR",
+		"scmProject": "ICAPPS",
+		"scmRepo": "ode-ito-online-document-exchange",
+		"artifactId": "TPC_OnlineDocumentExchangePublicEar"
+	},
+	{
 		"implementationTitle": "CIPO-ec-payment-app",
 		"scmProject": "CWP",
 		"scmRepo": "cipo-ec-payment",
