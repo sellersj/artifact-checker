@@ -37,7 +37,7 @@
             	   columns:[
                  {title:"Project", field:"scmProject", width:100, headerFilter:"input"},
                  {title:"Repo", field:"scmRepo", headerFilter:"input"},
-                 {title:"Hash", field:"scmHashAbbrev", width:75, formatter:function(cell, formatterParams) {
+                 {title:"Hash", field:"hashOrTag", width:75, formatter:function(cell, formatterParams) {
                      var value = this.sanitizeHTML(cell.getValue());
                      var url = cell.getRow().getData()["scmUrl"]
                      return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";

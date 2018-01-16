@@ -157,12 +157,16 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
         // only build the url if we have the needed data
         if (StringUtils.isNotBlank(getScmProject()) && //
-            StringUtils.isNotBlank(getScmRepo()) && //
-            StringUtils.isNotBlank(getScmHash()) //
-        ) {
+            StringUtils.isNotBlank(getScmRepo())) {
+
             String toolsHost = System.getenv(Constants.TOOLS_HOST);
-            url = "https://" + toolsHost + "/scm/projects/" + getScmProject() + "/repos/" + getScmRepo() + "/commits/"
-                + getScmHash();
+            url = "https://" + toolsHost + "/scm/projects/" + getScmProject() + "/repos/" + getScmRepo();
+
+            if (StringUtils.isNotBlank(getScmHash())) {
+                url += "/commits/" + getScmHash();
+            } else {
+                url += "/browse?at=refs%2Ftags%2F" + getScmTag();
+            }
         }
 
         return url;
@@ -365,6 +369,17 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
             }
         }
         return count;
+    }
+
+    /**
+     * @return the hash or tag so we can link to it
+     */
+    public String getHashOrTag() {
+        String text = getScmHashAbbrev();
+        if (StringUtils.isBlank(text)) {
+            text = getScmTag();
+        }
+        return text;
     }
 
     @Override
