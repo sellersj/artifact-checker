@@ -31,7 +31,7 @@ public class AppFileParser {
         ArrayList<App> result = new ArrayList<>();
 
         // split the file on a the manifest header, while keeping the header
-        String[] chunks = contents.split("(?=\\[App\\])");
+        String[] chunks = contents.split("(?=\\[APP\\])");
 
         for (String chunk : chunks) {
             result.add(getApp(chunk));

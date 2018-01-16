@@ -1,5 +1,43 @@
-[BREAK]Something
-[App]My_Name_Name
-[Server]My_Cluster_Name
-[App]My_Second_App
-[Server]My_Second_Cluster
+[BREAK]Intranet Websphere 8.5
+[APP]My_Name_Name
+[SERVER]Intra-SharedServices-CL1
+[TYPE]Intranet Websphere 8.5
+[BUILD VERSION]1.6.15
+[DATE BUILT]2017--0-5- 8T:15
+[DEPLOY DATE]Wed Jun  7 07:14:37 2017
+[DATASOURCE]SOME_COMMON_DATA_UDS
+[DATASOURCE]APP_SPECIFIC_UDS
+[NODE]Was_In1
+[NODE]Was_In2
+[CONTEXT_ROOT]/my/app/context/root
+[APP]App-Two-Internal
+[SERVER]Intra-SharedServices-CL2
+[TYPE]Intranet Websphere 8.5
+[BUILD VERSION]1.0.0
+[DATE BUILT]2017--0-5- 8T:15
+[DEPLOY DATE]Wed Jun  7 07:14:37 2017
+[DATASOURCE]APP2_SPECIFIC_UDS
+[NODE]Was_In1
+[NODE]Was_In2
+[CONTEXT_ROOT]/my/app2/context/root
+[BREAK]Public Websphere 8.5
+[APP]MY_Public_App-UTF8-Intra
+[SERVER]Public-SharedServices-CL1
+[TYPE]Public Websphere 8.5
+[BUILD VERSION]2.1.1
+[DATE BUILT]2017--0-9- 5T:16
+[DEPLOY DATE]Tue Nov 28 07:41:15 2017
+[DATASOURCE]MyPublicApp_DataSource_UDS
+[DATASOURCE]MyPublicApp__Liquibase_UDS
+[NODE]Was_Public1
+[NODE]Was_Public3
+[APP]AnotherApp__PUBLIC
+[SERVER]Public-Blah-Blah-CL2
+[TYPE]Public Websphere 8.5
+[BUILD VERSION]1.6.3
+[DATE BUILT]2013-09-05 10:36
+[DEPLOY DATE]Tue May 16 13:46:34 2017
+[DATASOURCE]MyPublicApp_DataSource_UDS
+[NODE]Was_Public2
+[NODE]Was_Public3
+[CONTEXT_ROOT]/some-context/root
