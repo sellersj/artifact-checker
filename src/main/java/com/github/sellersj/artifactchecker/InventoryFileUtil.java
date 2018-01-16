@@ -162,7 +162,7 @@ public class InventoryFileUtil {
                 ScmCorrection correction = mapOfCorrections.get(app.getTitle());
 
                 // correct the git info
-                if (StringUtils.isNotBlank(app.getScmHash()) && !app.hasRequiredGitInfo()) {
+                if (!app.hasRequiredGitInfo()) {
                     System.out.println("Correcting repo and name for " + app.getTitle() + " to "
                         + correction.getScmProject() + " and " + correction.getScmRepo());
 
