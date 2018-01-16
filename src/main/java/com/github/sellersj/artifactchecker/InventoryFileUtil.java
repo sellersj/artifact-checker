@@ -170,7 +170,7 @@ public class InventoryFileUtil {
                     app.setCorrectedScmRepo(correction.getScmRepo());
                 }
 
-                // TODO consider checking this seperatly with a double check of the version number
+                // TODO consider checking this separately with a double check of the version number
                 // correct the artifactId if we can
                 System.out
                     .println("Adding corrected artifactId for " + app.getTitle() + " to " + correction.getArtifactId());

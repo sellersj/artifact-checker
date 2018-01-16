@@ -12,6 +12,7 @@ import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.StopWatch;
 
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 
@@ -28,9 +29,15 @@ public class ReportBuilder {
      * This might not run well on windows since it has a max path size of 260 chars and when the project is run, it
      * checks out git projects. Path lengths can get quite long.
      *
+     * If you want to run this WITHOUT doing the clone and checks against the project, set the env variable SKIP_CLONE
+     * to a.
+     *
      * @param args
      */
     public static void main(String[] args) {
+        StopWatch watch = new StopWatch();
+        watch.start();
+
         String toolsHost = System.getenv(Constants.TOOLS_HOST);
         if (StringUtils.isBlank(toolsHost)) {
             System.err.println("The env variable TOOLS_HOST has to be set. Exiting");
@@ -44,8 +51,12 @@ public class ReportBuilder {
 
         Set<ArtifactAttributes> filtered = getAppsFilteredByCloneUrlAndHash(apps);
 
-        for (ArtifactAttributes gav : filtered) {
-            downloadArtifacts.cloneAndCheckProject(gav);
+        String skipClone = System.getenv(Constants.SKIP_CLONE);
+        if (StringUtils.isBlank(skipClone)) {
+
+            for (ArtifactAttributes gav : filtered) {
+                downloadArtifacts.cloneAndCheckProject(gav);
+            }
         }
 
         // populate the artifacts that we've not actually cloned
@@ -77,6 +88,9 @@ public class ReportBuilder {
         } catch (IOException e) {
             throw new RuntimeException("Couldn't copy files from " + srcDir + " to " + destDir, e);
         }
+
+        watch.stop();
+        System.out.println("The total build took: " + watch);
     }
 
     /**

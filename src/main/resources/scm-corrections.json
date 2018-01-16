@@ -36,10 +36,22 @@
 		"artifactId": "CCAA_Internal_EAR"
 	},
 	{
+		"implementationTitle": "CCAA - OSB - Companies Creditors Arrangement Act (CCAA) External EAR",
+		"scmProject": "ICAPPS",
+		"scmRepo": "ccaa-osb-companies-creditors-arrangement-act",
+		"artifactId": "CCAA_External_EAR"
+	},
+	{
 		"implementationTitle": "CDB - OCA_ConsumerResearchDBAdminEAR",
 		"scmProject": "ICAPPS",
 		"scmRepo": "cdb-oca-consumer-research-database",
 		"artifactId": "OCA_ConsumerResearchDBAdminEAR"
+	},
+	{
+		"implementationTitle": "CDB - OCA_ConsumerResearchDBPublicEAR",
+		"scmProject": "ICAPPS",
+		"scmRepo": "cdb-oca-consumer-research-database",
+		"artifactId": "OCA_ConsumerResearchDBPublicEAR"
 	},
 	{
 		"implementationTitle": "CFSRV - SITT_CFS_Report_and_Verification_ApplicationEAR",
