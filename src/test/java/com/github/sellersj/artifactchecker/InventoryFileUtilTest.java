@@ -8,7 +8,6 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
@@ -51,17 +50,28 @@ public class InventoryFileUtilTest {
         Set<ArtifactAttributes> apps = getTestAppInventory();
         assertEquals(2, apps.size());
 
-        Iterator<ArtifactAttributes> iterator = apps.iterator();
+        boolean junitFound = false;
+        boolean wetFound = false;
 
-        ArtifactAttributes artifact2 = iterator.next();
-        assertEquals("ca.canada.ised.wet.cdts", artifact2.getGroupId());
-        assertEquals("wet-cdts-spring-boot-thymeleaf-starter", artifact2.getArtifactId());
-        assertEquals("4.0.25.2-SNAPSHOT", artifact2.getVersion());
+        for (ArtifactAttributes art : apps) {
 
-        ArtifactAttributes artifact1 = iterator.next();
-        assertEquals("junit", artifact1.getGroupId());
-        assertEquals("junit", artifact1.getArtifactId());
-        assertEquals("4.12", artifact1.getVersion());
+            if ("junit".equals(art.getGroupId())) {
+                junitFound = true;
+                assertEquals("junit", art.getGroupId());
+                assertEquals("junit", art.getArtifactId());
+                assertEquals("4.12", art.getVersion());
+            }
+
+            if ("ca.canada.ised.wet.cdts".equals(art.getGroupId())) {
+                wetFound = true;
+                assertEquals("ca.canada.ised.wet.cdts", art.getGroupId());
+                assertEquals("wet-cdts-spring-boot-thymeleaf-starter", art.getArtifactId());
+                assertEquals("4.0.25.2-SNAPSHOT", art.getVersion());
+            }
+        }
+
+        assertTrue("should have found junit", junitFound);
+        assertTrue("should have found wet", wetFound);
     }
 
     @Test
