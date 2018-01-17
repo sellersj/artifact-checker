@@ -98,7 +98,7 @@
       });
        
       $("#groupBy").change(function(){
-         $("#example-table").tabulator("groupBy", this['value']);
+         $("#example-table").tabulator("setGroupBy", this['value']);
       });
   
       //load sample data into the table
@@ -116,6 +116,7 @@
          <option value="cluster">Cluster</option>
          <option value="nodes">Nodes</option>
          <option value="public">Public / Intranet</option>
+         <option value="java8Ready">Java 8 Ready</option>
        </select>
     </form>
     <div id="example-table"></div>
