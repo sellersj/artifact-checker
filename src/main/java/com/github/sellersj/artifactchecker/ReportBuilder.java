@@ -124,6 +124,9 @@ public class ReportBuilder {
 
                     System.out.println("Matching " + attributes.buildGitCloneUrl() + " with deployment " + app);
                     attributes.setDeploymentInfo(app);
+
+                    // track which apps were matched
+                    app.setAppLinked(true);
                     break;
                 }
             }
@@ -131,6 +134,13 @@ public class ReportBuilder {
             if (null == attributes.getDeploymentInfo()) {
                 System.out.println("Couldn't find deployment info for artifactId " + attributes.getArtifactId()
                     + " version " + attributes.getVersion());
+            }
+        }
+
+        System.out.println("Applications deployed that are not linked to maven application are:");
+        for (App app : deployedApp) {
+            if (!app.isAppLinked()) {
+                System.out.println(app);
             }
         }
     }

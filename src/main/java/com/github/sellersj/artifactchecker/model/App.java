@@ -32,6 +32,9 @@ public class App {
     public static final List<String> DEPLOYMENT_SUFFIX_LIST = Arrays.asList(//
         "__PUBLIC", "__INTRA", "_UTF8-Intra", "-Solr_PUBLIC", "_Training");
 
+    /** A way to flag what apps are tracked / linked to our other list. */
+    private boolean appLinked = false;
+
     /**
      * Adds an item to the list that is referenced by the key.
      *
@@ -136,6 +139,20 @@ public class App {
      */
     public void setAttributes(Map<String, List<String>> attributes) {
         this.attributes = attributes;
+    }
+
+    /**
+     * @return the appLinked
+     */
+    public boolean isAppLinked() {
+        return appLinked;
+    }
+
+    /**
+     * @param appLinked the appLinked to set
+     */
+    public void setAppLinked(boolean appLinked) {
+        this.appLinked = appLinked;
     }
 
 }
