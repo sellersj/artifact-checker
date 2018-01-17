@@ -18,4 +18,10 @@ public class Constants {
     /** The filename where we track java 8 issues with dependencies. */
     public static final String JAVA8_ISSUES_FILENAME = "java8-issues.txt";
 
+    /** The hostname of the public facing apps. */
+    public static final String PUBLIC_HOSTNAME = "PUBLIC_HOSTNAME";
+
+    /** The hostname of the intranet facing apps. */
+    public static final String INTRANET_HOSTNAME = "INTRANET_HOSTNAME";
+
 }

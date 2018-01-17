@@ -404,6 +404,25 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         return getDeploymentInfo("NODE");
     }
 
+    /** If this app is public facing. */
+    public boolean isPublic() {
+        return getDeploymentInfo("TYPE").contains("Public");
+    }
+
+    /** The link to the app. */
+    public String getUrl() {
+        String host;
+        String contextRoot = getDeploymentInfo("CONTEXT_ROOT");
+
+        if (isPublic()) {
+            host = System.getenv(Constants.PUBLIC_HOSTNAME);
+        } else {
+            host = System.getenv(Constants.INTRANET_HOSTNAME);
+        }
+
+        return host + contextRoot;
+    }
+
     private String getDeploymentInfo(String key) {
         String result = "";
 
