@@ -1,5 +1,6 @@
 package com.github.sellersj.artifactchecker.model;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -34,4 +35,19 @@ public class AppTest {
         }
     }
 
+    @Test
+    public void containsVersionHasVersion() {
+        String version = "1.2.9";
+        App app = new App();
+        app.putItem(App.BUILD_VERSION, version);
+        assertTrue(app.containsVersion(version));
+    }
+
+    @Test
+    public void containsVersionDoesNotHaveVersion() {
+        String version = "1.2.9";
+        App app = new App();
+        app.putItem(App.BUILD_VERSION, "9.2.2");
+        assertFalse(app.containsVersion(version));
+    }
 }

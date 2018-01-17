@@ -108,7 +108,7 @@ public class ReportBuilder {
 
     /**
      * This will try to map the values scraped from the manifests with the values we get out of the env
-     * 
+     *
      * @param artifacts to check
      * @param deployedApp with info to see if we can merge it
      */
@@ -126,6 +126,11 @@ public class ReportBuilder {
                     attributes.setDeploymentInfo(app);
                     break;
                 }
+            }
+
+            if (null == attributes.getDeploymentInfo()) {
+                System.out.println("Couldn't find deployment info for artifactId " + attributes.getArtifactId()
+                    + " version " + attributes.getVersion());
             }
         }
     }

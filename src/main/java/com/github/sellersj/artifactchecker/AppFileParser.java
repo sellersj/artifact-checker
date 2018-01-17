@@ -55,6 +55,8 @@ public class AppFileParser {
             }
         }
 
+        System.out.println("Found " + result.size() + " applications in production config");
+
         return result;
     }
 
@@ -68,15 +70,7 @@ public class AppFileParser {
             String value = string.substring(splitIndex + 1);
 
             if (!"BREAK".equals(key)) {
-                List<String> items = app.getAttributes().get(key);
-
-                // if the list is missing, add it in
-                if (null == items) {
-                    items = new ArrayList<>();
-                    app.getAttributes().put(key, items);
-                }
-
-                items.add(value);
+                app.putItem(key, value);
             }
         }
 

@@ -26,8 +26,9 @@ public class AppFileParserTest {
         for (App app : parseAppFile) {
             System.out.println(app);
 
-            checkKey(app, "APP");
-            checkKey(app, "SERVER");
+            checkKey(app, App.APP_KEY);
+            checkKey(app, App.CLUSTER);
+            checkKey(app, App.BUILD_VERSION);
 
             List<String> nodes = app.getAttributes().get("NODE");
             assertEquals("wrong number of nodes " + nodes, 2, nodes.size());

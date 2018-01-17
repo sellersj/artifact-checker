@@ -13,6 +13,9 @@ public class App {
     /** The key for name of the app. */
     public static final String APP_KEY = "APP";
 
+    /** The key that the cluster is stored under. */
+    public static final String CLUSTER = "SERVER";
+
     /** The key that the version is stored under. */
     public static final String BUILD_VERSION = "BUILD VERSION";
 
@@ -21,6 +24,24 @@ public class App {
     /** The list of suffixes used on artifactIds */
     private static final List<String> ARTIFACTID_SUFFIX_LIST = Arrays.asList(//
         "-ear", "-app", "EAR");
+
+    /**
+     * Adds an item to the list that is referenced by the key.
+     *
+     * @param key to use
+     * @param value the value to add to the list
+     */
+    public void putItem(String key, String value) {
+        List<String> items = attributes.get(key);
+
+        // if the list is missing, add it in
+        if (null == items) {
+            items = new ArrayList<>();
+            attributes.put(key, items);
+        }
+
+        items.add(value);
+    }
 
     /**
      * Since the names in prod don't match the artifactId, make a list of guesses.
@@ -47,11 +68,17 @@ public class App {
         return list;
     }
 
+    /**
+     * Checks if this app has a matching version.
+     *
+     * @param version to check
+     * @return true if it's in the list
+     */
     public boolean containsVersion(String version) {
         boolean result = false;
 
         if (attributes.containsKey(BUILD_VERSION)) {
-            attributes.get(BUILD_VERSION).contains(version);
+            result = attributes.get(BUILD_VERSION).contains(version);
         }
 
         return result;
