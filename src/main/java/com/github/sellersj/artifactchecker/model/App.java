@@ -23,7 +23,11 @@ public class App {
 
     /** The list of suffixes used on artifactIds */
     private static final List<String> ARTIFACTID_SUFFIX_LIST = Arrays.asList(//
-        "-ear", "-app", "EAR");
+        "-ear", "-app", "_EAR", "EAR", "Ear");
+
+    /** The possible suffixes that apps use. */
+    public static final List<String> DEPLOYMENT_SUFFIX_LIST = Arrays.asList(//
+        "__PUBLIC", "__INTRA", "_UTF8-Intra", "-Solr_PUBLIC", "_Training");
 
     /**
      * Adds an item to the list that is referenced by the key.
@@ -49,16 +53,21 @@ public class App {
      * @return
      */
     public List<String> getPossibleArtifactIds() {
-        ArrayList<String> list = new ArrayList<>();
+        List<String> list = new ListIgnoreCase();
 
         if (attributes.containsKey(APP_KEY)) {
             for (String string : attributes.get(APP_KEY)) {
 
-                // TODO it might be better to specify that this is the end of the line
-                String baseName = string.replaceAll("__PUBLIC", "") //
-                    .replaceAll("__INTRA", "")//
-                    .replaceAll("_UTF8-Intra", "");
+                String baseName = string;
+                for (String deploymentSuffix : DEPLOYMENT_SUFFIX_LIST) {
+                    // TODO it might be better to specify that this is the end of the line
+                    baseName = baseName.replaceAll(deploymentSuffix, "");
+                }
 
+                // just the artifactId
+                list.add(baseName);
+
+                // build the possible suffixes
                 for (String suffix : ARTIFACTID_SUFFIX_LIST) {
                     list.add(baseName + suffix);
                 }
@@ -82,6 +91,29 @@ public class App {
         }
 
         return result;
+    }
+
+    /**
+     * A list that will allow the {@link #contains(Object)} method to ignore the case of the java string.
+     *
+     * @author sellersj
+     *
+     */
+    public class ListIgnoreCase extends ArrayList<String> {
+
+        /** */
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public boolean contains(Object o) {
+            String paramStr = (String) o;
+            for (String s : this) {
+                if (paramStr.equalsIgnoreCase(s)) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     @Override

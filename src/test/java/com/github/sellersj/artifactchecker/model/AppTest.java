@@ -14,17 +14,17 @@ public class AppTest {
     public void getPossibleArtifactIds() {
         App app = new App();
 
-        List<String> suffixes = Arrays.asList("__PUBLIC", "__INTRA", "_UTF8-Intra");
-
-        for (String suffix : suffixes) {
+        for (String suffix : App.DEPLOYMENT_SUFFIX_LIST) {
 
             String baseName = "MY_APPLICATION";
             app.getAttributes().put("APP", Arrays.asList(baseName + suffix));
 
             List<String> expected = Arrays.asList(//
+                baseName, // just the artifactId
                 baseName + "-ear", //
-                baseName + "EAR", //
-                baseName + "-app" //
+                baseName + "-app", //
+                baseName + "_EAR", //
+                baseName + "EAR" //
             );
 
             List<String> possibleArtifactIds = app.getPossibleArtifactIds();
