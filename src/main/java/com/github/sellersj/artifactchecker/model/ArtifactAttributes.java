@@ -410,7 +410,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     }
 
     /** The link to the app. */
-    public String getUrl() {
+    public String getApplicationUrl() {
         String host;
         String contextRoot = getDeploymentInfo("CONTEXT_ROOT");
 
