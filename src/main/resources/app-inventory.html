@@ -79,7 +79,7 @@
             		   {title:"Cluster", field:"cluster", headerFilter:"input"},
             		   {title:"Nodes", field:"nodes", headerFilter:"input"},
             		   {title:"Public", field:"public", headerFilter:"input", formatter:"tick", width:50},
-            		   {title:"Url", field:"url", width:50, formatter:function(cell, formatterParams) {
+            		   {title:"Url", field:"applicationUrl", width:50, formatter:function(cell, formatterParams) {
                            var value = this.sanitizeHTML(cell.getValue());
                            var url = cell.getRow().getData()["applicationUrl"]
                            if (url) {
