@@ -10,8 +10,11 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class App {
 
-    /** */
+    /** The key for name of the app. */
     public static final String APP_KEY = "APP";
+
+    /** The key that the version is stored under. */
+    public static final String BUILD_VERSION = "BUILD VERSION";
 
     private Map<String, List<String>> attributes = new HashMap<>();
 
@@ -31,7 +34,7 @@ public class App {
             for (String string : attributes.get(APP_KEY)) {
 
                 // TODO it might be better to specify that this is the end of the line
-                String baseName = string.replace("__PUBLIC", "") //
+                String baseName = string.replaceAll("__PUBLIC", "") //
                     .replaceAll("__INTRA", "")//
                     .replaceAll("_UTF8-Intra", "");
 
@@ -42,6 +45,16 @@ public class App {
         }
 
         return list;
+    }
+
+    public boolean containsVersion(String version) {
+        boolean result = false;
+
+        if (attributes.containsKey(BUILD_VERSION)) {
+            attributes.get(BUILD_VERSION).contains(version);
+        }
+
+        return result;
     }
 
     @Override

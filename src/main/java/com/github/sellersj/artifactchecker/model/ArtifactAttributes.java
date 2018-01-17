@@ -87,6 +87,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     private String scmTag = "";
 
+    /** The info that is configured for the prod deployment. */
+    private App deploymentInfo;
+
     /**
      * @return true if the has the scm project, repo, and (hash or version).
      */
@@ -386,6 +389,35 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         return text;
     }
 
+    /** The deployment cluster. */
+    public String getDeploymentName() {
+        return getDeploymentInfo("APP");
+    }
+
+    /** The deployment cluster. */
+    public String getCluster() {
+        return getDeploymentInfo("SERVER");
+    }
+
+    /** The deployment nodes. */
+    public String getNodes() {
+        return getDeploymentInfo("NODE");
+    }
+
+    private String getDeploymentInfo(String key) {
+        String result = "";
+
+        if (null != deploymentInfo && deploymentInfo.getAttributes().containsKey(key)) {
+            List<String> list = deploymentInfo.getAttributes().get(key);
+            for (String string : list) {
+                result += string + " ";
+            }
+            result = result.trim();
+        }
+
+        return result;
+    }
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
@@ -530,6 +562,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public void setScmTag(String scmTag) {
         this.scmTag = scmTag;
+    }
+
+    /**
+     * @return the deploymentInfo
+     */
+    public App getDeploymentInfo() {
+        return deploymentInfo;
+    }
+
+    /**
+     * @param deploymentInfo the deploymentInfo to set
+     */
+    public void setDeploymentInfo(App deploymentInfo) {
+        this.deploymentInfo = deploymentInfo;
     }
 
 }

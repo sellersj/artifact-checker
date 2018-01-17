@@ -5,11 +5,14 @@ package com.github.sellersj.artifactchecker;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 
 import com.github.sellersj.artifactchecker.model.App;
 
@@ -18,16 +21,26 @@ import com.github.sellersj.artifactchecker.model.App;
  */
 public class AppFileParser {
 
+    public List<App> parseAppFile(String url) {
+
+        try (InputStream in = new URL(url).openStream()) {
+            String contents = IOUtils.toString(in, StandardCharsets.UTF_8);
+            return parseAppContents(contents);
+        } catch (Exception e) {
+            throw new RuntimeException("Could not download and parse url " + url, e);
+        }
+    }
+
     public List<App> parseAppFile(File file) {
         try {
             String contents = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
-            return parseAppFile(contents);
+            return parseAppContents(contents);
         } catch (IOException e) {
             throw new RuntimeException("Couldn't read file: " + file.getAbsolutePath(), e);
         }
     }
 
-    public List<App> parseAppFile(String contents) {
+    public List<App> parseAppContents(String contents) {
         ArrayList<App> result = new ArrayList<>();
 
         // split the file on a the manifest header, while keeping the header

@@ -8,12 +8,14 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.StopWatch;
 
+import com.github.sellersj.artifactchecker.model.App;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 
 /**
@@ -62,6 +64,17 @@ public class ReportBuilder {
         // populate the artifacts that we've not actually cloned
         updateAppsTrackedByAnotherArtifact(apps);
 
+        // merge the info from what's deployed
+        String applicationsUrl = System.getenv(Constants.APPLICATIONS_URL);
+        if (StringUtils.isNotBlank(applicationsUrl)) {
+            AppFileParser parser = new AppFileParser();
+            List<App> deployedApp = parser.parseAppFile(applicationsUrl);
+            mergeInfoFromProd(apps, deployedApp);
+        } else {
+            System.err.println("Url of the application url is not set. Not going to merge deployment info. Set "
+                + Constants.APPLICATIONS_URL + " env variable for this to work.");
+        }
+
         // make the output json
         File target = new File(DownloadArtifacts.FILES_GENERATED + "/app-inventory.json");
         ReportBuilder.buildJsonReport(apps, target);
@@ -91,6 +104,30 @@ public class ReportBuilder {
 
         watch.stop();
         System.out.println("The total build took: " + watch);
+    }
+
+    /**
+     * This will try to map the values scraped from the manifests with the values we get out of the env
+     * 
+     * @param artifacts to check
+     * @param deployedApp with info to see if we can merge it
+     */
+    private static void mergeInfoFromProd(Set<ArtifactAttributes> artifacts, List<App> deployedApp) {
+
+        for (ArtifactAttributes attributes : artifacts) {
+
+            for (App app : deployedApp) {
+
+                // match on the artifactId and the version
+                if (app.getPossibleArtifactIds().contains(attributes.getArtifactId())
+                    && app.containsVersion(attributes.getVersion())) {
+
+                    System.out.println("Matching " + attributes.buildGitCloneUrl() + " with deployment " + app);
+                    attributes.setDeploymentInfo(app);
+                    break;
+                }
+            }
+        }
     }
 
     /**
