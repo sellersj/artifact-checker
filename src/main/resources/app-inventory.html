@@ -98,9 +98,17 @@
       });
        
       $("#groupBy").change(function(){
-         $("#example-table").tabulator("setGroupBy", this['value']);
+         $("#example-table").tabulator("setGroupBy", $(this).val());
       });
-  
+
+      $("#colToShow input").change(function() {
+        if ($(this).is(':checked')) {
+          $("#example-table").tabulator("showColumn", $(this).val());
+        } else {
+          $("#example-table").tabulator("hideColumn", $(this).val());
+        }
+      });
+      
       //load sample data into the table
       $("#example-table").tabulator("setData", "app-inventory.json");
     });
@@ -118,6 +126,13 @@
          <option value="public">Public / Intranet</option>
          <option value="java8Ready">Java 8 Ready</option>
        </select>
+       <fieldset id="colToShow">
+         <legend>Visible columns</legend>
+           <label><input type="checkbox" checked="checked" value="title" />App Name</label>
+           <label><input type="checkbox" checked="checked" value="groupId" />Group Id</label>
+           <label><input type="checkbox" checked="checked" value="artifactId" />Artifact Id</label>
+           <label><input type="checkbox" checked="checked" value="version" />version</label>
+       </fieldset>
     </form>
     <div id="example-table"></div>
   </body>
