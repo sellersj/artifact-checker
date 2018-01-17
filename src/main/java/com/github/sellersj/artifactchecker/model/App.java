@@ -19,6 +19,9 @@ public class App {
     /** The key that the version is stored under. */
     public static final String BUILD_VERSION = "BUILD VERSION";
 
+    /** The key that the context root is stored under. */
+    public static final String CONTEXT_ROOT = "CONTEXT_ROOT";
+
     private Map<String, List<String>> attributes = new HashMap<>();
 
     /** The list of suffixes used on artifactIds */

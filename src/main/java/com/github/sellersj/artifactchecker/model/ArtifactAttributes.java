@@ -411,16 +411,21 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** The link to the app. */
     public String getApplicationUrl() {
-        String host;
-        String contextRoot = getDeploymentInfo("CONTEXT_ROOT");
+        String url = null;
+        String contextRoot = getDeploymentInfo(App.CONTEXT_ROOT);
 
-        if (isPublic()) {
-            host = System.getenv(Constants.PUBLIC_HOSTNAME);
-        } else {
-            host = System.getenv(Constants.INTRANET_HOSTNAME);
+        if (StringUtils.isNotBlank(contextRoot)) {
+            String host;
+            if (isPublic()) {
+                host = System.getenv(Constants.PUBLIC_HOSTNAME);
+            } else {
+                host = System.getenv(Constants.INTRANET_HOSTNAME);
+            }
+
+            url = host + contextRoot;
         }
 
-        return host + contextRoot;
+        return url;
     }
 
     private String getDeploymentInfo(String key) {

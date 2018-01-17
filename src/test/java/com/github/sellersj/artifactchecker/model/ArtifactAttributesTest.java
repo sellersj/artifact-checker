@@ -193,4 +193,28 @@ public class ArtifactAttributesTest {
         assertEquals(expected, art.getBaseUrl());
     }
 
+    @Test
+    public void getApplicationUrlNoContextRoot() {
+
+        ArtifactAttributes art = new ArtifactAttributes();
+        // blank app, no context too
+        art.setDeploymentInfo(new App());
+
+        String url = art.getApplicationUrl();
+        assertNull(url);
+    }
+
+    @Test
+    public void getApplicationUrlHasContextRoot() {
+        String contextRoot = "/some/context/root";
+
+        ArtifactAttributes art = new ArtifactAttributes();
+        App app = new App();
+        app.putItem(App.CONTEXT_ROOT, contextRoot);
+        art.setDeploymentInfo(app);
+
+        String url = art.getApplicationUrl();
+        assertTrue(url + "should have ended with " + contextRoot, url.endsWith("/some/context/root"));
+    }
+
 }
