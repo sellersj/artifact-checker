@@ -96,15 +96,28 @@
               //alert("Row " + row.getData().id + " Clicked!!!!");
           },
       });
+       
+      $("#groupBy").change(function(){
+         $("#example-table").tabulator("groupBy", this['value']);
+      });
   
       //load sample data into the table
       $("#example-table").tabulator("setData", "app-inventory.json");
     });
-    </script> 
+    </script>
   </head>
   <body>
     <h1>Maven Applications in production</h1>
     <p>Only applications that have source control information information will have accurate CVE or java 8 results</p>
+    <form action="#">
+       <label for="groupBy">Group items by</label>
+       <select name="groupBy" id="groupBy">
+         <option value="">No grouping</option>
+         <option value="cluster">Cluster</option>
+         <option value="nodes">Nodes</option>
+         <option value="public">Public / Intranet</option>
+       </select>
+    </form>
     <div id="example-table"></div>
   </body>
 </html>
