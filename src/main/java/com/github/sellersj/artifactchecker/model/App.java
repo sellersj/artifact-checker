@@ -1,7 +1,10 @@
 package com.github.sellersj.artifactchecker.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +25,9 @@ public class App {
     /** The key that the context root is stored under. */
     public static final String CONTEXT_ROOT = "CONTEXT_ROOT";
 
+    /** The deployment date. */
+    public static final String DEPLOY_DATE = "DEPLOY DATE";
+
     private Map<String, List<String>> attributes = new HashMap<>();
 
     /** The list of suffixes used on artifactIds */
@@ -34,6 +40,9 @@ public class App {
 
     /** A way to flag what apps are tracked / linked to our other list. */
     private boolean appLinked = false;
+
+    /** The format from the other file we're parsing. */
+    private static final SimpleDateFormat APP_FILE_DATE_FORMAT = new SimpleDateFormat("EEE MMM d HH:mm:ss yyyy");
 
     /**
      * Adds an item to the list that is referenced by the key.
@@ -94,6 +103,29 @@ public class App {
 
         if (attributes.containsKey(BUILD_VERSION)) {
             result = attributes.get(BUILD_VERSION).contains(version);
+        }
+
+        return result;
+    }
+
+    /**
+     * @return the deployment date if we have it.
+     */
+    public Date getDeploymentDate() {
+        Date result = null;
+
+        List<String> list = attributes.get(DEPLOY_DATE);
+        if (null != list && !list.isEmpty()) {
+            // default the result to the value in the app
+            String dateString = list.iterator().next();
+
+            try {
+                // try to parse it
+                result = APP_FILE_DATE_FORMAT.parse(dateString);
+            } catch (ParseException e) {
+                // log it and continue with the value that we had
+                System.err.println("Could not parse '" + result + "'");
+            }
         }
 
         return result;

@@ -59,6 +59,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** The date format with just the year. */
     private static final SimpleDateFormat SHORT_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
+    /** The format from the output. */
+    private static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     /** If this is a githug host. */
     private boolean github = false;
 
@@ -223,6 +226,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         }
 
         return date;
+    }
+
+    /**
+     * @return the deployment date.
+     */
+    public String getDeploymentDate() {
+        String result = "";
+        if (null != deploymentInfo) {
+            Date date = deploymentInfo.getDeploymentDate();
+            if (null != date) {
+                result = DATE_TIME_FORMAT.format(date);
+            }
+        }
+        return result;
     }
 
     /**

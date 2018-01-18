@@ -79,6 +79,7 @@
                    {title:"Cluster", field:"cluster", headerFilter:"input"},
                    {title:"Nodes", field:"nodes", headerFilter:"input"},
                    {title:"Public", field:"public", headerFilter:"input", formatter:"tick", width:50},
+                   {title:"Date", field:"deploymentDate", headerFilter:"input"},
                    {title:"Url", field:"applicationUrl", width:50, formatter:function(cell, formatterParams) {
                            var value = this.sanitizeHTML(cell.getValue());
                            var url = cell.getRow().getData()["applicationUrl"]
@@ -141,7 +142,7 @@
            <label><input type="checkbox" checked="checked" value="cveSeverityCountHigh cveSeverityCountMedium cveSeverityCountLow" />CVE Security Issues</label>
            <label><input type="checkbox" checked="checked" value="java8Ready" />Java 8 Ready</label>
            <label><input type="checkbox" checked="checked" value="jiraKey" />JIRA</label>
-           <label><input type="checkbox" checked="checked" value="deploymentName cluster nodes public" />Deployment</label>
+           <label><input type="checkbox" checked="checked" value="deploymentName cluster nodes public deploymentDate applicationUrl" />Deployment</label>
            <label><input type="checkbox" checked="checked" value="buildDateFormatted" />Build Date</label>
        </fieldset>
        <!-- button id="redraw">Redraw table</button  -->

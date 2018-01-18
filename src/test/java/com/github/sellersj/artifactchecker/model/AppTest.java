@@ -1,6 +1,8 @@
 package com.github.sellersj.artifactchecker.model;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -49,5 +51,30 @@ public class AppTest {
         App app = new App();
         app.putItem(App.BUILD_VERSION, "9.2.2");
         assertFalse(app.containsVersion(version));
+    }
+
+    @Test
+    public void getDeploymentDateAsStringNoValue() {
+        App app = new App();
+        assertNull(app.getDeploymentDate());
+    }
+
+    @Test
+    public void getDeploymentDateAsStringGarbageValue() {
+        // if unparsble, give back null
+        String input = "aksfhaskjfh";
+        App app = new App();
+        app.putItem(App.DEPLOY_DATE, input);
+        assertNull(app.getDeploymentDate());
+    }
+
+    @Test
+    public void getDeploymentDateAsStringActualValue() {
+        String input = "Tue May 16 13:46:34 2017";
+        App app = new App();
+        app.putItem(App.DEPLOY_DATE, input);
+
+        // being lazy and just comparing the toString values
+        assertEquals("Tue May 16 13:46:34 EDT 2017", app.getDeploymentDate().toString());
     }
 }

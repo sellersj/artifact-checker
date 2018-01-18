@@ -217,4 +217,28 @@ public class ArtifactAttributesTest {
         assertTrue(url + "should have ended with " + contextRoot, url.endsWith("/some/context/root"));
     }
 
+    @Test
+    public void getDeploymentDateNoDeployment() {
+        ArtifactAttributes art = new ArtifactAttributes();
+        art.setDeploymentInfo(null);
+        assertEquals("", art.getDeploymentDate());
+    }
+
+    @Test
+    public void getDeploymentDateNoDateInDeployment() {
+        ArtifactAttributes art = new ArtifactAttributes();
+        art.setDeploymentInfo(new App());
+        assertEquals("", art.getDeploymentDate());
+    }
+
+    @Test
+    public void getDeploymentDateHasAllValues() {
+        ArtifactAttributes art = new ArtifactAttributes();
+        App app = new App();
+        app.putItem(App.DEPLOY_DATE, "Thu Mar 5 07:05:10 2015");
+        art.setDeploymentInfo(app);
+        assertNotNull(art.getDeploymentDate());
+        assertEquals("2015-03-05 07:05:10", art.getDeploymentDate());
+    }
+
 }
