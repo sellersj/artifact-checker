@@ -20,7 +20,7 @@
           layout:"fitColumns", //fit columns to width of table (optional)
           columns:[ //Define Table Columns
               {formatter:"rownum", align:"center", width:40},
-        	  {title:"App Name", field:"title", headerFilter:"input"},
+            {title:"App Name", field:"title", headerFilter:"input"},
               {//create column group
                   title:"Artifact info",
                   columns:[
@@ -34,7 +34,7 @@
                   ],
               },
                {title:"Source Control",
-            	   columns:[
+                 columns:[
                  {title:"Project", field:"scmProject", width:100, headerFilter:"input"},
                  {title:"Repo", field:"scmRepo", headerFilter:"input"},
                  {title:"Hash", field:"hashOrTag", width:75, formatter:function(cell, formatterParams) {
@@ -45,8 +45,8 @@
                ]
                },
                {title:"CVE Security Issues",
-            	   columns:[
-            		 {title:"High", field:"cveSeverityCountHigh", headerFilter:"input", width:50, formatter:function(cell, formatterParams) {
+                 columns:[
+                 {title:"High", field:"cveSeverityCountHigh", headerFilter:"input", width:50, formatter:function(cell, formatterParams) {
                            var value = this.sanitizeHTML(cell.getValue());
                            var url = cell.getRow().getData()["owaspDependencyCheckUrl"]
                            return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
@@ -74,12 +74,12 @@
                   return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
                }},
                {title:"Deployment",
-            	   columns:[
-            		   {title:"Name", field:"deploymentName", headerFilter:"input"},
-            		   {title:"Cluster", field:"cluster", headerFilter:"input"},
-            		   {title:"Nodes", field:"nodes", headerFilter:"input"},
-            		   {title:"Public", field:"public", headerFilter:"input", formatter:"tick", width:50},
-            		   {title:"Url", field:"applicationUrl", width:50, formatter:function(cell, formatterParams) {
+                 columns:[
+                   {title:"Name", field:"deploymentName", headerFilter:"input"},
+                   {title:"Cluster", field:"cluster", headerFilter:"input"},
+                   {title:"Nodes", field:"nodes", headerFilter:"input"},
+                   {title:"Public", field:"public", headerFilter:"input", formatter:"tick", width:50},
+                   {title:"Url", field:"applicationUrl", width:50, formatter:function(cell, formatterParams) {
                            var value = this.sanitizeHTML(cell.getValue());
                            var url = cell.getRow().getData()["applicationUrl"]
                            if (url) {
@@ -100,17 +100,20 @@
       $("#groupBy").change(function(){
          $("#example-table").tabulator("setGroupBy", $(this).val());
       });
+      
+      $("#groupBy").click(function(){
+        $("#example-table").tabulator("redraw", true);
+      });
 
       $("#colToShow input").change(function() {
-    	    var cols = $(this).val().split(" ");
-    	    for (var i = 0; i < cols.length; i++) {
-          if ($(this).is(':checked')) {
-            $("#example-table").tabulator("showColumn", cols[i]);
-          } else {
-            $("#example-table").tabulator("hideColumn", cols[i]);
+          var cols = $(this).val().split(" ");
+          for (var i = 0; i < cols.length; i++) {
+            if ($(this).is(':checked')) {
+              $("#example-table").tabulator("showColumn", cols[i]);
+            } else {
+              $("#example-table").tabulator("hideColumn", cols[i]);
+            }
           }
-          $("#example-table").tabulator("redraw", true);	
-    	    }
       });
       
       //load sample data into the table
@@ -141,6 +144,7 @@
            <label><input type="checkbox" checked="checked" value="deploymentName cluster nodes public" />Deployment</label>
            <label><input type="checkbox" checked="checked" value="buildDateFormatted" />Build Date</label>
        </fieldset>
+       <!-- button id="redraw">Redraw table</button  -->
     </form>
     <div id="example-table"></div>
   </body>
