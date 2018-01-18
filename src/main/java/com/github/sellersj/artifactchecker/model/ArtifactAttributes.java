@@ -16,6 +16,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.sellersj.artifactchecker.Constants;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
@@ -80,6 +81,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     private SortedMap<String, String> manifest = new TreeMap<>();
 
     /** A list of all the vulnerabilties found with this artifact. */
+    @JsonIgnore
     private List<Vulnerability> vulnerabilities = new ArrayList<>();
 
     /**
