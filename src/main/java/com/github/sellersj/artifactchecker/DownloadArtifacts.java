@@ -116,6 +116,8 @@ public class DownloadArtifacts {
         // switch git to the specific hash that we're targeting
         switchToCommit(gav, projectDir);
 
+        mvnInstallIfSnapshot(gav, projectDir);
+
         // generate 1 tree file per project rather than 1 per module
         String treeOutputFile = projectDir.getAbsolutePath() + "/tree.txt";
         ProcessBuilder mvnDepTree = new ProcessBuilder(osPrefix + "mvn" + osSuffix, "--batch-mode",
@@ -156,6 +158,28 @@ public class DownloadArtifacts {
             throw new RuntimeException("Couldnm't delete directory for cleanup " + repoWorkingDir, e);
         }
 
+    }
+
+    /**
+     * For improperly deployed apps, the snapshots might not exist in the repo any more. So we're doing a maven install
+     * to be able to do the CVE checks.
+     *
+     * @param gav to use
+     * @param projectDir the directory that it's in
+     */
+    private void mvnInstallIfSnapshot(ArtifactAttributes gav, File projectDir) {
+        if (gav.getVersion().contains("SNAPSHOT")) {
+
+            System.err.println("*****************");
+            System.err.println("Artifact is a snapshot. This is wrong. " + gav);
+            System.err.println("Running maven install without tests so the other checks can be done.");
+            System.err.println("*****************");
+
+            ProcessBuilder mvnInstall = new ProcessBuilder(osPrefix + "mvn" + osSuffix, "--batch-mode", "install",
+                "-DskipTests");
+            mvnInstall.directory(projectDir);
+            run(mvnInstall);
+        }
     }
 
     /**
