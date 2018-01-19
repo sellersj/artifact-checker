@@ -110,9 +110,9 @@
           var cols = $(this).val().split(" ");
           for (var i = 0; i < cols.length; i++) {
             if ($(this).is(':checked')) {
-              $("#example-table").tabulator("showColumn", cols[i]);
+              $("#example-table").tabulator("toggleColumn", cols[i]);
             } else {
-              $("#example-table").tabulator("hideColumn", cols[i]);
+              $("#example-table").tabulator("toggleColumn", cols[i]);
             }
           }
       });
