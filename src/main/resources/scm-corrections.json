@@ -54,12 +54,6 @@
 		"artifactId": "OCA_ConsumerResearchDBPublicEAR"
 	},
 	{
-		"implementationTitle": "CFSRV - SITT_CFS_Report_and_Verification_ApplicationEAR",
-		"scmProject": "ICAPPS",
-		"scmRepo": "cfsrv-napd-cfs-report-and-verification-application",
-		"artifactId": "SITT_CFS_Report_and_Verification_ApplicationEAR"
-	},
-	{
 		"implementationTitle": "CIPOQBS - CIPO - Querium Term Translator EAR",
 		"scmProject": "ICAPPS",
 		"scmRepo": "cipoqbs-cipo-querium",
@@ -238,18 +232,6 @@
 		"scmProject": "ICAPPS",
 		"scmRepo": "rpd-hrb-reclassification-proactive-disclosure",
 		"artifactId": "HRB_ReclassificationProactiveDisclosurePublicEAR"
-	},
-	{
-		"implementationTitle": "SIS - TestProjectEAR",
-		"scmProject": "SANDBOX",
-		"scmRepo": "sis-test-project",
-		"artifactId": ""
-	},
-	{
-		"implementationTitle": "SRSFC - SRSFC_RadioSpectrumFeeCalculatorEAR",
-		"scmProject": "ICAPPS",
-		"scmRepo": "srsfc-sitt-radio-and-spectrum-fee-calculator",
-		"artifactId": ""
 	},
 	{
 		"implementationTitle": "THD - CFO Travel Hospitality Disclosure Admin EAR",
