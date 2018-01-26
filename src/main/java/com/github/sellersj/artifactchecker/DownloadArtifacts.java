@@ -168,7 +168,7 @@ public class DownloadArtifacts {
      * @param projectDir the directory that it's in
      */
     private void mvnInstallIfSnapshot(ArtifactAttributes gav, File projectDir) {
-        if (gav.getVersion().contains("SNAPSHOT")) {
+        if (StringUtils.isNotBlank(gav.getVersion()) && gav.getVersion().contains("SNAPSHOT")) {
 
             System.err.println("*****************");
             System.err.println("Artifact is a snapshot. This is wrong. " + gav);
