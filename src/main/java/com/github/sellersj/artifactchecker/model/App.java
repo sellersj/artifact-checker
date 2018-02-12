@@ -145,9 +145,11 @@ public class App {
         @Override
         public boolean contains(Object o) {
             String paramStr = (String) o;
-            for (String s : this) {
-                if (paramStr.equalsIgnoreCase(s)) {
-                    return true;
+            if (null != paramStr) {
+                for (String s : this) {
+                    if (paramStr.equalsIgnoreCase(s)) {
+                        return true;
+                    }
                 }
             }
             return false;
