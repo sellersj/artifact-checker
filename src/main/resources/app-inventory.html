@@ -26,53 +26,25 @@
                   columns:[
                       {title:"Group Id", field:"groupId", headerFilter:"input"},
                       {title:"Artifact Id", field:"artifactId", headerFilter:"input"},
-                      {title:"Version", field:"version", width:125, headerFilter:"input", formatter:function(cell, formatterParams) {
-                          var value = this.sanitizeHTML(cell.getValue());
-                          var url = cell.getRow().getData()["nexusUrl"]
-                          return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
-                       }},
+                      {title:"Version", field:"version", formatterParams:{urlField:"nexusUrl"}, formatter:"link", width:125, headerFilter:"input"},
                   ],
               },
                {title:"Source Control",
                  columns:[
                  {title:"Project", field:"scmProject", width:100, headerFilter:"input"},
                  {title:"Repo", field:"scmRepo", headerFilter:"input"},
-                 {title:"Hash", field:"hashOrTag", width:75, formatter:function(cell, formatterParams) {
-                     var value = this.sanitizeHTML(cell.getValue());
-                     var url = cell.getRow().getData()["scmUrl"]
-                     return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
-                  }}
+                 {title:"Hash", field:"hashOrTag", formatterParams:{urlField:"scmUrl"}, formatter:"link", width:75}
                ]
                },
                {title:"CVE Security Issues",
                  columns:[
-                 {title:"High", field:"cveSeverityCountHigh", headerFilter:"input", width:50, formatter:function(cell, formatterParams) {
-                           var value = this.sanitizeHTML(cell.getValue());
-                           var url = cell.getRow().getData()["owaspDependencyCheckUrl"]
-                           return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
-                  }},
-                  {title:"Medium", field:"cveSeverityCountMedium", headerFilter:"input", width:50, formatter:function(cell, formatterParams) {
-                      var value = this.sanitizeHTML(cell.getValue());
-                      var url = cell.getRow().getData()["owaspDependencyCheckUrl"]
-                      return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
-                   }},
-                 {title:"Low", field:"cveSeverityCountLow", headerFilter:"input", width:50, formatter:function(cell, formatterParams) {
-                     var value = this.sanitizeHTML(cell.getValue());
-                     var url = cell.getRow().getData()["owaspDependencyCheckUrl"]
-                     return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
-                  }}
+                   {title:"High", field:"cveSeverityCountHigh", formatterParams:{urlField:"owaspDependencyCheckUrl"}, formatter:"link", headerFilter:"input", width:50},
+                   {title:"Medium", field:"cveSeverityCountMedium", formatterParams:{urlField:"owaspDependencyCheckUrl"}, formatter:"link", headerFilter:"input", width:50},
+                   {title:"Low", field:"cveSeverityCountLow", formatterParams:{urlField:"owaspDependencyCheckUrl"}, formatter:"link", headerFilter:"input", width:50}
                ]
                },
-              {title:"Java 8 Ready", field:"java8Ready", headerFilter:"input", width:100, formatter:function(cell, formatterParams) {
-                  var value = this.sanitizeHTML(cell.getValue());
-                  var url = cell.getRow().getData()["java8Url"]
-                  return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
-               }},
-               {title:"JIRA", field:"jiraKey", headerFilter:"input", width:120, formatter:function(cell, formatterParams) {
-                  var value = this.sanitizeHTML(cell.getValue());
-                  var url = cell.getRow().getData()["jiraUrl"]
-                  return "<a href='" + url + "'>" + this.emptyToSpace(value) + "</a>";
-               }},
+              {title:"Java 8 Ready", field:"java8Ready", formatterParams:{urlField:"java8Url"}, formatter:"link", headerFilter:"input", width:100},
+               {title:"JIRA", field:"jiraKey", formatterParams:{urlField:"jiraUrl"}, formatter:"link", headerFilter:"input", width:120},
                {title:"Deployment",
                  columns:[
                    {title:"Name", field:"deploymentName", headerFilter:"input"},
