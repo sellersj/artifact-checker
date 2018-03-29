@@ -47,7 +47,7 @@ public class FindJava8Issues {
         "org.easymock:easymock:jar:3.5|" + //
         "cglib:cglib.*:3.2|" + //
         "org.ow2.asm:.*:5.0.[3-9]|" + //
-        "org.ow2.asm:.*:5.1|" + //
+        "org.ow2.asm:.*:5.[1-9]|" + //
         "org.mockito:mockito.*:1.10.19|" + //
         "org.eclipse.jdt.core.*:3.10.0|" + //
         "org.springframework:spring-.*:3.2.9|" + //
