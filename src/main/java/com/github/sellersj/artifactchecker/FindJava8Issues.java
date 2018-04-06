@@ -36,6 +36,7 @@ public class FindJava8Issues {
         "eclipse:jdtcore|" + //
         "org.eclipse.jdt:core|" + //
         "org.eclipse.jdt:org.eclipse.jdt.core|" + //
+        "com.entrust.toolkit|" + //
         "org.springframework:spring\\-" + //
         // make sure above line doesn't end with a pipe character |
         ").*";
