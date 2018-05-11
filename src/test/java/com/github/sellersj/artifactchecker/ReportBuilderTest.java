@@ -120,4 +120,16 @@ public class ReportBuilderTest {
         assertEquals("should have been filtered to but was " + filtered, apps.size(), filtered.size());
     }
 
+    @Test
+    public void generateCveFile_PositivePath() throws Exception {
+        File target = File.createTempFile("security-report-", ".html");
+        target.deleteOnExit();
+
+        Set<ArtifactAttributes> apps = InventoryFileUtilTest.getTestAppInventory();
+
+        // TODO put in a check here to make sure that there are some vulnerabilities
+
+        ReportBuilder.generateCveFile(apps, target);
+    }
+
 }

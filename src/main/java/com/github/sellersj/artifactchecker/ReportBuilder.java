@@ -7,9 +7,14 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -17,6 +22,8 @@ import org.apache.commons.lang3.time.StopWatch;
 
 import com.github.sellersj.artifactchecker.model.App;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
+import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
+import com.github.sellersj.artifactchecker.model.security.SecurityVulnerability;
 
 /**
  * If you want to run this from maven, then you can (maybe not with quotes)
@@ -74,6 +81,10 @@ public class ReportBuilder {
             System.err.println("Url of the application url is not set. Not going to merge deployment info. Set "
                 + Constants.APPLICATIONS_URL + " env variable for this to work.");
         }
+
+        // generate a file that's a vulnerability first view
+        File securityReportFile = new File(DownloadArtifacts.FILES_GENERATED + "/security-report.html");
+        generateCveFile(apps, securityReportFile);
 
         // make the output json
         File target = new File(DownloadArtifacts.FILES_GENERATED + "/app-inventory.json");
@@ -224,6 +235,67 @@ public class ReportBuilder {
 
         Set<ArtifactAttributes> apps = InventoryFileUtil.readMergedManifests(url);
         return apps;
+    }
+
+    /**
+     * Generates a report that's specific to security issues
+     * 
+     * @param apps that are found
+     * @param securityReportFile the file to write to
+     */
+    public static void generateCveFile(Set<ArtifactAttributes> apps, File securityReportFile) {
+        // for all the maps, make a map using the vulnerabilities and all the apps that have been flagged for that
+        SortedMap<SecurityVulnerability, List<ArtifactAttributes>> map = mapAppsToCve(apps);
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("<!DOCTYPE html><html><head><meta charset=\"UTF-8\">"
+            + "<title>Security View of Applications</title>\n</head>\n<body>");
+        builder.append("<h1>Security issues</h1>");
+
+        for (Entry<SecurityVulnerability, List<ArtifactAttributes>> entry : map.entrySet()) {
+            builder.append("<h2>" + entry.getKey().getName() + " score " + entry.getKey().getScore() + "</h2>");
+            builder.append("<ul>");
+            for (ArtifactAttributes artifactAttributes : entry.getValue()) {
+                builder.append("<li>");
+                System.out.println(artifactAttributes.getTitle());
+                builder.append("</li>");
+            }
+            builder.append("</ul>");
+        }
+
+        builder.append("</body></html>");
+        try {
+            FileUtils.writeStringToFile(securityReportFile, builder.toString(), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not write the file " + securityReportFile, e);
+        }
+    }
+
+    /**
+     * This will map the apps to the cve so we can have a different view on the code.
+     * 
+     * @param apps to map
+     */
+    private static SortedMap<SecurityVulnerability, List<ArtifactAttributes>> mapAppsToCve(Set<ArtifactAttributes> apps) {
+        SortedMap<SecurityVulnerability, List<ArtifactAttributes>> map = new TreeMap<>();
+
+        for (ArtifactAttributes artifactAttributes : apps) {
+            for (Vulnerability vul : artifactAttributes.getVulnerabilities()) {
+
+                // check if the key already exist
+                SecurityVulnerability key = new SecurityVulnerability(vul.getCvssScore(), vul.getName());
+
+                // if the map doesn't contain the key, init the list
+                if (!map.containsKey(key)) {
+                    map.put(key, new ArrayList<ArtifactAttributes>());
+                }
+
+                // now the key will always exist in the map and we'll add this app to the list
+                map.get(key).add(artifactAttributes);
+            }
+        }
+
+        return map;
     }
 
 }
