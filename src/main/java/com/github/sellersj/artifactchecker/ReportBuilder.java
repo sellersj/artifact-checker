@@ -240,6 +240,8 @@ public class ReportBuilder {
     /**
      * Generates a report that's specific to security issues
      *
+     * TODO this would be much better using a template / json output to separate data from view
+     *
      * @param apps that are found
      * @param securityReportFile the file to write to
      */
@@ -255,7 +257,15 @@ public class ReportBuilder {
         for (Entry<SecurityVulnerability, List<ArtifactAttributes>> entry : map.entrySet()) {
             builder.append("<h2><a href=\"https://nvd.nist.gov/vuln/detail/" + entry.getKey().getName() + "\">"
                 + entry.getKey().getName() + "</a>");
-            builder.append("<p>Score: " + entry.getKey().getScore() + "</p>\n");
+
+            // write some things about the vul
+            builder.append("<p>");
+            builder.append("Score: " + entry.getKey().getScore() + "<br/>");
+            builder.append("Severity: " + entry.getKey().getSeverity() + "<br/>");
+            builder.append("Description: " + entry.getKey().getDescription() + "<br/>");
+            builder.append("</p>\n");
+
+            // what apps have the issue
             builder.append("<ul>\n");
             for (ArtifactAttributes artifactAttributes : entry.getValue()) {
                 builder.append("<li>");
@@ -285,7 +295,7 @@ public class ReportBuilder {
             for (Vulnerability vul : artifactAttributes.getVulnerabilities()) {
 
                 // check if the key already exist
-                SecurityVulnerability key = new SecurityVulnerability(vul.getCvssScore(), vul.getName());
+                SecurityVulnerability key = new SecurityVulnerability(vul);
 
                 // if the map doesn't contain the key, init the list
                 if (!map.containsKey(key)) {
