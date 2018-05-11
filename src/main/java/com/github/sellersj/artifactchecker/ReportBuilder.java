@@ -239,7 +239,7 @@ public class ReportBuilder {
 
     /**
      * Generates a report that's specific to security issues
-     * 
+     *
      * @param apps that are found
      * @param securityReportFile the file to write to
      */
@@ -250,20 +250,22 @@ public class ReportBuilder {
         StringBuilder builder = new StringBuilder();
         builder.append("<!DOCTYPE html><html><head><meta charset=\"UTF-8\">"
             + "<title>Security View of Applications</title>\n</head>\n<body>");
-        builder.append("<h1>Security issues</h1>");
+        builder.append("<h1>Security issues</h1>\n");
 
         for (Entry<SecurityVulnerability, List<ArtifactAttributes>> entry : map.entrySet()) {
-            builder.append("<h2>" + entry.getKey().getName() + " score " + entry.getKey().getScore() + "</h2>");
-            builder.append("<ul>");
+            builder.append("<h2><a href=\"https://nvd.nist.gov/vuln/detail/" + entry.getKey().getName() + "\">"
+                + entry.getKey().getName() + "</a>");
+            builder.append("<p>Score: " + entry.getKey().getScore() + "</p>\n");
+            builder.append("<ul>\n");
             for (ArtifactAttributes artifactAttributes : entry.getValue()) {
                 builder.append("<li>");
-                System.out.println(artifactAttributes.getTitle());
-                builder.append("</li>");
+                System.out.println(artifactAttributes.getCorrectedArtifactId() + " " + artifactAttributes.getJiraKey());
+                builder.append("</li>\n");
             }
-            builder.append("</ul>");
+            builder.append("</ul>\n");
         }
 
-        builder.append("</body></html>");
+        builder.append("\n</body></html>\n");
         try {
             FileUtils.writeStringToFile(securityReportFile, builder.toString(), StandardCharsets.UTF_8);
         } catch (IOException e) {
@@ -273,7 +275,7 @@ public class ReportBuilder {
 
     /**
      * This will map the apps to the cve so we can have a different view on the code.
-     * 
+     *
      * @param apps to map
      */
     private static SortedMap<SecurityVulnerability, List<ArtifactAttributes>> mapAppsToCve(Set<ArtifactAttributes> apps) {
