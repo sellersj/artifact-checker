@@ -36,10 +36,10 @@ import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 public class DownloadArtifacts {
 
     /** The version of owasp dependency check to use. */
-    private static final String OWASP_DEP_CHECK_VERSION = "3.1.1";
+    private static final String OWASP_DEP_CHECK_VERSION = "3.1.2";
 
     /** The version of maven-dependency-plugin to use. */
-    private static final String MAVEN_DEP_PLUGIN_VERSION = "3.0.2";
+    private static final String MAVEN_DEP_PLUGIN_VERSION = "3.1.0";
 
     /**
      * We're dealing with mac giving a limited PATH to eclipse and linking directly to homebrew.
