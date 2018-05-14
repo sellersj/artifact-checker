@@ -250,19 +250,19 @@ public class ReportBuilder {
         SortedMap<SecurityVulnerability, List<ArtifactAttributes>> map = mapAppsToCve(apps);
 
         StringBuilder builder = new StringBuilder();
-        builder.append("<!DOCTYPE html><html><head><meta charset=\"UTF-8\">"
+        builder.append("<!DOCTYPE html><html lang='en'><head><meta charset=\"UTF-8\">"
             + "<title>Security View of Applications</title>\n</head>\n<body>");
         builder.append("<h1>Security issues</h1>\n");
 
         for (Entry<SecurityVulnerability, List<ArtifactAttributes>> entry : map.entrySet()) {
             builder.append("<h2><a href=\"https://nvd.nist.gov/vuln/detail/" + entry.getKey().getName() + "\">"
-                + entry.getKey().getName() + "</a>");
+                + entry.getKey().getName() + "</a></h2>\n");
 
             // write some things about the vul
-            builder.append("<p>");
-            builder.append("Score: " + entry.getKey().getScore() + "<br/>");
-            builder.append("Severity: " + entry.getKey().getSeverity() + "<br/>");
-            builder.append("Description: " + entry.getKey().getDescription() + "<br/>");
+            builder.append("<p>\n");
+            builder.append("Score: " + entry.getKey().getScore() + "<br/>\n");
+            builder.append("Severity: " + entry.getKey().getSeverity() + "<br/>\n");
+            builder.append("Description: " + entry.getKey().getDescription() + "<br/>\n");
             builder.append("</p>\n");
 
             // what apps have the issue
