@@ -364,5 +364,11 @@
 		"scmProject": "CWP",
 		"scmRepo": "cipo-general-correspondence",
 		"artifactId": "CIPO-general-correspondence-app"
+	},
+	{
+		"implementationTitle": "CIPO-cr-request-correction-certificate-app - Enterprise Application",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-cr-request-correction-certificate",
+		"artifactId": "CIPO-cr-request-correction-certificate-app"
 	}
 ]
