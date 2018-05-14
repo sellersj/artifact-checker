@@ -287,6 +287,10 @@ public class ReportBuilder {
                 builder.append(String.format(" <a href='%s'>%s</a> ", artifactAttributes.getNexusUrl(),
                     artifactAttributes.getTitle()));
 
+                // link to nexus with the app name
+                builder.append(String.format(" <a href='%s'>Security report</a> ",
+                    artifactAttributes.getOwaspDependencyCheckUrl()));
+
                 builder.append("</li>\n");
             }
             builder.append("</ul>\n");
