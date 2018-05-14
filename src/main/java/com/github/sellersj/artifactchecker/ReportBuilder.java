@@ -269,7 +269,24 @@ public class ReportBuilder {
             builder.append("<ul>\n");
             for (ArtifactAttributes artifactAttributes : entry.getValue()) {
                 builder.append("<li>");
-                System.out.println(artifactAttributes.getCorrectedArtifactId() + " " + artifactAttributes.getJiraKey());
+
+                // if public
+                if (artifactAttributes.isPublic()) {
+                    builder.append("<strong>PUBLIC</strong>");
+                } else {
+                    builder.append("internal");
+                }
+
+                // jira key if we have it
+                if (StringUtils.isNotEmpty(artifactAttributes.getJiraKey())) {
+                    builder.append(String.format(" <a href='%s'>%s</a> ", artifactAttributes.getJiraUrl(),
+                        artifactAttributes.getJiraKey()));
+                }
+
+                // link to nexus with the app name
+                builder.append(String.format(" <a href='%s'>%s</a> ", artifactAttributes.getNexusUrl(),
+                    artifactAttributes.getTitle()));
+
                 builder.append("</li>\n");
             }
             builder.append("</ul>\n");
