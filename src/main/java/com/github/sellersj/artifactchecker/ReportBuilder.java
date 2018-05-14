@@ -250,7 +250,7 @@ public class ReportBuilder {
         SortedMap<SecurityVulnerability, List<ArtifactAttributes>> map = mapAppsToCve(apps);
 
         StringBuilder builder = new StringBuilder();
-        builder.append("<!DOCTYPE html><html lang='en'><head><meta charset=\"UTF-8\">"
+        builder.append("<!DOCTYPE html>\n<html lang='en'><head><meta charset=\"UTF-8\">"
             + "<title>Security View of Applications</title>\n</head>\n<body>");
         builder.append("<h1>Security issues</h1>\n");
 
