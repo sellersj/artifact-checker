@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
-import java.util.TreeSet;   
+import java.util.TreeSet;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -112,8 +112,13 @@ public class InventoryFileUtilTest {
             File file = InventoryFileUtil.getFileOnClasspath("/merged-manifests.txt");
             Set<ArtifactAttributes> apps = InventoryFileUtil.readMergedManifests(file);
 
-            // for each app, generate a vulnerability
             for (ArtifactAttributes artifactAttributes : apps) {
+                // jria key
+                if (StringUtils.isBlank(artifactAttributes.getJiraKey())) {
+                    artifactAttributes.getManifest().put(ArtifactAttributes.ISSUE_TRACKING, "FAKE");
+                }
+
+                // generate some vulnerabilities
                 int numberOfVul = RANDOM.nextInt(5) + 2;
                 for (int i = 0; i < numberOfVul; i++) {
                     artifactAttributes.getVulnerabilities().add(generateMockVulnerability());
@@ -131,7 +136,7 @@ public class InventoryFileUtilTest {
         // make fake CVE
         vul.setName(String.format("CVE-201%s-010%s", RANDOM.nextInt(10), twoDigitInt()));
 
-        vul.setDescription("Fake cve goes " + RandomStringUtils.randomAscii(0, 100));
+        vul.setDescription("Fake cve goes " + RandomStringUtils.randomAlphanumeric(0, 100));
 
         BigDecimal cvsScore = BigDecimal.valueOf(RANDOM.nextDouble() * 10.0).setScale(1, BigDecimal.ROUND_HALF_UP);
         vul.setCvssScore(cvsScore.toPlainString());
