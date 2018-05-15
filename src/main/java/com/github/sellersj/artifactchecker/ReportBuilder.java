@@ -251,8 +251,14 @@ public class ReportBuilder {
 
         StringBuilder builder = new StringBuilder();
         builder.append("<!DOCTYPE html>\n<html lang='en'><head><meta charset=\"UTF-8\">"
-            + "<title>Security View of Applications</title>\n</head>\n<body>");
-        builder.append("<h1>Security issues</h1>\n");
+            + "<title>Security View of Applications in production</title>\n");
+        // put in style here
+        builder.append("<style>\n");
+        builder.append("body { font-family: sans-serif; }\n");
+        builder.append("tr:nth-child(even) {background-color: #f2f2f2;}\n");
+        builder.append("</style>\n");
+        builder.append("</head>\n<body>");
+        builder.append("<h1>Security issues in production</h1>\n");
 
         for (Entry<SecurityVulnerability, List<ArtifactAttributes>> entry : map.entrySet()) {
             String cveName = entry.getKey().getName();
