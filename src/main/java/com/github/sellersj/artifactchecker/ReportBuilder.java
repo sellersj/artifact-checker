@@ -258,7 +258,7 @@ public class ReportBuilder {
             String cveName = entry.getKey().getName();
 
             // anchor
-            builder.append(String.format("<a name='%s'></a>", cveName));
+            builder.append(String.format("<a id='%s'></a>", cveName));
             // header, linking to external site
             builder.append(
                 String.format("<h2><a href=\"https://nvd.nist.gov/vuln/detail/%s\">%s</a></h2>\n", cveName, cveName));
@@ -271,34 +271,52 @@ public class ReportBuilder {
             builder.append("</p>\n");
 
             // what apps have the issue
-            builder.append("\n");
+            builder.append("<table style=\"width:100%\">\n");
+
+            // TODO put in table headings
+            builder.append("<tr>");
+            builder.append("<th>Sever</th>");
+            builder.append("<th>Jira</th>");
+            builder.append("<th>Artifact</th>");
+            builder.append("<th>CVE Security Report</th>");
+            builder.append("</tr>\n<tbody>");
+
             for (ArtifactAttributes artifactAttributes : entry.getValue()) {
-                builder.append("<li>");
+                builder.append("<tr>");
 
                 // if public
+                td(builder, true);
                 if (artifactAttributes.isPublic()) {
                     builder.append("<strong>PUBLIC</strong>");
                 } else {
                     builder.append("internal");
                 }
+                td(builder, false);
 
                 // jira key if we have it
+                td(builder, true);
                 if (StringUtils.isNotEmpty(artifactAttributes.getJiraKey())) {
                     builder.append(String.format(" <a href='%s'>%s</a> ", artifactAttributes.getJiraUrl(),
                         artifactAttributes.getJiraKey()));
+                } else {
+                    builder.append("&nbsp;");
                 }
+                td(builder, false);
 
                 // link to nexus with the app name
+                td(builder, true);
                 builder.append(String.format(" <a href='%s'>%s</a> ", artifactAttributes.getNexusUrl(),
                     artifactAttributes.getTitle()));
+                td(builder, false);
 
                 // link to nexus with the app name
-                builder.append(String.format(" <a href='%s'>Security report</a> ",
-                    artifactAttributes.getOwaspDependencyCheckUrl()));
+                td(builder, true);
+                builder.append(
+                    String.format(" <a href='%s'>report</a> ", artifactAttributes.getOwaspDependencyCheckUrl()));
+                td(builder, false);
 
-                builder.append("</li>\n");
             }
-            builder.append("</ul>\n");
+            builder.append("</tr>\n</tbody>\n</table>\n");
         }
 
         builder.append("\n</body></html>\n");
@@ -306,6 +324,14 @@ public class ReportBuilder {
             FileUtils.writeStringToFile(securityReportFile, builder.toString(), StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new RuntimeException("Could not write the file " + securityReportFile, e);
+        }
+    }
+
+    private static void td(StringBuilder builder, boolean start) {
+        if (start) {
+            builder.append("<td>\n");
+        } else {
+            builder.append("</td>\n");
         }
     }
 
