@@ -255,8 +255,13 @@ public class ReportBuilder {
         builder.append("<h1>Security issues</h1>\n");
 
         for (Entry<SecurityVulnerability, List<ArtifactAttributes>> entry : map.entrySet()) {
-            builder.append("<h2><a href=\"https://nvd.nist.gov/vuln/detail/" + entry.getKey().getName() + "\">"
-                + entry.getKey().getName() + "</a></h2>\n");
+            String cveName = entry.getKey().getName();
+
+            // anchor
+            builder.append(String.format("<a name='%s'></a>", cveName));
+            // header, linking to external site
+            builder.append(
+                String.format("<h2><a href=\"https://nvd.nist.gov/vuln/detail/%s\">%s</a></h2>\n", cveName, cveName));
 
             // write some things about the vul
             builder.append("<p>\n");
@@ -266,7 +271,7 @@ public class ReportBuilder {
             builder.append("</p>\n");
 
             // what apps have the issue
-            builder.append("<ul>\n");
+            builder.append("\n");
             for (ArtifactAttributes artifactAttributes : entry.getValue()) {
                 builder.append("<li>");
 

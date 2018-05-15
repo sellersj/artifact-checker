@@ -5,20 +5,30 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.Random;
 import java.util.Set;
-import java.util.TreeSet;
+import java.util.TreeSet;   
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
+import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
 public class InventoryFileUtilTest {
+
+    private static final Random RANDOM = new Random();
+
+    private static final List<String> SEVERITY_CHOICES = Arrays.asList("High", "Medium", "Low");
 
     @Test
     public void testWriteRead() throws Exception {
@@ -101,10 +111,39 @@ public class InventoryFileUtilTest {
         try {
             File file = InventoryFileUtil.getFileOnClasspath("/merged-manifests.txt");
             Set<ArtifactAttributes> apps = InventoryFileUtil.readMergedManifests(file);
+
+            // for each app, generate a vulnerability
+            for (ArtifactAttributes artifactAttributes : apps) {
+                int numberOfVul = RANDOM.nextInt(5) + 2;
+                for (int i = 0; i < numberOfVul; i++) {
+                    artifactAttributes.getVulnerabilities().add(generateMockVulnerability());
+                }
+            }
             return apps;
         } catch (Exception e) {
             throw new RuntimeException("Couldn't load the merged manifest test file", e);
         }
+    }
+
+    private static Vulnerability generateMockVulnerability() {
+        Vulnerability vul = new Vulnerability();
+
+        // make fake CVE
+        vul.setName(String.format("CVE-201%s-010%s", RANDOM.nextInt(10), twoDigitInt()));
+
+        vul.setDescription("Fake cve goes " + RandomStringUtils.randomAscii(0, 100));
+
+        BigDecimal cvsScore = BigDecimal.valueOf(RANDOM.nextDouble() * 10.0).setScale(1, BigDecimal.ROUND_HALF_UP);
+        vul.setCvssScore(cvsScore.toPlainString());
+
+        // get a random severity
+        vul.setSeverity(SEVERITY_CHOICES.get(RANDOM.nextInt(SEVERITY_CHOICES.size())));
+
+        return vul;
+    }
+
+    private static final int twoDigitInt() {
+        return RANDOM.nextInt(90) + 10;
     }
 
 }
