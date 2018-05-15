@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map.Entry;
@@ -112,16 +113,22 @@ public class InventoryFileUtilTest {
             File file = InventoryFileUtil.getFileOnClasspath("/merged-manifests.txt");
             Set<ArtifactAttributes> apps = InventoryFileUtil.readMergedManifests(file);
 
+            // generate a bunch of vul's
+
+            List<Vulnerability> vuls = new ArrayList<>();
+            for (int i = 0; i < 15; i++) {
+                vuls.add(generateMockVulnerability());
+            }
+
             for (ArtifactAttributes artifactAttributes : apps) {
                 // jria key
                 if (StringUtils.isBlank(artifactAttributes.getJiraKey())) {
                     artifactAttributes.getManifest().put(ArtifactAttributes.ISSUE_TRACKING, "FAKE");
                 }
 
-                // generate some vulnerabilities
-                int numberOfVul = RANDOM.nextInt(5) + 2;
+                int numberOfVul = RANDOM.nextInt(vuls.size() / 2) + 2;
                 for (int i = 0; i < numberOfVul; i++) {
-                    artifactAttributes.getVulnerabilities().add(generateMockVulnerability());
+                    artifactAttributes.getVulnerabilities().add(vuls.get(RANDOM.nextInt(vuls.size())));
                 }
             }
             return apps;
@@ -134,7 +141,7 @@ public class InventoryFileUtilTest {
         Vulnerability vul = new Vulnerability();
 
         // make fake CVE
-        vul.setName(String.format("CVE-201%s-010%s", RANDOM.nextInt(10), twoDigitInt()));
+        vul.setName(String.format("CVE-201%s-010%s", RANDOM.nextInt(3), RANDOM.nextInt(9)));
 
         vul.setDescription("Fake cve goes " + RandomStringUtils.randomAlphanumeric(0, 100));
 
@@ -145,10 +152,6 @@ public class InventoryFileUtilTest {
         vul.setSeverity(SEVERITY_CHOICES.get(RANDOM.nextInt(SEVERITY_CHOICES.size())));
 
         return vul;
-    }
-
-    private static final int twoDigitInt() {
-        return RANDOM.nextInt(90) + 10;
     }
 
 }
