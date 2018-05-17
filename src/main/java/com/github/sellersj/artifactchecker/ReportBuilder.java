@@ -23,6 +23,7 @@ import org.apache.commons.lang3.time.StopWatch;
 import com.github.sellersj.artifactchecker.model.App;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
+import com.github.sellersj.artifactchecker.model.security.ArtifactAttributesComparator;
 import com.github.sellersj.artifactchecker.model.security.SecurityVulnerability;
 
 /**
@@ -363,6 +364,12 @@ public class ReportBuilder {
                 // now the key will always exist in the map and we'll add this app to the list
                 map.get(key).add(artifactAttributes);
             }
+        }
+
+        // sort the artifacts. Can remove this if switching to ui sorting
+        ArtifactAttributesComparator comparator = new ArtifactAttributesComparator();
+        for (List<ArtifactAttributes> appList : map.values()) {
+            appList.sort(comparator);
         }
 
         return map;
