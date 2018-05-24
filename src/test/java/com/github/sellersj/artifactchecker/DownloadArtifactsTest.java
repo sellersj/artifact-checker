@@ -5,12 +5,19 @@ import static org.junit.Assert.assertEquals;
 import java.io.File;
 import java.util.List;
 
+import org.apache.commons.lang3.SystemUtils;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 
 public class DownloadArtifactsTest {
+
+    /** Just so we can print out the method being run. */
+    @Rule
+    public TestName currentTestName = new TestName();
 
     @Test
     public void testcloneAndCheckProjectNotCloneable() {
@@ -52,6 +59,11 @@ public class DownloadArtifactsTest {
 
     @Test
     public void testcloneAndCheckProjectSpringBootThymleaf() {
+        if (!SystemUtils.IS_OS_MAC_OSX) {
+            System.out.println("Not going to run the test " + currentTestName.getMethodName() + " except on a mac");
+            return;
+        }
+
         ArtifactAttributes gav = new ArtifactAttributes();
         gav.setGithub(true);
         gav.getManifest().put(ArtifactAttributes.SCM_PROJECT, "wet-boew");
