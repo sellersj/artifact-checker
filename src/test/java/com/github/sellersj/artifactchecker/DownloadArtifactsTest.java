@@ -102,4 +102,17 @@ public class DownloadArtifactsTest {
         assertEquals("size", size, matchingTags.size());
     }
 
+    @Test
+    public void getMatchingTagsManyBlankLines() {
+        int size = 4;
+        String tags = "";
+        for (int i = 0; i < size; i++) {
+            tags += "\r\n\t\n";
+        }
+
+        DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
+        List<String> matchingTags = downloadArtifacts.getMatchingTags(tags);
+        assertEquals("should be empty", 0, matchingTags.size());
+    }
+
 }

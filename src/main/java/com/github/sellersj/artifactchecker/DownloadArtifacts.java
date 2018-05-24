@@ -12,7 +12,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -253,7 +252,13 @@ public class DownloadArtifacts {
      * @return
      */
     public List<String> getMatchingTags(String tags) {
-        return Arrays.asList(tags.split("\\r?\\n"));
+        ArrayList<String> matching = new ArrayList<>();
+        for (String string : tags.split("\\r?\\n")) {
+            if (StringUtils.isNotBlank(string)) {
+                matching.add(string);
+            }
+        }
+        return matching;
     }
 
     /** Gets a unique dir, hopefully based on the scm hash. */
