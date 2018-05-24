@@ -38,7 +38,7 @@ public class DownloadArtifacts {
     private static final String OWASP_DEP_CHECK_VERSION = "3.1.2";
 
     /** The version of maven-dependency-plugin to use. */
-    private static final String MAVEN_DEP_PLUGIN_VERSION = "3.1.0";
+    private static final String MAVEN_DEP_PLUGIN_VERSION = "3.1.1";
 
     /**
      * We're dealing with mac giving a limited PATH to eclipse and linking directly to homebrew.
@@ -207,7 +207,8 @@ public class DownloadArtifacts {
     public void switchToTag(ArtifactAttributes gav, File projectDir) {
         System.out.println("Using the version to checkout for project " + gav);
 
-        ProcessBuilder gitCheckoutVersion = new ProcessBuilder(osPrefix + "git", "tag", "-l", "*-" + gav.getVersion());
+        ProcessBuilder gitCheckoutVersion = new ProcessBuilder(osPrefix + "git", "tag", "-l",
+            "*-" + gav.getVersion());
         gitCheckoutVersion.directory(projectDir);
 
         // since we want the normal output, we have to redirect the system err ourselves
