@@ -51,6 +51,20 @@ public class DownloadArtifactsTest {
     }
 
     @Test
+    public void testcloneAndCheckProjectSpringBootThymleaf() {
+        ArtifactAttributes gav = new ArtifactAttributes();
+        gav.setGithub(true);
+        gav.getManifest().put(ArtifactAttributes.SCM_PROJECT, "wet-boew");
+        gav.getManifest().put(ArtifactAttributes.SCM_REPO, "spring-boot-thymeleaf");
+        gav.getManifest().put(ArtifactAttributes.VERSION, "4.0.26.2");
+
+        DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
+        downloadArtifacts.cloneAndCheckProject(gav);
+
+        // TODO check the content of the attributes
+    }
+
+    @Test
     public void testCopyFiles() {
         // create the "from" directory is it doesn't exist for this unit test.
         // TODO ensure that there is actually data in that directory

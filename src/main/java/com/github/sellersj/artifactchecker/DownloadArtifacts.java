@@ -207,8 +207,7 @@ public class DownloadArtifacts {
     public void switchToTag(ArtifactAttributes gav, File projectDir) {
         System.out.println("Using the version to checkout for project " + gav);
 
-        ProcessBuilder gitCheckoutVersion = new ProcessBuilder(osPrefix + "git", "tag", "-l",
-            "\"*-" + gav.getVersion() + "\"");
+        ProcessBuilder gitCheckoutVersion = new ProcessBuilder(osPrefix + "git", "tag", "-l", "*-" + gav.getVersion());
         gitCheckoutVersion.directory(projectDir);
 
         // since we want the normal output, we have to redirect the system err ourselves
