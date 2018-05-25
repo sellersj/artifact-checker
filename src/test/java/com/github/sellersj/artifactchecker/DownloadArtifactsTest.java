@@ -73,7 +73,9 @@ public class DownloadArtifactsTest {
         DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
         downloadArtifacts.cloneAndCheckProject(gav);
 
-        // TODO check the content of the attributes
+        // check the content of the attributes
+        assertEquals("commit date", "2018-02-13 14:56:54 -0500", gav.getScmAuthorDate());
+        assertEquals("scm tag", "wet-cdts-spring-boot-thymeleaf-starter-4.0.26.2", gav.getScmTag());
     }
 
     @Test

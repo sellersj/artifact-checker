@@ -55,6 +55,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** The old maven date format. */
     private static final SimpleDateFormat MAVEN_OLD_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd-HHmm");
+    
+    /** The ISO 8601 date format used by git. */
+    private static final SimpleDateFormat GIT_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
 
     /** The date format with just the year. */
     private static final SimpleDateFormat SHORT_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
@@ -91,6 +94,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      * The scm tag if an artifact doesn't have the hash.
      */
     private String scmTag = "";
+
+    /** The date that git thinks the commit happened. */
+    private String scmAuthorDate = "";
 
     /** The info that is configured for the prod deployment. */
     private App deploymentInfo;
@@ -196,7 +202,6 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /**
      * @return the build date if it exists and is parsable.
      */
-
     public Date getBuildDate() {
         String string = manifest.get(BUILD_TIME);
         Date date = null;
@@ -222,6 +227,14 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
             // if it's not blank and we can't parse either date format, something is wrong
             if (null == date) {
                 System.err.println("Could not parse date : " + string);
+            }
+        } else if (StringUtils.isNotBlank(getScmAuthorDate())) {
+
+            // try the iso 8601 format that git uses
+            try {
+                date = GIT_DATE_FORMAT.parse(getScmAuthorDate());
+            } catch (ParseException e) {
+                // don't log
             }
         }
 
@@ -619,6 +632,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public void setDeploymentInfo(App deploymentInfo) {
         this.deploymentInfo = deploymentInfo;
+    }
+
+    /**
+     * @return the scmAuthorDate
+     */
+    public String getScmAuthorDate() {
+        return scmAuthorDate;
+    }
+
+    /**
+     * @param scmAuthorDate the scmAuthorDate to set
+     */
+    public void setScmAuthorDate(String scmAuthorDate) {
+        this.scmAuthorDate = scmAuthorDate;
     }
 
 }

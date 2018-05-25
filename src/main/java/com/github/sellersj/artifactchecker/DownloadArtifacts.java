@@ -115,6 +115,9 @@ public class DownloadArtifacts {
         // switch git to the specific hash that we're targeting
         switchToCommit(gav, projectDir);
 
+        // grab the commit date if we can
+        populateAuthorDate(gav, projectDir);
+
         mvnInstallIfSnapshot(gav, projectDir);
 
         // generate 1 tree file per project rather than 1 per module
@@ -198,6 +201,46 @@ public class DownloadArtifacts {
     }
 
     /**
+     * For whatever tag (hashed or not) we are on, this will try to get the date.
+     * 
+     * Useful:
+     * <ul>
+     * <li>https://devhints.io/git-log-format</li>
+     * <li>https://devhints.io/git-log</li>
+     * </ul>
+     * 
+     * @param gav for info about get the date
+     * @param projectDir where to clone the project
+     */
+    public void populateAuthorDate(ArtifactAttributes gav, File projectDir) {
+        if (StringUtils.isNotBlank(gav.getScmHash()) || StringUtils.isNotBlank(gav.getScmTag())) {
+
+            // get the last log entry, limiting it to 1, and have it with just the author iso time (ai)
+            ProcessBuilder gitLog = new ProcessBuilder(osPrefix + "git", "log", "-n", "1", "--pretty=\"%ai\"");
+            gitLog.directory(projectDir);
+
+            // since we want the normal output, we have to redirect the system err ourselves
+            gitLog.redirectError(Redirect.INHERIT);
+
+            try {
+                Process process = gitLog.start();
+                String output = StringUtils
+                    .trimToEmpty(IOUtils.toString(process.getInputStream(), StandardCharsets.UTF_8));
+
+                // for the process to run
+                process.waitFor();
+                process.exitValue();
+
+                System.out.println("found the author date of " + output);
+                gav.setScmAuthorDate(output);
+
+            } catch (Exception e) {
+                throw new RuntimeException("Couldn't run process: " + gitLog, e);
+            }
+        }
+    }
+
+    /**
      * try to get a list of the tags, see if we have 1 unique version that ends with the version, and then try to switch
      * to that.
      *
@@ -207,8 +250,7 @@ public class DownloadArtifacts {
     public void switchToTag(ArtifactAttributes gav, File projectDir) {
         System.out.println("Using the version to checkout for project " + gav);
 
-        ProcessBuilder gitCheckoutVersion = new ProcessBuilder(osPrefix + "git", "tag", "-l",
-            "*-" + gav.getVersion());
+        ProcessBuilder gitCheckoutVersion = new ProcessBuilder(osPrefix + "git", "tag", "-l", "*-" + gav.getVersion());
         gitCheckoutVersion.directory(projectDir);
 
         // since we want the normal output, we have to redirect the system err ourselves
@@ -300,7 +342,7 @@ public class DownloadArtifacts {
             // TODO do we need to sort and filter the vulnerabilities
             gav.getVulnerabilities().addAll(vulnerabilities);
         } catch (Exception e) {
-            throw new RuntimeException("Couldnm't read owas" + "p file " + file.getAbsolutePath(), e);
+            throw new RuntimeException("Couldn't read owasp file " + file.getAbsolutePath(), e);
         }
     }
 
