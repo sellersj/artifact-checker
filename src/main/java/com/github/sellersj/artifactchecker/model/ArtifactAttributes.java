@@ -55,7 +55,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** The old maven date format. */
     private static final SimpleDateFormat MAVEN_OLD_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd-HHmm");
-    
+
     /** The ISO 8601 date format used by git. */
     private static final SimpleDateFormat GIT_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
 
@@ -100,6 +100,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** The info that is configured for the prod deployment. */
     private App deploymentInfo;
+
+    /** Our corrected jira key from a static file. */
+    private String correctedJiraKey = "";
 
     /**
      * @return true if the has the scm project, repo, and (hash or version).
@@ -298,6 +301,11 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
         if (StringUtils.isNotBlank(url)) {
             key = url.substring(url.lastIndexOf("/") + 1);
+        }
+
+        // we don't have a value from the manifest
+        if (StringUtils.isBlank(key)) {
+            key = correctedJiraKey;
         }
 
         return key;
@@ -646,6 +654,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public void setScmAuthorDate(String scmAuthorDate) {
         this.scmAuthorDate = scmAuthorDate;
+    }
+
+    /**
+     * @return the correctedJiraKey
+     */
+    public String getCorrectedJiraKey() {
+        return correctedJiraKey;
+    }
+
+    /**
+     * @param correctedJiraKey the correctedJiraKey to set
+     */
+    public void setCorrectedJiraKey(String correctedJiraKey) {
+        this.correctedJiraKey = correctedJiraKey;
     }
 
 }

@@ -18,6 +18,9 @@ public class ScmCorrection implements Comparable<ScmCorrection> {
 
     /** The proper artifactId. */
     private String artifactId = "";
+    
+    /** The jira key. */
+    private String jiraKey = "";
 
     @Override
     public boolean equals(Object obj) {
@@ -42,6 +45,7 @@ public class ScmCorrection implements Comparable<ScmCorrection> {
         builder.append(getScmProject(), rhs.getScmProject());
         builder.append(getScmRepo(), rhs.getScmRepo());
         builder.append(getArtifactId(), rhs.getArtifactId());
+        builder.append(getJiraKey(), rhs.getJiraKey());
 
         return builder.toComparison();
     }
@@ -100,6 +104,22 @@ public class ScmCorrection implements Comparable<ScmCorrection> {
      */
     public void setArtifactId(String artifactId) {
         this.artifactId = artifactId;
+    }
+
+    
+    /**
+     * @return the jiraKey
+     */
+    public String getJiraKey() {
+        return jiraKey;
+    }
+
+    
+    /**
+     * @param jiraKey the jiraKey to set
+     */
+    public void setJiraKey(String jiraKey) {
+        this.jiraKey = jiraKey;
     }
 
 }

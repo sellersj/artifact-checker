@@ -158,6 +158,21 @@ public class ArtifactAttributesTest {
     }
 
     @Test
+    public void getJiraKeyWithManifestAndCorrectedValue() {
+        ArtifactAttributes art = new ArtifactAttributes();
+        art.getManifest().put(ArtifactAttributes.ISSUE_TRACKING, "http://jira.example.com/browse/TEST");
+        art.setCorrectedJiraKey("TOM");
+        assertEquals("TEST", art.getJiraKey());
+    }
+
+    @Test
+    public void getJiraKeyUsingCorrectedValue() {
+        ArtifactAttributes art = new ArtifactAttributes();
+        art.setCorrectedJiraKey("TOM");
+        assertEquals("TOM", art.getJiraKey());
+    }
+
+    @Test
     public void getArtifactIdNoCorrectionNeeded() {
         String artifactId = "myArtifactId";
         ArtifactAttributes art = new ArtifactAttributes();
