@@ -1,8 +1,11 @@
 package com.github.sellersj.artifactchecker;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.SystemUtils;
@@ -76,6 +79,16 @@ public class DownloadArtifactsTest {
         // check the content of the attributes
         assertEquals("commit date", "2018-02-13 14:56:54 -0500", gav.getScmAuthorDate());
         assertEquals("scm tag", "wet-cdts-spring-boot-thymeleaf-starter-4.0.26.2", gav.getScmTag());
+
+        // extra checks for the date
+        Date buildDate = gav.getBuildDate();
+        assertNotNull("build date shouldn't be null", buildDate);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(buildDate);
+
+        assertEquals("year", 2018, cal.get(Calendar.YEAR));
+        assertEquals("month", 1, cal.get(Calendar.MONTH));
+        assertEquals("month", 13, cal.get(Calendar.DAY_OF_MONTH));
     }
 
     @Test

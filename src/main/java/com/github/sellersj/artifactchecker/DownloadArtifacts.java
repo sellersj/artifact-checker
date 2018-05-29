@@ -216,7 +216,7 @@ public class DownloadArtifacts {
         if (StringUtils.isNotBlank(gav.getScmHash()) || StringUtils.isNotBlank(gav.getScmTag())) {
 
             // get the last log entry, limiting it to 1, and have it with just the author iso time (ai)
-            ProcessBuilder gitLog = new ProcessBuilder(osPrefix + "git", "log", "-n", "1", "--pretty=\"%ai\"");
+            ProcessBuilder gitLog = new ProcessBuilder(osPrefix + "git", "log", "-n", "1", "--pretty=%ai");
             gitLog.directory(projectDir);
 
             // since we want the normal output, we have to redirect the system err ourselves
