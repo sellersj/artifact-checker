@@ -177,6 +177,12 @@ public class InventoryFileUtil {
                         "Adding corrected artifactId for " + app.getTitle() + " to " + correction.getArtifactId());
                     app.setCorrectedArtifactId(correction.getArtifactId());
                 }
+
+                if (StringUtils.isNotBlank(correction.getJiraKey())) {
+                    System.out
+                        .println("Adding corrected jira key for " + app.getTitle() + " to " + correction.getJiraKey());
+                    app.setCorrectedJiraKey(correction.getJiraKey());
+                }
             }
         }
     }
