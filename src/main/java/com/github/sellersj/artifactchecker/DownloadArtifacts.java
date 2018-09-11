@@ -140,7 +140,10 @@ public class DownloadArtifacts {
             "-DautoUpdate=false", //
             "-DnuspecAnalyzerEnabled=false", //
             "-DassemblyAnalyzerEnabled=false", //
-            "-DnspAnalyzerEnabled=false"//
+            "-DnspAnalyzerEnabled=false", //
+            "-DnodeAnalyzerEnabled=false", //
+            "-DrubygemsAnalyzerEnabled=false", //
+            "-DbundleAuditAnalyzerEnabled=false" //
         );
         mvnOwaspCheck.directory(projectDir);
         run(mvnOwaspCheck);
@@ -202,13 +205,13 @@ public class DownloadArtifacts {
 
     /**
      * For whatever tag (hashed or not) we are on, this will try to get the date.
-     * 
+     *
      * Useful:
      * <ul>
      * <li>https://devhints.io/git-log-format</li>
      * <li>https://devhints.io/git-log</li>
      * </ul>
-     * 
+     *
      * @param gav for info about get the date
      * @param projectDir where to clone the project
      */
