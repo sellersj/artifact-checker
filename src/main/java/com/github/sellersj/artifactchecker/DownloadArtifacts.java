@@ -35,7 +35,7 @@ import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 public class DownloadArtifacts {
 
     /** The version of owasp dependency check to use. */
-    private static final String OWASP_DEP_CHECK_VERSION = "3.1.2";
+    private static final String OWASP_DEP_CHECK_VERSION = "3.3.2";
 
     /** The version of maven-dependency-plugin to use. */
     private static final String MAVEN_DEP_PLUGIN_VERSION = "3.1.1";
@@ -143,7 +143,8 @@ public class DownloadArtifacts {
             "-DnspAnalyzerEnabled=false", //
             "-DnodeAnalyzerEnabled=false", //
             "-DrubygemsAnalyzerEnabled=false", //
-            "-DbundleAuditAnalyzerEnabled=false" //
+            "-DbundleAuditAnalyzerEnabled=false", //
+            "-Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2" //
         );
         mvnOwaspCheck.directory(projectDir);
         run(mvnOwaspCheck);
