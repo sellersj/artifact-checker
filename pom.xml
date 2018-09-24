@@ -12,7 +12,7 @@
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <jackson.version>2.9.6</jackson.version>
+    <jackson.version>2.9.7</jackson.version>
   </properties>
 
   <dependencies>
@@ -59,7 +59,7 @@
                   <pluginExecutionFilter>
                     <groupId>com.github.koraktor</groupId>
                     <artifactId>mavanagaiata</artifactId>
-                    <versionRange>[0.8.2,)</versionRange>
+                    <versionRange>[0.9.0,)</versionRange>
                     <goals>
                       <goal>commit</goal>
                       <goal>branch</goal>
@@ -79,7 +79,7 @@
       <plugin>
         <groupId>com.github.koraktor</groupId>
         <artifactId>mavanagaiata</artifactId>
-        <version>0.8.2</version>
+        <version>0.9.0</version>
         <executions>
           <execution>
             <id>load-git-branch</id>

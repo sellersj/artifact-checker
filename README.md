@@ -28,7 +28,7 @@ And configured with the plugin that extracts git info like this:
 <plugin>
   <groupId>com.github.koraktor</groupId>
   <artifactId>mavanagaiata</artifactId>
-  <version>0.8.2</version>
+  <version>0.9.0</version>
   <executions>
     <execution>
       <id>load-git-branch</id>
