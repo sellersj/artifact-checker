@@ -26,8 +26,8 @@ import com.github.sellersj.artifactchecker.model.owasp.DependencyCheck;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
 /**
- * If doing this on a computer that hasn't updated the owasp dependency check data, it be can be done by calling the
- * <code>org.owasp:dependency-check-maven:3.0.2:update-only</code>
+ * If doing this on a computer that hasn't updated the owasp dependency check data, it be can be
+ * done by calling the <code>org.owasp:dependency-check-maven:3.0.2:update-only</code>
  *
  * @author sellersj
  *
@@ -52,7 +52,9 @@ public class DownloadArtifacts {
 
     public static final String WORKING_DIR = "target/cloned-projects/";
 
-    /** The place where we store the files we've generated from the project, the ones we care about. */
+    /**
+     * The place where we store the files we've generated from the project, the ones we care about.
+     */
     public static final String FILES_GENERATED = "target/files-generated/";
 
     public DownloadArtifacts() {
@@ -126,7 +128,9 @@ public class DownloadArtifacts {
             "org.apache.maven.plugins:maven-dependency-plugin:" + MAVEN_DEP_PLUGIN_VERSION + ":tree",
             "-DoutputFile=" + treeOutputFile, "-DappendOutput=true");
         mvnDepTree.directory(projectDir);
-        run(mvnDepTree);
+        if (0 != run(mvnDepTree)) {
+            gav.setLibraryCheckedWorked(false);
+        }
 
         // run dependency tree
         // TODO figure out how to properly filter for java 8 issues here
@@ -147,7 +151,9 @@ public class DownloadArtifacts {
             "-Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2" //
         );
         mvnOwaspCheck.directory(projectDir);
-        run(mvnOwaspCheck);
+        if (0 != run(mvnOwaspCheck)) {
+            gav.setLibraryCheckedWorked(false);
+        }
 
         // grather the info we want from the owasp dependency check
         processDependencyCheckInfo(gav, projectDir);
@@ -167,8 +173,8 @@ public class DownloadArtifacts {
     }
 
     /**
-     * For improperly deployed apps, the snapshots might not exist in the repo any more. So we're doing a maven install
-     * to be able to do the CVE checks.
+     * For improperly deployed apps, the snapshots might not exist in the repo any more. So we're
+     * doing a maven install to be able to do the CVE checks.
      *
      * @param gav to use
      * @param projectDir the directory that it's in
@@ -219,7 +225,8 @@ public class DownloadArtifacts {
     public void populateAuthorDate(ArtifactAttributes gav, File projectDir) {
         if (StringUtils.isNotBlank(gav.getScmHash()) || StringUtils.isNotBlank(gav.getScmTag())) {
 
-            // get the last log entry, limiting it to 1, and have it with just the author iso time (ai)
+            // get the last log entry, limiting it to 1, and have it with just the author iso time
+            // (ai)
             ProcessBuilder gitLog = new ProcessBuilder(osPrefix + "git", "log", "-n", "1", "--pretty=%ai");
             gitLog.directory(projectDir);
 
@@ -245,8 +252,8 @@ public class DownloadArtifacts {
     }
 
     /**
-     * try to get a list of the tags, see if we have 1 unique version that ends with the version, and then try to switch
-     * to that.
+     * try to get a list of the tags, see if we have 1 unique version that ends with the version,
+     * and then try to switch to that.
      *
      * @param gav to switch to
      * @param projectDir where the project is already cloned to

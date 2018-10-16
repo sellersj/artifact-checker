@@ -77,11 +77,17 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** Our corrected artifactId from a static file. */
     private String correctedArtifactId;
 
-    /** Flag for if this artficat's repo was already checked by another artifact (e.g. 1 repo, 2 ears). */
+    /**
+     * Flag for if this artficat's repo was already checked by another artifact (e.g. 1 repo, 2
+     * ears).
+     */
     private boolean alreadyTrackedByAnother = false;
 
     /** Flag for if we can run this on java 8. */
     private boolean java8Ready = false;
+
+    /** If the library checks (dependency, owasp, etc) worked. */
+    private boolean libraryCheckedWorked = true;
 
     /** The manifest associated with this artifact. */
     private SortedMap<String, String> manifest = new TreeMap<>();
@@ -668,6 +674,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public void setCorrectedJiraKey(String correctedJiraKey) {
         this.correctedJiraKey = correctedJiraKey;
+    }
+
+    /**
+     * @return the libraryCheckedWorked
+     */
+    public boolean isLibraryCheckedWorked() {
+        return libraryCheckedWorked;
+    }
+
+    /**
+     * @param libraryCheckedWorked the libraryCheckedWorked to set
+     */
+    public void setLibraryCheckedWorked(boolean libraryCheckedWorked) {
+        this.libraryCheckedWorked = libraryCheckedWorked;
     }
 
 }
