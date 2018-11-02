@@ -82,6 +82,7 @@ public class DownloadArtifacts {
 
     public void cloneAndCheckProject(ArtifactAttributes gav) {
         if (!gav.hasRequiredGitInfo()) {
+            gav.setLibraryCheckedWorked(false);
             System.err.println("###########");
             System.err.println("Project doesn't have enough info to clone and check: " + gav);
             System.err.println("###########");
