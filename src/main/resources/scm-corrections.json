@@ -439,5 +439,32 @@
 		"scmRepo": "cipo-ec-tm-add-name-list",
 		"artifactId": "CIPO-ec-tm-add-name-list-app",
 		"jiraKey": "CRRCC"
-	}	
+	},	{
+		"implementationTitle": "CIPO-id-information-retrieval-service-app - Enterprise Application",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-id-information-retrieval-service",
+		"artifactId": "CIPO-id-information-retrieval-service-app",
+		"jiraKey": ""
+	},
+	{
+		"implementationTitle": "CIPO-fee-service-app - Enterprise Application",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-fee-service",
+		"artifactId": "CIPO-fee-service-app",
+		"jiraKey": ""
+	},
+	{
+		"implementationTitle": "CIPO-id-transaction-processing-service-app - Enterprise Application",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-id-transaction-processing-service",
+		"artifactId": "CIPO-id-transaction-processing-service-app",
+		"jiraKey": ""
+	},
+	{
+		"implementationTitle": "CIPO-fee-console-app - Enterprise Application",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-fee-console",
+		"artifactId": "CIPO-fee-console-app",
+		"jiraKey": ""
+	}
 ]
