@@ -119,6 +119,19 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
             (StringUtils.isNotBlank(getScmHash()) || StringUtils.isNotBlank(getVersion()));
     }
 
+    /**
+     * @return true if the has the scm project, repo, and (hash or version).
+     */
+    public boolean hasSameGitInfo(ArtifactAttributes app) {
+        return getScmProject().equals(app.getScmProject()) && //
+            getScmRepo().equals(app.getScmRepo()) && //
+            // either check the hash
+            (StringUtils.isNotBlank(getScmHash()) && getScmHash().equals(app.getScmHash()) || //
+            // or check the version
+                (StringUtils.isNotBlank(getVersion()) && getVersion().equals(app.getVersion()))) //
+        ;
+    }
+
     public String buildGitCloneUrl() {
         String cloneUrl;
 

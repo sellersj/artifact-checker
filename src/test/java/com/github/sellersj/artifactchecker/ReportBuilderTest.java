@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -18,6 +19,7 @@ import org.junit.Test;
 
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.ScmCorrection;
+import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
 public class ReportBuilderTest {
 
@@ -136,6 +138,66 @@ public class ReportBuilderTest {
         // TODO put in a check here to make sure that there are some vulnerabilities
 
         ReportBuilder.generateCveFile(apps, target);
+    }
+
+    @Test
+    public void updateAppsTrackedByAnotherArtifact_ScmHashes() {
+        Set<ArtifactAttributes> apps = new HashSet<>();
+
+        for (int i = 0; i < 2; i++) {
+            ArtifactAttributes app1 = new ArtifactAttributes();
+            app1.setCorrectedScmProject("myProject");
+            app1.setCorrectedScmRepo("myRepo");
+            app1.getManifest().put(ArtifactAttributes.SCM_HASH, "12348");
+
+            if (0 == i) {
+                app1.setAlreadyTrackedByAnother(true);
+            } else {
+                app1.setJava8Ready(true);
+                List<Vulnerability> vulnerabilities = Arrays.asList(new Vulnerability());
+                app1.setVulnerabilities(vulnerabilities);
+            }
+
+            apps.add(app1);
+        }
+
+        ReportBuilder.updateAppsTrackedByAnotherArtifact(apps);
+
+        // check that all all items are set
+        for (ArtifactAttributes artifactAttributes : apps) {
+            assertTrue("java 8 not set set properly for " + artifactAttributes, artifactAttributes.isJava8Ready());
+            assertEquals("not right vuls for " + artifactAttributes, 1, artifactAttributes.getVulnerabilities().size());
+        }
+    }
+
+    @Test
+    public void updateAppsTrackedByAnotherArtifact_NoScmHashesOnlyVersions() {
+        Set<ArtifactAttributes> apps = new HashSet<>();
+
+        for (int i = 0; i < 2; i++) {
+            ArtifactAttributes app1 = new ArtifactAttributes();
+            app1.setCorrectedScmProject("myProject");
+            app1.setCorrectedScmRepo("myRepo");
+            app1.getManifest().put(ArtifactAttributes.VERSION, "1.2.3");
+
+            if (0 == i) {
+                app1.setAlreadyTrackedByAnother(true);
+            } else {
+                app1.setJava8Ready(true);
+                List<Vulnerability> vulnerabilities = Arrays.asList(new Vulnerability());
+                app1.setVulnerabilities(vulnerabilities);
+            }
+
+            apps.add(app1);
+        }
+
+        ReportBuilder.updateAppsTrackedByAnotherArtifact(apps);
+
+        // check that all all items are set
+        for (ArtifactAttributes artifactAttributes : apps) {
+            assertTrue("java 8 not set set properly for " + artifactAttributes, artifactAttributes.isJava8Ready());
+            assertEquals("not right vuls for " + artifactAttributes, 1, artifactAttributes.getVulnerabilities().size());
+        }
     }
 
 }
