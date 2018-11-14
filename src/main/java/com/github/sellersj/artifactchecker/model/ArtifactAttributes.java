@@ -78,8 +78,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     private String correctedArtifactId;
 
     /**
-     * Flag for if this artficat's repo was already checked by another artifact (e.g. 1 repo, 2
-     * ears).
+     * Flag for if this artficat's repo was already checked by another artifact (e.g. 1 repo, 2 ears).
      */
     private boolean alreadyTrackedByAnother = false;
 
@@ -130,6 +129,13 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
             // or check the version
                 (StringUtils.isNotBlank(getVersion()) && getVersion().equals(app.getVersion()))) //
         ;
+    }
+
+    /**
+     * @return a string that can be used to uniquely identify this project, using git repo, hash, and version.
+     */
+    public String getUniqueStringForGitInfoAndVersion() {
+        return buildGitCloneUrl() + "+" + getScmHash() + "+" + getVersion();
     }
 
     public String buildGitCloneUrl() {
