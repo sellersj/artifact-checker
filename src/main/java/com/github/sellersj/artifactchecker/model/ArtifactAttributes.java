@@ -476,7 +476,8 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
         ArrayList<String> nodeUrls = new ArrayList<>();
         for (String node : nodes) {
-            nodeUrls.add("http://" + logHost + "/logs/" + node.toLowerCase().replaceAll("_", "") + "/");
+            nodeUrls.add("<a href=\"http://" + logHost + "/logs/" + node.toLowerCase().replaceAll("_", "") + "/\">"
+                + node + "</a>");
         }
 
         return nodeUrls;

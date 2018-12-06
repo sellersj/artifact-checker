@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -298,8 +299,10 @@ public class ArtifactAttributesTest {
         List<String> nodeUrls = art.getNodeUrls();
         assertEquals("size", 2, nodeUrls.size());
 
-        assertTrue("didn't find host 1 " + nodeUrls, nodeUrls.contains("http://" + logHost + "/logs/wasin1/"));
-        assertTrue("didn't find host 2 " + nodeUrls, nodeUrls.contains("http://" + logHost + "/logs/wasin2/"));
+        List<String> expected = Arrays.asList("<a href=\"http://logs.example.com/logs/wasin1/\">Was_In1</a>", //
+            "<a href=\"http://logs.example.com/logs/wasin2/\">Was_In2</a>");
+
+        assertEquals(expected, nodeUrls);
     }
 
 }
