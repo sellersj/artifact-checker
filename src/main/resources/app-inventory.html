@@ -51,7 +51,10 @@
                  columns:[
                    {title:"Name", field:"deploymentName", headerFilter:"input"},
                    {title:"Cluster", field:"cluster", headerFilter:"input"},
-                   {title:"Nodes", field:"nodes", headerFilter:"input"},
+                   {title:"Nodes", field:"nodeUrls", headerFilter:"input", formatter:function(cell, formatterParams) {
+                       var value = this.sanitizeHTML(cell.getValue());
+                       return cell.getRow().getData()["nodeUrls"].join(" ");
+                       }},
                    {title:"Public", field:"public", headerFilter:"input", formatter:"tick", width:50},
                    {title:"Date", field:"deploymentDate", headerFilter:"input"},
                    {title:"Url", field:"applicationUrl", width:50, formatter:function(cell, formatterParams) {
