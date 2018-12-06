@@ -27,6 +27,7 @@ public class ReportBuilderTest {
     @Before
     public void setToolsHost() {
         ConstantsTest.setTestValues();
+        toolsHost = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST);
     }
 
     @Test
