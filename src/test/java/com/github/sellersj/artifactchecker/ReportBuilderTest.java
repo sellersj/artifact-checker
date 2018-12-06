@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.SystemUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,13 +25,8 @@ public class ReportBuilderTest {
     private String toolsHost;
 
     @Before
-    public void checkToolsHostSet() {
-        toolsHost = System.getenv(Constants.TOOLS_HOST);
-        if (!SystemUtils.IS_OS_MAC_OSX) {
-            assertTrue("The TOOLS_HOST variable has to be set", StringUtils.isNotBlank(toolsHost));
-        } else {
-            System.err.println("The TOOLS_HOST var isn't set so some of these tests will probably fail");
-        }
+    public void setToolsHost() {
+        ConstantsTest.setTestValues();
     }
 
     @Test

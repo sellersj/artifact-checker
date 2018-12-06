@@ -8,10 +8,20 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
+import com.github.sellersj.artifactchecker.Constants;
+import com.github.sellersj.artifactchecker.ConstantsTest;
+
 public class ArtifactAttributesTest {
+
+    @Before
+    public void setToolsHost() {
+        ConstantsTest.setTestValues();
+    }
 
     @Test
     public void hasRequiredGitInfo() {
@@ -274,6 +284,22 @@ public class ArtifactAttributesTest {
         art.setDeploymentInfo(app);
         assertNotNull(art.getDeploymentDate());
         assertEquals("2015-03-05 07:05:10", art.getDeploymentDate());
+    }
+
+    @Test
+    public void getNodeUrls() {
+        String logHost = "logs.example.com";
+        System.setProperty(Constants.PROD_LOG_HOST, logHost);
+
+        ArtifactAttributes art = new ArtifactAttributes();
+        art.setDeploymentInfo(new App());
+        art.getDeploymentInfo().putItem("NODE", "Was_In1 Was_In2");
+
+        List<String> nodeUrls = art.getNodeUrls();
+        assertEquals("size", 2, nodeUrls.size());
+
+        assertTrue("didn't find host 1 " + nodeUrls, nodeUrls.contains("http://" + logHost + "/logs/wasin1/"));
+        assertTrue("didn't find host 2 " + nodeUrls, nodeUrls.contains("http://" + logHost + "/logs/wasin2/"));
     }
 
 }

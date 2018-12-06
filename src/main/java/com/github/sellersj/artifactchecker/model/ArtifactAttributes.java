@@ -469,6 +469,19 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         return getDeploymentInfo("NODE");
     }
 
+    /** Makes links right into the logging location. */
+    public List<String> getNodeUrls() {
+        String[] nodes = getNodes().split(" ");
+        String logHost = Constants.getSysOrEnvVariable(Constants.PROD_LOG_HOST);
+
+        ArrayList<String> nodeUrls = new ArrayList<>();
+        for (String node : nodes) {
+            nodeUrls.add("http://" + logHost + "/logs/" + node.toLowerCase().replaceAll("_", "") + "/");
+        }
+
+        return nodeUrls;
+    }
+
     /** If this app is public facing. */
     public boolean isPublic() {
         return getDeploymentInfo("TYPE").contains("Public");
