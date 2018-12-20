@@ -13,8 +13,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"isVirtual", "fileName", "filePath", "md5", "sha1", "description", "license", "evidenceCollected",
-    "identifiers", "vulnerabilities"})
+@JsonPropertyOrder({ "isVirtual", "fileName", "filePath", "md5", "sha1", "description", "license", "evidenceCollected",
+    "identifiers", "vulnerabilities" })
 public class Dependency {
 
     @JsonProperty("isVirtual")

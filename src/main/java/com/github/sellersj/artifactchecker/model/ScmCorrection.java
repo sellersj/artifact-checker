@@ -18,7 +18,7 @@ public class ScmCorrection implements Comparable<ScmCorrection> {
 
     /** The proper artifactId. */
     private String artifactId = "";
-    
+
     /** The jira key. */
     private String jiraKey = "";
 
@@ -106,7 +106,6 @@ public class ScmCorrection implements Comparable<ScmCorrection> {
         this.artifactId = artifactId;
     }
 
-    
     /**
      * @return the jiraKey
      */
@@ -114,7 +113,6 @@ public class ScmCorrection implements Comparable<ScmCorrection> {
         return jiraKey;
     }
 
-    
     /**
      * @param jiraKey the jiraKey to set
      */

@@ -208,7 +208,8 @@ public class InventoryFileUtil {
         // remove all the titles that we we care about
         unneeded.removeAll(titles);
 
-        // we should be left with all the values that are in the corrections file but no longer in prod
+        // we should be left with all the values that are in the corrections file but no longer in
+        // prod
         return unneeded;
     }
 

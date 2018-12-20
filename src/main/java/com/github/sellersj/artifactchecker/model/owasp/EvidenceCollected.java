@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"vendorEvidence", "productEvidence", "versionEvidence"})
+@JsonPropertyOrder({ "vendorEvidence", "productEvidence", "versionEvidence" })
 public class EvidenceCollected {
 
     @JsonProperty("vendorEvidence")

@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"reportSchema", "scanInfo", "projectInfo", "dependencies"})
+@JsonPropertyOrder({ "reportSchema", "scanInfo", "projectInfo", "dependencies" })
 public class DependencyCheck {
 
     @JsonProperty("reportSchema")

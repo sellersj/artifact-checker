@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"source", "url", "name"})
+@JsonPropertyOrder({ "source", "url", "name" })
 public class Reference {
 
     @JsonProperty("source")
