@@ -53,3 +53,11 @@ For some tests or code to work, it assumes that a TOOLS_HOST env variable is set
 
 ## Checking for updates of plugins and dependencies
 Run the maven command `versions:display-dependency-updates versions:display-plugin-updates versions:display-property-updates`
+
+## Data Used to generate the "Deployment" columns
+The code uses an env var called `APPLICATIONS_URL` where it pulls deployment info. Under the same host name there is also
+* applications
+* appServers
+* dataSources
+* deploys
+* mailSourceData
