@@ -47,6 +47,7 @@
               {title:"Java 8 Ready", field:"java8Ready", formatterParams:{urlField:"java8Url"}, formatter:"link", headerFilter:"input", width:100},
               {title:"Library Check", field:"libraryCheckedWorked", formatter:"tickCross", headerFilter:"input", width:50},
                {title:"JIRA", field:"jiraKey", formatterParams:{urlField:"jiraUrl"}, formatter:"link", headerFilter:"input", width:120},
+               {title:"Tech Owner", field:"techOwner", headerFilter:"input"},
                {title:"Deployment",
                  columns:[
                    {title:"Name", field:"deploymentName", headerFilter:"input"},
@@ -119,6 +120,7 @@
            <label><input type="checkbox" checked="checked" value="cveSeverityCountHigh cveSeverityCountMedium cveSeverityCountLow" />CVE Security Issues</label>
            <label><input type="checkbox" checked="checked" value="java8Ready" />Java 8 Ready</label>
            <label><input type="checkbox" checked="checked" value="jiraKey" />JIRA</label>
+           <label><input type="checkbox" checked="checked" value="techOwner" />Tech Owner</label>
            <label><input type="checkbox" checked="checked" value="deploymentName cluster nodes public deploymentDate applicationUrl" />Deployment</label>
            <label><input type="checkbox" checked="checked" value="buildDateFormatted" />Build Date</label>
        </fieldset>

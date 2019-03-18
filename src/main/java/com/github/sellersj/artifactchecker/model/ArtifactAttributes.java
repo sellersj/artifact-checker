@@ -78,8 +78,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     private String correctedArtifactId;
 
     /**
-     * Flag for if this artficat's repo was already checked by another artifact (e.g. 1 repo, 2
-     * ears).
+     * Flag for if this artficat's repo was already checked by another artifact (e.g. 1 repo, 2 ears).
      */
     private boolean alreadyTrackedByAnother = false;
 
@@ -110,6 +109,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** Our corrected jira key from a static file. */
     private String correctedJiraKey = "";
 
+    /** Our tech owner from a static file. */
+    private String techOwner = "";
+
     /**
      * @return true if the has the scm project, repo, and (hash or version).
      */
@@ -133,8 +135,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     }
 
     /**
-     * @return a string that can be used to uniquely identify this project, using git repo, hash,
-     *         and version.
+     * @return a string that can be used to uniquely identify this project, using git repo, hash, and version.
      */
     public String getUniqueStringForGitInfoAndVersion() {
         return buildGitCloneUrl() + "+" + getScmHash() + "+" + getVersion();
@@ -709,6 +710,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public void setCorrectedJiraKey(String correctedJiraKey) {
         this.correctedJiraKey = correctedJiraKey;
+    }
+
+    /**
+     * @return the techOwner
+     */
+    public String getTechOwner() {
+        return techOwner;
+    }
+
+    /**
+     * @param techOwner the techOwner to set
+     */
+    public void setTechOwner(String techOwner) {
+        this.techOwner = techOwner;
     }
 
     /**

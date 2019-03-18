@@ -26,6 +26,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.ScmCorrection;
+import com.github.sellersj.artifactchecker.model.TechOwner;
 
 public class InventoryFileUtil {
 
@@ -45,6 +46,16 @@ public class InventoryFileUtil {
             List<ScmCorrection> corrections = mapper.readValue(file, new TypeReference<List<ScmCorrection>>() {
             });
             return corrections;
+        } catch (IOException e) {
+            throw new RuntimeException("Couldn't read file: " + file, e);
+        }
+    }
+
+    public static List<TechOwner> readTechOwner(File file) {
+        try {
+            List<TechOwner> techOwners = mapper.readValue(file, new TypeReference<List<TechOwner>>() {
+            });
+            return techOwners;
         } catch (IOException e) {
             throw new RuntimeException("Couldn't read file: " + file, e);
         }
@@ -112,6 +123,8 @@ public class InventoryFileUtil {
 
         // fix any manifests we can find
         fillInMissingScmInfo(apps);
+
+        fillInTechOwner(apps);
 
         return apps;
     }
@@ -187,6 +200,23 @@ public class InventoryFileUtil {
         }
     }
 
+    /** Fills in tech owner. */
+    public static void fillInTechOwner(Set<ArtifactAttributes> apps) {
+
+        Map<String, TechOwner> mapOfTechOwners = getTechOwners();
+
+        for (ArtifactAttributes app : apps) {
+            if (mapOfTechOwners.containsKey(app.getJiraKey())) {
+                TechOwner owner = mapOfTechOwners.get(app.getJiraKey());
+
+                if (StringUtils.isNotBlank(owner.getJiraKey())) {
+                    System.out.println("Updating TechOwner for " + app.getJiraKey() + " to " + owner.getJiraKey());
+                    app.setTechOwner(owner.getTechOwner());
+                }
+            }
+        }
+    }
+
     /**
      *
      * @param apps from the scraped sources
@@ -222,6 +252,17 @@ public class InventoryFileUtil {
         }
 
         return mapOfCorrections;
+    }
+
+    private static Map<String, TechOwner> getTechOwners() {
+        File file = getFileOnClasspath("/tech-owner.json");
+        List<TechOwner> techOwner = readTechOwner(file);
+        Map<String, TechOwner> mapOfTechOwners = new HashMap<>();
+        for (TechOwner owner : techOwner) {
+            mapOfTechOwners.put(owner.getJiraKey(), owner);
+        }
+
+        return mapOfTechOwners;
     }
 
     private static Manifest readToManifest(String string) {

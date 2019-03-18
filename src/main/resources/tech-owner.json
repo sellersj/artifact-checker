@@ -1,0 +1,162 @@
+[
+	{
+		"jiraKey": "AGS",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "ALSC",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "ART",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "BBCS",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "CASS",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "CBSL",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "CCR",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "CDB",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "CEBE",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "CID",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "CIPOQBS",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "CTR",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "CWS",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "ECOMCPP",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "ECOMCPPR",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "EPTT",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "ETDS",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "FDOCPD",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "FDOGCPD",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "FDOPDFS",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "FDORPD",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "FDOTHD",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "ICGCPD",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "ICPDC",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "ICR",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "INS",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "MSD",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "ODE",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "OHW",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "PCOCDD",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "PDFCNVTR",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "POIMAP",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "QPAY",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "RFAXAPI",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "RGOFLDOC",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "RPD",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "SIS",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "SPNDSMRT",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "SWU",
+		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "THD",
+		"techOwner": "AMIS"
+	}
+]
