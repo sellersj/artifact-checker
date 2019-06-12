@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "name", "type", "confidence", "url" })
+@JsonPropertyOrder({"name", "type", "confidence", "url"})
 public class Identifier {
 
     @JsonProperty("name")

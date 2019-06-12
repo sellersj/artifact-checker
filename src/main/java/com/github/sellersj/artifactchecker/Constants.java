@@ -32,8 +32,8 @@ public class Constants {
     public static final String INTRANET_HOSTNAME = "INTRANET_HOSTNAME";
 
     /**
-     * This will try to get the variable as a system var, if not falls back to env var. If it's
-     * still not found, it will throw an exception.
+     * This will try to get the variable as a system var, if not falls back to env var. If it's still not found, it will
+     * throw an exception.
      *
      * @param varName that we are looking for.
      * @return
@@ -54,8 +54,8 @@ public class Constants {
     }
 
     /**
-     * This will try to get the variable as a system var, if not falls back to env var. If it's
-     * still not found, it will throw an exception.
+     * This will try to get the variable as a system var, if not falls back to env var. If it's still not found, it will
+     * throw an exception.
      *
      * @param varName that we are looking for.
      * @return

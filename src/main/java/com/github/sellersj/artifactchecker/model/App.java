@@ -132,8 +132,7 @@ public class App {
     }
 
     /**
-     * A list that will allow the {@link #contains(Object)} method to ignore the case of the java
-     * string.
+     * A list that will allow the {@link #contains(Object)} method to ignore the case of the java string.
      *
      * @author sellersj
      *

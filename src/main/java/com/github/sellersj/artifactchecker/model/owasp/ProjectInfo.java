@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "name", "groupID", "artifactID", "version", "reportDate", "credits" })
+@JsonPropertyOrder({"name", "groupID", "artifactID", "version", "reportDate", "credits"})
 public class ProjectInfo {
 
     @JsonProperty("name")
