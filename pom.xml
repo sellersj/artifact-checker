@@ -94,9 +94,10 @@
           <skipNoGit>true</skipNoGit>
         </configuration>
       </plugin>
+      <!-- https://bugs.eclipse.org/bugs/show_bug.cgi?id=547340 -->
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>3.1.2</version>
+        <version>3.1.1</version>
         <configuration>
           <archive>
             <manifest>
