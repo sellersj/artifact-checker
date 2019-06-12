@@ -481,5 +481,68 @@
 		"scmRepo": "cipo-ec-id-maintfee",
 		"artifactId": "CIPO-ec-id-maintfee-app",
 		"jiraKey": ""
+	},
+	{
+		"implementationTitle": "CIPO-tm-madrid-console-app",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-tm-madrid-console",
+		"artifactId": "CIPO-tm-madrid-console-app",
+		"jiraKey": ""
+	},
+	{
+		"implementationTitle": "CIPO-tm-information-retrieval-service-app - Enterprise Application",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-tm-information-retrieval-service",
+		"artifactId": "CIPO-tm-information-retrieval-service-app",
+		"jiraKey": ""
+	},
+	{
+		"implementationTitle": "CIPO-tm-madrid-financial-service-app - Enterprise Application",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-tm-madrid-financial-service",
+		"artifactId": "CIPO-tm-madrid-financial-service-app",
+		"jiraKey": ""
+	},
+	{
+		"implementationTitle": "CIPO-tm-madrid-package-service-app - Enterprise Application",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-tm-madrid-package-service",
+		"artifactId": "CIPO-tm-madrid-package-service-app",
+		"jiraKey": ""
+	},
+	{
+		"implementationTitle": "CIPO-tm-madrid-transaction-service-app - Enterprise Application",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-tm-madrid-transaction-service",
+		"artifactId": "CIPO-tm-madrid-transaction-service-app",
+		"jiraKey": ""
+	},
+	{
+		"implementationTitle": "CIPO-tm-madrid-workflow-engine-app - Enterprise Application",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-tm-madrid-workflow-engine",
+		"artifactId": "CIPO-tm-madrid-workflow-engine-app",
+		"jiraKey": ""
+	},
+	{
+		"implementationTitle": "CIPO-tm-transaction-processing-service-app - Enterprise Application",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-tm-transaction-processing-service",
+		"artifactId": "CIPO-tm-transaction-processing-service-app",
+		"jiraKey": ""
+	},
+	{
+		"implementationTitle": "CIPO-tm-user-profile-service-app - Enterprise Application",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-tm-user-profile-service",
+		"artifactId": "CIPO-tm-user-profile-service-app",
+		"jiraKey": ""
+	},
+	{
+		"implementationTitle": "IRPI Web Service - Enterprise Application",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-tm-irpi-service",
+		"artifactId": "CIPO-tm-irpi-service-app",
+		"jiraKey": ""
 	}
 ]
