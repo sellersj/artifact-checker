@@ -544,5 +544,19 @@
 		"scmRepo": "cipo-tm-irpi-service",
 		"artifactId": "CIPO-tm-irpi-service-app",
 		"jiraKey": ""
+	},
+	{
+		"implementationTitle": "CIPO-ec-tm-client-admin-app",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-ec-tm-client-admin",
+		"artifactId": "CIPO-ec-tm-client-admin-app",
+		"jiraKey": ""
+	},
+	{
+		"implementationTitle": "CIPO-ec-tm-oppBoard-app",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-ec-tm-oppboard",
+		"artifactId": "CIPO-ec-tm-oppBoard-app",
+		"jiraKey": ""
 	}
 ]
