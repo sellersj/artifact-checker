@@ -61,3 +61,19 @@ The code uses an env var called `APPLICATIONS_URL` where it pulls deployment inf
 * dataSources
 * deploys
 * mailSourceData
+
+## TODO not yet working Manual steps to regenerate the schema
+Currently there are some manual steps for generating the model
+Download the schema
+https://github.com/jeremylong/DependencyCheck/tree/master/core/src/main/resources/schema
+Pull the convertion tool
+`mvn dependency:copy -Dartifact=org.hisrc.jsonix:jsonix-schema-compiler-full:2.3.9 -DoutputDirectory=. -Dmdep.stripVersion=true`
+Generate the jsonFiles like this
+`java -jar jsonix-schema-compiler-full.jar -generateJsonSchema dependency-check.2.1.xsd`
+Copy the schema into the project
+
+## Current horrible process for generating java model files
+Copy a generated json file `src/main/resources/schema`
+Uncomment the jsonschema2pojo plugin in pom.xml
+Copy and paste the model classes in
+

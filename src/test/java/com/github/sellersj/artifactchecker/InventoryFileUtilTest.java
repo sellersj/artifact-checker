@@ -5,7 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,6 +22,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
+import com.github.sellersj.artifactchecker.model.owasp.Cvssv3;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
 public class InventoryFileUtilTest {
@@ -145,8 +145,10 @@ public class InventoryFileUtilTest {
 
         vul.setDescription("Fake cve goes " + RandomStringUtils.randomAlphanumeric(0, 100));
 
-        BigDecimal cvsScore = BigDecimal.valueOf(RANDOM.nextDouble() * 10.0).setScale(1, BigDecimal.ROUND_HALF_UP);
-        vul.setCvssScore(cvsScore.toPlainString());
+        Float cvsScore = Float.valueOf(RANDOM.nextFloat() * 10.0f);// .setScale(1, BigDecimal.ROUND_HALF_UP);
+        Cvssv3 cvssv3 = new Cvssv3();
+        cvssv3.setBaseScore(cvsScore);
+        vul.setCvssv3(cvssv3);
 
         // get a random severity
         vul.setSeverity(SEVERITY_CHOICES.get(RANDOM.nextInt(SEVERITY_CHOICES.size())));

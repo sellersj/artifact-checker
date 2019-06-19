@@ -22,7 +22,7 @@ import org.apache.commons.lang3.time.StopWatch;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.owasp.Dependency;
-import com.github.sellersj.artifactchecker.model.owasp.DependencyCheck;
+import com.github.sellersj.artifactchecker.model.owasp.DependencyCheckReport;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
 /**
@@ -337,7 +337,7 @@ public class DownloadArtifacts {
         // gather all the vul's and add them to the artifact
         ObjectMapper mapper = new ObjectMapper();
         try {
-            DependencyCheck check = mapper.readValue(file, DependencyCheck.class);
+            DependencyCheckReport check = mapper.readValue(file, DependencyCheckReport.class);
             List<Vulnerability> vulnerabilities = new ArrayList<>();
 
             // guard against not having any dependencies
