@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -50,6 +51,9 @@ public class DownloadArtifacts {
      */
     private String osSuffix;
 
+    /** The url where we will point to nexus. */
+    private String nexusUrl;
+
     public static final String WORKING_DIR = "target/cloned-projects/";
 
     /**
@@ -70,6 +74,12 @@ public class DownloadArtifacts {
         } else {
             osPrefix = "";
             osSuffix = "";
+        }
+
+        String toolsHost = System.getenv(Constants.TOOLS_HOST);
+        if (StringUtils.isNotBlank(toolsHost)) {
+            nexusUrl = toolsHost + "/maven-proxy/service/local/";
+            System.out.println(String.format("We are going to use %s to download artifacts", nexusUrl));
         }
     }
 
@@ -137,8 +147,8 @@ public class DownloadArtifacts {
         // TODO figure out how to properly filter for java 8 issues here
         buildJava8Issues(gav, treeOutputFile);
 
-        // run owasp dependency check
-        ProcessBuilder mvnOwaspCheck = new ProcessBuilder(osPrefix + "mvn" + osSuffix, "--batch-mode",
+        List<String> command = new ArrayList<>();
+        command.addAll(Arrays.asList(osPrefix + "mvn" + osSuffix, "--batch-mode",
             "org.owasp:dependency-check-maven:" + OWASP_DEP_CHECK_VERSION + ":check", //
             "org.owasp:dependency-check-maven:" + OWASP_DEP_CHECK_VERSION + ":aggregate", //
             "-Dformat=ALL", "-DskipProvidedScope=true", //
@@ -149,8 +159,15 @@ public class DownloadArtifacts {
             "-DnodeAnalyzerEnabled=false", //
             "-DrubygemsAnalyzerEnabled=false", //
             "-DbundleAuditAnalyzerEnabled=false", //
-            "-Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2" //
-        );
+            "-Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2"));
+
+        // if we have a nexus url, use it
+        if (StringUtils.isNotBlank(nexusUrl)) {
+            command.add("-DnexusUrl=" + nexusUrl);
+        }
+
+        // run owasp dependency check
+        ProcessBuilder mvnOwaspCheck = new ProcessBuilder(command);
         mvnOwaspCheck.directory(projectDir);
         if (0 != run(mvnOwaspCheck)) {
             gav.setLibraryCheckedWorked(false);
