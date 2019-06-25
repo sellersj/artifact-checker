@@ -173,7 +173,7 @@ public class DownloadArtifacts {
             gav.setLibraryCheckedWorked(false);
         }
 
-        // grather the info we want from the owasp dependency check
+        // gather the info we want from the owasp dependency check
         processDependencyCheckInfo(gav, projectDir);
 
         // copy all required files we want to a different location
