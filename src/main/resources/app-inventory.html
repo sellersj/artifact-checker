@@ -39,6 +39,7 @@
                },
                {title:"CVE Security Issues",
                  columns:[
+                   {title:"Critical", field:"cveSeverityCountCritical", formatterParams:{urlField:"owaspDependencyCheckUrl"}, formatter:"link", headerFilter:"input", width:50},
                    {title:"High", field:"cveSeverityCountHigh", formatterParams:{urlField:"owaspDependencyCheckUrl"}, formatter:"link", headerFilter:"input", width:50},
                    {title:"Medium", field:"cveSeverityCountMedium", formatterParams:{urlField:"owaspDependencyCheckUrl"}, formatter:"link", headerFilter:"input", width:50},
                    {title:"Low", field:"cveSeverityCountLow", formatterParams:{urlField:"owaspDependencyCheckUrl"}, formatter:"link", headerFilter:"input", width:50}
@@ -117,7 +118,7 @@
            <label><input type="checkbox" checked="checked" value="title" />App Name</label>
            <label><input type="checkbox" checked="checked" value="groupId artifactId version" />Artifact info</label>
            <label><input type="checkbox" checked="checked" value="scmProject scmRepo hashOrTag" />Source Control</label>
-           <label><input type="checkbox" checked="checked" value="cveSeverityCountHigh cveSeverityCountMedium cveSeverityCountLow" />CVE Security Issues</label>
+           <label><input type="checkbox" checked="checked" value="cveSeverityCountCritical cveSeverityCountHigh cveSeverityCountMedium cveSeverityCountLow" />CVE Security Issues</label>
            <label><input type="checkbox" checked="checked" value="java8Ready" />Java 8 Ready</label>
            <label><input type="checkbox" checked="checked" value="jiraKey" />JIRA</label>
            <label><input type="checkbox" checked="checked" value="techOwner" />Tech Owner</label>
