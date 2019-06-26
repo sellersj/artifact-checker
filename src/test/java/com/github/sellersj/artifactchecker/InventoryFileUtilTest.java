@@ -31,7 +31,7 @@ public class InventoryFileUtilTest {
 
     private static final Random RANDOM = new Random();
 
-    private static final List<String> SEVERITY_CHOICES = Arrays.asList("High", "Medium", "Low");
+    private static final List<String> SEVERITY_CHOICES = Arrays.asList("CRITICAL", "HIGH", "MEDIUM", "LOW", "0.0");
 
     @Test
     public void testWriteRead() throws Exception {
