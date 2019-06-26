@@ -351,11 +351,15 @@ public class DownloadArtifacts {
             return;
         }
 
+        gav.getVulnerabilities().addAll(parseDependencyCheckReport(file));
+    }
+
+    public List<Vulnerability> parseDependencyCheckReport(File file) {
         // gather all the vul's and add them to the artifact
         ObjectMapper mapper = new ObjectMapper();
+        List<Vulnerability> vulnerabilities = new ArrayList<>();
         try {
             DependencyCheckReport check = mapper.readValue(file, DependencyCheckReport.class);
-            List<Vulnerability> vulnerabilities = new ArrayList<>();
 
             // guard against not having any dependencies
             List<Dependency> dependencies = check.getDependencies();
@@ -367,12 +371,12 @@ public class DownloadArtifacts {
                     }
                 }
             }
-
-            // TODO do we need to sort and filter the vulnerabilities
-            gav.getVulnerabilities().addAll(vulnerabilities);
         } catch (Exception e) {
             throw new RuntimeException("Couldn't read owasp file " + file.getAbsolutePath(), e);
         }
+
+        // TODO do we need to sort and filter the vulnerabilities
+        return vulnerabilities;
     }
 
     private int run(ProcessBuilder builder) {
