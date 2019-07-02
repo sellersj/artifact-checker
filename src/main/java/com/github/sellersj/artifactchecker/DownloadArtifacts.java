@@ -36,7 +36,7 @@ import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 public class DownloadArtifacts {
 
     /** The version of owasp dependency check to use. */
-    private static final String OWASP_DEP_CHECK_VERSION = "5.0.0";
+    private static final String OWASP_DEP_CHECK_VERSION = "5.1.0";
 
     /** The version of maven-dependency-plugin to use. */
     private static final String MAVEN_DEP_PLUGIN_VERSION = "3.1.1";
