@@ -558,5 +558,12 @@
 		"scmRepo": "cipo-ec-tm-oppboard",
 		"artifactId": "CIPO-ec-tm-oppBoard-app",
 		"jiraKey": ""
+	},
+	{
+		"implementationTitle": "Patent Electronic Filing - Enterprise Application",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-patent-efiling",
+		"artifactId": "CIPO-patent-efiling-app",
+		"jiraKey": ""
 	}
 ]
