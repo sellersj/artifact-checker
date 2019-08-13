@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -22,7 +23,7 @@ import org.apache.commons.lang3.time.StopWatch;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.owasp.Dependency;
-import com.github.sellersj.artifactchecker.model.owasp.DependencyCheck;
+import com.github.sellersj.artifactchecker.model.owasp.DependencyCheckReport;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
 /**
@@ -35,7 +36,7 @@ import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 public class DownloadArtifacts {
 
     /** The version of owasp dependency check to use. */
-    private static final String OWASP_DEP_CHECK_VERSION = "4.0.2";
+    private static final String OWASP_DEP_CHECK_VERSION = "5.2.1";
 
     /** The version of maven-dependency-plugin to use. */
     private static final String MAVEN_DEP_PLUGIN_VERSION = "3.1.1";
@@ -49,6 +50,9 @@ public class DownloadArtifacts {
      * Ah windows...
      */
     private String osSuffix;
+
+    /** The url where we will point to nexus. */
+    private String nexusUrl;
 
     public static final String WORKING_DIR = "target/cloned-projects/";
 
@@ -70,6 +74,12 @@ public class DownloadArtifacts {
         } else {
             osPrefix = "";
             osSuffix = "";
+        }
+
+        String toolsHost = System.getenv(Constants.TOOLS_HOST);
+        if (StringUtils.isNotBlank(toolsHost)) {
+            nexusUrl = toolsHost + "/maven-proxy/service/local/";
+            System.out.println(String.format("We are going to use %s to download artifacts", nexusUrl));
         }
     }
 
@@ -137,8 +147,8 @@ public class DownloadArtifacts {
         // TODO figure out how to properly filter for java 8 issues here
         buildJava8Issues(gav, treeOutputFile);
 
-        // run owasp dependency check
-        ProcessBuilder mvnOwaspCheck = new ProcessBuilder(osPrefix + "mvn" + osSuffix, "--batch-mode",
+        List<String> command = new ArrayList<>();
+        command.addAll(Arrays.asList(osPrefix + "mvn" + osSuffix, "--batch-mode",
             "org.owasp:dependency-check-maven:" + OWASP_DEP_CHECK_VERSION + ":check", //
             "org.owasp:dependency-check-maven:" + OWASP_DEP_CHECK_VERSION + ":aggregate", //
             "-Dformat=ALL", "-DskipProvidedScope=true", //
@@ -149,14 +159,21 @@ public class DownloadArtifacts {
             "-DnodeAnalyzerEnabled=false", //
             "-DrubygemsAnalyzerEnabled=false", //
             "-DbundleAuditAnalyzerEnabled=false", //
-            "-Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2" //
-        );
+            "-Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2"));
+
+        // if we have a nexus url, use it
+        if (StringUtils.isNotBlank(nexusUrl)) {
+            command.add("-DnexusUrl=" + nexusUrl);
+        }
+
+        // run owasp dependency check
+        ProcessBuilder mvnOwaspCheck = new ProcessBuilder(command);
         mvnOwaspCheck.directory(projectDir);
         if (0 != run(mvnOwaspCheck)) {
             gav.setLibraryCheckedWorked(false);
         }
 
-        // grather the info we want from the owasp dependency check
+        // gather the info we want from the owasp dependency check
         processDependencyCheckInfo(gav, projectDir);
 
         // copy all required files we want to a different location
@@ -334,11 +351,15 @@ public class DownloadArtifacts {
             return;
         }
 
+        gav.getVulnerabilities().addAll(parseDependencyCheckReport(file));
+    }
+
+    public List<Vulnerability> parseDependencyCheckReport(File file) {
         // gather all the vul's and add them to the artifact
         ObjectMapper mapper = new ObjectMapper();
+        List<Vulnerability> vulnerabilities = new ArrayList<>();
         try {
-            DependencyCheck check = mapper.readValue(file, DependencyCheck.class);
-            List<Vulnerability> vulnerabilities = new ArrayList<>();
+            DependencyCheckReport check = mapper.readValue(file, DependencyCheckReport.class);
 
             // guard against not having any dependencies
             List<Dependency> dependencies = check.getDependencies();
@@ -350,12 +371,12 @@ public class DownloadArtifacts {
                     }
                 }
             }
-
-            // TODO do we need to sort and filter the vulnerabilities
-            gav.getVulnerabilities().addAll(vulnerabilities);
         } catch (Exception e) {
             throw new RuntimeException("Couldn't read owasp file " + file.getAbsolutePath(), e);
         }
+
+        // TODO do we need to sort and filter the vulnerabilities
+        return vulnerabilities;
     }
 
     private int run(ProcessBuilder builder) {

@@ -4,10 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -15,6 +17,7 @@ import org.junit.Test;
 import org.junit.rules.TestName;
 
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
+import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
 public class DownloadArtifactsTest {
 
@@ -154,6 +157,24 @@ public class DownloadArtifactsTest {
         DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
         List<String> matchingTags = downloadArtifacts.getMatchingTags(tags);
         assertEquals("should be empty", 0, matchingTags.size());
+    }
+
+    /**
+     * Used to supply an updated form to check for the dependenices
+     *
+     * @throws Exception
+     */
+    @Test
+    @Ignore
+    public void parseDependencyCheckReport() throws Exception {
+        String url = "https://.../dependency-check-report.json";
+        File tempFile = File.createTempFile("dependency-check-report", ".json");
+        FileUtils.copyURLToFile(new URL(url), tempFile);
+
+        DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
+        List<Vulnerability> vuls = downloadArtifacts.parseDependencyCheckReport(tempFile);
+
+        System.out.println(vuls);
     }
 
 }

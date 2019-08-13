@@ -118,6 +118,27 @@
           </archive>
         </configuration>
       </plugin>
+
+      <!-- Use this with json output file to generate the classes. -->
+      <!-- TODO figure it out how to do this with the schema -->
+      <!-- <plugin> -->
+      <!-- <groupId>org.jsonschema2pojo</groupId> -->
+      <!-- <artifactId>jsonschema2pojo-maven-plugin</artifactId> -->
+      <!-- <version>1.0.1</version> -->
+      <!-- <configuration> -->
+      <!-- <sourceDirectory>${basedir}/src/main/resources/schema</sourceDirectory> -->
+      <!-- <sourceType>json</sourceType> -->
+      <!-- <useDoubleNumbers>false</useDoubleNumbers> -->
+      <!-- <targetPackage>com.github.sellersj.artifactchecker.model.owasp</targetPackage> -->
+      <!-- </configuration> -->
+      <!-- <executions> -->
+      <!-- <execution> -->
+      <!-- <goals> -->
+      <!-- <goal>generate</goal> -->
+      <!-- </goals> -->
+      <!-- </execution> -->
+      <!-- </executions> -->
+      <!-- </plugin> -->
     </plugins>
   </build>
 </project>

@@ -23,13 +23,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
+import com.github.sellersj.artifactchecker.model.owasp.Cvssv2;
+import com.github.sellersj.artifactchecker.model.owasp.Cvssv3;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
 public class InventoryFileUtilTest {
 
     private static final Random RANDOM = new Random();
 
-    private static final List<String> SEVERITY_CHOICES = Arrays.asList("High", "Medium", "Low");
+    private static final List<String> SEVERITY_CHOICES = Arrays.asList("CRITICAL", "HIGH", "MEDIUM", "LOW", "0.0");
 
     @Test
     public void testWriteRead() throws Exception {
@@ -145,8 +147,17 @@ public class InventoryFileUtilTest {
 
         vul.setDescription("Fake cve goes " + RandomStringUtils.randomAlphanumeric(0, 100));
 
-        BigDecimal cvsScore = BigDecimal.valueOf(RANDOM.nextDouble() * 10.0).setScale(1, BigDecimal.ROUND_HALF_UP);
-        vul.setCvssScore(cvsScore.toPlainString());
+        BigDecimal score = new BigDecimal(RANDOM.nextFloat() * 10.0f).setScale(1, BigDecimal.ROUND_HALF_UP);
+        Float cvsScore = Float.valueOf(score.floatValue());
+        if (RANDOM.nextBoolean()) {
+            Cvssv3 cvssv3 = new Cvssv3();
+            cvssv3.setBaseScore(cvsScore);
+            vul.setCvssv3(cvssv3);
+        } else {
+            Cvssv2 cvssv2 = new Cvssv2();
+            cvssv2.setScore(cvsScore);
+            vul.setCvssv2(cvssv2);
+        }
 
         // get a random severity
         vul.setSeverity(SEVERITY_CHOICES.get(RANDOM.nextInt(SEVERITY_CHOICES.size())));

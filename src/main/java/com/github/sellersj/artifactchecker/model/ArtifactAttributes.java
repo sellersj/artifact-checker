@@ -413,7 +413,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     public int getCveSeverityCountLow() {
         int count = 0;
         for (Vulnerability vulnerability : vulnerabilities) {
-            if ("Low".equals(vulnerability.getSeverity())) {
+            if ("Low".equalsIgnoreCase(vulnerability.getSeverity())) {
                 count++;
             }
         }
@@ -426,7 +426,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     public int getCveSeverityCountMedium() {
         int count = 0;
         for (Vulnerability vulnerability : vulnerabilities) {
-            if ("Medium".equals(vulnerability.getSeverity())) {
+            if ("Medium".equalsIgnoreCase(vulnerability.getSeverity())) {
                 count++;
             }
         }
@@ -439,7 +439,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     public int getCveSeverityCountHigh() {
         int count = 0;
         for (Vulnerability vulnerability : vulnerabilities) {
-            if ("High".equals(vulnerability.getSeverity())) {
+            if ("High".equalsIgnoreCase(vulnerability.getSeverity())) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * @return the number of cve's with severity of Critical.
+     */
+    public int getCveSeverityCountCritical() {
+        int count = 0;
+        for (Vulnerability vulnerability : vulnerabilities) {
+            if ("Critical".equalsIgnoreCase(vulnerability.getSeverity())) {
                 count++;
             }
         }
