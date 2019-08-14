@@ -78,7 +78,7 @@ public class DownloadArtifacts {
 
         String toolsHost = System.getenv(Constants.TOOLS_HOST);
         if (StringUtils.isNotBlank(toolsHost)) {
-            nexusUrl = toolsHost + "/maven-proxy/service/local/";
+            nexusUrl = "https://" + toolsHost + "/maven-proxy/service/local/";
             System.out.println(String.format("We are going to use %s to download artifacts", nexusUrl));
         }
     }
