@@ -565,5 +565,12 @@
 		"scmRepo": "cipo-patent-efiling",
 		"artifactId": "CIPO-patent-efiling-app",
 		"jiraKey": ""
+	},
+	{
+		"implementationTitle": "CIPO-tm-conversion-processing-service-app - Enterprise Application",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-tm-conversion-processing-service",
+		"artifactId": "CIPO-tm-conversion-processing-service-app",
+		"jiraKey": ""
 	}
 ]
