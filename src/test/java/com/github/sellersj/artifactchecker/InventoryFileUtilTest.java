@@ -2,6 +2,7 @@ package com.github.sellersj.artifactchecker;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -108,6 +109,16 @@ public class InventoryFileUtilTest {
 
             assertTrue("should have found at least one entry in the manifest: " + artifactAttributes, hasValues);
         }
+    }
+
+    @Test
+    public void getJiraKeysToBeDecomissioned() {
+        List<String> keys = InventoryFileUtil.getJiraKeysToBeDecomissioned();
+        assertNotNull(keys);
+        assertFalse("shouldn't be empty", keys.isEmpty());
+        String keyToFind = "FDOGCPD";
+        assertTrue("should contain " + keyToFind + " but had " + keys, keys.contains(keyToFind));
+        assertTrue("should be correct size but was " + keys.size(), keys.size() >= 10);
     }
 
     public static Set<ArtifactAttributes> getTestAppInventory() {

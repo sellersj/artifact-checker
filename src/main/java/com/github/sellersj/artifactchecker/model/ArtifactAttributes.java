@@ -112,6 +112,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** Our tech owner from a static file. */
     private String techOwner = "";
 
+    /** If this is targetted for decomissioning. */
+    private boolean toDecomission = false;
+
     /**
      * @return true if the has the scm project, repo, and (hash or version).
      */
@@ -751,6 +754,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public void setLibraryCheckedWorked(boolean libraryCheckedWorked) {
         this.libraryCheckedWorked = libraryCheckedWorked;
+    }
+
+    /**
+     * @return the toDecomission
+     */
+    public boolean isToDecomission() {
+        return toDecomission;
+    }
+
+    /**
+     * @param toDecomission the toDecomission to set
+     */
+    public void setToDecomission(boolean toDecomission) {
+        this.toDecomission = toDecomission;
     }
 
 }

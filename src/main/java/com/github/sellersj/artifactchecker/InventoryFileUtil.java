@@ -125,6 +125,7 @@ public class InventoryFileUtil {
         fillInMissingScmInfo(apps);
 
         fillInTechOwner(apps);
+        fillInDecomissionedInfo(apps);
 
         return apps;
     }
@@ -218,6 +219,21 @@ public class InventoryFileUtil {
     }
 
     /**
+     * If the app is to be decomissioned.
+     *
+     * @param apps to check
+     */
+    public static void fillInDecomissionedInfo(Set<ArtifactAttributes> apps) {
+        List<String> jiraKeys = getJiraKeysToBeDecomissioned();
+
+        for (ArtifactAttributes app : apps) {
+            if (jiraKeys.contains(app.getJiraKey())) {
+                app.setToDecomission(true);
+            }
+        }
+    }
+
+    /**
      *
      * @param apps from the scraped sources
      * @param mapOfCorrections the corrections
@@ -263,6 +279,18 @@ public class InventoryFileUtil {
         }
 
         return mapOfTechOwners;
+    }
+
+    public static List<String> getJiraKeysToBeDecomissioned() {
+        File file = getFileOnClasspath("/to-be-decomissioned.json");
+
+        try {
+            List<String> jiraKeys = mapper.readValue(file, new TypeReference<List<String>>() {
+            });
+            return jiraKeys;
+        } catch (IOException e) {
+            throw new RuntimeException("Couldn't read file: " + file, e);
+        }
     }
 
     private static Manifest readToManifest(String string) {
