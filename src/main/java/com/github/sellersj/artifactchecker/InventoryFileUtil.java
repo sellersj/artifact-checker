@@ -125,7 +125,6 @@ public class InventoryFileUtil {
         fillInMissingScmInfo(apps);
 
         fillInTechOwner(apps);
-        fillInDecomissionedInfo(apps);
 
         return apps;
     }

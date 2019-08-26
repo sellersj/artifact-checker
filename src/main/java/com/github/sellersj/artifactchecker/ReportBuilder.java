@@ -83,6 +83,8 @@ public class ReportBuilder {
                 + Constants.APPLICATIONS_URL + " env variable for this to work.");
         }
 
+        InventoryFileUtil.fillInDecomissionedInfo(apps);
+
         // generate a file that's a vulnerability first view
         File securityReportFile = new File(DownloadArtifacts.FILES_GENERATED + "/security-report.html");
         generateCveFile(apps, securityReportFile);
