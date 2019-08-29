@@ -572,5 +572,19 @@
 		"scmRepo": "cipo-tm-conversion-processing-service",
 		"artifactId": "CIPO-tm-conversion-processing-service-app",
 		"jiraKey": ""
+	},
+	{
+		"implementationTitle": "CIPO-ec-id-eaccess-app",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-ec-id-eaccess",
+		"artifactId": "CIPO-ec-id-eaccess-app",
+		"jiraKey": ""
+	},
+	{
+		"implementationTitle": "CIPO-ec-id-mailbox-app",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-ec-id-mailbox",
+		"artifactId": "CIPO-ec-id-mailbox-app",
+		"jiraKey": ""
 	}
 ]
