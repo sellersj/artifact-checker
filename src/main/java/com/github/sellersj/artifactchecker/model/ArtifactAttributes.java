@@ -19,9 +19,13 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.sellersj.artifactchecker.Constants;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
+import com.opencsv.bean.CsvBindByName;
 
 /**
  * Any attributes that we will track for an artifact.
+ *
+ * There are some hacky members that do nothing so that we can trick the opencsv library to using the getters to get the
+ * values that we want. See <a href="https://sourceforge.net/p/opencsv/feature-requests/105/?limit=25">the ticket</a>
  *
  * @author sellersj
  */
@@ -83,6 +87,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     private boolean alreadyTrackedByAnother = false;
 
     /** Flag for if we can run this on java 8. */
+    @CsvBindByName
     private boolean java8Ready = false;
 
     /** If the library checks (dependency, owasp, etc) worked. */
@@ -98,9 +103,11 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /**
      * The scm tag if an artifact doesn't have the hash.
      */
+    @CsvBindByName
     private String scmTag = "";
 
     /** The date that git thinks the commit happened. */
+    @CsvBindByName
     private String scmAuthorDate = "";
 
     /** The info that is configured for the prod deployment. */
@@ -110,9 +117,11 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     private String correctedJiraKey = "";
 
     /** Our tech owner from a static file. */
+    @CsvBindByName
     private String techOwner = "";
 
     /** If this is targetted for decomissioning. */
+    @CsvBindByName
     private boolean toDecomission = false;
 
     /**
@@ -233,6 +242,10 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         return hash;
     }
 
+    /** For the opencsv. */
+    @CsvBindByName
+    private Date buildDate;
+
     /**
      * @return the build date if it exists and is parsable.
      */
@@ -274,6 +287,10 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
         return date;
     }
+
+    /** For the opencsv. */
+    @CsvBindByName
+    private Date deploymentDate;
 
     /**
      * @return the deployment date.
@@ -318,13 +335,25 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         return artifactId;
     }
 
+    /** For the opencsv. */
+    @CsvBindByName
+    private String version;
+
     public String getVersion() {
         return manifest.get(VERSION);
     }
 
+    /** For the opencsv. */
+    @CsvBindByName
+    private String title;
+
     public String getTitle() {
         return manifest.get(IMPLEMENTATION_TITLE);
     }
+
+    /** For the opencsv. */
+    @CsvBindByName
+    private String jiraKey;
 
     public String getJiraKey() {
         String url = manifest.get(ISSUE_TRACKING);
@@ -396,6 +425,10 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
         return url;
     }
+
+    /** For the opencsv. */
+    @CsvBindByName
+    private String jiraUrl;
 
     public String getJiraUrl() {
         return manifest.get(ISSUE_TRACKING);
@@ -473,15 +506,27 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         return text;
     }
 
+    /** For the opencsv. */
+    @CsvBindByName
+    private String deploymentName;
+
     /** The deployment cluster. */
     public String getDeploymentName() {
         return getDeploymentInfo("APP");
     }
 
+    /** For the opencsv. */
+    @CsvBindByName
+    private String cluster;
+
     /** The deployment cluster. */
     public String getCluster() {
         return getDeploymentInfo("SERVER");
     }
+
+    /** For the opencsv. */
+    @CsvBindByName
+    private String nodes;
 
     /** The deployment nodes. */
     public String getNodes() {
@@ -506,6 +551,10 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     public boolean isPublic() {
         return getDeploymentInfo("TYPE").contains("Public");
     }
+
+    /** For the opencsv. */
+    @CsvBindByName
+    private String applicationUrl;
 
     /** The link to the app. */
     public String getApplicationUrl() {

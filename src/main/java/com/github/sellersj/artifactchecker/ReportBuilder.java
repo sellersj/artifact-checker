@@ -5,9 +5,11 @@ package com.github.sellersj.artifactchecker;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -25,6 +27,8 @@ import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 import com.github.sellersj.artifactchecker.model.security.ArtifactAttributesComparator;
 import com.github.sellersj.artifactchecker.model.security.SecurityVulnerability;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
 
 /**
  * If you want to run this from maven, then you can (maybe not with quotes)
@@ -92,6 +96,8 @@ public class ReportBuilder {
         // make the output json
         File target = new File(DownloadArtifacts.FILES_GENERATED + "/app-inventory.json");
         ReportBuilder.buildJsonReport(apps, target);
+        File csvTarget = new File(DownloadArtifacts.FILES_GENERATED + "/app-inventory.csv");
+        ReportBuilder.buildCsvReport(apps, csvTarget);
 
         // copy the html report file
         String htmlFilename = "/app-inventory.html";
@@ -226,6 +232,18 @@ public class ReportBuilder {
     public static void buildJsonReport(Set<ArtifactAttributes> apps, File outFile) {
         System.out.println("The number of apps is at least " + apps.size());
         InventoryFileUtil.write(outFile, apps);
+    }
+
+    public static void buildCsvReport(Set<ArtifactAttributes> apps, File outFile) {
+        System.out.println("The number of apps is at least " + apps.size());
+        try (Writer writer = Files.newBufferedWriter(outFile.toPath());) {
+            StatefulBeanToCsv<ArtifactAttributes> beanToCsv = new StatefulBeanToCsvBuilder<ArtifactAttributes>(writer)
+                .build();
+            ArrayList<ArtifactAttributes> appList = new ArrayList<>(apps);
+            beanToCsv.write(appList);
+        } catch (Exception e) {
+            throw new RuntimeException("Could not write the csv file for jira users to remove ", e);
+        }
     }
 
     public static Set<ArtifactAttributes> generateAppInventory(String location) {

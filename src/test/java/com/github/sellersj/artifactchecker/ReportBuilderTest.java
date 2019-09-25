@@ -77,6 +77,16 @@ public class ReportBuilderTest {
     }
 
     @Test
+    public void buildCsvReport() throws Exception {
+        File target = File.createTempFile("app-inventory-", ".csv");
+        System.out.println("target file is: " + target.getAbsolutePath());
+        // target.deleteOnExit();
+
+        Set<ArtifactAttributes> apps = InventoryFileUtilTest.getTestAppInventory();
+        ReportBuilder.buildCsvReport(apps, target);
+    }
+
+    @Test
     public void getAppsFilteredByCloneUrlAndHash_SameProjectSameHash() {
         Set<ArtifactAttributes> apps = new HashSet<>();
         String scmProject = "myScmProject";
