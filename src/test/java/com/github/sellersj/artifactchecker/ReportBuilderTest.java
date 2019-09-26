@@ -79,6 +79,7 @@ public class ReportBuilderTest {
     @Test
     public void buildCsvReport() throws Exception {
         File target = File.createTempFile("app-inventory-", ".csv");
+        // System.out.println(target.getAbsolutePath());
         target.deleteOnExit();
 
         Set<ArtifactAttributes> apps = InventoryFileUtilTest.getTestAppInventory();

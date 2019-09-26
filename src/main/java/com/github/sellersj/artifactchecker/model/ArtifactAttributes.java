@@ -1,7 +1,7 @@
 package com.github.sellersj.artifactchecker.model;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +18,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.sellersj.artifactchecker.Constants;
+import com.github.sellersj.artifactchecker.DateUtils;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 import com.opencsv.bean.CsvBindByName;
 
@@ -55,19 +56,19 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     public static final String VERSION = "Implementation-Version";
 
     /** The maven date format. */
-    private static final SimpleDateFormat MAVEN_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+    public static final DateTimeFormatter MAVEN_DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
     /** The old maven date format. */
-    private static final SimpleDateFormat MAVEN_OLD_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd-HHmm");
+    private static final DateTimeFormatter MAVEN_OLD_DATE_FORMAT = DateTimeFormatter.ofPattern("yyyyMMdd-HHmm");
 
     /** The ISO 8601 date format used by git. */
-    private static final SimpleDateFormat GIT_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+    private static final DateTimeFormatter GIT_DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss Z");
 
     /** The date format with just the year. */
-    private static final SimpleDateFormat SHORT_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    private static final DateTimeFormatter SHORT_DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     /** The format from the output. */
-    private static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     /** If this is a githug host. */
     private boolean github = false;
@@ -252,19 +253,11 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         if (StringUtils.isNotBlank(string)) {
 
             // try the first date format
-            try {
-                date = MAVEN_DATE_FORMAT.parse(string);
-            } catch (ParseException e) {
-                // don't log
-            }
+            date = parseToDate(string, MAVEN_DATE_FORMAT);
 
             // if it didn't work, try the older format
             if (null == date) {
-                try {
-                    date = MAVEN_OLD_DATE_FORMAT.parse(string);
-                } catch (ParseException e) {
-                    // don't log
-                }
+                date = parseToDate(string, MAVEN_OLD_DATE_FORMAT);
             }
 
             // if it's not blank and we can't parse either date format, something is wrong
@@ -272,15 +265,26 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
                 System.err.println("Could not parse date : " + string);
             }
         } else if (StringUtils.isNotBlank(getScmAuthorDate())) {
-
             // try the iso 8601 format that git uses
-            try {
-                date = GIT_DATE_FORMAT.parse(getScmAuthorDate());
-            } catch (ParseException e) {
-                // don't log
-            }
+            date = parseToDate(getScmAuthorDate(), GIT_DATE_FORMAT);
         }
 
+        return date;
+    }
+
+    /**
+     * @param string to parse
+     * @param formatter the formatter to use
+     * @return the date if we have it
+     */
+    public Date parseToDate(String string, DateTimeFormatter formatter) {
+        Date date = null;
+        try {
+            LocalDateTime dateTime = LocalDateTime.parse(string, formatter);
+            date = DateUtils.asDate(dateTime);
+        } catch (Exception e) {
+            // don't log anything
+        }
         return date;
     }
 
@@ -296,7 +300,8 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         if (null != deploymentInfo) {
             Date date = deploymentInfo.getDeploymentDate();
             if (null != date) {
-                result = DATE_TIME_FORMAT.format(date);
+                LocalDateTime dateTime = DateUtils.asLocalDateTime(date);
+                result = DATE_TIME_FORMAT.format(dateTime);
             }
         }
         return result;
@@ -313,7 +318,8 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         String result = "";
         Date date = getBuildDate();
         if (null != date) {
-            result = SHORT_DATE_FORMAT.format(date);
+            LocalDateTime dateTime = DateUtils.asLocalDateTime(date);
+            result = SHORT_DATE_FORMAT.format(dateTime);
         }
         return result;
     }

@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
@@ -143,6 +144,9 @@ public class InventoryFileUtilTest {
                 for (int i = 0; i < numberOfVul; i++) {
                     artifactAttributes.getVulnerabilities().add(vuls.get(RANDOM.nextInt(vuls.size())));
                 }
+
+                // set a build time
+                artifactAttributes.getManifest().put(ArtifactAttributes.BUILD_TIME, getMockBuildDate());
             }
             return apps;
         } catch (Exception e) {
@@ -174,6 +178,15 @@ public class InventoryFileUtilTest {
         vul.setSeverity(SEVERITY_CHOICES.get(RANDOM.nextInt(SEVERITY_CHOICES.size())));
 
         return vul;
+    }
+
+    private static String getMockBuildDate() {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -1 * RANDOM.nextInt(90));
+        cal.add(Calendar.HOUR, -1 * RANDOM.nextInt(6));
+        cal.add(Calendar.MINUTE, -1 * RANDOM.nextInt(60));
+
+        return ArtifactAttributes.MAVEN_DATE_FORMAT.format(DateUtils.asLocalDateTime(cal.getTime()));
     }
 
 }
