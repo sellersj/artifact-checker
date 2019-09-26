@@ -1,7 +1,6 @@
 package com.github.sellersj.artifactchecker.model;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -10,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import com.github.sellersj.artifactchecker.DateUtils;
 
 public class App {
 
@@ -42,7 +43,8 @@ public class App {
     private boolean appLinked = false;
 
     /** The format from the other file we're parsing. */
-    private static final SimpleDateFormat APP_FILE_DATE_FORMAT = new SimpleDateFormat("EEE MMM d HH:mm:ss yyyy");
+    private static final DateTimeFormatter APP_FILE_DATE_FORMAT = DateTimeFormatter
+        .ofPattern("EEE MMM d HH:mm:ss yyyy");
 
     /**
      * Adds an item to the list that is referenced by the key.
@@ -119,13 +121,8 @@ public class App {
             // default the result to the value in the app
             String dateString = list.iterator().next();
 
-            try {
-                // try to parse it
-                result = APP_FILE_DATE_FORMAT.parse(dateString);
-            } catch (ParseException e) {
-                // log it and continue with the value that we had
-                System.err.println("Could not parse '" + result + "'");
-            }
+            // try to parse it
+            result = DateUtils.parseToDate(dateString, APP_FILE_DATE_FORMAT);
         }
 
         return result;

@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -26,5 +27,21 @@ public class DateUtils {
 
     public static LocalDateTime asLocalDateTime(Date date) {
         return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
+    }
+
+    /**
+     * @param string to parse
+     * @param formatter the formatter to use
+     * @return the date if we have it
+     */
+    public static Date parseToDate(String string, DateTimeFormatter formatter) {
+        Date date = null;
+        try {
+            LocalDateTime dateTime = LocalDateTime.parse(string, formatter);
+            date = asDate(dateTime);
+        } catch (Exception e) {
+            // don't log anything
+        }
+        return date;
     }
 }

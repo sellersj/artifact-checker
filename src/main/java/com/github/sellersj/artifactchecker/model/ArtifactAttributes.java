@@ -253,11 +253,11 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         if (StringUtils.isNotBlank(string)) {
 
             // try the first date format
-            date = parseToDate(string, MAVEN_DATE_FORMAT);
+            date = DateUtils.parseToDate(string, MAVEN_DATE_FORMAT);
 
             // if it didn't work, try the older format
             if (null == date) {
-                date = parseToDate(string, MAVEN_OLD_DATE_FORMAT);
+                date = DateUtils.parseToDate(string, MAVEN_OLD_DATE_FORMAT);
             }
 
             // if it's not blank and we can't parse either date format, something is wrong
@@ -266,25 +266,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
             }
         } else if (StringUtils.isNotBlank(getScmAuthorDate())) {
             // try the iso 8601 format that git uses
-            date = parseToDate(getScmAuthorDate(), GIT_DATE_FORMAT);
+            date = DateUtils.parseToDate(getScmAuthorDate(), GIT_DATE_FORMAT);
         }
 
-        return date;
-    }
-
-    /**
-     * @param string to parse
-     * @param formatter the formatter to use
-     * @return the date if we have it
-     */
-    public Date parseToDate(String string, DateTimeFormatter formatter) {
-        Date date = null;
-        try {
-            LocalDateTime dateTime = LocalDateTime.parse(string, formatter);
-            date = DateUtils.asDate(dateTime);
-        } catch (Exception e) {
-            // don't log anything
-        }
         return date;
     }
 
