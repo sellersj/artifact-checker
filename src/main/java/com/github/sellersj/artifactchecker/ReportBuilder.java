@@ -40,11 +40,11 @@ import com.opencsv.bean.StatefulBeanToCsvBuilder;
 public class ReportBuilder {
 
     /**
-     * This might not run well on windows since it has a max path size of 260 chars and when the project is run, it
-     * checks out git projects. Path lengths can get quite long.
+     * This might not run well on windows since it has a max path size of 260 chars and when the
+     * project is run, it checks out git projects. Path lengths can get quite long.
      *
-     * If you want to run this WITHOUT doing the clone and checks against the project, set the env variable SKIP_CLONE
-     * to a.
+     * If you want to run this WITHOUT doing the clone and checks against the project, set the env
+     * variable SKIP_CLONE to a.
      *
      * @param args
      */
@@ -127,7 +127,8 @@ public class ReportBuilder {
     }
 
     /**
-     * This will try to map the values scraped from the manifests with the values we get out of the env
+     * This will try to map the values scraped from the manifests with the values we get out of the
+     * env
      *
      * @param artifacts to check
      * @param deployedApp with info to see if we can merge it
@@ -166,8 +167,8 @@ public class ReportBuilder {
     }
 
     /**
-     * This will check the apps that are marked as being covered by another artifact, and then find it and copy their
-     * reports (cve, java 8, etc) over.
+     * This will check the apps that are marked as being covered by another artifact, and then find
+     * it and copy their reports (cve, java 8, etc) over.
      *
      * @param apps
      */
@@ -198,8 +199,8 @@ public class ReportBuilder {
     }
 
     /**
-     * Some projects have multiple ears deployed to prod, but the same git repository. This will filter based on the
-     * clone url and commit hash.
+     * Some projects have multiple ears deployed to prod, but the same git repository. This will
+     * filter based on the clone url and commit hash.
      *
      * @return
      */
@@ -242,7 +243,7 @@ public class ReportBuilder {
             ArrayList<ArtifactAttributes> appList = new ArrayList<>(apps);
             beanToCsv.write(appList);
         } catch (Exception e) {
-            throw new RuntimeException("Could not write the csv file for jira users to remove ", e);
+            throw new RuntimeException("Could not write the csv file for apps in production ", e);
         }
     }
 
