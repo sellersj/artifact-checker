@@ -135,6 +135,27 @@ public class ArtifactAttributesTest {
     }
 
     @Test
+    public void getBuildDateWeirdDateFormat() {
+        // yet another date format
+        String dateString = "2019-09-10-13:16";
+        ArtifactAttributes art = new ArtifactAttributes();
+        art.getManifest().put(ArtifactAttributes.BUILD_TIME, dateString);
+
+        Date date = art.getBuildDate();
+        assertNotNull(date);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        assertEquals(2019, calendar.get(Calendar.YEAR));
+        // Calendar.MONTH is zero based
+        assertEquals(8, calendar.get(Calendar.MONTH));
+        assertEquals(10, calendar.get(Calendar.DAY_OF_MONTH));
+
+        assertEquals(13, calendar.get(Calendar.HOUR_OF_DAY));
+        assertEquals(16, calendar.get(Calendar.MINUTE));
+    }
+
+    @Test
     public void getBuildDateUsingScmInfo() {
         String dateString = "2018-02-13 14:56:54 -0500";
         ArtifactAttributes art = new ArtifactAttributes();

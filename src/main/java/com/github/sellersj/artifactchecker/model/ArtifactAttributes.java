@@ -3,6 +3,7 @@ package com.github.sellersj.artifactchecker.model;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +61,13 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** The old maven date format. */
     private static final DateTimeFormatter MAVEN_OLD_DATE_FORMAT = DateTimeFormatter.ofPattern("yyyyMMdd-HHmm");
+
+    /** We keep on finding different date formats. */
+    private static final List<DateTimeFormatter> BUILD_TIME_DATE_FORMATS = Arrays.asList( //
+        MAVEN_DATE_FORMAT, //
+        MAVEN_OLD_DATE_FORMAT, //
+        DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm") // another date format that we've found
+    );
 
     /** The ISO 8601 date format used by git. */
     private static final DateTimeFormatter GIT_DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss Z");
@@ -252,12 +260,14 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
         if (StringUtils.isNotBlank(string)) {
 
-            // try the first date format
-            date = DateUtils.parseToDate(string, MAVEN_DATE_FORMAT);
+            // try all the date formats, until we find one that works
+            for (DateTimeFormatter dateFormat : BUILD_TIME_DATE_FORMATS) {
+                date = DateUtils.parseToDate(string, dateFormat);
 
-            // if it didn't work, try the older format
-            if (null == date) {
-                date = DateUtils.parseToDate(string, MAVEN_OLD_DATE_FORMAT);
+                // if we find a date, stop looking at the different formats
+                if (null != date) {
+                    break;
+                }
             }
 
             // if it's not blank and we can't parse either date format, something is wrong
