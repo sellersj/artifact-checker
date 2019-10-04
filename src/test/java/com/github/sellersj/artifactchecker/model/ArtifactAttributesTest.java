@@ -195,6 +195,7 @@ public class ArtifactAttributesTest {
         art.getManifest().put(ArtifactAttributes.ISSUE_TRACKING, "http://jira.example.com/browse/TEST");
         art.setCorrectedJiraKey("TOM");
         assertEquals("TEST", art.getJiraKey());
+        assertEquals("http://jira.example.com/browse/TEST", art.getJiraUrl());
     }
 
     @Test
@@ -202,6 +203,7 @@ public class ArtifactAttributesTest {
         ArtifactAttributes art = new ArtifactAttributes();
         art.setCorrectedJiraKey("TOM");
         assertEquals("TOM", art.getJiraKey());
+        assertEquals("http://jira.example.com/browse/TOM", art.getJiraUrl());
     }
 
     @Test

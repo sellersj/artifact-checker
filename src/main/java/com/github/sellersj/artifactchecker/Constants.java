@@ -15,6 +15,11 @@ public class Constants {
     public static final String PROD_LOG_HOST = "PROD_LOG_HOST";
 
     /**
+     * If there are jira key corrections, we will use this host.
+     */
+    public static final String CORRECTED_JIRA_HOST = "CORRECTED_JIRA_HOST";
+
+    /**
      * Skip the clone and checks against the actual project.
      */
     public static final String SKIP_CLONE = "SKIP_CLONE";

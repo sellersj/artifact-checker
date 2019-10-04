@@ -50,6 +50,7 @@ For some tests or code to work, it assumes that a TOOLS_HOST env variable is set
 1) To override this in a junit test in eclipse, open the "Run Configurations" 
 2) Click on the "Environment" tab
 3) Click "New", enter in the name "TOOLS_HOST" and the value
+4) Repeat for PROD_LOG_HOST and CORRECTED_JIRA_HOST. See `com.github.sellersj.artifactchecker.Constants`
 
 ## Checking for updates of plugins and dependencies
 Run the maven command `versions:display-dependency-updates versions:display-plugin-updates versions:display-property-updates`

@@ -431,7 +431,14 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     private String jiraUrl;
 
     public String getJiraUrl() {
-        return manifest.get(ISSUE_TRACKING);
+        String url = manifest.get(ISSUE_TRACKING);
+
+        if (StringUtils.isBlank(url)) {
+            String jiraHost = Constants.getSysOrEnvVariable(Constants.CORRECTED_JIRA_HOST);
+            url = jiraHost + "/browse/" + getJiraKey();
+        }
+
+        return url;
     }
 
     /** A link to the owasp dependency check report. */

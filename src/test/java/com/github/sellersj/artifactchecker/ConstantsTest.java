@@ -8,6 +8,7 @@ public class ConstantsTest {
     public static final void setTestValues() {
         setSystemVariable(Constants.TOOLS_HOST, "tools.example.com");
         setSystemVariable(Constants.PROD_LOG_HOST, "logs.example.com");
+        setSystemVariable(Constants.CORRECTED_JIRA_HOST, "http://jira.example.com");
     }
 
     /**
