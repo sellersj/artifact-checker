@@ -17,6 +17,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -40,11 +41,11 @@ import com.opencsv.bean.StatefulBeanToCsvBuilder;
 public class ReportBuilder {
 
     /**
-     * This might not run well on windows since it has a max path size of 260 chars and when the
-     * project is run, it checks out git projects. Path lengths can get quite long.
+     * This might not run well on windows since it has a max path size of 260 chars and when the project is run, it
+     * checks out git projects. Path lengths can get quite long.
      *
-     * If you want to run this WITHOUT doing the clone and checks against the project, set the env
-     * variable SKIP_CLONE to a.
+     * If you want to run this WITHOUT doing the clone and checks against the project, set the env variable SKIP_CLONE
+     * to a.
      *
      * @param args
      */
@@ -127,8 +128,7 @@ public class ReportBuilder {
     }
 
     /**
-     * This will try to map the values scraped from the manifests with the values we get out of the
-     * env
+     * This will try to map the values scraped from the manifests with the values we get out of the env
      *
      * @param artifacts to check
      * @param deployedApp with info to see if we can merge it
@@ -167,8 +167,8 @@ public class ReportBuilder {
     }
 
     /**
-     * This will check the apps that are marked as being covered by another artifact, and then find
-     * it and copy their reports (cve, java 8, etc) over.
+     * This will check the apps that are marked as being covered by another artifact, and then find it and copy their
+     * reports (cve, java 8, etc) over.
      *
      * @param apps
      */
@@ -199,8 +199,8 @@ public class ReportBuilder {
     }
 
     /**
-     * Some projects have multiple ears deployed to prod, but the same git repository. This will
-     * filter based on the clone url and commit hash.
+     * Some projects have multiple ears deployed to prod, but the same git repository. This will filter based on the
+     * clone url and commit hash.
      *
      * @return
      */
@@ -270,7 +270,7 @@ public class ReportBuilder {
     public static void generateCveFile(Set<ArtifactAttributes> apps, File securityReportFile) {
         // for all the maps, make a map using the vulnerabilities and all the apps that have been
         // flagged for that
-        SortedMap<SecurityVulnerability, List<ArtifactAttributes>> map = mapAppsToCve(apps);
+        SortedMap<SecurityVulnerability, Set<ArtifactAttributes>> map = mapAppsToCve(apps);
 
         StringBuilder builder = new StringBuilder();
         builder.append("<!DOCTYPE html>\n<html lang='en'><head><meta charset=\"UTF-8\">"
@@ -369,8 +369,11 @@ public class ReportBuilder {
      *
      * @param apps to map
      */
-    private static SortedMap<SecurityVulnerability, List<ArtifactAttributes>> mapAppsToCve(Set<ArtifactAttributes> apps) {
-        SortedMap<SecurityVulnerability, List<ArtifactAttributes>> map = new TreeMap<>();
+    private static SortedMap<SecurityVulnerability, Set<ArtifactAttributes>> mapAppsToCve(Set<ArtifactAttributes> apps) {
+        SortedMap<SecurityVulnerability, Set<ArtifactAttributes>> map = new TreeMap<>();
+
+        // sort the artifacts. Can remove this if switching to ui sorting
+        ArtifactAttributesComparator comparator = new ArtifactAttributesComparator();
 
         for (ArtifactAttributes artifactAttributes : apps) {
             for (Vulnerability vul : artifactAttributes.getVulnerabilities()) {
@@ -380,18 +383,12 @@ public class ReportBuilder {
 
                 // if the map doesn't contain the key, init the list
                 if (!map.containsKey(key)) {
-                    map.put(key, new ArrayList<ArtifactAttributes>());
+                    map.put(key, new TreeSet<ArtifactAttributes>(comparator));
                 }
 
                 // now the key will always exist in the map and we'll add this app to the list
                 map.get(key).add(artifactAttributes);
             }
-        }
-
-        // sort the artifacts. Can remove this if switching to ui sorting
-        ArtifactAttributesComparator comparator = new ArtifactAttributesComparator();
-        for (List<ArtifactAttributes> appList : map.values()) {
-            appList.sort(comparator);
         }
 
         return map;
