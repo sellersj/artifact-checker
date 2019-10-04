@@ -20,7 +20,7 @@ public class ArtifactAttributesComparator implements Comparator<ArtifactAttribut
         // reverse the order so it does public before internal
         builder.append(rhs.isPublic(), lhs.isPublic());
 
-        builder.append(lhs.getCorrectedArtifactId(), rhs.getCorrectedArtifactId());
+        builder.append(lhs.getArtifactId(), rhs.getArtifactId());
         builder.append(lhs.getGroupId(), rhs.getGroupId());
         builder.append(lhs.getVersion(), rhs.getVersion());
 
