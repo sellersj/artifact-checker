@@ -22,6 +22,7 @@ import java.util.TreeSet;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Before;
 import org.junit.Test;
 
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
@@ -30,6 +31,11 @@ import com.github.sellersj.artifactchecker.model.owasp.Cvssv3;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
 public class InventoryFileUtilTest {
+
+    @Before
+    public void setToolsHost() {
+        ConstantsTest.setTestValues();
+    }
 
     private static final Random RANDOM = new Random();
 
