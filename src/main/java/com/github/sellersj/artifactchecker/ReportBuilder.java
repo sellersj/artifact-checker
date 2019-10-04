@@ -283,7 +283,7 @@ public class ReportBuilder {
         builder.append("</head>\n<body>");
         builder.append("<h1>Security issues in production</h1>\n");
 
-        for (Entry<SecurityVulnerability, List<ArtifactAttributes>> entry : map.entrySet()) {
+        for (Entry<SecurityVulnerability, Set<ArtifactAttributes>> entry : map.entrySet()) {
             String cveName = entry.getKey().getName();
 
             // anchor
