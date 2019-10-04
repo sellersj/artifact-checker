@@ -17,7 +17,9 @@ public class ArtifactAttributesComparator implements Comparator<ArtifactAttribut
     public int compare(ArtifactAttributes lhs, ArtifactAttributes rhs) {
         CompareToBuilder builder = new CompareToBuilder();
 
-        builder.append(lhs.isPublic(), rhs.isPublic());
+        // reverse the order so it does public before internal
+        builder.append(rhs.isPublic(), lhs.isPublic());
+
         builder.append(lhs.getCorrectedArtifactId(), rhs.getCorrectedArtifactId());
         builder.append(lhs.getGroupId(), rhs.getGroupId());
         builder.append(lhs.getVersion(), rhs.getVersion());
