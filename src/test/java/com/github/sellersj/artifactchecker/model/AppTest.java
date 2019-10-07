@@ -2,6 +2,7 @@ package com.github.sellersj.artifactchecker.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -76,5 +77,16 @@ public class AppTest {
 
         // being lazy and just comparing the toString values
         assertEquals("Tue May 16 13:46:34 EDT 2017", app.getDeploymentDate().toString());
+    }
+
+    @Test
+    public void getDeploymentDateAsStringActualValueHasManySpacesInIt() {
+        String input = "Thu Aug  8 07:11:09 2019";
+        App app = new App();
+        app.putItem(App.DEPLOY_DATE, input);
+
+        // being lazy and just comparing the toString values
+        assertNotNull("the date shouldn't be null", app.getDeploymentDate());
+        assertEquals("Thu Aug 08 07:11:09 EDT 2019", app.getDeploymentDate().toString());
     }
 }

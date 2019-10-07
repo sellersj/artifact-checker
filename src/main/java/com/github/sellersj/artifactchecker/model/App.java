@@ -121,7 +121,9 @@ public class App {
             // default the result to the value in the app
             String dateString = list.iterator().next();
 
-            // try to parse it
+            // we're going to try to get around the variable number of spaces by just changing multiple spaces to a
+            // single space
+            dateString = dateString.replaceAll("  +", " ");
             result = DateUtils.parseToDate(dateString, APP_FILE_DATE_FORMAT);
         }
 
