@@ -1,7 +1,7 @@
 package com.github.sellersj.artifactchecker;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.File;
 import java.net.URL;
@@ -11,19 +11,14 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SystemUtils;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TestName;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
 public class DownloadArtifactsTest {
-
-    /** Just so we can print out the method being run. */
-    @Rule
-    public TestName currentTestName = new TestName();
 
     @Test
     public void testcloneAndCheckProjectNotCloneable() {
@@ -36,7 +31,7 @@ public class DownloadArtifactsTest {
     }
 
     @Test
-    @Ignore("ignore for now. CI server has trouble reading this for some reason.")
+    @Disabled("ignore for now. CI server has trouble reading this for some reason.")
     public void testcloneAndCheckProject() {
         ArtifactAttributes gav = new ArtifactAttributes();
         gav.setGithub(true);
@@ -64,9 +59,9 @@ public class DownloadArtifactsTest {
     }
 
     @Test
-    public void testcloneAndCheckProjectSpringBootThymleaf() {
+    public void testcloneAndCheckProjectSpringBootThymleaf(TestInfo testInfo) {
         if (!SystemUtils.IS_OS_MAC_OSX) {
-            System.out.println("Not going to run the test " + currentTestName.getMethodName() + " except on a mac");
+            System.out.println("Not going to run the test " + testInfo.getTestMethod() + " except on a mac");
             return;
         }
 
@@ -85,13 +80,13 @@ public class DownloadArtifactsTest {
 
         // extra checks for the date
         Date buildDate = gav.getBuildDate();
-        assertNotNull("build date shouldn't be null", buildDate);
+        assertNotNull(buildDate, "build date shouldn't be null");
         Calendar cal = Calendar.getInstance();
         cal.setTime(buildDate);
 
-        assertEquals("year", 2018, cal.get(Calendar.YEAR));
-        assertEquals("month", 1, cal.get(Calendar.MONTH));
-        assertEquals("month", 13, cal.get(Calendar.DAY_OF_MONTH));
+        assertEquals(2018, cal.get(Calendar.YEAR), "year");
+        assertEquals(1, cal.get(Calendar.MONTH), "month");
+        assertEquals(13, cal.get(Calendar.DAY_OF_MONTH), "day of month");
     }
 
     @Test
@@ -106,7 +101,7 @@ public class DownloadArtifactsTest {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testSwitchToCommitNoHash() {
         // TODO refactor this test
         File directory = new File("E:/Workspaces/IC_Eclipse_44/TestProject");
@@ -129,7 +124,7 @@ public class DownloadArtifactsTest {
 
         DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
         List<String> matchingTags = downloadArtifacts.getMatchingTags(tags);
-        assertEquals("size", 1, matchingTags.size());
+        assertEquals(1, matchingTags.size(), "size");
         assertEquals("1.5.11", matchingTags.get(0));
     }
 
@@ -143,7 +138,7 @@ public class DownloadArtifactsTest {
 
         DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
         List<String> matchingTags = downloadArtifacts.getMatchingTags(tags);
-        assertEquals("size", size, matchingTags.size());
+        assertEquals(size, matchingTags.size(), "size");
     }
 
     @Test
@@ -156,7 +151,7 @@ public class DownloadArtifactsTest {
 
         DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
         List<String> matchingTags = downloadArtifacts.getMatchingTags(tags);
-        assertEquals("should be empty", 0, matchingTags.size());
+        assertEquals(0, matchingTags.size(), "should be empty");
     }
 
     /**
@@ -165,7 +160,7 @@ public class DownloadArtifactsTest {
      * @throws Exception
      */
     @Test
-    @Ignore
+    @Disabled
     public void parseDependencyCheckReport() throws Exception {
         String url = "https://.../dependency-check-report.json";
         File tempFile = File.createTempFile("dependency-check-report", ".json");

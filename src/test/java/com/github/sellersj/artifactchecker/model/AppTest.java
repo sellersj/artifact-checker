@@ -1,15 +1,15 @@
 package com.github.sellersj.artifactchecker.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class AppTest {
 
@@ -32,8 +32,8 @@ public class AppTest {
 
             List<String> possibleArtifactIds = app.getPossibleArtifactIds();
             for (String string : expected) {
-                assertTrue("should have found: " + string + " but had " + possibleArtifactIds,
-                    possibleArtifactIds.contains(string));
+                assertTrue(possibleArtifactIds.contains(string),
+                    "should have found: " + string + " but had " + possibleArtifactIds);
             }
         }
     }
@@ -86,7 +86,7 @@ public class AppTest {
         app.putItem(App.DEPLOY_DATE, input);
 
         // being lazy and just comparing the toString values
-        assertNotNull("the date shouldn't be null", app.getDeploymentDate());
+        assertNotNull(app.getDeploymentDate(), "the date shouldn't be null");
         assertEquals("Thu Aug 08 07:11:09 EDT 2019", app.getDeploymentDate().toString());
     }
 }

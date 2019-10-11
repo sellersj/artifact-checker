@@ -1,13 +1,13 @@
 package com.github.sellersj.artifactchecker;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.github.sellersj.artifactchecker.model.App;
 
@@ -21,7 +21,7 @@ public class AppFileParserTest {
         List<App> parseAppFile = parser.parseAppFile(file);
         assertNotNull(parseAppFile);
 
-        assertEquals("size", 4, parseAppFile.size());
+        assertEquals(4, parseAppFile.size(), "size");
 
         for (App app : parseAppFile) {
             System.out.println(app);
@@ -31,13 +31,13 @@ public class AppFileParserTest {
             checkKey(app, App.BUILD_VERSION);
 
             List<String> nodes = app.getAttributes().get("NODE");
-            assertEquals("wrong number of nodes " + nodes, 2, nodes.size());
+            assertEquals(2, nodes.size(), "wrong number of nodes " + nodes);
         }
     }
 
     private void checkKey(App app, String key) {
-        assertTrue("should have key '" + key + "' but key are: " + app.getAttributes().keySet(),
-            app.getAttributes().containsKey(key));
+        assertTrue(app.getAttributes().containsKey(key),
+            "should have key '" + key + "' but key are: " + app.getAttributes().keySet());
     }
 
 }

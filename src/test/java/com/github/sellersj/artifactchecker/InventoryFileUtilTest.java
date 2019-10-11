@@ -1,9 +1,9 @@
 package com.github.sellersj.artifactchecker;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -22,8 +22,9 @@ import java.util.TreeSet;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.owasp.Cvssv2;
@@ -32,7 +33,7 @@ import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
 public class InventoryFileUtilTest {
 
-    @Before
+    @BeforeEach
     public void setToolsHost() {
         ConstantsTest.setTestValues();
     }
@@ -60,10 +61,12 @@ public class InventoryFileUtilTest {
         // TODO probably should check the contents of the file
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testWriteBadFile() throws Exception {
-        Path dir = Files.createTempDirectory("testWriteBadFile");
-        InventoryFileUtil.write(dir.toFile(), null);
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            Path dir = Files.createTempDirectory("testWriteBadFile");
+            InventoryFileUtil.write(dir.toFile(), null);
+        });
     }
 
     @Test
@@ -91,14 +94,14 @@ public class InventoryFileUtilTest {
             }
         }
 
-        assertTrue("should have found junit", junitFound);
-        assertTrue("should have found wet", wetFound);
+        assertTrue(junitFound, "should have found junit");
+        assertTrue(wetFound, "should have found wet");
     }
 
     @Test
     public void testReadMergedManifestsNoEmptyProject() throws Exception {
         Set<ArtifactAttributes> apps = getTestAppInventory();
-        assertFalse("should be checking some apps", apps.isEmpty());
+        assertFalse(apps.isEmpty(), "should be checking some apps");
 
         for (ArtifactAttributes artifactAttributes : apps) {
 
@@ -114,7 +117,7 @@ public class InventoryFileUtilTest {
                 }
             }
 
-            assertTrue("should have found at least one entry in the manifest: " + artifactAttributes, hasValues);
+            assertTrue(hasValues, "should have found at least one entry in the manifest: " + artifactAttributes);
         }
     }
 
@@ -122,10 +125,10 @@ public class InventoryFileUtilTest {
     public void getJiraKeysToBeDecomissioned() {
         List<String> keys = InventoryFileUtil.getJiraKeysToBeDecomissioned();
         assertNotNull(keys);
-        assertFalse("shouldn't be empty", keys.isEmpty());
+        assertFalse(keys.isEmpty(), "shouldn't be empty");
         String keyToFind = "FDOGCPD";
-        assertTrue("should contain " + keyToFind + " but had " + keys, keys.contains(keyToFind));
-        assertTrue("should be correct size but was " + keys.size(), keys.size() >= 10);
+        assertTrue(keys.contains(keyToFind), "should contain " + keyToFind + " but had " + keys);
+        assertTrue(keys.size() >= 10, "should be correct size but was " + keys.size());
     }
 
     public static Set<ArtifactAttributes> getTestAppInventory() {
