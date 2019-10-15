@@ -1,25 +1,25 @@
 package com.github.sellersj.artifactchecker.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.github.sellersj.artifactchecker.Constants;
 import com.github.sellersj.artifactchecker.ConstantsTest;
 
 public class ArtifactAttributesTest {
 
-    @Before
+    @BeforeEach
     public void setToolsHost() {
         ConstantsTest.setTestValues();
     }
@@ -27,31 +27,31 @@ public class ArtifactAttributesTest {
     @Test
     public void hasRequiredGitInfo() {
         ArtifactAttributes gav = new ArtifactAttributes();
-        assertFalse("nothing set", gav.hasRequiredGitInfo());
+        assertFalse(gav.hasRequiredGitInfo(), "nothing set");
 
         gav.getManifest().put(ArtifactAttributes.SCM_PROJECT, "sellersj");
-        assertFalse("only project set", gav.hasRequiredGitInfo());
+        assertFalse(gav.hasRequiredGitInfo(), "only project set");
 
         gav.getManifest().put(ArtifactAttributes.SCM_REPO, "artifact-checker");
-        assertFalse("only project and repo set", gav.hasRequiredGitInfo());
+        assertFalse(gav.hasRequiredGitInfo(), "only project and repo set");
 
         gav.getManifest().put(ArtifactAttributes.SCM_HASH, "1c6c1006f11661902b6f48cddbfa8b3ba2cc7385");
-        assertTrue("should show as cloneable", gav.hasRequiredGitInfo());
+        assertTrue(gav.hasRequiredGitInfo(), "should show as cloneable");
     }
 
     @Test
     public void hasRequiredGitInfoNoHashButVersion() {
         ArtifactAttributes gav = new ArtifactAttributes();
-        assertFalse("nothing set", gav.hasRequiredGitInfo());
+        assertFalse(gav.hasRequiredGitInfo(), "nothing set");
 
         gav.getManifest().put(ArtifactAttributes.SCM_PROJECT, "sellersj");
-        assertFalse("only project set", gav.hasRequiredGitInfo());
+        assertFalse(gav.hasRequiredGitInfo(), "only project set");
 
         gav.getManifest().put(ArtifactAttributes.SCM_REPO, "artifact-checker");
-        assertFalse("only project and repo set", gav.hasRequiredGitInfo());
+        assertFalse(gav.hasRequiredGitInfo(), "only project and repo set");
 
         gav.getManifest().put(ArtifactAttributes.VERSION, "1.2.3");
-        assertTrue("should show as cloneable", gav.hasRequiredGitInfo());
+        assertTrue(gav.hasRequiredGitInfo(), "should show as cloneable");
     }
 
     @Test
@@ -283,7 +283,7 @@ public class ArtifactAttributesTest {
         art.setDeploymentInfo(app);
 
         String url = art.getApplicationUrl();
-        assertTrue(url + "should have ended with " + contextRoot, url.endsWith("/some/context/root"));
+        assertTrue(url.endsWith("/some/context/root"), url + "should have ended with " + contextRoot);
     }
 
     @Test
@@ -320,7 +320,7 @@ public class ArtifactAttributesTest {
         art.getDeploymentInfo().putItem("NODE", "Was_In1 Was_In2");
 
         List<String> nodeUrls = art.getNodeUrls();
-        assertEquals("size", 2, nodeUrls.size());
+        assertEquals(2, nodeUrls.size(), "size");
 
         List<String> expected = Arrays.asList("<a href=\"http://logs.example.com/logs/wasin1/\">Was_In1</a>", //
             "<a href=\"http://logs.example.com/logs/wasin2/\">Was_In2</a>");

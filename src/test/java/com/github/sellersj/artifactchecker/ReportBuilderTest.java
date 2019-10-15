@@ -1,8 +1,8 @@
 package com.github.sellersj.artifactchecker;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.ScmCorrection;
@@ -24,7 +24,7 @@ public class ReportBuilderTest {
 
     private String toolsHost;
 
-    @Before
+    @BeforeEach
     public void setToolsHost() {
         ConstantsTest.setTestValues();
         toolsHost = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST);
@@ -35,12 +35,12 @@ public class ReportBuilderTest {
         String location = "https://" + toolsHost + "/deployed-to/manifest-combined.txt";
 
         Set<ArtifactAttributes> apps = ReportBuilder.generateAppInventory(location);
-        assertFalse("inventory should have a bunch of manifest files", apps.isEmpty());
+        assertFalse(apps.isEmpty(), "inventory should have a bunch of manifest files");
 
         int appSize = apps.size();
         int appFilteredSize = ReportBuilder.getAppsFilteredByCloneUrlAndHash(apps).size();
-        assertTrue("The filtering should have removed some apps. Comparing " + appSize + " to " + appFilteredSize,
-            appSize > appFilteredSize);
+        assertTrue(appSize > appFilteredSize,
+            "The filtering should have removed some apps. Comparing " + appSize + " to " + appFilteredSize);
 
         System.out.println("Number of apps: " + apps.size());
 
@@ -105,7 +105,7 @@ public class ReportBuilderTest {
         }
 
         Set<ArtifactAttributes> filtered = ReportBuilder.getAppsFilteredByCloneUrlAndHash(apps);
-        assertEquals("should have been filtered to 1 but was " + filtered, 1, filtered.size());
+        assertEquals(1, filtered.size(), "should have been filtered to 1 but was " + filtered);
     }
 
     @Test
@@ -129,7 +129,7 @@ public class ReportBuilderTest {
         }
 
         Set<ArtifactAttributes> filtered = ReportBuilder.getAppsFilteredByCloneUrlAndHash(apps);
-        assertEquals("should have been filtered to but was " + filtered, apps.size(), filtered.size());
+        assertEquals(apps.size(), filtered.size(), "should have been filtered to but was " + filtered);
     }
 
     @Test
@@ -170,8 +170,8 @@ public class ReportBuilderTest {
 
         // check that all all items are set
         for (ArtifactAttributes artifactAttributes : apps) {
-            assertTrue("java 8 not set set properly for " + artifactAttributes, artifactAttributes.isJava8Ready());
-            assertEquals("not right vuls for " + artifactAttributes, 1, artifactAttributes.getVulnerabilities().size());
+            assertTrue(artifactAttributes.isJava8Ready(), "java 8 not set set properly for " + artifactAttributes);
+            assertEquals(1, artifactAttributes.getVulnerabilities().size(), "not right vuls for " + artifactAttributes);
         }
     }
 
@@ -200,8 +200,8 @@ public class ReportBuilderTest {
 
         // check that all all items are set
         for (ArtifactAttributes artifactAttributes : apps) {
-            assertTrue("java 8 not set set properly for " + artifactAttributes, artifactAttributes.isJava8Ready());
-            assertEquals("not right vuls for " + artifactAttributes, 1, artifactAttributes.getVulnerabilities().size());
+            assertTrue(artifactAttributes.isJava8Ready(), "java 8 not set set properly for " + artifactAttributes);
+            assertEquals(1, artifactAttributes.getVulnerabilities().size(), "not right vuls for " + artifactAttributes);
         }
     }
 
