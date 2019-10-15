@@ -168,7 +168,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         if (github) {
             cloneUrl = "git@github.com:" + getScmProject() + "/" + getScmRepo() + ".git";
         } else {
-            String toolsHost = System.getenv(Constants.TOOLS_HOST);
+            String toolsHost = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST);
             if (StringUtils.isBlank(toolsHost)) {
                 throw new RuntimeException("The 'TOOLS_HOST' env variable has to be set");
             }
@@ -225,7 +225,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         if (StringUtils.isNotBlank(getScmProject()) && //
             StringUtils.isNotBlank(getScmRepo())) {
 
-            String toolsHost = System.getenv(Constants.TOOLS_HOST);
+            String toolsHost = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST);
             url = "https://" + toolsHost + "/scm/projects/" + getScmProject() + "/repos/" + getScmRepo();
 
             if (StringUtils.isNotBlank(getScmHash())) {
@@ -372,7 +372,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     }
 
     public String getNexusUrl() {
-        String toolsHost = System.getenv(Constants.TOOLS_HOST);
+        String toolsHost = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST);
 
         // default it to a blank string if we don't have the the artifactId
         String artifactId = getArtifactId();
@@ -571,9 +571,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         if (StringUtils.isNotBlank(contextRoot)) {
             String host;
             if (isPublic()) {
-                host = System.getenv(Constants.PUBLIC_HOSTNAME);
+                host = Constants.getSysOrEnvVariable(Constants.PUBLIC_HOSTNAME);
             } else {
-                host = System.getenv(Constants.INTRANET_HOSTNAME);
+                host = Constants.getSysOrEnvVariable(Constants.INTRANET_HOSTNAME);
             }
 
             url = host + contextRoot;

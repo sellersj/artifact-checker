@@ -53,7 +53,7 @@ public class ReportBuilder {
         StopWatch watch = new StopWatch();
         watch.start();
 
-        String toolsHost = System.getenv(Constants.TOOLS_HOST);
+        String toolsHost = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST);
         if (StringUtils.isBlank(toolsHost)) {
             System.err.println("The env variable TOOLS_HOST has to be set. Exiting");
             return;
@@ -66,7 +66,7 @@ public class ReportBuilder {
 
         Set<ArtifactAttributes> filtered = getAppsFilteredByCloneUrlAndHash(apps);
 
-        String skipClone = System.getenv(Constants.SKIP_CLONE);
+        String skipClone = Constants.getSysOrEnvVariable(Constants.SKIP_CLONE);
         if (StringUtils.isBlank(skipClone)) {
 
             for (ArtifactAttributes gav : filtered) {
@@ -78,7 +78,7 @@ public class ReportBuilder {
         updateAppsTrackedByAnotherArtifact(apps);
 
         // merge the info from what's deployed
-        String applicationsUrl = System.getenv(Constants.APPLICATIONS_URL);
+        String applicationsUrl = Constants.getSysOrEnvVariable(Constants.APPLICATIONS_URL);
         if (StringUtils.isNotBlank(applicationsUrl)) {
             AppFileParser parser = new AppFileParser();
             List<App> deployedApp = parser.parseAppFile(applicationsUrl);

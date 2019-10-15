@@ -76,7 +76,7 @@ public class DownloadArtifacts {
             osSuffix = "";
         }
 
-        String toolsHost = System.getenv(Constants.TOOLS_HOST);
+        String toolsHost = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST);
         if (StringUtils.isNotBlank(toolsHost)) {
             nexusUrl = "https://" + toolsHost + "/maven-proxy/service/local/";
             System.out.println(String.format("We are going to use %s to download artifacts", nexusUrl));
