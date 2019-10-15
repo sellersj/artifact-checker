@@ -66,7 +66,7 @@ public class ReportBuilder {
 
         Set<ArtifactAttributes> filtered = getAppsFilteredByCloneUrlAndHash(apps);
 
-        String skipClone = Constants.getSysOrEnvVariable(Constants.SKIP_CLONE);
+        String skipClone = Constants.getSysOrEnvVariable(Constants.SKIP_CLONE, false);
         if (StringUtils.isBlank(skipClone)) {
 
             for (ArtifactAttributes gav : filtered) {
@@ -78,7 +78,7 @@ public class ReportBuilder {
         updateAppsTrackedByAnotherArtifact(apps);
 
         // merge the info from what's deployed
-        String applicationsUrl = Constants.getSysOrEnvVariable(Constants.APPLICATIONS_URL);
+        String applicationsUrl = Constants.getSysOrEnvVariable(Constants.APPLICATIONS_URL, false);
         if (StringUtils.isNotBlank(applicationsUrl)) {
             AppFileParser parser = new AppFileParser();
             List<App> deployedApp = parser.parseAppFile(applicationsUrl);
