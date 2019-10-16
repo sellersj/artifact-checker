@@ -319,7 +319,11 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     }
 
     public String getGroupId() {
-        return manifest.get("Implementation-Vendor-Id");
+        String groupId = manifest.get("Maven-Project-GroupId");
+        if (StringUtils.isBlank(groupId)) {
+            groupId = manifest.get("Implementation-Vendor-Id");
+        }
+        return groupId;
     }
 
     /**

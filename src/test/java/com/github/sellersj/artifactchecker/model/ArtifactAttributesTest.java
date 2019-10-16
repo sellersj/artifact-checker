@@ -328,4 +328,41 @@ public class ArtifactAttributesTest {
         assertEquals(expected, nodeUrls);
     }
 
+    /**
+     * They have discontinued the use of <code>Implementation-Vendor-Id</code>
+     * https://issues.apache.org/jira/browse/MSHARED-777
+     */
+    @Test
+    public void getGroupIdOldManifestEntry() {
+        String expected = "old Value";
+        ArtifactAttributes art = new ArtifactAttributes();
+        art.getManifest().put("Implementation-Vendor-Id", expected);
+        assertEquals(expected, art.getGroupId());
+    }
+
+    /**
+     * They have discontinued the use of <code>Implementation-Vendor-Id</code>
+     * https://issues.apache.org/jira/browse/MSHARED-777
+     */
+    @Test
+    public void getGroupIdNewManifestEntry() {
+        String expected = "new Value";
+        ArtifactAttributes art = new ArtifactAttributes();
+        art.getManifest().put("Maven-Project-GroupId", expected);
+        assertEquals(expected, art.getGroupId());
+    }
+
+    /**
+     * They have discontinued the use of <code>Implementation-Vendor-Id</code>
+     * https://issues.apache.org/jira/browse/MSHARED-777
+     */
+    @Test
+    public void getGroupIdBothManifestEntry() {
+        String expected = "new Value";
+        ArtifactAttributes art = new ArtifactAttributes();
+        art.getManifest().put("Implementation-Vendor-Id", "old value");
+        art.getManifest().put("Maven-Project-GroupId", expected);
+        assertEquals(expected, art.getGroupId());
+    }
+
 }

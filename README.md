@@ -19,6 +19,9 @@ This is for extracting info out of where the jar, war, ear plugins are defined l
     <Scm-Commit-Date>${mavanagaiata.commit.committer.date}</Scm-Commit-Date>
     <Scm-Project-Id>${git.project.id}</Scm-Project-Id>
     <Scm-Repo-Name>${git.repo.name}</Scm-Repo-Name>
+    <Maven-Project-GroupId>${project.groupId}</Maven-Project-GroupId>
+    <Maven-Project-ArtifactId>${project.artifactId}</Maven-Project-ArtifactId>
+    <Maven-Project-Version>${project.version}</Maven-Project-Version>
   </manifestEntries>
 </archive>
 ```
