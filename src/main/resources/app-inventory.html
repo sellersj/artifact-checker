@@ -83,7 +83,7 @@
               {title:"Library Check", field:"libraryCheckedWorked", formatter:"tickCross", headerFilter:"input", width:50},
                {title:"JIRA", field:"jiraKey", formatterParams:{urlField:"jiraUrl"}, formatter:"link", headerFilter:"input", width:120},
                {title:"Tech Owner", field:"techOwner", headerFilter:"input"},
-               {title:"To be decomissioned", field:"toDecomission", formatter:"tickCross", headerFilter:"input", width:50},
+               {title:"To be decomissioned", field:"toDecomission", formatter:"tickCross", formatterParams:{crossElement:false}, headerFilter:"input", width:50},
                {title:"Deployment",
                  columns:[
                    {title:"Name", field:"deploymentName", headerFilter:"input"},
@@ -92,7 +92,7 @@
                        var value = this.sanitizeHTML(cell.getValue());
                        return cell.getRow().getData()["nodeUrls"].join(" ");
                        }},
-                   {title:"Public", field:"public", headerFilter:"input", formatter:"tickCross", width:50},
+                   {title:"Public", field:"public", headerFilter:"input", formatter:"tickCross", formatterParams:{crossElement:false}, width:50},
                    {title:"Date", field:"deploymentDate", headerFilter:"input"},
                    {title:"Url", field:"applicationUrl", width:50, formatter:function(cell, formatterParams) {
                            var value = this.sanitizeHTML(cell.getValue());
