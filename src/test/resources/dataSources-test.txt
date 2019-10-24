@@ -1,0 +1,14 @@
+[DATA_SOURCE]ABC_Corporate_UDS
+[SERVER]Public-NoCluster-Gen-CL1
+[SERVER]Public-BOB-CL1
+[APPLICATION]XYZ_MY_APP__PUBLIC
+[APPLICATION]CDE_ANOTHER_APP__PUBLIC
+[JNDI]jdbc/abc/corporate/CorporateUDS
+[AUTH]DmgrProd/ABC_Corporate
+[USER]myawesome_user
+[PASS]my-hash-1
+[DATA_SOURCE]ABC_Semething_Access
+[JNDI]jdbc/abc/audit/SomethingAccessDS
+[AUTH]DmgrProd/ABC_Semething_Access
+[USER]bob_user
+[PASS]bob-hash-2
