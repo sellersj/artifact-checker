@@ -54,7 +54,21 @@ public class DataSourceFileParser {
 
         System.out.println("Found " + result.size() + " datasources in production config");
 
+        // just for interest, look at all the data sources that aren't mapped to any applications.
+        printUnmappedDataSources(result);
+
         return result;
+    }
+
+    private void printUnmappedDataSources(List<ParsedDataSource> ds) {
+        List<ParsedDataSource> unmapped = new ArrayList<>();
+        for (ParsedDataSource pds : ds) {
+            if (pds.getAppNames().isEmpty()) {
+                unmapped.add(pds);
+            }
+        }
+        System.out.println(
+            String.format("There are %s data sources not mapped to an application: %s", unmapped.size(), unmapped));
     }
 
     private ParsedDataSource getDataSource(String chunk) {
