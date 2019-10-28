@@ -605,6 +605,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         return result;
     }
 
+    /** For the opencsv. */
+    @CsvBindByName
+    private String databaseUserNames;
+
+    /** Build a space seperated list of oracle usernames used by this app. */
+    public String getDatabaseUserNames() {
+        Set<String> usernames = new TreeSet<>();
+
+        for (ParsedDataSource ds : getLinkedDataSources()) {
+            usernames.add(ds.getDatabaseUsername());
+        }
+        return String.join(" ", usernames);
+    }
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
