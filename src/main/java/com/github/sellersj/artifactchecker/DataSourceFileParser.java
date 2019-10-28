@@ -62,25 +62,29 @@ public class DataSourceFileParser {
 
         String lines[] = chunk.split("\\r?\\n");
         for (String string : lines) {
-            int splitIndex = string.indexOf("]");
-            String key = string.substring(1, splitIndex);
-            String value = string.substring(splitIndex + 1);
+            try {
+                int splitIndex = string.indexOf("]");
+                String key = string.substring(1, splitIndex);
+                String value = string.substring(splitIndex + 1);
 
-            switch (key) {
-                case ParsedDataSource.DATA_SOURCE_KEY:
-                    app.setName(value);
-                    break;
-                case ParsedDataSource.JNDI:
-                    app.setJndiName(value);
-                    break;
-                case ParsedDataSource.DATABASE_USER:
-                    app.setDatabaseUsername(value);
-                    break;
-                case ParsedDataSource.APPLICATION:
-                    app.getAppNames().add(value);
-                    break;
-                default:
-                    // ignore the other tags for now
+                switch (key) {
+                    case ParsedDataSource.DATA_SOURCE_KEY:
+                        app.setName(value);
+                        break;
+                    case ParsedDataSource.JNDI:
+                        app.setJndiName(value);
+                        break;
+                    case ParsedDataSource.DATABASE_USER:
+                        app.setDatabaseUsername(value);
+                        break;
+                    case ParsedDataSource.APPLICATION:
+                        app.getAppNames().add(value);
+                        break;
+                    default:
+                        // ignore the other tags for now
+                }
+            } catch (Exception e) {
+                throw new RuntimeException("Could not parse line: " + string, e);
             }
         }
 
