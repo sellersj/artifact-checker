@@ -25,6 +25,7 @@ import org.apache.commons.lang3.time.StopWatch;
 
 import com.github.sellersj.artifactchecker.model.App;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
+import com.github.sellersj.artifactchecker.model.ParsedDataSource;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 import com.github.sellersj.artifactchecker.model.security.ArtifactAttributesComparator;
 import com.github.sellersj.artifactchecker.model.security.SecurityVulnerability;
@@ -83,6 +84,11 @@ public class ReportBuilder {
             AppFileParser parser = new AppFileParser();
             List<App> deployedApp = parser.parseAppFile(wasInfoUrl + "applications");
             mergeInfoFromProd(apps, deployedApp);
+
+            // get the datasource info
+            DataSourceFileParser dsParser = new DataSourceFileParser();
+            List<ParsedDataSource> parseDataSource = dsParser.parseDataSourceFile(wasInfoUrl + "dataSources");
+            mergeDataSourceInfoFromProd(apps, parseDataSource);
         } else {
             System.err.println("Url of the application url is not set. Not going to merge deployment info. Set "
                 + Constants.WAS_INFO_HOST + " env variable for this to work.");
@@ -113,15 +119,7 @@ public class ReportBuilder {
         // move all the files in the output directory into the final place to be picked up by apache
         File srcDir = new File(DownloadArtifacts.FILES_GENERATED);
 
-        // get a destination, override it if needed (like for testing)
-        String destinationDirPath = "/data00/bamboo/projectsites/app-inventory/";
-        String overridePath = Constants.getSysOrEnvVariable(Constants.DEST_DIR_OVERRIDE, false);
-        if (StringUtils.isNotBlank(overridePath)) {
-            System.out.println("Overriding path to " + overridePath);
-            destinationDirPath = overridePath;
-        }
-
-        File destDir = new File(destinationDirPath);
+        File destDir = new File(getDestinationPath());
         try {
             // delete the target directory to clear out old files
             FileUtils.deleteDirectory(destDir);
@@ -134,6 +132,22 @@ public class ReportBuilder {
 
         watch.stop();
         System.out.println("The total build took: " + watch);
+    }
+
+    /**
+     * Get a destination, override it if needed (like for testing).
+     *
+     * @return the path to write files to.
+     */
+    private static String getDestinationPath() {
+        String destinationDirPath = "/data00/bamboo/projectsites/app-inventory/";
+        String overridePath = Constants.getSysOrEnvVariable(Constants.DEST_DIR_OVERRIDE, false);
+        if (StringUtils.isNotBlank(overridePath)) {
+            System.out.println("Overriding path to " + overridePath);
+            destinationDirPath = overridePath;
+        }
+
+        return destinationDirPath;
     }
 
     /**
@@ -180,6 +194,22 @@ public class ReportBuilder {
                 attribute.setDeploymentInfo(app);
 
                 artifacts.add(attribute);
+            }
+        }
+    }
+
+    /**
+     * This will try to map the values scraped from the manifests with the values we get out of the env
+     *
+     * @param artifacts to check
+     * @param dataSources with info to see if we can merge it
+     */
+    private static void mergeDataSourceInfoFromProd(Set<ArtifactAttributes> artifacts,
+                                                    List<ParsedDataSource> dataSources) {
+
+        for (ArtifactAttributes attributes : artifacts) {
+            for (ParsedDataSource app : dataSources) {
+                // TODO match the data source info with the app
             }
         }
     }
