@@ -24,8 +24,8 @@ public class Constants {
      */
     public static final String SKIP_CLONE = "SKIP_CLONE";
 
-    /** The url of the applications file. */
-    public static final String APPLICATIONS_URL = "APPLICATIONS_URL";
+    /** The url of the applications directory. */
+    public static final String WAS_INFO_HOST = "WAS_INFO_HOST";
 
     /** The filename where we track java 8 issues with dependencies. */
     public static final String JAVA8_ISSUES_FILENAME = "java8-issues.txt";

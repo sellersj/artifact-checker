@@ -78,14 +78,14 @@ public class ReportBuilder {
         updateAppsTrackedByAnotherArtifact(apps);
 
         // merge the info from what's deployed
-        String applicationsUrl = Constants.getSysOrEnvVariable(Constants.APPLICATIONS_URL, false);
-        if (StringUtils.isNotBlank(applicationsUrl)) {
+        String wasInfoUrl = Constants.getSysOrEnvVariable(Constants.WAS_INFO_HOST, false);
+        if (StringUtils.isNotBlank(wasInfoUrl)) {
             AppFileParser parser = new AppFileParser();
-            List<App> deployedApp = parser.parseAppFile(applicationsUrl);
+            List<App> deployedApp = parser.parseAppFile(wasInfoUrl + "applications");
             mergeInfoFromProd(apps, deployedApp);
         } else {
             System.err.println("Url of the application url is not set. Not going to merge deployment info. Set "
-                + Constants.APPLICATIONS_URL + " env variable for this to work.");
+                + Constants.WAS_INFO_HOST + " env variable for this to work.");
         }
 
         InventoryFileUtil.fillInDecomissionedInfo(apps);
