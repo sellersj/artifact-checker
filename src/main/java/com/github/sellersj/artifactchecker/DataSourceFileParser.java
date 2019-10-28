@@ -1,0 +1,90 @@
+/**
+ *
+ */
+package com.github.sellersj.artifactchecker;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+
+import com.github.sellersj.artifactchecker.model.ParsedDataSource;
+
+/**
+ * @author sellersj
+ */
+public class DataSourceFileParser {
+
+    public List<ParsedDataSource> parseDataSourceFile(String url) {
+
+        try (InputStream in = new URL(url).openStream()) {
+            String contents = IOUtils.toString(in, StandardCharsets.UTF_8);
+            return parseDataSourceContents(contents);
+        } catch (Exception e) {
+            throw new RuntimeException("Could not download and parse url " + url, e);
+        }
+    }
+
+    public List<ParsedDataSource> parseDataSourceFile(File file) {
+        try {
+            String contents = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+            return parseDataSourceContents(contents);
+        } catch (IOException e) {
+            throw new RuntimeException("Couldn't read file: " + file.getAbsolutePath(), e);
+        }
+    }
+
+    public List<ParsedDataSource> parseDataSourceContents(String contents) {
+        ArrayList<ParsedDataSource> result = new ArrayList<>();
+
+        // split the file on a the manifest header, while keeping the header
+        String[] chunks = contents.split("(?=\\[" + ParsedDataSource.DATA_SOURCE_KEY + "\\])");
+
+        for (String chunk : chunks) {
+            ParsedDataSource app = getDataSource(chunk);
+
+            result.add(app);
+        }
+
+        System.out.println("Found " + result.size() + " datasources in production config");
+
+        return result;
+    }
+
+    private ParsedDataSource getDataSource(String chunk) {
+        ParsedDataSource app = new ParsedDataSource();
+
+        String lines[] = chunk.split("\\r?\\n");
+        for (String string : lines) {
+            int splitIndex = string.indexOf("]");
+            String key = string.substring(1, splitIndex);
+            String value = string.substring(splitIndex + 1);
+
+            switch (key) {
+                case ParsedDataSource.DATA_SOURCE_KEY:
+                    app.setName(value);
+                    break;
+                case ParsedDataSource.JNDI:
+                    app.setJndiName(value);
+                    break;
+                case ParsedDataSource.DATABASE_USER:
+                    app.setDatabaseUsername(value);
+                    break;
+                case ParsedDataSource.APPLICATION:
+                    app.getAppNames().add(value);
+                    break;
+                default:
+                    // ignore the other tags for now
+            }
+        }
+
+        return app;
+    }
+
+}
