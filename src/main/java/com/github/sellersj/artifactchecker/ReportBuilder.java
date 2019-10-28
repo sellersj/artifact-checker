@@ -112,7 +112,16 @@ public class ReportBuilder {
 
         // move all the files in the output directory into the final place to be picked up by apache
         File srcDir = new File(DownloadArtifacts.FILES_GENERATED);
-        File destDir = new File("/data00/bamboo/projectsites/app-inventory/");
+
+        // get a destination, override it if needed (like for testing)
+        String destinationDirPath = "/data00/bamboo/projectsites/app-inventory/";
+        String overridePath = Constants.getSysOrEnvVariable(Constants.DEST_DIR_OVERRIDE, false);
+        if (StringUtils.isNotBlank(overridePath)) {
+            System.out.println("Overriding path to " + overridePath);
+            destinationDirPath = overridePath;
+        }
+
+        File destDir = new File(destinationDirPath);
         try {
             // delete the target directory to clear out old files
             FileUtils.deleteDirectory(destDir);

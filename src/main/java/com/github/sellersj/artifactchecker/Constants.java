@@ -36,6 +36,9 @@ public class Constants {
     /** The hostname of the intranet facing apps. */
     public static final String INTRANET_HOSTNAME = "INTRANET_HOSTNAME";
 
+    /** The place to write the files from the report. */
+    public static final String DEST_DIR_OVERRIDE = "DEST_DIR_OVERRIDE";
+
     /**
      * This will try to get the variable as a system var, if not falls back to env var. If it's still not found, it will
      * throw an exception.
