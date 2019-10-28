@@ -209,7 +209,11 @@ public class ReportBuilder {
 
         for (ArtifactAttributes attributes : artifacts) {
             for (ParsedDataSource app : dataSources) {
-                // TODO match the data source info with the app
+
+                // match the data source info with the app
+                if (app.getAppNames().contains(attributes.getDeploymentName())) {
+                    attributes.getLinkedDataSources().add(app);
+                }
             }
         }
     }

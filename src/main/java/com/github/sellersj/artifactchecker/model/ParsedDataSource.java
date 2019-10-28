@@ -3,7 +3,12 @@ package com.github.sellersj.artifactchecker.model;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class ParsedDataSource {
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+public class ParsedDataSource implements Comparable<ParsedDataSource> {
 
     /** The key for name of the app. */
     public static final String DATA_SOURCE_KEY = "DATA_SOURCE";
@@ -28,6 +33,33 @@ public class ParsedDataSource {
 
     /** The names of apps that are mapped to this data source. */
     private final Set<String> appNames = new TreeSet<>();
+
+    @Override
+    public int compareTo(ParsedDataSource o) {
+        CompareToBuilder builder = new CompareToBuilder();
+
+        builder.append(getName(), o.getName());
+        builder.append(getJndiName(), o.getJndiName());
+        builder.append(getDatabaseUsername(), o.getDatabaseUsername());
+        builder.append(getAppNames(), o.getAppNames());
+
+        return builder.toComparison();
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
+    }
 
     /**
      * @return the name

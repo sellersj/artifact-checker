@@ -7,8 +7,10 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.CompareToBuilder;
@@ -132,6 +134,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** If this is targetted for decomissioning. */
     @CsvBindByName
     private boolean toDecomission = false;
+
+    /** The data sources that are linked to this app. */
+    private Set<ParsedDataSource> linkedDataSources = new TreeSet<>();
 
     /**
      * @return true if the has the scm project, repo, and (hash or version).
@@ -828,6 +833,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public void setToDecomission(boolean toDecomission) {
         this.toDecomission = toDecomission;
+    }
+
+    /**
+     * @return the linkedDataSources
+     */
+    public Set<ParsedDataSource> getLinkedDataSources() {
+        return linkedDataSources;
+    }
+
+    /**
+     * @param linkedDataSources the linkedDataSources to set
+     */
+    public void setLinkedDataSources(Set<ParsedDataSource> linkedDataSources) {
+        this.linkedDataSources = linkedDataSources;
     }
 
 }
