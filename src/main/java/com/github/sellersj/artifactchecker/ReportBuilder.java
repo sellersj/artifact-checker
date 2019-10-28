@@ -171,6 +171,15 @@ public class ReportBuilder {
         for (App app : deployedApp) {
             if (!app.isAppLinked()) {
                 System.out.println(app);
+
+                // add in the missing one with whatever info we have
+                ArtifactAttributes attribute = new ArtifactAttributes();
+                // fake out the manifest title with the WAS app name
+                String appName = app.getAttributes().get(App.APP_KEY).get(0);
+                attribute.getManifest().put(ArtifactAttributes.IMPLEMENTATION_TITLE, appName);
+                attribute.setDeploymentInfo(app);
+
+                artifacts.add(attribute);
             }
         }
     }
