@@ -89,6 +89,11 @@ public class ReportBuilder {
             DataSourceFileParser dsParser = new DataSourceFileParser();
             List<ParsedDataSource> parseDataSource = dsParser.parseDataSourceFile(wasInfoUrl + "dataSources");
             mergeDataSourceInfoFromProd(apps, parseDataSource);
+
+            // now let's write the unmapped files
+            List<ParsedDataSource> unmapped = dsParser.getUnmappedDataSources(parseDataSource);
+            File unmappedDSTarget = new File(DownloadArtifacts.FILES_GENERATED + "/unmapped-datasources.csv");
+            ReportBuilder.buildCsvReportOfUnmappedDataSources(unmapped, unmappedDSTarget);
         } else {
             System.err.println("Url of the application url is not set. Not going to merge deployment info. Set "
                 + Constants.WAS_INFO_HOST + " env variable for this to work.");
@@ -296,6 +301,22 @@ public class ReportBuilder {
             beanToCsv.write(appList);
         } catch (Exception e) {
             throw new RuntimeException("Could not write the csv file for apps in production ", e);
+        }
+    }
+
+    /**
+     *
+     * @param unmapped to write to the file
+     * @param outFile the file to write to
+     */
+    public static void buildCsvReportOfUnmappedDataSources(List<ParsedDataSource> unmapped, File outFile) {
+        System.out.println("The number of unmapped datasources is " + unmapped.size());
+        try (Writer writer = Files.newBufferedWriter(outFile.toPath());) {
+            StatefulBeanToCsv<ParsedDataSource> beanToCsv = new StatefulBeanToCsvBuilder<ParsedDataSource>(writer)
+                .build();
+            beanToCsv.write(unmapped);
+        } catch (Exception e) {
+            throw new RuntimeException("Could not write the csv file for unmapped datasources ", e);
         }
     }
 
