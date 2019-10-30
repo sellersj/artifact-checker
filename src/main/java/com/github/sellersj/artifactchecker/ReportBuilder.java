@@ -197,6 +197,7 @@ public class ReportBuilder {
                 String appName = app.getAttributes().get(App.APP_KEY).get(0);
                 attribute.getManifest().put(ArtifactAttributes.IMPLEMENTATION_TITLE, appName);
                 attribute.setDeploymentInfo(app);
+                attribute.setLibraryCheckedWorked(false);
 
                 artifacts.add(attribute);
             }
