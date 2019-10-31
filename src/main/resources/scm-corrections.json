@@ -586,5 +586,12 @@
 		"scmRepo": "cipo-ec-id-mailbox",
 		"artifactId": "CIPO-ec-id-mailbox-app",
 		"jiraKey": ""
+	},
+	{
+		"implementationTitle": "CIPO-ec-pb-maintfee-app",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-ec-pb-maintfee",
+		"artifactId": "CIPO-ec-pb-maintfee-app",
+		"jiraKey": ""
 	}
 ]
