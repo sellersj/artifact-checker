@@ -295,6 +295,8 @@ public class ReportBuilder {
 
     public static void buildCsvReport(Set<ArtifactAttributes> apps, File outFile) {
         System.out.println("The number of apps is at least " + apps.size());
+        // make the file if it doesn't exist
+        outFile.getParentFile().mkdirs();
         try (Writer writer = Files.newBufferedWriter(outFile.toPath());) {
             StatefulBeanToCsv<ArtifactAttributes> beanToCsv = new StatefulBeanToCsvBuilder<ArtifactAttributes>(writer)
                 .build();
@@ -312,7 +314,9 @@ public class ReportBuilder {
      */
     public static void buildCsvReportOfUnmappedDataSources(List<ParsedDataSource> unmapped, File outFile) {
         System.out.println("The number of unmapped datasources is " + unmapped.size());
-        try (Writer writer = Files.newBufferedWriter(outFile.toPath());) {
+        // make the file if it doesn't exist
+        outFile.getParentFile().mkdirs();
+        try (Writer writer = Files.newBufferedWriter(outFile.toPath())) {
             StatefulBeanToCsv<ParsedDataSource> beanToCsv = new StatefulBeanToCsvBuilder<ParsedDataSource>(writer)
                 .build();
             beanToCsv.write(unmapped);
