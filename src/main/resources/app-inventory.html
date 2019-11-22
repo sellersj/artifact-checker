@@ -21,6 +21,7 @@
   <body>
     <h1>Maven Applications in production</h1>
     <p>Only applications that have source control information information will have accurate CVE or java 8 results</p>
+    <p>Data was generated <span id="dateGen"></span></p>
     <form action="#">
     <!-- 
        <label for="groupBy">Group items by</label>
@@ -135,8 +136,15 @@
         	   table.toggleColumn(cols[i]);
              }
            }
-       }); 
-      
+       });
+        
+       // indicate the timestamp of the generated file
+       var xhr = $.ajax({
+    	url: "app-inventory.json",
+    		success: function(response) {
+				$("#dateGen").text(xhr.getResponseHeader("Last-Modified"));
+    		}
+		});
     </script>
   </body>
 </html>
