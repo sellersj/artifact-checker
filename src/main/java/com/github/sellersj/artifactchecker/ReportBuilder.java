@@ -367,8 +367,9 @@ public class ReportBuilder {
             // anchor
             builder.append(String.format("<a id='%s'></a>", cveName));
             // header, linking to external site
-            builder.append(
-                String.format("<h2><a href=\"https://nvd.nist.gov/vuln/detail/%s\">%s</a></h2>\n", cveName, cveName));
+            builder
+                .append(String.format("<a id=\"%s\"><h2><a href=\"https://nvd.nist.gov/vuln/detail/%s\">%s</a></h2>\n",
+                    cveName, cveName, cveName));
 
             // write some things about the vul
             builder.append("<p>\n");
