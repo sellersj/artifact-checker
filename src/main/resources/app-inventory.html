@@ -39,7 +39,7 @@
            <label><input type="checkbox" checked="checked" value="groupId artifactId version" />Artifact info</label>
            <label><input type="checkbox" checked="checked" value="scmProject scmRepo hashOrTag" />Source Control</label>
            <label><input type="checkbox" checked="checked" value="cveSeverityCountCritical cveSeverityCountHigh cveSeverityCountMedium cveSeverityCountLow" />CVE Security Issues</label>
-           <label><input type="checkbox" checked="checked" value="java8Ready" />Java 8 Ready</label>
+           <label><input type="checkbox" checked="checked" value="java8Ready java8Url" />Java 8 Ready</label>
            <label><input type="checkbox" checked="checked" value="jiraKey" />JIRA</label>
            <label><input type="checkbox" checked="checked" value="techOwner" />Tech Owner</label>
            <label><input type="checkbox" checked="checked" value="deploymentName cluster nodeUrls databaseUserNames public deploymentDate applicationUrl" />Deployment</label>
@@ -83,8 +83,12 @@
                    {title:"Low", field:"cveSeverityCountLow", formatterParams:{urlField:"owaspDependencyCheckUrl"}, formatter:"link", headerFilter:"input", width:50}
                ]
                },
-              {title:"Java 8 Ready", field:"java8Ready", formatterParams:{urlField:"java8Url"}, formatter:"link", headerFilter:"input", width:100},
-              {title:"Library Check", field:"libraryCheckedWorked", formatter:"tickCross", headerFilter:"input", width:50},
+               {title:"Java 8",
+                   columns:[
+                       {title:"Status", field:"java8Ready", formatter:"tickCross", headerFilter:"input", width:50},
+                       {title:"Report", field:"java8Url", formatterParams:{label:"report"}, formatter:"link", headerFilter:"input", width:75},
+               ]},
+               {title:"Library Check", field:"libraryCheckedWorked", formatter:"tickCross", headerFilter:"input", width:50},
                {title:"JIRA", field:"jiraKey", formatterParams:{urlField:"jiraUrl"}, formatter:"link", headerFilter:"input", width:120},
                {title:"Tech Owner", field:"techOwner", headerFilter:"input"},
                {title:"To be decomissioned", field:"toDecomission", formatter:"tickCross", formatterParams:{crossElement:false}, headerFilter:"input", width:50},
