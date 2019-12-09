@@ -542,6 +542,16 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** For the opencsv. */
     @CsvBindByName
+    private boolean clusterJava8;
+
+    /** The deployment cluster. */
+    public boolean isClusterJava8() {
+        String cluster = getCluster();
+        return StringUtils.isNotBlank(cluster) && cluster.contains("jdk8");
+    }
+
+    /** For the opencsv. */
+    @CsvBindByName
     private String nodes;
 
     /** The deployment nodes. */

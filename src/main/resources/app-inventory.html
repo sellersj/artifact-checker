@@ -42,7 +42,7 @@
            <label><input type="checkbox" checked="checked" value="java8Ready java8Url" />Java 8 Ready</label>
            <label><input type="checkbox" checked="checked" value="jiraKey" />JIRA</label>
            <label><input type="checkbox" checked="checked" value="techOwner" />Tech Owner</label>
-           <label><input type="checkbox" checked="checked" value="deploymentName cluster nodeUrls databaseUserNames public deploymentDate applicationUrl" />Deployment</label>
+           <label><input type="checkbox" checked="checked" value="deploymentName cluster nodeUrls databaseUserNames public deploymentDate applicationUrl clusterJava8" />Deployment</label>
            <label><input type="checkbox" checked="checked" value="buildDateFormatted" />Build Date</label>
        </fieldset>
        <!-- button id="redraw">Redraw table</button  -->
@@ -111,7 +111,8 @@
                            } else {
                              return "";
                            }
-                    }}
+                    }},
+                    {title:"Java 8 runtime", field:"clusterJava8", headerFilter:"input", formatter:"tickCross", width:50}
                ]
                },
               {title:"Build Date", field:"buildDateFormatted", width:100, headerFilter:"input"},
