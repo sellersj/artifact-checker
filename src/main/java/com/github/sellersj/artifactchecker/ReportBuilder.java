@@ -90,10 +90,14 @@ public class ReportBuilder {
             List<ParsedDataSource> parseDataSource = dsParser.parseDataSourceFile(wasInfoUrl + "dataSources");
             mergeDataSourceInfoFromProd(apps, parseDataSource);
 
+            // write all the data sources
+            File allDSTarget = new File(DownloadArtifacts.FILES_GENERATED + "/datasources.csv");
+            ReportBuilder.buildCsvReportOfDataSources(parseDataSource, allDSTarget);
+
             // now let's write the unmapped files
             List<ParsedDataSource> unmapped = dsParser.getUnmappedDataSources(parseDataSource);
             File unmappedDSTarget = new File(DownloadArtifacts.FILES_GENERATED + "/unmapped-datasources.csv");
-            ReportBuilder.buildCsvReportOfUnmappedDataSources(unmapped, unmappedDSTarget);
+            ReportBuilder.buildCsvReportOfDataSources(unmapped, unmappedDSTarget);
         } else {
             System.err.println("Url of the application url is not set. Not going to merge deployment info. Set "
                 + Constants.WAS_INFO_HOST + " env variable for this to work.");
@@ -312,8 +316,8 @@ public class ReportBuilder {
      * @param unmapped to write to the file
      * @param outFile the file to write to
      */
-    public static void buildCsvReportOfUnmappedDataSources(List<ParsedDataSource> unmapped, File outFile) {
-        System.out.println("The number of unmapped datasources is " + unmapped.size());
+    public static void buildCsvReportOfDataSources(List<ParsedDataSource> unmapped, File outFile) {
+        System.out.println("The number of datasources is " + unmapped.size());
         // make the file if it doesn't exist
         outFile.getParentFile().mkdirs();
         try (Writer writer = Files.newBufferedWriter(outFile.toPath())) {
@@ -321,7 +325,7 @@ public class ReportBuilder {
                 .build();
             beanToCsv.write(unmapped);
         } catch (Exception e) {
-            throw new RuntimeException("Could not write the csv file for unmapped datasources ", e);
+            throw new RuntimeException(String.format("Could not write the csv file %s for datasources ", outFile), e);
         }
     }
 
