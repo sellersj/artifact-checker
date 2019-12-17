@@ -50,11 +50,12 @@ public class FindJava8Issues {
         "cglib:cglib.*:3.2|" + //
         "org.ow2.asm:.*:5.0.[3-9]|" + //
         "org.ow2.asm:.*:5.[1-9]|" + //
+        "org.ow2.asm:.*:[6-9]|" + //
         "org.mockito:mockito.*:1.10.19|" + //
         "org.eclipse.jdt.core.*:3.10.0|" + //
         "org.springframework:spring-.*:3.2.9|" + //
         "org.springframework:spring-.*:3.2.1[0-9]|" + //
-        "org.springframework:spring-.*:4|" + //
+        "org.springframework:spring-.*:[4-9|" + //
         ":provided|" + //
         ":test" + //
         // make sure above line doesn't end with a pipe character |
