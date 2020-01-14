@@ -23,6 +23,7 @@ public class FindJava8IssuesTest {
             Arguments.of(Arrays.asList("org.apache.commons:commons-lang3:jar:3.7:compile"), 0), //
             Arguments.of(Arrays.asList("org.easymock:easymock:jar:3.3.1:compile"), 0), //
             Arguments.of(Arrays.asList("cglib:cglib:3.2"), 0), //
+            Arguments.of(Arrays.asList("cglib:cglib:3.3.0"), 0), //
             Arguments.of(Arrays.asList("org.springframework:spring-core:3.2.9:compile"), 0), //
             Arguments.of(Arrays.asList("org.springframework:spring-core:4.3.6:compile"), 0), //
 

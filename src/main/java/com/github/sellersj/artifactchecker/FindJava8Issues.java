@@ -47,7 +47,7 @@ public class FindJava8Issues {
         "org.easymock:easymock:jar:3.4|" + //
         "org.easymock:easymock:jar:3.5|" + //
         "org.easymock:easymock:jar:4|" + //
-        "cglib:cglib.*:3.2|" + //
+        "cglib:cglib.*:3.[2-9]|" + //
         "org.ow2.asm:.*:5.0.[3-9]|" + //
         "org.ow2.asm:.*:5.[1-9]|" + //
         "org.ow2.asm:.*:[6-9]|" + //
