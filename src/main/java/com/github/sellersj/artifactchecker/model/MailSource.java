@@ -3,9 +3,12 @@ package com.github.sellersj.artifactchecker.model;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class MailSource {
+public class MailSource implements Comparable<MailSource> {
 
     /** The key for name of the app. */
     public static final String MAIL_SOURCE_NAME = "MAIL_SOURCE_NAME";
@@ -28,6 +31,21 @@ public class MailSource {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public int compareTo(MailSource o) {
+        return CompareToBuilder.reflectionCompare(this, o);
     }
 
     /**
