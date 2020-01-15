@@ -632,6 +632,15 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         return String.join(" ", usernames);
     }
 
+    /** For the opencsv. */
+    @CsvBindByName
+    private Boolean sendsEmail;
+
+    /** If this app is mapped to a mail source. */
+    public Boolean isSendsEmail() {
+        return !getLinkedMailSources().isEmpty();
+    }
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
