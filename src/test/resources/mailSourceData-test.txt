@@ -1,0 +1,7 @@
+[MAIL_SOURCE_NAME]MY_AWESOME_MAIL_SOURCE
+[MAIL_JNDI]mail/corporate/MainMS
+[APP]My_Name_Name
+[APP]App-Two-Internal
+[MAIL_SOURCE_NAME]NOT_SO_AWESOME_MAIL_SOURCE
+[MAIL_JNDI]mail/corporate/TeamMailSource
+[APP]AnotherApp__PUBLIC
