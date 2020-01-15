@@ -25,6 +25,7 @@ import org.apache.commons.lang3.time.StopWatch;
 
 import com.github.sellersj.artifactchecker.model.App;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
+import com.github.sellersj.artifactchecker.model.MailSource;
 import com.github.sellersj.artifactchecker.model.ParsedDataSource;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 import com.github.sellersj.artifactchecker.model.security.ArtifactAttributesComparator;
@@ -89,6 +90,11 @@ public class ReportBuilder {
             DataSourceFileParser dsParser = new DataSourceFileParser();
             List<ParsedDataSource> parseDataSource = dsParser.parseDataSourceFile(wasInfoUrl + "dataSources");
             mergeDataSourceInfoFromProd(apps, parseDataSource);
+
+            // get the mailSource info
+            MailSourceFileParser msParser = new MailSourceFileParser();
+            List<MailSource> mailSources = msParser.parseMailSourceFile(wasInfoUrl + "mailSourceData");
+            mergMailSourceInfoFromProd(apps, mailSources);
 
             // write all the data sources
             File allDSTarget = new File(DownloadArtifacts.FILES_GENERATED + "/datasources.csv");
@@ -223,6 +229,25 @@ public class ReportBuilder {
                 // match the data source info with the app
                 if (app.getAppNames().contains(attributes.getDeploymentName())) {
                     attributes.getLinkedDataSources().add(app);
+                }
+            }
+        }
+    }
+
+    /**
+     * This will try to map the values scraped from the manifests with the values we get out of the env
+     *
+     * @param artifacts to check
+     * @param mailSources with info to see if we can merge it
+     */
+    private static void mergMailSourceInfoFromProd(Set<ArtifactAttributes> artifacts, List<MailSource> mailSources) {
+
+        for (ArtifactAttributes attributes : artifacts) {
+            for (MailSource mailSource : mailSources) {
+
+                // match the data source info with the app
+                if (mailSource.getAppNames().contains(attributes.getDeploymentName())) {
+                    attributes.getLinkedMailSources().add(mailSource);
                 }
             }
         }

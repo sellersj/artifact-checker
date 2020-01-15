@@ -138,6 +138,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** The data sources that are linked to this app. */
     private Set<ParsedDataSource> linkedDataSources = new TreeSet<>();
 
+    /** The mail sources that are linked to this app. */
+    private Set<MailSource> linkedMailSources = new TreeSet<>();
+
     /**
      * @return true if the has the scm project, repo, and (hash or version).
      */
@@ -871,6 +874,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public void setLinkedDataSources(Set<ParsedDataSource> linkedDataSources) {
         this.linkedDataSources = linkedDataSources;
+    }
+
+    /**
+     * @return the linkedMailSources
+     */
+    public Set<MailSource> getLinkedMailSources() {
+        return linkedMailSources;
+    }
+
+    /**
+     * @param linkedMailSources the linkedMailSources to set
+     */
+    public void setLinkedMailSources(Set<MailSource> linkedMailSources) {
+        this.linkedMailSources = linkedMailSources;
     }
 
 }
