@@ -196,18 +196,45 @@ public class ReportBuilder {
             }
         }
 
+        // TODO here's where we'd match an app for the missing ones... how?
+
         System.out.println("Applications deployed that are not linked to maven application are:");
         for (App app : deployedApp) {
             if (!app.isAppLinked()) {
                 System.out.println(app);
 
-                // add in the missing one with whatever info we have
-                ArtifactAttributes attribute = new ArtifactAttributes();
-                // fake out the manifest title with the WAS app name
-                String appName = app.getAttributes().get(App.APP_KEY).get(0);
-                attribute.getManifest().put(ArtifactAttributes.IMPLEMENTATION_TITLE, appName);
+                // we are going to keep track of the artifact to
+                ArtifactAttributes attribute = null;
+
+                // now go through all the apps that we have, and check for one that matches, then copy all the info
+                // over. This is in case of another deployment that matches the info
+                for (ArtifactAttributes artifactToCheck : artifacts) {
+                    if (null == artifactToCheck.getDeploymentInfo()
+                        && app.getPossibleArtifactIds().contains(artifactToCheck.getArtifactId())
+                        && app.containsVersion(artifactToCheck.getVersion())) {
+
+                        System.out.println(
+                            "Matching Extra app " + artifactToCheck.buildGitCloneUrl() + " with deployment " + app);
+
+                        attribute = new ArtifactAttributes(artifactToCheck);
+                        // clear out the deployment info
+                        attribute.setDeploymentInfo(null);
+                    }
+                }
+
+                if (null == attribute) {
+                    // if we had not found anything at all, make a placeholder entry with the deployment name as the
+                    // title.
+
+                    attribute = new ArtifactAttributes();
+                    // fake out the manifest title with the WAS app name
+                    String appName = app.getAttributes().get(App.APP_KEY).get(0);
+                    attribute.getManifest().put(ArtifactAttributes.IMPLEMENTATION_TITLE, appName);
+                    attribute.setLibraryCheckedWorked(false);
+                }
+
+                // now make sure that we add back in the deployment info, because that's actually what's different
                 attribute.setDeploymentInfo(app);
-                attribute.setLibraryCheckedWorked(false);
 
                 artifacts.add(attribute);
             }

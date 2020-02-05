@@ -141,6 +141,35 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** The mail sources that are linked to this app. */
     private Set<MailSource> linkedMailSources = new TreeSet<>();
 
+    /** Default constructor. */
+    public ArtifactAttributes() {
+    }
+
+    /** Clone constructor. */
+    public ArtifactAttributes(ArtifactAttributes source) {
+
+        // ideally this should be done in a nicer way to copy all the fields over.
+        // any time a new field is added, it will have to be added to this list
+
+        this.github = source.github;
+        this.correctedScmProject = source.correctedScmProject;
+        this.correctedScmRepo = source.correctedScmRepo;
+        this.correctedArtifactId = source.correctedArtifactId;
+        this.alreadyTrackedByAnother = source.alreadyTrackedByAnother;
+        this.java8Ready = source.java8Ready;
+        this.libraryCheckedWorked = source.libraryCheckedWorked;
+        this.manifest = source.manifest;
+        this.vulnerabilities = source.vulnerabilities;
+        this.scmTag = source.scmTag;
+        this.scmAuthorDate = source.scmAuthorDate;
+        this.deploymentInfo = source.deploymentInfo;
+        this.correctedJiraKey = source.correctedJiraKey;
+        this.techOwner = source.techOwner;
+        this.toDecomission = source.toDecomission;
+        this.linkedDataSources = source.linkedDataSources;
+        this.linkedMailSources = source.linkedMailSources;
+    }
+
     /**
      * @return true if the has the scm project, repo, and (hash or version).
      */
