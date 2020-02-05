@@ -209,8 +209,7 @@ public class ReportBuilder {
                 // now go through all the apps that we have, and check for one that matches, then copy all the info
                 // over. This is in case of another deployment that matches the info
                 for (ArtifactAttributes artifactToCheck : artifacts) {
-                    if (null == artifactToCheck.getDeploymentInfo()
-                        && app.getPossibleArtifactIds().contains(artifactToCheck.getArtifactId())
+                    if (app.getPossibleArtifactIds().contains(artifactToCheck.getArtifactId())
                         && app.containsVersion(artifactToCheck.getVersion())) {
 
                         System.out.println(
