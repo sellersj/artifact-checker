@@ -1,6 +1,8 @@
 package com.github.sellersj.artifactchecker.model;
 
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -42,9 +44,36 @@ public class App {
     /** A way to flag what apps are tracked / linked to our other list. */
     private boolean appLinked = false;
 
+    /**
+     * A work around when after moving to java 8+ and the date formats adher to the CLDR standard.
+     *
+     * The date format using CLDR uses dots after the short forms, but the output from the deployment does not have that
+     * for the days of the week or month.
+     *
+     * See https://stackoverflow.com/a/50412644/2055199
+     */
+    private static Map<Long, String> dayOfWeekTexts = Map.of(//
+        1L, "Mon", //
+        2L, "Tue", //
+        3L, "Wed", //
+        4L, "Thu", //
+        5L, "Fri", //
+        6L, "Sat", //
+        7L, "Sun");
+
+    /** Overriding the months without dots. See CLDR issue. */
+    private static Map<Long, String> monthTexts = Map.ofEntries(//
+        Map.entry(1L, "Jan"), Map.entry(2L, "Feb"), Map.entry(3L, "Mar"), Map.entry(4L, "Apr"), Map.entry(5L, "May"),
+        Map.entry(6L, "Jun"), Map.entry(7L, "Jul"), Map.entry(8L, "Aug"), Map.entry(9L, "Sep"), Map.entry(10L, "Oct"),
+        Map.entry(11L, "Nov"), Map.entry(12L, "Dec"));
+
     /** The format from the other file we're parsing. */
-    private static final DateTimeFormatter APP_FILE_DATE_FORMAT = DateTimeFormatter
-        .ofPattern("EEE MMM d HH:mm:ss yyyy");
+    private static final DateTimeFormatter APP_FILE_DATE_FORMAT = new DateTimeFormatterBuilder() //
+        .appendText(ChronoField.DAY_OF_WEEK, dayOfWeekTexts) //
+        .appendLiteral(' ') //
+        .appendText(ChronoField.MONTH_OF_YEAR, monthTexts) //
+        .appendPattern(" d HH:mm:ss yyyy") //
+        .toFormatter();
 
     /**
      * Adds an item to the list that is referenced by the key.
