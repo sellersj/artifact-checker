@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -171,7 +172,7 @@ public class InventoryFileUtilTest {
 
         vul.setDescription("Fake cve goes " + RandomStringUtils.randomAlphanumeric(0, 100));
 
-        BigDecimal score = new BigDecimal(RANDOM.nextFloat() * 10.0f).setScale(1, BigDecimal.ROUND_HALF_UP);
+        BigDecimal score = new BigDecimal(RANDOM.nextFloat() * 10.0f).setScale(1, RoundingMode.HALF_UP);
         Float cvsScore = Float.valueOf(score.floatValue());
         if (RANDOM.nextBoolean()) {
             Cvssv3 cvssv3 = new Cvssv3();
