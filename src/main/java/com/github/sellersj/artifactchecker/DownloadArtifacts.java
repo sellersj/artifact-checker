@@ -14,6 +14,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
@@ -24,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.owasp.Dependency;
 import com.github.sellersj.artifactchecker.model.owasp.DependencyCheckReport;
+import com.github.sellersj.artifactchecker.model.owasp.SuppressedVulnerability;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
 /**
@@ -366,8 +368,22 @@ public class DownloadArtifacts {
             if (null != dependencies) {
                 for (Dependency dep : dependencies) {
                     List<Vulnerability> depsVuls = dep.getVulnerabilities();
+
                     if (null != depsVuls) {
                         vulnerabilities.addAll(depsVuls);
+                    }
+
+                    // now let's remove any suppressed issues where the name matches
+                    if (null != dep.getSuppressedVulnerabilities()) {
+                        for (Iterator<Vulnerability> iterator = vulnerabilities.iterator(); iterator.hasNext();) {
+                            Vulnerability vul = iterator.next();
+
+                            for (SuppressedVulnerability suppressed : dep.getSuppressedVulnerabilities()) {
+                                if (vul.getName().equals(suppressed.getName())) {
+                                    iterator.remove();
+                                }
+                            }
+                        }
                     }
                 }
             }
