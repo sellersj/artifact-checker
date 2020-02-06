@@ -7,11 +7,17 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * From https://stackoverflow.com/a/27323328
  *
  */
 public class DateUtils {
+
+    /** A logger. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(DateUtils.class);
 
     public static Date asDate(LocalDate localDate) {
         return Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
@@ -40,7 +46,7 @@ public class DateUtils {
             LocalDateTime dateTime = LocalDateTime.parse(string, formatter);
             date = asDate(dateTime);
         } catch (Exception e) {
-            // don't log anything
+            LOGGER.debug(String.format("Could not parse date %s", string), e);
         }
         return date;
     }
