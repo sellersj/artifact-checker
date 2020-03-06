@@ -158,5 +158,69 @@
 	{
 		"jiraKey": "THD",
 		"techOwner": "AMIS"
+	},
+	{
+		"jiraKey": "MCOTHER",
+		"techOwner": "MC"
+	},
+	{
+		"jiraKey": "MCASPS",
+		"techOwner": "MC"
+	},
+	{
+		"jiraKey": "AIRR",
+		"techOwner": "MC"
+	},
+	{
+		"jiraKey": "MCCATS",
+		"techOwner": "MC"
+	},
+	{
+		"jiraKey": "MCCL",
+		"techOwner": "MC"
+	},
+	{
+		"jiraKey": "MCCRS",
+		"techOwner": "MC"
+	},
+	{
+		"jiraKey": "MCDTCS",
+		"techOwner": "MC"
+	},
+	{
+		"jiraKey": "MCEGDD",
+		"techOwner": "MC"
+	},
+	{
+		"jiraKey": "MCEDR",
+		"techOwner": "MC"
+	},
+	{
+		"jiraKey": "MCG",
+		"techOwner": "MC"
+	},
+	{
+		"jiraKey": "MASSCOMP",
+		"techOwner": "MC"
+	},
+	{
+		"jiraKey": "MCASPIS",
+		"techOwner": "MC"
+	},
+	{
+		"jiraKey": "NOANB",
+		"techOwner": "MC"
+	},
+	{
+		"jiraKey": "NAC",
+		"techOwner": "MC"
+	},
+	{
+		"jiraKey": "MCR",
+		"techOwner": "MC"
+	},
+	{
+		"jiraKey": "MCSTARS",
+		"techOwner": "MC"
 	}
 ]
