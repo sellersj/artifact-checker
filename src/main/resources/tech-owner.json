@@ -222,5 +222,49 @@
 	{
 		"jiraKey": "MCSTARS",
 		"techOwner": "MC"
+	},
+	{
+		"jiraKey": "BIMS",
+		"techOwner": "CB"
+	},
+	{
+		"jiraKey": "ADU",
+		"techOwner": "CB"
+	},
+	{
+		"jiraKey": "CAN",
+		"techOwner": "CB"
+	},
+	{
+		"jiraKey": "CBW",
+		"techOwner": "SBB"
+	},
+	{
+		"jiraKey": "CCCAPI",
+		"techOwner": "SBB"
+	},
+	{
+		"jiraKey": "CDNID",
+		"techOwner": "SBB"
+	},
+	{
+		"jiraKey": "CIS",
+		"techOwner": "SBB"
+	},
+	{
+		"jiraKey": "SPP",
+		"techOwner": "SBB"
+	},
+	{
+		"jiraKey": "IMSUSNTD",
+		"techOwner": "SBB"
+	},
+	{
+		"jiraKey": "CIODSIPS",
+		"techOwner": "SBB"
+	},
+	{
+		"jiraKey": "CIODSIPS",
+		"techOwner": "SIPS"
 	}
 ]
