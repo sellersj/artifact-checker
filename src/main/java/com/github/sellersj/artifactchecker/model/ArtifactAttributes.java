@@ -605,6 +605,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         return nodeUrls;
     }
 
+    /** For the opencsv. */
+    @CsvBindByName
+    private String nodeHostnames;
+
+    /** The hostnames of the deployment nodes. */
+    public Set<String> getNodeHostnames() {
+        TreeSet<String> nodeHosts = new TreeSet<>();
+        for (String node : getNodes().split(" ")) {
+            nodeHosts.add(node.toLowerCase().replaceAll("_", ""));
+        }
+
+        return nodeHosts;
+    }
+
     /** If this app is public facing. */
     public boolean isPublic() {
         return getDeploymentInfo("TYPE").contains("Public");
