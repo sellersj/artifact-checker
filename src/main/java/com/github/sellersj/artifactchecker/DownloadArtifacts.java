@@ -30,7 +30,7 @@ import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
 /**
  * If doing this on a computer that hasn't updated the owasp dependency check data, it be can be done by calling the
- * <code>org.owasp:dependency-check-maven:3.0.2:update-only</code>
+ * <code>org.owasp:dependency-check-maven:5.3.1:update-only</code>
  *
  * @author sellersj
  *
