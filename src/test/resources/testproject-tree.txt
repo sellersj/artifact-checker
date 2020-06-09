@@ -129,6 +129,6 @@ ca.gc.ic.test:TestProjectWAR:war:1.5.19-SNAPSHOT
 |  +- javax.annotation:jsr250-api:jar:1.1:provided
 |  \- javax.inject:javax.inject:jar:1:provided
 +- javax.xml:jaxr-api:jar:1.0_04:provided
-+- com.oracle:ojdbc6:jar:11.2.0.4:provided
++- com.oracle.database.jdbc:ojdbc6:jar:11.2.0.4:provided
 +- com.verity:k2:jar:6.1.2:provided
 \- com.bea.commonj:com.springsource.commonj:jar:1.1.0:provided
