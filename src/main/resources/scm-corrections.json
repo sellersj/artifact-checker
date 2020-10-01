@@ -420,6 +420,13 @@
 		"jiraKey": "TMEAN"
 	},
 	{
+		"implementationTitle": "CIPO-app-status-app",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-app-status",
+		"artifactId": "CIPO-tm-agent-name-list-app",
+		"jiraKey": ""
+	},
+	{
 		"implementationTitle": "General Correspondence - Enterprise Application",
 		"scmProject": "CWP",
 		"scmRepo": "cipo-general-correspondence",
