@@ -7,13 +7,6 @@
 		"jiraKey": ""
 	},
 	{
-		"implementationTitle": "ART - IC_ReportingWebEAR",
-		"scmProject": "ICAPPS",
-		"scmRepo": "art-ic-reporting",
-		"artifactId": "IC_ReportingWebEAR",
-		"jiraKey": ""
-	},
-	{
 		"implementationTitle": "BBCS - CIRS_Business-Based_Classification_Structure_EAR",
 		"scmProject": "ICAPPS",
 		"scmRepo": "bbcs-imb-business-based-classification-structure",
@@ -25,13 +18,6 @@
 		"scmProject": "ICAPPS",
 		"scmRepo": "cass-ic-co-operative-administrative-and-statistical-system",
 		"artifactId": "CASS-EAR",
-		"jiraKey": ""
-	},
-	{
-		"implementationTitle": "CBW - IMBS CCC Web Services EAR",
-		"scmProject": "ICAPPS",
-		"scmRepo": "cbw-ims-canadian-company-capability-services",
-		"artifactId": "IMBS_CCCServicesEAR",
 		"jiraKey": ""
 	},
 	{
@@ -67,13 +53,6 @@
 		"scmProject": "ICAPPS",
 		"scmRepo": "cipoqbs-cipo-querium",
 		"artifactId": "CIPO_QueriumEAR",
-		"jiraKey": ""
-	},
-	{
-		"implementationTitle": "CSBFPAUT - IdentityManagementProvisioningEAR",
-		"scmProject": "ICAPPS",
-		"scmRepo": "csbfpaut-sbb-csbfp-authentication",
-		"artifactId": "IdentityManagementProvisioningEAR",
 		"jiraKey": ""
 	},
 	{
@@ -413,13 +392,6 @@
 		"jiraKey": "CIPOFITT"
 	},
 	{
-		"implementationTitle": "CIPO-tm-agent-name-list-app - Enterprise Application",
-		"scmProject": "CWP",
-		"scmRepo": "cipo-tm-agent-name-list",
-		"artifactId": "CIPO-tm-agent-name-list-app",
-		"jiraKey": "TMEAN"
-	},
-	{
 		"implementationTitle": "CIPO-app-status-app",
 		"scmProject": "CWP",
 		"scmRepo": "cipo-app-status",
@@ -571,13 +543,6 @@
 		"scmProject": "CWP",
 		"scmRepo": "cipo-patent-efiling",
 		"artifactId": "CIPO-patent-efiling-app",
-		"jiraKey": ""
-	},
-	{
-		"implementationTitle": "CIPO-tm-conversion-processing-service-app - Enterprise Application",
-		"scmProject": "CWP",
-		"scmRepo": "cipo-tm-conversion-processing-service",
-		"artifactId": "CIPO-tm-conversion-processing-service-app",
 		"jiraKey": ""
 	},
 	{
