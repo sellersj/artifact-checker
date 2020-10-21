@@ -80,7 +80,7 @@ public class CheckForTemplatingUse {
                 List<String> fileLines = FileUtils.readLines(file, StandardCharsets.ISO_8859_1);
                 int count = 0;
                 for (String line : fileLines) {
-                    if (line.contains("\\stemplateName")) {
+                    if (line.contains("templateName=")) {
                         lines.add(file.getAbsolutePath() + ":" + count + ":" + line);
                     }
                     count++;
