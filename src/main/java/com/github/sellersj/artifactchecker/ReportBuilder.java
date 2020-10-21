@@ -70,8 +70,13 @@ public class ReportBuilder {
 
         String skipClone = Constants.getSysOrEnvVariable(Constants.SKIP_CLONE, false);
         if (StringUtils.isBlank(skipClone)) {
-
+            int size = filtered.size();
+            System.out.println(String.format("Going to attempt to clone out %s projects", size));
+            int count = 1;
             for (ArtifactAttributes gav : filtered) {
+                System.out.println(String.format("Clone project %s of %s which is %s %s", count++, size,
+                    gav.getScmProject(), gav.getScmRepo()));
+
                 downloadArtifacts.cloneAndCheckProject(gav);
             }
         }
