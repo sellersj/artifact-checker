@@ -30,6 +30,9 @@ public class Constants {
     /** The filename where we track java 8 issues with dependencies. */
     public static final String JAVA8_ISSUES_FILENAME = "java8-issues.txt";
 
+    /** The name of the file we will put matching epic templating lines. */
+    public static final String TEMPLATE_MATCHING_LINE_FILENAME = "epic-template-lines.txt";
+
     /** The hostname of the public facing apps. */
     public static final String PUBLIC_HOSTNAME = "PUBLIC_HOSTNAME";
 

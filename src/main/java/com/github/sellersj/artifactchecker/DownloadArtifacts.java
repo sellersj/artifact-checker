@@ -29,8 +29,8 @@ import com.github.sellersj.artifactchecker.model.owasp.SuppressedVulnerability;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
 /**
- * If doing this on a computer that hasn't updated the owasp dependency check data, it be can be
- * done by calling the <code>org.owasp:dependency-check-maven:6.0.2:update-only</code>
+ * If doing this on a computer that hasn't updated the owasp dependency check data, it be can be done by calling the
+ * <code>org.owasp:dependency-check-maven:6.0.2:update-only</code>
  *
  * @author sellersj
  *
@@ -178,6 +178,10 @@ public class DownloadArtifacts {
         // gather the info we want from the owasp dependency check
         processDependencyCheckInfo(gav, projectDir);
 
+        // check for the templating here
+        CheckForTemplatingUse templatingUse = new CheckForTemplatingUse();
+        gav.setEpicTemplatingNames(templatingUse.getEpicTemplateNames(projectDir));
+
         // copy all required files we want to a different location
         copyFiles();
 
@@ -193,8 +197,8 @@ public class DownloadArtifacts {
     }
 
     /**
-     * For improperly deployed apps, the snapshots might not exist in the repo any more. So we're
-     * doing a maven install to be able to do the CVE checks.
+     * For improperly deployed apps, the snapshots might not exist in the repo any more. So we're doing a maven install
+     * to be able to do the CVE checks.
      *
      * @param gav to use
      * @param projectDir the directory that it's in
@@ -272,8 +276,8 @@ public class DownloadArtifacts {
     }
 
     /**
-     * try to get a list of the tags, see if we have 1 unique version that ends with the version,
-     * and then try to switch to that.
+     * try to get a list of the tags, see if we have 1 unique version that ends with the version, and then try to switch
+     * to that.
      *
      * @param gav to switch to
      * @param projectDir where the project is already cloned to
@@ -423,6 +427,7 @@ public class DownloadArtifacts {
             Files.walk(path)//
                 .filter(p -> p.getFileName().toString().startsWith("dependency-check-")
                     || "tree.txt".equals(p.getFileName().toString())
+                    || Constants.TEMPLATE_MATCHING_LINE_FILENAME.equals(p.getFileName().toString())
                     || Constants.JAVA8_ISSUES_FILENAME.equals(p.getFileName().toString()))
                 // .peek(System.out::println) //
                 .forEach(p -> moveUnchecked(p));

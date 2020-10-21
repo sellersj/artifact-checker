@@ -141,6 +141,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** The mail sources that are linked to this app. */
     private Set<MailSource> linkedMailSources = new TreeSet<>();
 
+    /** The epic templating names we have identified for this project. */
+    private Set<String> epicTemplatingNames = new TreeSet<>();
+
     /** Default constructor. */
     public ArtifactAttributes() {
     }
@@ -168,6 +171,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         this.toDecomission = source.toDecomission;
         this.linkedDataSources = source.linkedDataSources;
         this.linkedMailSources = source.linkedMailSources;
+        this.epicTemplatingNames = source.epicTemplatingNames;
     }
 
     /**
@@ -940,6 +944,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public void setLinkedMailSources(Set<MailSource> linkedMailSources) {
         this.linkedMailSources = linkedMailSources;
+    }
+
+    /**
+     * @return the epicTemplatingNames
+     */
+    public Set<String> getEpicTemplatingNames() {
+        return epicTemplatingNames;
+    }
+
+    /**
+     * @param epicTemplatingNames the epicTemplatingNames to set
+     */
+    public void setEpicTemplatingNames(Set<String> epicTemplatingNames) {
+        this.epicTemplatingNames = epicTemplatingNames;
     }
 
 }
