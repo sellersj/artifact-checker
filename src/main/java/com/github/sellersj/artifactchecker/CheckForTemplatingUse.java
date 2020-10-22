@@ -33,7 +33,7 @@ public class CheckForTemplatingUse {
      */
     public Set<String> getEpicTemplateNames(File startingDir) {
         List<File> jspFiles = getJspFiles(startingDir);
-        List<String> matchingLines = getLinesOfTemplating(jspFiles);
+        List<String> matchingLines = getLinesOfTemplating(startingDir, jspFiles);
         writeFileOfLinesFound(startingDir, matchingLines);
 
         // get the template names so they can be put into the model
@@ -69,10 +69,11 @@ public class CheckForTemplatingUse {
     /**
      * Search the file looking for something that looks like a template name.
      *
+     * @param startingdir to know relatively what path we will need
      * @param files to check
      * @return a list of matching lines
      */
-    public List<String> getLinesOfTemplating(List<File> files) {
+    public List<String> getLinesOfTemplating(File startingdir, List<File> files) {
         ArrayList<String> lines = new ArrayList<>();
 
         for (File file : files) {
@@ -82,7 +83,9 @@ public class CheckForTemplatingUse {
                 for (String line : fileLines) {
                     count++;
                     if (line.contains("templateName=")) {
-                        lines.add(file.getAbsolutePath() + ":" + count + ":" + line);
+                        // we don't care where it is on the disk, so we're trying to get the relative path
+                        String location = file.getAbsolutePath().substring(startingdir.getAbsolutePath().length() + 1);
+                        lines.add(location + ":" + count + ":" + line);
                     }
                 }
 

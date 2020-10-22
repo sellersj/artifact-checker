@@ -1,6 +1,7 @@
 package com.github.sellersj.artifactchecker;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
@@ -39,14 +40,18 @@ public class CheckForTemplatingUseTest {
 
     @Test
     public void getLinesOfTemplating_Footer() {
+        File rootDir = new File(".");
 
         File file = new File("./src/test/resources/test-template-footer.jsp");
         assertTrue(file.exists(), file.getAbsolutePath() + " doesn't exist");
-        List<String> lines = checkForTemplatingUse.getLinesOfTemplating(Arrays.asList(file));
+        List<String> lines = checkForTemplatingUse.getLinesOfTemplating(rootDir, Arrays.asList(file));
 
         assertEquals(1, lines.size(), "not the expected number of lines " + lines);
         for (String line : lines) {
             assertTrue(line.contains("templateName"), "should contain the attribute, but it is " + line);
+            assertFalse(line.contains(rootDir.getAbsolutePath()),
+                "should not contain the start of the path, but it is " + line);
+            assertFalse(line.startsWith(File.separator), "shouldn't start with a slash");
         }
 
         List<String> expectedTemplateNames = Arrays.asList("usability-2-col-template");
