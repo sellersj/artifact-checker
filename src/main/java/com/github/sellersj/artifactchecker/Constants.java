@@ -33,6 +33,9 @@ public class Constants {
     /** The name of the file we will put matching epic templating lines. */
     public static final String TEMPLATE_MATCHING_LINE_FILENAME = "epic-template-lines.txt";
 
+    /** The name of the file we will put matching epic usage lines. */
+    public static final String EPIC_MATCHING_LINE_FILENAME = "epic-resource-lines.txt";
+
     /** The hostname of the public facing apps. */
     public static final String PUBLIC_HOSTNAME = "PUBLIC_HOSTNAME";
 

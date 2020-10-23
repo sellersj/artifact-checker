@@ -181,6 +181,7 @@ public class DownloadArtifacts {
         // check for the templating here
         CheckForTemplatingUse templatingUse = new CheckForTemplatingUse();
         gav.setEpicTemplatingNames(templatingUse.getEpicTemplateNames(projectDir));
+        templatingUse.writeEpicUse(projectDir);
 
         // copy all required files we want to a different location
         copyFiles();
