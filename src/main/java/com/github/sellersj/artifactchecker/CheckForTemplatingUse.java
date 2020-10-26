@@ -72,6 +72,7 @@ public class CheckForTemplatingUse {
 
     public void writeFileOfLinesFound(File directory, String filename, List<String> lines) {
         File file = new File(directory, filename);
+        LOGGER.info(String.format("Writing file %s with %s lines", file.getAbsolutePath(), lines.size()));
         try {
             FileUtils.writeLines(file, lines);
         } catch (IOException e) {

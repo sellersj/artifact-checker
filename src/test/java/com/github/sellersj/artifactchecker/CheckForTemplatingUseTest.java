@@ -61,4 +61,27 @@ public class CheckForTemplatingUseTest {
             "not what we were expecting but was " + templateNames);
     }
 
+    @Test
+    public void getMainFiles_SomeInThisProject() {
+        File dir = new File(".");
+        List<File> list = checkForTemplatingUse.getMainFiles(dir);
+        assertFalse(list.isEmpty(), "shouldn't be empty but had " + list);
+
+        // make sure that there are a couple of main files
+        boolean foundProperties = false;
+        boolean foundJava = false;
+        for (File file : list) {
+            if (file.getAbsolutePath().endsWith(".java")) {
+                foundJava = true;
+            }
+            if (file.getAbsolutePath().endsWith(".properties")) {
+                foundProperties = true;
+            }
+            assertFalse(file.getAbsolutePath().contains("src" + File.separator + "test"),
+                "shouldn't have found anything in the testing directory");
+        }
+        assertTrue(foundProperties, "should have found property files but only found " + list);
+        assertTrue(foundJava, "should have found java files but only found " + list);
+    }
+
 }
