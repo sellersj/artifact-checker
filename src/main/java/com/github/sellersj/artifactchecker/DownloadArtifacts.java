@@ -429,6 +429,7 @@ public class DownloadArtifacts {
                 .filter(p -> p.getFileName().toString().startsWith("dependency-check-")
                     || "tree.txt".equals(p.getFileName().toString())
                     || Constants.TEMPLATE_MATCHING_LINE_FILENAME.equals(p.getFileName().toString())
+                    || Constants.EPIC_MATCHING_LINE_FILENAME.equals(p.getFileName().toString())
                     || Constants.JAVA8_ISSUES_FILENAME.equals(p.getFileName().toString()))
                 // .peek(System.out::println) //
                 .forEach(p -> moveUnchecked(p));
