@@ -22,6 +22,7 @@ import java.util.TreeSet;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.StopWatch;
+import org.apache.commons.text.StringEscapeUtils;
 
 import com.github.sellersj.artifactchecker.model.App;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
@@ -435,7 +436,8 @@ public class ReportBuilder {
             builder.append("<p>\n");
             builder.append("Score: " + entry.getKey().getScore() + "<br/>\n");
             builder.append("Severity: " + entry.getKey().getSeverity() + "<br/>\n");
-            builder.append("Description: " + entry.getKey().getDescription() + "<br/>\n");
+            builder
+                .append("Description: " + StringEscapeUtils.escapeHtml4(entry.getKey().getDescription()) + "<br/>\n");
             builder.append("</p>\n");
 
             // what apps have the issue
