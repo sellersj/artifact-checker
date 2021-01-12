@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedMap;
@@ -425,12 +426,16 @@ public class ReportBuilder {
         for (Entry<SecurityVulnerability, Set<ArtifactAttributes>> entry : map.entrySet()) {
             String cveName = entry.getKey().getName();
 
-            // anchor
-            builder.append(String.format("<a id='%s'></a>", cveName));
             // header, linking to external site
-            builder
-                .append(String.format("<a id=\"%s\"><h2><a href=\"https://nvd.nist.gov/vuln/detail/%s\">%s</a></h2>\n",
-                    cveName, cveName, cveName));
+            if (cveName.startsWith("CVE-")) {
+                builder.append(
+                    String.format("<a id=\"%s\"></a><h2><a href=\"https://nvd.nist.gov/vuln/detail/%s\">%s</a></h2>\n",
+                        cveName, cveName, cveName));
+            } else {
+                // replace non-alpha numeric chars in the anchor
+                String id = cveName.replaceAll("[^A-Za-z0-9]", "-").toLowerCase(Locale.CANADA);
+                builder.append(String.format("<a id=\"%s\"></a><h2>%s</h2>\n", id, cveName));
+            }
 
             // write some things about the vul
             builder.append("<p>\n");
