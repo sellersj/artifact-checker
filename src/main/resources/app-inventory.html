@@ -153,7 +153,7 @@
        var xhr = $.ajax({
     	url: "app-inventory.json",
     		success: function(response) {
-				$("#dateGen").text(xhr.getResponseHeader("Last-Modified"));
+				$("#dateGen").text(new Date(xhr.getResponseHeader("Last-Modified")));
     		}
 		});
     </script>
