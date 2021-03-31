@@ -161,6 +161,7 @@ public class DownloadArtifacts {
             "-DnodeAnalyzerEnabled=false", //
             "-DrubygemsAnalyzerEnabled=false", //
             "-DbundleAuditAnalyzerEnabled=false", //
+            "-DnodeAuditSkipDevDependencies=true", //
             "-Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2"));
 
         // if we have a nexus url, use it
