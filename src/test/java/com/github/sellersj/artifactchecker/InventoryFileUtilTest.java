@@ -45,8 +45,12 @@ public class InventoryFileUtilTest {
 
     @Test
     public void testWriteRead() throws Exception {
+        // this version should be kept in sync with what's in the pom
         // this will probably fail if maven repo in different location
-        String fileName = System.getProperty("user.home") + "/.m2/repository/junit/junit/4.12/junit-4.12.jar";
+        String junitVersion = "5.7.1";
+        String fileName = System.getProperty("user.home") + //
+            "/.m2/repository/org/junit/jupiter/junit-jupiter-engine/" //
+            + junitVersion + "/junit-jupiter-engine-" + junitVersion + ".jar";
 
         ArtifactAttributes attributes = new ArtifactAttributes();
         attributes.setManifest(GetManifest.getMainAttributes(fileName));

@@ -41,6 +41,7 @@
       <artifactId>opencsv</artifactId>
       <version>5.4</version>
     </dependency>
+    <!-- keep the version in InventoryFileUtilTest#testWriteRead() in sync with this -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
