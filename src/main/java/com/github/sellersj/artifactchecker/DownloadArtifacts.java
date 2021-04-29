@@ -30,7 +30,7 @@ import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
 /**
  * If doing this on a computer that hasn't updated the owasp dependency check data, it be can be done by calling the
- * <code>org.owasp:dependency-check-maven:6.1.5:update-only</code>
+ * <code>org.owasp:dependency-check-maven:6.1.6:update-only</code>
  *
  * @author sellersj
  *
@@ -38,7 +38,7 @@ import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 public class DownloadArtifacts {
 
     /** The version of owasp dependency check to use. */
-    private static final String OWASP_DEP_CHECK_VERSION = "6.1.5";
+    private static final String OWASP_DEP_CHECK_VERSION = "6.1.6";
 
     /** The version of maven-dependency-plugin to use. */
     private static final String MAVEN_DEP_PLUGIN_VERSION = "3.1.2";
