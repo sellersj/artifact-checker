@@ -598,6 +598,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** Makes links right into the logging location. */
     public List<String> getNodeUrls() {
         String[] nodes = getNodes().split(" ");
+        Arrays.sort(nodes);
         String logHost = Constants.getSysOrEnvVariable(Constants.PROD_LOG_HOST);
 
         ArrayList<String> nodeUrls = new ArrayList<>();
