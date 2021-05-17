@@ -317,7 +317,7 @@ public class ArtifactAttributesTest {
 
         ArtifactAttributes art = new ArtifactAttributes();
         art.setDeploymentInfo(new App());
-        art.getDeploymentInfo().putItem("NODE", "Was_In1 Was_In2");
+        art.getDeploymentInfo().putItem("NODE", "Was_In2 Was_In1");
 
         List<String> nodeUrls = art.getNodeUrls();
         assertEquals(2, nodeUrls.size(), "size");
