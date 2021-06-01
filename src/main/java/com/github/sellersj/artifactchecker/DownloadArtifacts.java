@@ -5,6 +5,7 @@ package com.github.sellersj.artifactchecker;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.ProcessBuilder.Redirect;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -16,6 +17,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -29,8 +31,8 @@ import com.github.sellersj.artifactchecker.model.owasp.SuppressedVulnerability;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
 /**
- * If doing this on a computer that hasn't updated the owasp dependency check data, it be can be done by calling the
- * <code>org.owasp:dependency-check-maven:6.1.6:update-only</code>
+ * If doing this on a computer that hasn't updated the owasp dependency check data, it be can be
+ * done by calling the <code>org.owasp:dependency-check-maven:RELEASE:update-only</code>
  *
  * @author sellersj
  *
@@ -38,10 +40,10 @@ import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 public class DownloadArtifacts {
 
     /** The version of owasp dependency check to use. */
-    private static final String OWASP_DEP_CHECK_VERSION = "6.1.6";
+    private String owaspDepCheckVersion;
 
     /** The version of maven-dependency-plugin to use. */
-    private static final String MAVEN_DEP_PLUGIN_VERSION = "3.1.2";
+    private String mavenDepPluginVersion;
 
     /**
      * We're dealing with mac giving a limited PATH to eclipse and linking directly to homebrew.
@@ -83,6 +85,18 @@ public class DownloadArtifacts {
             nexusUrl = "https://" + toolsHost + "/maven-proxy/service/local/";
             System.out.println(String.format("We are going to use %s to download artifacts", nexusUrl));
         }
+
+        // load the versions of the plugins to use
+        String filename = "properties-from-pom.properties";
+        InputStream is = getClass().getClassLoader().getResourceAsStream(filename);
+        Properties properties = new Properties();
+        try {
+            properties.load(is);
+            owaspDepCheckVersion = properties.getProperty("owasp.dependency.check.version");
+            mavenDepPluginVersion = properties.getProperty("maven.dependency.plugin.version");
+        } catch (IOException e) {
+            System.err.println("Could not load " + filename + " to determine the versions of the plugins.");
+        }
     }
 
     private void buildJava8Issues(ArtifactAttributes gav, String treeOutputFile) {
@@ -93,6 +107,13 @@ public class DownloadArtifacts {
     }
 
     public void cloneAndCheckProject(ArtifactAttributes gav) {
+        // check the the class was initalized correctly
+        if (null == owaspDepCheckVersion) {
+            throw new IllegalStateException("The owaspDepCheckVersion is null but should be properly set.");
+        } else if (null == mavenDepPluginVersion) {
+            throw new IllegalStateException("The mavenDepPluginVersion is null but should be properly set.");
+        }
+
         if (!gav.hasRequiredGitInfo()) {
             gav.setLibraryCheckedWorked(false);
             System.err.println("###########");
@@ -138,7 +159,7 @@ public class DownloadArtifacts {
         // generate 1 tree file per project rather than 1 per module
         String treeOutputFile = projectDir.getAbsolutePath() + "/tree.txt";
         ProcessBuilder mvnDepTree = new ProcessBuilder(osPrefix + "mvn" + osSuffix, "--batch-mode",
-            "org.apache.maven.plugins:maven-dependency-plugin:" + MAVEN_DEP_PLUGIN_VERSION + ":tree",
+            "org.apache.maven.plugins:maven-dependency-plugin:" + mavenDepPluginVersion + ":tree",
             "-DoutputFile=" + treeOutputFile, "-DappendOutput=true");
         mvnDepTree.directory(projectDir);
         if (0 != run(mvnDepTree)) {
@@ -151,8 +172,8 @@ public class DownloadArtifacts {
 
         List<String> command = new ArrayList<>();
         command.addAll(Arrays.asList(osPrefix + "mvn" + osSuffix, "--batch-mode",
-            "org.owasp:dependency-check-maven:" + OWASP_DEP_CHECK_VERSION + ":check", //
-            "org.owasp:dependency-check-maven:" + OWASP_DEP_CHECK_VERSION + ":aggregate", //
+            "org.owasp:dependency-check-maven:" + owaspDepCheckVersion + ":check", //
+            "org.owasp:dependency-check-maven:" + owaspDepCheckVersion + ":aggregate", //
             "-Dformat=ALL", "-DskipProvidedScope=true", //
             "-DautoUpdate=false", //
             "-DnuspecAnalyzerEnabled=false", //
@@ -200,8 +221,8 @@ public class DownloadArtifacts {
     }
 
     /**
-     * For improperly deployed apps, the snapshots might not exist in the repo any more. So we're doing a maven install
-     * to be able to do the CVE checks.
+     * For improperly deployed apps, the snapshots might not exist in the repo any more. So we're
+     * doing a maven install to be able to do the CVE checks.
      *
      * @param gav to use
      * @param projectDir the directory that it's in
@@ -279,8 +300,8 @@ public class DownloadArtifacts {
     }
 
     /**
-     * try to get a list of the tags, see if we have 1 unique version that ends with the version, and then try to switch
-     * to that.
+     * try to get a list of the tags, see if we have 1 unique version that ends with the version,
+     * and then try to switch to that.
      *
      * @param gav to switch to
      * @param projectDir where the project is already cloned to
