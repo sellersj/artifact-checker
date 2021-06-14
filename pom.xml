@@ -17,7 +17,7 @@ n.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 
     <!-- used for the reports of other project -->
     <owasp.dependency.check.version>6.2.2</owasp.dependency.check.version>
-    <maven.dependency.plugin.version>3.1.2</maven.dependency.plugin.version>
+    <maven.dependency.plugin.version>3.2.0</maven.dependency.plugin.version>
 
     <!-- to try to address -->
     <!-- https://issues.apache.org/jira/browse/SUREFIRE-1788 -->
