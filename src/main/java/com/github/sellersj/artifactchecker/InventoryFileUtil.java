@@ -210,7 +210,7 @@ public class InventoryFileUtil {
                 TechOwner owner = mapOfTechOwners.get(app.getJiraKey());
 
                 if (StringUtils.isNotBlank(owner.getJiraKey())) {
-                    System.out.println("Updating TechOwner for " + app.getJiraKey() + " to " + owner.getJiraKey());
+                    System.out.println("Updating TechOwner for " + app.getJiraKey() + " to " + owner.getTechOwner());
                     app.setTechOwner(owner.getTechOwner());
                 }
             }
