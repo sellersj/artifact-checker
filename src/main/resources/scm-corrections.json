@@ -565,5 +565,12 @@
 		"scmRepo": "cipo-ec-pb-maintfee",
 		"artifactId": "CIPO-ec-pb-maintfee-app",
 		"jiraKey": ""
+	},
+	{
+		"implementationTitle": "CIPO-ec-profile-ws-app",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-ec-profile-ws",
+		"artifactId": "CIPO-ec-profile-ws-app",
+		"jiraKey": ""
 	}
 ]
