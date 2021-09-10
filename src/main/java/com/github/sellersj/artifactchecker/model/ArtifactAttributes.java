@@ -603,11 +603,17 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
         ArrayList<String> nodeUrls = new ArrayList<>();
         for (String node : nodes) {
-            nodeUrls.add("<a href=\"http://" + logHost + "/logs/" + node.toLowerCase().replaceAll("_", "") + "/\">"
-                + node + "</a>");
+            nodeUrls.add(
+                "<a href=\"http://" + logHost + "/logs/" + nodeLogLocationCorrection(node) + "/\">" + node + "</a>");
         }
 
         return nodeUrls;
+    }
+
+    public String nodeLogLocationCorrection(String node) {
+        return node.toLowerCase() //
+            .replace("was_osbp", "wasosbpublic") //
+            .replaceAll("_", "");
     }
 
     /** For the opencsv. */
@@ -618,7 +624,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     public Set<String> getNodeHostnames() {
         TreeSet<String> nodeHosts = new TreeSet<>();
         for (String node : getNodes().split(" ")) {
-            nodeHosts.add(node.toLowerCase().replaceAll("_", ""));
+            nodeHosts.add(nodeLogLocationCorrection(node));
         }
 
         return nodeHosts;

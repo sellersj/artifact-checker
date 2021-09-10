@@ -365,4 +365,20 @@ public class ArtifactAttributesTest {
         assertEquals(expected, art.getGroupId());
     }
 
+    @Test
+    public void nodeLogLocationCorrection_RegularNode() {
+        String input = "Was_Public1";
+        String expected = "waspublic1";
+        ArtifactAttributes art = new ArtifactAttributes();
+        assertEquals(expected, art.nodeLogLocationCorrection(input));
+    }
+
+    @Test
+    public void nodeLogLocationCorrection_OsbNode() {
+        String input = "Was_OsbP1";
+        String expected = "wasosbpublic1";
+        ArtifactAttributes art = new ArtifactAttributes();
+        assertEquals(expected, art.nodeLogLocationCorrection(input));
+    }
+
 }
