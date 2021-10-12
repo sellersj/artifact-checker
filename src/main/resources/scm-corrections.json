@@ -572,5 +572,19 @@
 		"scmRepo": "cipo-ec-profile-ws",
 		"artifactId": "CIPO-ec-profile-ws-app",
 		"jiraKey": ""
+	},
+	{
+		"implementationTitle": "CIPO-ec-cpr-filing-app",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-ec-cpr-filing",
+		"artifactId": "CIPO-ec-cpr-filing-app",
+		"jiraKey": ""
+	},
+	{
+		"implementationTitle": "CIPO-ec-online-statements-app",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-ec-online-statements",
+		"artifactId": "CIPO-ec-online-statements-app",
+		"jiraKey": ""
 	}
 ]
