@@ -308,6 +308,7 @@ public class ReportBuilder {
                         // java 8 stuff
                         app.setVulnerabilities(unfiltered.getVulnerabilities());
                         app.setJava8Ready(unfiltered.isJava8Ready());
+                        app.setLibraryCheckedWorked(unfiltered.isLibraryCheckedWorked());
                         app.setTechOwner(unfiltered.getTechOwner());
                     }
 

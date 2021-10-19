@@ -159,6 +159,7 @@ public class ReportBuilderTest {
                 app1.setAlreadyTrackedByAnother(true);
             } else {
                 app1.setJava8Ready(true);
+                app1.setLibraryCheckedWorked(false);
                 List<Vulnerability> vulnerabilities = Arrays.asList(new Vulnerability());
                 app1.setVulnerabilities(vulnerabilities);
             }
@@ -171,6 +172,8 @@ public class ReportBuilderTest {
         // check that all all items are set
         for (ArtifactAttributes artifactAttributes : apps) {
             assertTrue(artifactAttributes.isJava8Ready(), "java 8 not set set properly for " + artifactAttributes);
+            assertFalse(artifactAttributes.isLibraryCheckedWorked(),
+                "library check not set set properly for " + artifactAttributes);
             assertEquals(1, artifactAttributes.getVulnerabilities().size(), "not right vuls for " + artifactAttributes);
         }
     }
