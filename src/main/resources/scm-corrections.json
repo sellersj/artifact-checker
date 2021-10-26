@@ -586,5 +586,12 @@
 		"scmRepo": "cipo-ec-online-statements",
 		"artifactId": "CIPO-ec-online-statements-app",
 		"jiraKey": ""
+	},
+	{
+		"implementationTitle": "CIPO-agent-college-register-app",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-agent-college-register",
+		"artifactId": "CIPO-ec-online-statements-app",
+		"jiraKey": ""
 	}
 ]
