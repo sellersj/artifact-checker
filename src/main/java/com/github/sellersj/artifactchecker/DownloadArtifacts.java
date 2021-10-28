@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.io.IOUtils;
@@ -185,8 +186,7 @@ public class DownloadArtifacts {
             "-DrubygemsAnalyzerEnabled=false", //
             "-DbundleAuditAnalyzerEnabled=false", //
             "-DnodeAuditSkipDevDependencies=true", //
-            "-DyarnAuditAnalyzerEnabled=false", //
-            "-Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2"));
+            "-DyarnAuditAnalyzerEnabled=false"));
 
         // if we have a nexus url, use it
         if (StringUtils.isNotBlank(nexusUrl)) {
@@ -431,7 +431,17 @@ public class DownloadArtifacts {
             builder.directory().mkdirs();
         }
 
+        // capture the stdout and stderr for the parent
         builder.inheritIO();
+
+        // pass along any env vars from the parent to the children. This should work for memory, tls settings, etc.
+        Map<String, String> env = builder.environment();
+        Properties props = System.getProperties();
+        for (String prop : props.stringPropertyNames()) {
+            env.put(prop, props.getProperty(prop));
+        }
+
+        // run the process
         try {
             Process process = builder.start();
             process.waitFor();
