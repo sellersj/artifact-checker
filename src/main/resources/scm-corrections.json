@@ -7,13 +7,6 @@
 		"jiraKey": ""
 	},
 	{
-		"implementationTitle": "BBCS - CIRS_Business-Based_Classification_Structure_EAR",
-		"scmProject": "ICAPPS",
-		"scmRepo": "bbcs-imb-business-based-classification-structure",
-		"artifactId": "CIRS_Business-Based_Classification_Structure_EAR",
-		"jiraKey": ""
-	},
-	{
 		"implementationTitle": "CASS - CASS-EAR",
 		"scmProject": "ICAPPS",
 		"scmRepo": "cass-ic-co-operative-administrative-and-statistical-system",
@@ -81,13 +74,6 @@
 		"scmProject": "ICAPPS",
 		"scmRepo": "eptt-sitt-event-participation-tracking-tool",
 		"artifactId": "SITT_EPTT_EAR",
-		"jiraKey": ""
-	},
-	{
-		"implementationTitle": "ETDS - SITT_ETDS_EAR",
-		"scmProject": "ICAPPS",
-		"scmRepo": "etds-sitt-emergency-telecommunications-data-system",
-		"artifactId": "SITT_ETDS_EAR",
 		"jiraKey": ""
 	},
 	{
@@ -341,13 +327,6 @@
 		"scmRepo": "cipo-ec-pb-pct-filing",
 		"artifactId": "CIPO-ec-pb-pct-filing-app",
 		"jiraKey": "PCT"
-	},
-	{
-		"implementationTitle": "CIPO-ec-tm-agent-renewal-app",
-		"scmProject": "CWP",
-		"scmRepo": "cipo-ec-tm-agent-renewal",
-		"artifactId": "CIPO-ec-tm-agent-renewal-app",
-		"jiraKey": "TMR"
 	},
 	{
 		"implementationTitle": "CIPO-ec-tm-filing-app",
