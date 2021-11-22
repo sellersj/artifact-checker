@@ -593,5 +593,12 @@
 		"scmRepo": "cipo-agent-college-register",
 		"artifactId": "CIPO-agent-college-register-app",
 		"jiraKey": ""
+	},
+	{
+		"implementationTitle": "CIPO-accounts-ws-app",
+		"scmProject": "CWP",
+		"scmRepo": "cipo-accounts",
+		"artifactId": "CIPO-accounts-ws-app",
+		"jiraKey": ""
 	}
 ]
