@@ -385,7 +385,7 @@
 		"jiraKey": "CGCID"
 	},
 	{
-		"implementationTitle": "CIPO-cr-request-correction-certificate-app - Enterprise Application",
+		"implementationTitle": "Copyright Request Correction Certificate - Enterprise Application",
 		"scmProject": "CWP",
 		"scmRepo": "cipo-cr-request-correction-certificate",
 		"artifactId": "CIPO-cr-request-correction-certificate-app",
