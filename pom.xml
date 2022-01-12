@@ -149,7 +149,7 @@ n.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       <!-- https://bugs.eclipse.org/bugs/show_bug.cgi?id=547340 -->
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>3.2.1</version>
+        <version>3.2.2</version>
         <configuration>
           <archive>
             <manifest>
