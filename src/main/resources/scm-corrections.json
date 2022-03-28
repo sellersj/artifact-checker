@@ -579,5 +579,12 @@
 		"scmRepo": "cipo-accounts",
 		"artifactId": "CIPO-accounts-ws-app",
 		"jiraKey": ""
-	}
+	},
+  {
+    "implementationTitle": "CIPO-tm-documents-processing-service-app",
+    "scmProject": "CWP",
+    "scmRepo": "cipo-tm-documents-processing-service",
+    "artifactId": "CIPO-tm-documents-processing-service-app",
+    "jiraKey": ""
+  }
 ]
