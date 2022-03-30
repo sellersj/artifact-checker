@@ -77,8 +77,30 @@ public class InventoryFileUtil {
             String contents = IOUtils.toString(in, StandardCharsets.UTF_8);
             Set<MavenGAV> gavs = new HashSet<>();
 
-            // TODO read the merged pom files and extract the GAV info
+            // read the merged pom files and extract the GAV info
+            String[] lines = contents.split("\\r?\\n");
+            MavenGAV gav = new MavenGAV();
+            for (String line : lines) {
+                if (line.startsWith("#")) {
+                    continue;
+                }
 
+                if (line.startsWith("groupId=")) {
+                    gav.setGroupId(StringUtils.substringAfter(line, "groupId="));
+                } else if (line.startsWith("artifactId=")) {
+                    gav.setArtifactId(StringUtils.substringAfter(line, "artifactId="));
+                } else if (line.startsWith("version=")) {
+                    gav.setVersion(StringUtils.substringAfter(line, "version="));
+                }
+
+                // add it to the set and get ready for the next loop
+                if (gav.isFilledOut()) {
+                    gavs.add(gav);
+                    gav = new MavenGAV();
+                }
+
+                System.out.println(line);
+            }
             return gavs;
 
         } catch (Exception e) {

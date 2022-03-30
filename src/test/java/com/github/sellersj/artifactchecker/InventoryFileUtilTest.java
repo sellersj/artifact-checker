@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -28,6 +29,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
+import com.github.sellersj.artifactchecker.model.MavenGAV;
 import com.github.sellersj.artifactchecker.model.owasp.Cvssv2;
 import com.github.sellersj.artifactchecker.model.owasp.Cvssv3;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
@@ -165,6 +167,24 @@ public class InventoryFileUtilTest {
             return apps;
         } catch (Exception e) {
             throw new RuntimeException("Couldn't load the merged manifest test file", e);
+        }
+    }
+
+    @Test
+    public void testReadMergedPomFiles() throws Exception {
+        String toolsHost = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST);
+        Set<MavenGAV> gavs = InventoryFileUtil
+            .readMergedPomFiles(new URL("https://" + toolsHost + "/deployed-to/pom-info-combined.txt"));
+
+        // TODO assert not empty
+        assertFalse(gavs.isEmpty(), "gav list should not be empty");
+
+        for (MavenGAV gav : gavs) {
+            System.out.println(gav);
+
+            assertNotNull(gav.getGroupId(), "groupId shouldn't be null for " + gav);
+            assertNotNull(gav.getArtifactId(), "artifactId shouldn't be null for " + gav);
+            assertNotNull(gav.getVersion(), "version shouldn't be null for " + gav);
         }
     }
 

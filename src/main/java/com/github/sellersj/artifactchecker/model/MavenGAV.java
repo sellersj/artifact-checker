@@ -1,5 +1,6 @@
 package com.github.sellersj.artifactchecker.model;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -19,6 +20,12 @@ public class MavenGAV {
 
     /** Version. */
     private String version;
+
+    public boolean isFilledOut() {
+        return StringUtils.isNotBlank(groupId) && //
+            StringUtils.isNotBlank(artifactId) && //
+            StringUtils.isNotBlank(version);
+    }
 
     @Override
     public String toString() {
