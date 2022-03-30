@@ -28,6 +28,7 @@ import org.apache.commons.text.StringEscapeUtils;
 import com.github.sellersj.artifactchecker.model.App;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.MailSource;
+import com.github.sellersj.artifactchecker.model.MavenGAV;
 import com.github.sellersj.artifactchecker.model.ParsedDataSource;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 import com.github.sellersj.artifactchecker.model.security.ArtifactAttributesComparator;
@@ -65,6 +66,9 @@ public class ReportBuilder {
 
         String location = "https://" + toolsHost + "/deployed-to/manifest-combined.txt";
         Set<ArtifactAttributes> apps = ReportBuilder.generateAppInventory(location);
+
+        String pomCombined = "https://" + toolsHost + "/deployed-to/pom-info-combined.txt";
+        ReportBuilder.repairArtifactList(pomCombined, apps);
 
         DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
 
@@ -398,6 +402,32 @@ public class ReportBuilder {
 
         Set<ArtifactAttributes> apps = InventoryFileUtil.readMergedManifests(url);
         return apps;
+    }
+
+    public static void repairArtifactList(String pomCombined, Set<ArtifactAttributes> apps) {
+        URL url;
+        try {
+            url = new URL(pomCombined);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("Couldn't make a url from " + pomCombined, e);
+        }
+
+        Set<MavenGAV> gavs = InventoryFileUtil.readMergedPomFiles(url);
+        for (ArtifactAttributes artifactAttributes : apps) {
+            if (StringUtils.isBlank(artifactAttributes.getGroupId())) {
+                System.out.println("Going to repair " + artifactAttributes);
+
+                // match it against the correct artifactId and version
+                for (MavenGAV gav : gavs) {
+                    if (gav.getArtifactId().equals(artifactAttributes.getCorrectedArtifactId()) && //
+                        gav.getVersion().equals(artifactAttributes.getVersion())) {
+
+                        System.out.println("Setting the groupId to " + gav.getGroupId());
+                        artifactAttributes.setCorrectedGroupId(gav.getGroupId());
+                    }
+                }
+            }
+        }
     }
 
     /**

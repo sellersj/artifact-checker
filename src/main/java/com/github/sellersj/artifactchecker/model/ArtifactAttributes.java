@@ -92,6 +92,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** Our corrected artifactId from a static file. */
     private String correctedArtifactId;
 
+    /** From another source. */
+    private String correctedGroupId;
+
     /**
      * Flag for if this artficat's repo was already checked by another artifact (e.g. 1 repo, 2 ears).
      */
@@ -364,6 +367,12 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         if (StringUtils.isBlank(groupId)) {
             groupId = manifest.get("Implementation-Vendor-Id");
         }
+
+        // if it's still blank, try to use the corrected one
+        if (StringUtils.isBlank(groupId)) {
+            groupId = correctedGroupId;
+        }
+
         return groupId;
     }
 
@@ -965,6 +974,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public void setEpicTemplatingNames(Set<String> epicTemplatingNames) {
         this.epicTemplatingNames = epicTemplatingNames;
+    }
+
+    /**
+     * @return the correctedGroupId
+     */
+    public String getCorrectedGroupId() {
+        return correctedGroupId;
+    }
+
+    /**
+     * @param correctedGroupId the correctedGroupId to set
+     */
+    public void setCorrectedGroupId(String correctedGroupId) {
+        this.correctedGroupId = correctedGroupId;
     }
 
 }

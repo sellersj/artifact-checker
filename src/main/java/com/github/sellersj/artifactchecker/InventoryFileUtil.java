@@ -25,6 +25,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
+import com.github.sellersj.artifactchecker.model.MavenGAV;
 import com.github.sellersj.artifactchecker.model.ScmCorrection;
 import com.github.sellersj.artifactchecker.model.TechOwner;
 
@@ -69,6 +70,20 @@ public class InventoryFileUtil {
             throw new RuntimeException("Could not download file from " + url, e);
         }
 
+    }
+
+    public static Set<MavenGAV> readMergedPomFiles(URL url) {
+        try (InputStream in = url.openStream()) {
+            String contents = IOUtils.toString(in, StandardCharsets.UTF_8);
+            Set<MavenGAV> gavs = new HashSet<>();
+
+            // TODO read the merged pom files and extract the GAV info
+
+            return gavs;
+
+        } catch (Exception e) {
+            throw new RuntimeException("Could not download file from " + url, e);
+        }
     }
 
     /**
