@@ -22,7 +22,7 @@ n.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     <!-- to try to address -->
     <!-- https://issues.apache.org/jira/browse/SUREFIRE-1788 -->
     <!-- https://stackoverflow.com/a/61936537/2055199 -->
-    <surefire.plugin.version>3.0.0-M5</surefire.plugin.version>
+    <surefire.plugin.version>3.0.0-M6</surefire.plugin.version>
   </properties>
 
   <dependencies>
