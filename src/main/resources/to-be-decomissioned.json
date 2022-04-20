@@ -1,6 +1,8 @@
 [
 "AGS",
+"ALSC",
 "BBCS",
+"BCS",
 "CASS",
 "CBW",
 "CFSRV",
@@ -14,12 +16,16 @@
 "ICGCPD",
 "ICPDC",
 "ICPS",
+"ICR",
 "MSD",
 "ODE",
 "OHW",
 "PDFCNVTR",
 "POIMAP",
+"QPAY",
 "RFAXAPID",
 "RPD",
+"SPNDSMRT",
+"SWU",
 "THD"
 ]
