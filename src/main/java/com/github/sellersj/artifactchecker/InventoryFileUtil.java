@@ -249,6 +249,8 @@ public class InventoryFileUtil {
                 if (StringUtils.isNotBlank(owner.getJiraKey())) {
                     System.out.println("Updating TechOwner for " + app.getJiraKey() + " to " + owner.getTechOwner());
                     app.setTechOwner(owner.getTechOwner());
+                } else if ("CWP".equals(app.getScmProject())) {
+                    app.setTechOwner("CIPO");
                 }
             }
         }
