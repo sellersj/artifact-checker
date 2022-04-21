@@ -266,5 +266,81 @@
 	{
 		"jiraKey": "CIODSIPS",
 		"techOwner": "SIPS"
+	},
+	{
+		"jiraKey": "BBMAP",
+		"techOwner": "BLSD - STS"
+	},
+	{
+		"jiraKey": "CCAA",
+		"techOwner": "BLSD - OSB"
+	},
+	{
+		"jiraKey": "CCDEV",
+		"techOwner": "BLSD - Corp"
+	},
+	{
+		"jiraKey": "CRMSRI",
+		"techOwner": "ADPD - SF"
+	},
+	{
+		"jiraKey": "FEDNORCOMS",
+		"techOwner": "Decommissioned"
+	},
+	{
+		"jiraKey": "IBW",
+		"techOwner": ""
+	},
+	{
+		"jiraKey": "IDM",
+		"techOwner": "BLSD"
+	},
+	{
+		"jiraKey": "INS",
+		"techOwner": "BLSD - OSB"
+	},
+	{
+		"jiraKey": "intake",
+		"techOwner": "ADPD - SF"
+	},
+	{
+		"jiraKey": "ISCWP",
+		"techOwner": "DDID"
+	},
+	{
+		"jiraKey": "ISEDBNAPI",
+		"techOwner": "BLSD"
+	},
+	{
+		"jiraKey": "OSBEFTR",
+		"techOwner": ""
+	},
+	{
+		"jiraKey": "OSBFCONV",
+		"techOwner": "BLSD - OSB"
+	},
+	{
+		"jiraKey": "OSBTR",
+		"techOwner": "BLSD - OSB"
+	},
+	{
+		"jiraKey": "OUD",
+		"techOwner": "BLSD - OSB"
+	},
+	{
+		"jiraKey": "SBF",
+		"techOwner": "BLSD - CSBFP"
+	},
+	{
+		"jiraKey": "SITTIBC",
+		"techOwner": "BLSD - STS"
+	},
+	{
+		"jiraKey": "TDS",
+		"techOwner": "Decommissioned"
+	},
+	{
+		"jiraKey": "TRUSTLIC",
+		"techOwner": "BLSD - OSB"
 	}
 ]
