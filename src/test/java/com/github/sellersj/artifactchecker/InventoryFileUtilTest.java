@@ -49,7 +49,7 @@ public class InventoryFileUtilTest {
     public void testWriteRead() throws Exception {
         // this version should be kept in sync with what's in the pom
         // this will probably fail if maven repo in different location
-        String junitVersion = "5.7.2";
+        String junitVersion = "5.8.2";
         String fileName = System.getProperty("user.home") + //
             "/.m2/repository/org/junit/jupiter/junit-jupiter-engine/" //
             + junitVersion + "/junit-jupiter-engine-" + junitVersion + ".jar";
