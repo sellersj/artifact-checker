@@ -241,6 +241,11 @@ public class ReportBuilder {
                     String appName = app.getAttributes().get(App.APP_KEY).get(0);
                     attribute.getManifest().put(ArtifactAttributes.IMPLEMENTATION_TITLE, appName);
                     attribute.setLibraryCheckedWorked(false);
+
+                    // set the tech owner for the very old apps where we don't have the other info
+                    if (appName.startsWith("CIPO")) {
+                        attribute.setTechOwner("CIPO");
+                    }
                 }
 
                 // now make sure that we add back in the deployment info, because that's actually what's different
