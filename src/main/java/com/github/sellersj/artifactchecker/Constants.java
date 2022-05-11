@@ -36,6 +36,12 @@ public class Constants {
     /** The name of the file we will put matching epic usage lines. */
     public static final String EPIC_MATCHING_LINE_FILENAME = "epic-resource-lines.txt";
 
+    /** So we can use to figure out resource mapping. */
+    public static final String WEB_DOT_XML_FILENAME = "web.xml";
+
+    /** So we can use to figure out resource mapping. */
+    public static final String IBM_WEB_BINDING_FILENAME = "ibm-web-bnd.xml";
+
     /** The hostname of the public facing apps. */
     public static final String PUBLIC_HOSTNAME = "PUBLIC_HOSTNAME";
 

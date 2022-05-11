@@ -465,7 +465,9 @@ public class DownloadArtifacts {
                     || "tree.txt".equals(p.getFileName().toString())
                     || Constants.TEMPLATE_MATCHING_LINE_FILENAME.equals(p.getFileName().toString())
                     || Constants.EPIC_MATCHING_LINE_FILENAME.equals(p.getFileName().toString())
-                    || Constants.JAVA8_ISSUES_FILENAME.equals(p.getFileName().toString()))
+                    || Constants.JAVA8_ISSUES_FILENAME.equals(p.getFileName().toString())
+                    || Constants.WEB_DOT_XML_FILENAME.equals(p.getFileName().toString())
+                    || Constants.IBM_WEB_BINDING_FILENAME.equals(p.getFileName().toString()))
                 // .peek(System.out::println) //
                 .forEach(p -> moveUnchecked(p));
 
