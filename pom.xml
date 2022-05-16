@@ -13,7 +13,7 @@ n.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <jackson.version>2.13.2</jackson.version>
+    <jackson.version>2.13.3</jackson.version>
 
     <!-- used for the reports of other project -->
     <owasp.dependency.check.version>7.1.0</owasp.dependency.check.version>
