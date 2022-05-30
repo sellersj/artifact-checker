@@ -147,6 +147,10 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** The epic templating names we have identified for this project. */
     private Set<String> epicTemplatingNames = new TreeSet<>();
 
+    /** If this is an app that uses cma. */
+    @CsvBindByName
+    private boolean cmaAuthApp = false;
+
     /** Default constructor. */
     public ArtifactAttributes() {
     }
@@ -988,6 +992,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public void setCorrectedGroupId(String correctedGroupId) {
         this.correctedGroupId = correctedGroupId;
+    }
+
+    /**
+     * @return the cmaAuthApp
+     */
+    public boolean isCmaAuthApp() {
+        return cmaAuthApp;
+    }
+
+    /**
+     * @param cmaAuthApp the cmaAuthApp to set
+     */
+    public void setCmaAuthApp(boolean cmaAuthApp) {
+        this.cmaAuthApp = cmaAuthApp;
     }
 
 }

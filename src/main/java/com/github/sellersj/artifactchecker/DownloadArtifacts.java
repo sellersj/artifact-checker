@@ -19,6 +19,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -207,6 +208,11 @@ public class DownloadArtifacts {
         CheckForTemplatingUse templatingUse = new CheckForTemplatingUse();
         gav.setEpicTemplatingNames(templatingUse.getEpicTemplateNames(projectDir));
         templatingUse.writeEpicUse(projectDir);
+
+        // find any CMA container managed authentication based on the web.xml
+        CheckForAuthUse authUse = new CheckForAuthUse();
+        Set<String> authRoles = authUse.getContainerManagedAuthenticationRoles(projectDir);
+        gav.setCmaAuthApp(!authRoles.isEmpty());
 
         // copy all required files we want to a different location
         copyFiles();

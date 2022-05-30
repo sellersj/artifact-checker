@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+  version="3.0">
+
+  <display-name>Example file that uses CMA</display-name>
+
+  <security-constraint>
+    <display-name>Administrator and/or Review</display-name>
+    <web-resource-collection>
+      <web-resource-name>/scr/*</web-resource-name>
+      <description>All resources are restricted until authenticated.</description>
+      <url-pattern>/scr/*</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+    </web-resource-collection>
+    <auth-constraint>
+      <description></description>
+      <role-name>Administrator</role-name>
+      <role-name>Reviewer</role-name>
+    </auth-constraint>
+    <user-data-constraint>
+      <transport-guarantee>NONE</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+
+  <security-role>
+    <description>My App Administrator</description>
+    <role-name>Administrator</role-name>
+  </security-role>
+  <security-role>
+    <description>My App Reviewer</description>
+    <role-name>Reviewer</role-name>
+  </security-role>
+</web-app>
