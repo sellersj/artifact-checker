@@ -16,7 +16,7 @@ n.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     <jackson.version>2.13.3</jackson.version>
 
     <!-- used for the reports of other project -->
-    <owasp.dependency.check.version>7.1.1</owasp.dependency.check.version>
+    <owasp.dependency.check.version>7.1.2</owasp.dependency.check.version>
     <maven.dependency.plugin.version>3.3.0</maven.dependency.plugin.version>
 
     <!-- to try to address -->
