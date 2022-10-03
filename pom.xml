@@ -20,6 +20,7 @@ n.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     <!-- used for the reports of other project -->
     <owasp.dependency.check.version>7.2.1</owasp.dependency.check.version>
     <maven.dependency.plugin.version>3.3.0</maven.dependency.plugin.version>
+    <tabulator-tables.version>5.4.0</tabulator-tables.version>
 
     <!-- to try to address -->
     <!-- https://issues.apache.org/jira/browse/SUREFIRE-1788 -->
@@ -52,6 +53,12 @@ n.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       <groupId>com.opencsv</groupId>
       <artifactId>opencsv</artifactId>
       <version>5.7.0</version>
+    </dependency>
+    <!-- used to figure out when a new version is available -->
+    <dependency>
+      <groupId>org.webjars.npm</groupId>
+      <artifactId>tabulator-tables</artifactId>
+      <version>${tabulator-tables.version}</version>
     </dependency>
     <!-- keep the version in InventoryFileUtilTest#testWriteRead() in sync with this -->
     <dependency>
@@ -210,5 +217,22 @@ n.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       <!-- </executions> -->
       <!-- </plugin> -->
     </plugins>
+    <!-- used to set the version of tabulator -->
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>**/*.html</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+        <excludes>
+          <exclude>**/*.html</exclude>
+        </excludes>
+      </resource>
+    </resources>
   </build>
 </project>
