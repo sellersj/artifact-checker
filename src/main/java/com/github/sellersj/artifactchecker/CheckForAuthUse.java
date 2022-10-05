@@ -156,10 +156,12 @@ public class CheckForAuthUse {
                         String absPath = file.getAbsolutePath();
                         String relPath = absPath.replace(dir.getAbsolutePath(), "");
 
-                        LOGGER.info("Found login page on " + relPath + "#" + lineNumber + " for with content");
+                        String result = relPath + "#" + lineNumber;
+
+                        LOGGER.info("Found login page on " + result + " for with content");
 
                         // the matching file with the line number
-                        matchingLines.add(relPath + "#" + lineNumber);
+                        matchingLines.add(result);
                     }
                     lineNumber++;
                 }
