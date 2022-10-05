@@ -28,8 +28,9 @@ import com.opencsv.bean.CsvBindByName;
 /**
  * Any attributes that we will track for an artifact.
  *
- * There are some hacky members that do nothing so that we can trick the opencsv library to using the getters to get the
- * values that we want. See <a href="https://sourceforge.net/p/opencsv/feature-requests/105/?limit=25">the ticket</a>
+ * There are some hacky members that do nothing so that we can trick the opencsv library to using
+ * the getters to get the values that we want. See
+ * <a href="https://sourceforge.net/p/opencsv/feature-requests/105/?limit=25">the ticket</a>
  *
  * @author sellersj
  */
@@ -96,7 +97,8 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     private String correctedGroupId;
 
     /**
-     * Flag for if this artficat's repo was already checked by another artifact (e.g. 1 repo, 2 ears).
+     * Flag for if this artficat's repo was already checked by another artifact (e.g. 1 repo, 2
+     * ears).
      */
     private boolean alreadyTrackedByAnother = false;
 
@@ -151,6 +153,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     @CsvBindByName
     private boolean cmaAuthApp = false;
 
+    /** The pages we think are login with the line numbers. */
+    private Set<String> loginPages = new TreeSet<>();
+
     /** Default constructor. */
     public ArtifactAttributes() {
     }
@@ -179,6 +184,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         this.linkedDataSources = source.linkedDataSources;
         this.linkedMailSources = source.linkedMailSources;
         this.epicTemplatingNames = source.epicTemplatingNames;
+        this.loginPages = source.loginPages;
     }
 
     /**
@@ -204,7 +210,8 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     }
 
     /**
-     * @return a string that can be used to uniquely identify this project, using git repo, hash, and version.
+     * @return a string that can be used to uniquely identify this project, using git repo, hash,
+     *         and version.
      */
     public String getUniqueStringForGitInfoAndVersion() {
         return buildGitCloneUrl() + "+" + getScmHash() + "+" + getVersion();
@@ -1006,6 +1013,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public void setCmaAuthApp(boolean cmaAuthApp) {
         this.cmaAuthApp = cmaAuthApp;
+    }
+
+    /**
+     * @return the loginPages
+     */
+    public Set<String> getLoginPages() {
+        return loginPages;
+    }
+
+    /**
+     * @param loginPages the loginPages to set
+     */
+    public void setLoginPages(Set<String> loginPages) {
+        this.loginPages = loginPages;
     }
 
 }

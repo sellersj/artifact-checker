@@ -5,6 +5,7 @@ package com.github.sellersj.artifactchecker;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -34,7 +35,7 @@ public class CheckForAuthUse {
      * This will look through for templating attributes in jsp's.
      *
      * @param startingDir where the project is checked out
-     * @return the epic template names
+     * @return the CMA roles as defined in the web.xml
      */
     public Set<String> getContainerManagedAuthenticationRoles(File startingDir) {
         TreeSet<String> roleNames = new TreeSet<>();
@@ -112,6 +113,62 @@ public class CheckForAuthUse {
         }
 
         return roleNames;
+    }
+
+    /**
+     * @param dir starting directory
+     * @return
+     */
+    public Set<String> getLoginPageLines(File dir) {
+
+        List<File> files = (List<File>) FileUtils.listFiles(dir, //
+            // only visit these files
+            FileFilterUtils.and(
+                // only look in main directories
+                new NamePathFileFilter("src" + File.separator + "main"), //
+
+                FileFilterUtils.or( //
+                    FileFilterUtils.suffixFileFilter("jsp"), //
+                    FileFilterUtils.suffixFileFilter("jspf"), //
+                    FileFilterUtils.suffixFileFilter("html") //
+                )),
+
+            // ignore these directories
+            FileFilterUtils.notFileFilter(FileFilterUtils.or( //
+                FileFilterUtils.nameFileFilter("target"), //
+                FileFilterUtils.nameFileFilter(".git"), //
+                FileFilterUtils.nameFileFilter(".settings"), //
+                new NamePathFileFilter("src" + File.separator + "main" + File.separator + "application"), //
+                new NamePathFileFilter("src" + File.separator + "test"))));
+
+        TreeSet<String> matchingLines = new TreeSet<>();
+
+        for (File file : files) {
+            try {
+                List<String> lines = FileUtils.readLines(file, StandardCharsets.ISO_8859_1);
+                int lineNumber = 1;
+                for (String line : lines) {
+                    if (line.contains("/login") //
+                        || line.contains("j_security_check") //
+                        || line.contains("j_spring_security_check")) {
+
+                        // TODO we need the path, minus the starting directory
+                        String absPath = file.getAbsolutePath();
+                        String relPath = absPath.replace(dir.getAbsolutePath(), "");
+
+                        LOGGER.info("Found login page on " + relPath + "#" + lineNumber + " for with content");
+
+                        // the matching file with the line number
+                        matchingLines.add(relPath + "#" + lineNumber);
+                    }
+                    lineNumber++;
+                }
+            } catch (IOException e) {
+                throw new RuntimeException("Could not read file " + file, e);
+            }
+        }
+
+        return matchingLines;
     }
 
 }
