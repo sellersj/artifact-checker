@@ -19,7 +19,7 @@ n.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xs
     <!-- used for the reports of other project -->
     <owasp.dependency.check.version>7.2.1</owasp.dependency.check.version>
     <maven.dependency.plugin.version>3.3.0</maven.dependency.plugin.version>
-    <tabulator-tables.version>5.4.1</tabulator-tables.version>
+    <tabulator-tables.version>5.4.2</tabulator-tables.version>
 
     <!-- to try to address -->
     <!-- https://issues.apache.org/jira/browse/SUREFIRE-1788 -->
