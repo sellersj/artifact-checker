@@ -53,7 +53,7 @@ n.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xs
     <dependency>
       <groupId>com.opencsv</groupId>
       <artifactId>opencsv</artifactId>
-      <version>5.7.0</version>
+      <version>5.7.1</version>
     </dependency>
     <!-- used to figure out when a new version is available -->
     <dependency>
