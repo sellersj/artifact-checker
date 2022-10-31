@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -21,15 +22,21 @@ import java.util.jar.Manifest;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.sellersj.artifactchecker.model.App;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.MavenGAV;
 import com.github.sellersj.artifactchecker.model.ScmCorrection;
 import com.github.sellersj.artifactchecker.model.TechOwner;
 
 public class InventoryFileUtil {
+
+    /** A logger. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(InventoryFileUtil.class);
 
     private static final ObjectMapper mapper = new ObjectMapper();
 
@@ -106,6 +113,72 @@ public class InventoryFileUtil {
         } catch (Exception e) {
             throw new RuntimeException("Could not download file from " + url, e);
         }
+    }
+
+    /**
+     * This is from the KED data center.
+     *
+     * @param url to read the file from
+     * @return
+     */
+    public static Set<ArtifactAttributes> readMergedApplicationListing(URL url) {
+
+        Set<ArtifactAttributes> apps = new HashSet<>();
+
+        // TODO we need to keep track of the different nodes the app is deployed on to eliminate duplicates
+
+        try (InputStream in = url.openStream()) {
+            String contents = IOUtils.toString(in, StandardCharsets.UTF_8);
+
+            String[] lines = contents.split("\n");
+            for (String line : lines) {
+
+                if (StringUtils.isNotBlank(line) && !line.trim().startsWith("#") && line.trim().endsWith(".ear")) {
+                    // these should only be the ear listing
+
+                    // TODO wrap in try / catch to isolate errors?
+                    String[] chunks = line.trim().split("\\s+");
+                    if (3 != chunks.length) {
+                        LOGGER.warn(
+                            "We can't parse the line: " + line + " because we have " + chunks.length + " parts to it");
+                    }
+                    ArtifactAttributes attributes = new ArtifactAttributes();
+
+                    // server node
+                    String serverNode = chunks[0];
+
+                    // build date
+                    // convert the string to a date to convert to a date.
+                    // TODO fix this since it's too silly for words
+                    LocalDate date = LocalDate.parse(chunks[1]);
+                    attributes.getManifest().put(ArtifactAttributes.BUILD_TIME,
+                        ArtifactAttributes.MAVEN_DATE_FORMAT.format(date.atStartOfDay()));
+
+                    // ear name
+                    // chunks[3];
+                    String earArtifactName = chunks[2];
+                    String artifactId = StringUtils.substringBeforeLast(earArtifactName, "-");
+                    attributes.getManifest().put(ArtifactAttributes.ARTIFACT_ID, artifactId);
+
+                    String version = StringUtils
+                        .substringBeforeLast(StringUtils.substringAfterLast(earArtifactName, "-"), ".");
+                    attributes.getManifest().put(ArtifactAttributes.VERSION, version);
+
+                    // set the deployment info here
+                    App deploymentInfo = new App();
+                    deploymentInfo.setDataCenter(App.DATA_CENTER_KED);
+                    attributes.setDeploymentInfo(deploymentInfo);
+
+                    apps.add(attributes);
+                }
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Could not download file from " + url, e);
+        }
+
+        return apps;
+
     }
 
     /**

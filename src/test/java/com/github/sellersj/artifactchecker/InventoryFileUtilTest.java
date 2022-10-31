@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.github.sellersj.artifactchecker.model.App;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.MavenGAV;
 import com.github.sellersj.artifactchecker.model.owasp.Cvssv2;
@@ -186,6 +187,25 @@ public class InventoryFileUtilTest {
             assertNotNull(gav.getArtifactId(), "artifactId shouldn't be null for " + gav);
             assertNotNull(gav.getVersion(), "version shouldn't be null for " + gav);
         }
+    }
+
+    @Test
+    public void testReadMergedApplicationListing() throws Exception {
+        String toolsHost = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST);
+        Set<ArtifactAttributes> attributes = InventoryFileUtil
+            .readMergedApplicationListing(new URL("https://" + toolsHost + "/deployed-to/ked-applications.txt"));
+
+        assertFalse(attributes.isEmpty(), "gav list should not be empty");
+
+        for (ArtifactAttributes att : attributes) {
+            // TODO put these checks in
+            // assertFalse(att.getNodes().isEmpty(), "node list");
+            assertNotNull(att.getBuildDate(), "build date");
+            assertNotNull(att.getArtifactId(), "artifactId");
+            assertNotNull(att.getVersion(), "version");
+            assertEquals(App.DATA_CENTER_KED, att.getDeploymentInfo().getDataCenter(), "data center");
+        }
+
     }
 
     private static Vulnerability generateMockVulnerability() {
