@@ -48,6 +48,8 @@ public class AppFileParser {
 
         for (String chunk : chunks) {
             App app = getApp(chunk);
+            // if we are parsing this file, it's in this data center
+            app.setDataCenter(App.DATA_CENTER_ICDC);
 
             // ignore empty apps (e.g. it's the break line)
             if (!app.getAttributes().isEmpty()) {

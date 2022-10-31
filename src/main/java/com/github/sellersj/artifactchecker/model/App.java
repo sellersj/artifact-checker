@@ -14,6 +14,12 @@ import com.github.sellersj.artifactchecker.DateUtils;
 
 public class App {
 
+    /** The ICDC data center. */
+    public static final String DATA_CENTER_ICDC = "ICDC";
+
+    /** The KED data center. */
+    public static final String DATA_CENTER_KED = "KED";
+
     /** The key for name of the app. */
     public static final String APP_KEY = "APP";
 
@@ -41,6 +47,9 @@ public class App {
 
     /** A way to flag what apps are tracked / linked to our other list. */
     private boolean appLinked = false;
+
+    /** The data center. */
+    private String dataCenter;
 
     /** The format from the other file we're parsing. */
     private static final DateTimeFormatter APP_FILE_DATE_FORMAT = DateTimeFormatter
@@ -186,6 +195,20 @@ public class App {
      */
     public void setAppLinked(boolean appLinked) {
         this.appLinked = appLinked;
+    }
+
+    /**
+     * @return the dataCenter
+     */
+    public String getDataCenter() {
+        return dataCenter;
+    }
+
+    /**
+     * @param dataCenter the dataCenter to set
+     */
+    public void setDataCenter(String dataCenter) {
+        this.dataCenter = dataCenter;
     }
 
 }
