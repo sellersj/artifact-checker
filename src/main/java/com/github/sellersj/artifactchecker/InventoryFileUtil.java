@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -123,7 +124,7 @@ public class InventoryFileUtil {
      */
     public static Set<ArtifactAttributes> readMergedApplicationListing(URL url) {
 
-        Set<ArtifactAttributes> apps = new HashSet<>();
+        Map<String, ArtifactAttributes> apps = new HashMap<>();
 
         // TODO we need to keep track of the different nodes the app is deployed on to eliminate duplicates
 
@@ -142,34 +143,47 @@ public class InventoryFileUtil {
                         LOGGER.warn(
                             "We can't parse the line: " + line + " because we have " + chunks.length + " parts to it");
                     }
-                    ArtifactAttributes attributes = new ArtifactAttributes();
+                    // ear name
+                    String earArtifactName = chunks[2];
+                    ArtifactAttributes attributes = null;
+                    if (apps.containsKey(earArtifactName)) {
+                        attributes = apps.get(earArtifactName);
+
+                    } else {
+                        attributes = new ArtifactAttributes();
+                        apps.put(earArtifactName, attributes);
+
+                        //
+                        // build date
+                        // convert the string to a date to convert to a date.
+                        // TODO fix this since it's too silly for words
+                        LocalDate date = LocalDate.parse(chunks[1]);
+                        attributes.getManifest().put(ArtifactAttributes.BUILD_TIME,
+                            ArtifactAttributes.MAVEN_DATE_FORMAT.format(date.atStartOfDay()));
+
+                        // ear name
+                        String artifactId = StringUtils.substringBeforeLast(earArtifactName, "-");
+                        attributes.getManifest().put(ArtifactAttributes.ARTIFACT_ID, artifactId);
+
+                        String version = StringUtils
+                            .substringBeforeLast(StringUtils.substringAfterLast(earArtifactName, "-"), ".");
+                        attributes.getManifest().put(ArtifactAttributes.VERSION, version);
+
+                        // set the deployment info here
+                        App deploymentInfo = new App();
+                        deploymentInfo.setDataCenter(App.DATA_CENTER_KED);
+                        attributes.setDeploymentInfo(deploymentInfo);
+                    }
 
                     // server node
                     String serverNode = chunks[0];
+                    Map<String, List<String>> deployAtt = attributes.getDeploymentInfo().getAttributes();
+                    if (!deployAtt.containsKey("NODE")) {
+                        deployAtt.put("NODE", new ArrayList<String>());
+                    }
+                    deployAtt.get("NODE").add(serverNode);
 
-                    // build date
-                    // convert the string to a date to convert to a date.
-                    // TODO fix this since it's too silly for words
-                    LocalDate date = LocalDate.parse(chunks[1]);
-                    attributes.getManifest().put(ArtifactAttributes.BUILD_TIME,
-                        ArtifactAttributes.MAVEN_DATE_FORMAT.format(date.atStartOfDay()));
-
-                    // ear name
-                    // chunks[3];
-                    String earArtifactName = chunks[2];
-                    String artifactId = StringUtils.substringBeforeLast(earArtifactName, "-");
-                    attributes.getManifest().put(ArtifactAttributes.ARTIFACT_ID, artifactId);
-
-                    String version = StringUtils
-                        .substringBeforeLast(StringUtils.substringAfterLast(earArtifactName, "-"), ".");
-                    attributes.getManifest().put(ArtifactAttributes.VERSION, version);
-
-                    // set the deployment info here
-                    App deploymentInfo = new App();
-                    deploymentInfo.setDataCenter(App.DATA_CENTER_KED);
-                    attributes.setDeploymentInfo(deploymentInfo);
-
-                    apps.add(attributes);
+                    apps.put(earArtifactName, attributes);
                 }
             }
 
@@ -177,7 +191,7 @@ public class InventoryFileUtil {
             throw new RuntimeException("Could not download file from " + url, e);
         }
 
-        return apps;
+        return new HashSet<ArtifactAttributes>(apps.values());
 
     }
 

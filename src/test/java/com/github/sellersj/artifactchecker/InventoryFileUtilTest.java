@@ -198,14 +198,12 @@ public class InventoryFileUtilTest {
         assertFalse(attributes.isEmpty(), "gav list should not be empty");
 
         for (ArtifactAttributes att : attributes) {
-            // TODO put these checks in
-            // assertFalse(att.getNodes().isEmpty(), "node list");
+            assertFalse(att.getNodes().isEmpty(), "node list");
             assertNotNull(att.getBuildDate(), "build date");
             assertNotNull(att.getArtifactId(), "artifactId");
             assertNotNull(att.getVersion(), "version");
             assertEquals(App.DATA_CENTER_KED, att.getDeploymentInfo().getDataCenter(), "data center");
         }
-
     }
 
     private static Vulnerability generateMockVulnerability() {
