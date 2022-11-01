@@ -586,5 +586,13 @@
     "scmRepo": "cipo-tm-documents-processing-service",
     "artifactId": "CIPO-tm-documents-processing-service-app",
     "jiraKey": ""
+  },
+  {
+    "implementationTitle": "cpor-weekly-batch-app",
+    "scmProject": "CIPO",
+    "scmRepo": "cpor",
+    "groupId": "ca.gc.ic.cipo.cpr",
+    "artifactId": "cpor-weekly-batch-app",
+    "jiraKey": ""
   }
 ]

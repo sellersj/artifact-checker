@@ -16,6 +16,9 @@ public class ScmCorrection implements Comparable<ScmCorrection> {
     /** The proper scm repo. */
     private String scmRepo = "";
 
+    /** The proper groupId. */
+    private String groupId = "";
+
     /** The proper artifactId. */
     private String artifactId = "";
 
@@ -118,6 +121,20 @@ public class ScmCorrection implements Comparable<ScmCorrection> {
      */
     public void setJiraKey(String jiraKey) {
         this.jiraKey = jiraKey;
+    }
+
+    /**
+     * @return the groupId
+     */
+    public String getGroupId() {
+        return groupId;
+    }
+
+    /**
+     * @param groupId the groupId to set
+     */
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 
 }

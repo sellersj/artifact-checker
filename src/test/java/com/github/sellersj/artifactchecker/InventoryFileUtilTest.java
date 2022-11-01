@@ -198,6 +198,7 @@ public class InventoryFileUtilTest {
         assertFalse(attributes.isEmpty(), "gav list should not be empty");
 
         for (ArtifactAttributes att : attributes) {
+            assertNotNull(att.getTitle(), "title");
             assertFalse(att.getNodes().isEmpty(), "node list");
             assertNotNull(att.getBuildDate(), "build date");
             assertNotNull(att.getArtifactId(), "artifactId");

@@ -124,7 +124,7 @@ public class InventoryFileUtil {
      */
     public static Set<ArtifactAttributes> readMergedApplicationListing(URL url) {
 
-        Map<String, ArtifactAttributes> apps = new HashMap<>();
+        Map<String, ArtifactAttributes> appMap = new HashMap<>();
 
         // TODO we need to keep track of the different nodes the app is deployed on to eliminate duplicates
 
@@ -146,12 +146,12 @@ public class InventoryFileUtil {
                     // ear name
                     String earArtifactName = chunks[2];
                     ArtifactAttributes attributes = null;
-                    if (apps.containsKey(earArtifactName)) {
-                        attributes = apps.get(earArtifactName);
+                    if (appMap.containsKey(earArtifactName)) {
+                        attributes = appMap.get(earArtifactName);
 
                     } else {
                         attributes = new ArtifactAttributes();
-                        apps.put(earArtifactName, attributes);
+                        appMap.put(earArtifactName, attributes);
 
                         //
                         // build date
@@ -164,6 +164,9 @@ public class InventoryFileUtil {
                         // ear name
                         String artifactId = StringUtils.substringBeforeLast(earArtifactName, "-");
                         attributes.getManifest().put(ArtifactAttributes.ARTIFACT_ID, artifactId);
+
+                        // set the title to the ear name until we have something better
+                        attributes.getManifest().put(ArtifactAttributes.IMPLEMENTATION_TITLE, artifactId);
 
                         String version = StringUtils
                             .substringBeforeLast(StringUtils.substringAfterLast(earArtifactName, "-"), ".");
@@ -183,7 +186,7 @@ public class InventoryFileUtil {
                     }
                     deployAtt.get("NODE").add(serverNode);
 
-                    apps.put(earArtifactName, attributes);
+                    appMap.put(earArtifactName, attributes);
                 }
             }
 
@@ -191,7 +194,12 @@ public class InventoryFileUtil {
             throw new RuntimeException("Could not download file from " + url, e);
         }
 
-        return new HashSet<ArtifactAttributes>(apps.values());
+        HashSet<ArtifactAttributes> apps = new HashSet<ArtifactAttributes>(appMap.values());
+        // fix any manifests we can find
+        fillInMissingScmInfo(apps);
+        fillInTechOwner(apps);
+
+        return apps;
 
     }
 
@@ -314,6 +322,11 @@ public class InventoryFileUtil {
                         "Adding corrected artifactId for " + app.getTitle() + " to " + correction.getArtifactId());
                     app.setCorrectedArtifactId(correction.getArtifactId());
                 }
+                if (StringUtils.isBlank(app.getGroupId())) {
+                    System.out
+                        .println("Adding corrected groupId for " + app.getTitle() + " to " + correction.getGroupId());
+                    app.setCorrectedGroupId(correction.getGroupId());
+                }
 
                 if (StringUtils.isNotBlank(correction.getJiraKey())) {
                     System.out
@@ -337,7 +350,9 @@ public class InventoryFileUtil {
                     System.out.println("Updating TechOwner for " + app.getJiraKey() + " to " + owner.getTechOwner());
                     app.setTechOwner(owner.getTechOwner());
                 }
-            } else if ("CWP".equals(app.getScmProject()) || StringUtils.isBlank(app.getScmProject())) {
+            } else if ("CWP".equals(app.getScmProject()) //
+                || "CIPO".equals(app.getScmProject()) //
+                || StringUtils.isBlank(app.getScmProject())) {
                 app.setTechOwner("CIPO");
             }
         }

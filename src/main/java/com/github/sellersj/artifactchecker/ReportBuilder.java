@@ -66,6 +66,12 @@ public class ReportBuilder {
 
         String location = "https://" + toolsHost + "/deployed-to/manifest-combined.txt";
         Set<ArtifactAttributes> apps = ReportBuilder.generateAppInventory(location);
+        try {
+            apps.addAll(InventoryFileUtil
+                .readMergedApplicationListing(new URL("https://" + toolsHost + "/deployed-to/ked-applications.txt")));
+        } catch (MalformedURLException e1) {
+            throw new RuntimeException("Could not read the ked app file", e1);
+        }
 
         String pomCombined = "https://" + toolsHost + "/deployed-to/pom-info-combined.txt";
         ReportBuilder.repairArtifactList(pomCombined, apps);
