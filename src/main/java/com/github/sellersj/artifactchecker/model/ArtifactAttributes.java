@@ -617,7 +617,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         String[] nodes = getNodes().split(" ");
         Arrays.sort(nodes);
 
-        if (App.DATA_CENTER_KED.equals(getDeploymentInfo().getDataCenter())) {
+        if (null != getDeploymentInfo() && App.DATA_CENTER_KED.equals(getDeploymentInfo().getDataCenter())) {
             return Arrays.asList(nodes);
 
         } else {
