@@ -10,6 +10,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -342,6 +343,8 @@ public class InventoryFileUtil {
 
         Map<String, TechOwner> mapOfTechOwners = getTechOwners();
 
+        List<String> cipoScmProjects = Arrays.asList("CWP", "CIPO", "CIPITM");
+
         for (ArtifactAttributes app : apps) {
             if (mapOfTechOwners.containsKey(app.getJiraKey())) {
                 TechOwner owner = mapOfTechOwners.get(app.getJiraKey());
@@ -350,8 +353,7 @@ public class InventoryFileUtil {
                     System.out.println("Updating TechOwner for " + app.getJiraKey() + " to " + owner.getTechOwner());
                     app.setTechOwner(owner.getTechOwner());
                 }
-            } else if ("CWP".equals(app.getScmProject()) //
-                || "CIPO".equals(app.getScmProject()) //
+            } else if (cipoScmProjects.contains(app.getScmProject()) //
                 || StringUtils.isBlank(app.getScmProject())) {
                 app.setTechOwner("CIPO");
             }
