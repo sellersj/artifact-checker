@@ -325,6 +325,7 @@ public class ReportBuilder {
                         app.setJava8Ready(unfiltered.isJava8Ready());
                         app.setLibraryCheckedWorked(unfiltered.isLibraryCheckedWorked());
                         app.setTechOwner(unfiltered.getTechOwner());
+                        app.setScmTag(unfiltered.getScmTag());
                     }
 
                 }
