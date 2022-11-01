@@ -616,15 +616,19 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     public List<String> getNodeUrls() {
         String[] nodes = getNodes().split(" ");
         Arrays.sort(nodes);
-        String logHost = Constants.getSysOrEnvVariable(Constants.PROD_LOG_HOST);
 
-        ArrayList<String> nodeUrls = new ArrayList<>();
-        for (String node : nodes) {
-            nodeUrls.add(
-                "<a href=\"http://" + logHost + "/logs/" + nodeLogLocationCorrection(node) + "/\">" + node + "</a>");
+        if (App.DATA_CENTER_KED.equals(getDeploymentInfo().getDataCenter())) {
+            return Arrays.asList(nodes);
+
+        } else {
+            String logHost = Constants.getSysOrEnvVariable(Constants.PROD_LOG_HOST);
+            ArrayList<String> nodeUrls = new ArrayList<>();
+            for (String node : nodes) {
+                nodeUrls.add("<a href=\"http://" + logHost + "/logs/" + nodeLogLocationCorrection(node) + "/\">" + node
+                    + "</a>");
+            }
+            return nodeUrls;
         }
-
-        return nodeUrls;
     }
 
     public String nodeLogLocationCorrection(String node) {
