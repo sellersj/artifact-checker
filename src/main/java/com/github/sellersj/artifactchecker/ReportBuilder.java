@@ -68,7 +68,7 @@ public class ReportBuilder {
         Set<ArtifactAttributes> apps = ReportBuilder.generateAppInventory(location);
         try {
             apps.addAll(InventoryFileUtil
-                .readMergedApplicationListing(new URL("https://" + toolsHost + "/deployed-to/ked-applications.txt")));
+                .readMergedApplicationListing(new URL("https://" + toolsHost + "/projectsites/ked-applications.txt")));
         } catch (MalformedURLException e1) {
             throw new RuntimeException("Could not read the ked app file", e1);
         }

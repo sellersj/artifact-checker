@@ -193,7 +193,7 @@ public class InventoryFileUtilTest {
     public void testReadMergedApplicationListing() throws Exception {
         String toolsHost = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST);
         Set<ArtifactAttributes> attributes = InventoryFileUtil
-            .readMergedApplicationListing(new URL("https://" + toolsHost + "/deployed-to/ked-applications.txt"));
+            .readMergedApplicationListing(new URL("https://" + toolsHost + "/projectsites/ked-applications.txt"));
 
         assertFalse(attributes.isEmpty(), "gav list should not be empty");
 
