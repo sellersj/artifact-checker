@@ -334,8 +334,24 @@ public class DownloadArtifacts {
             process.exitValue();
 
             List<String> matchingTags = getMatchingTags(output);
+
+            String tag = null;
             if (1 == matchingTags.size()) {
-                String tag = matchingTags.get(0);
+                tag = matchingTags.get(0);
+            } else {
+                System.err.println(String.format(
+                    "Found more than 1 tag for the checkout for project %s. The tags are: %s", gav, matchingTags));
+
+                // going to try to guess on the tag value
+                String tagGuess = gav.getScmRepo() + "-" + gav.getVersion();
+                if (matchingTags.contains(tagGuess)) {
+                    System.err.println(
+                        String.format("Found our tag guess of %s for the checkout for project %s", tagGuess, gav));
+                    tag = tagGuess;
+                }
+            }
+
+            if (null != tag) {
                 gav.setScmTag(tag);
 
                 // switch to this tag
@@ -347,10 +363,9 @@ public class DownloadArtifacts {
                 tagProcess.exitValue();
 
                 System.out.println("Switched to tag '" + tag + "' for " + gav);
-
             } else {
-                // TODO maybe throw an exception here?
-                System.err.println("Found more than 1 tag for the checkout for project " + gav);
+                System.err.println("Could not find a matching tag for the checkout for project " + gav
+                    + ". Tags found are: " + matchingTags);
             }
         } catch (Exception e) {
             throw new RuntimeException("Couldn't run process: " + gitCheckoutVersion, e);
