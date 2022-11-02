@@ -66,6 +66,9 @@ The code uses an env var called `WAS_INFO_HOST` where it pulls deployment info. 
 * deploys
 * mailSourceData
 
+## Data used to generate Deployment from other data center
+The code uses an env var called `WAS_CIPO_HOST`
+
 ## TODO not yet working Manual steps to regenerate the schema
 Currently there are some manual steps for generating the model
 Download the schema

@@ -63,12 +63,17 @@ public class ReportBuilder {
             System.err.println("The env variable TOOLS_HOST has to be set. Exiting");
             return;
         }
+        String cipoHost = Constants.getSysOrEnvVariable(Constants.WAS_CIPO_HOST);
+        if (StringUtils.isBlank(toolsHost)) {
+            System.err.println("The env variable WAS_CIPO_HOST has to be set. Exiting");
+            return;
+        }
 
         String location = "https://" + toolsHost + "/deployed-to/manifest-combined.txt";
         Set<ArtifactAttributes> apps = ReportBuilder.generateAppInventory(location);
         try {
-            apps.addAll(InventoryFileUtil
-                .readMergedApplicationListing(new URL("https://" + toolsHost + "/projectsites/ked-applications.txt")));
+            apps.addAll(
+                InventoryFileUtil.readMergedApplicationListing(new URL("https://" + cipoHost + "/app_version.txt")));
         } catch (MalformedURLException e1) {
             throw new RuntimeException("Could not read the ked app file", e1);
         }

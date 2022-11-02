@@ -27,6 +27,9 @@ public class Constants {
     /** The url of the applications directory. */
     public static final String WAS_INFO_HOST = "WAS_INFO_HOST";
 
+    /** The url of the cipo host. */
+    public static final String WAS_CIPO_HOST = "WAS_CIPO_HOST";
+
     /** The filename where we track java 8 issues with dependencies. */
     public static final String JAVA8_ISSUES_FILENAME = "java8-issues.txt";
 
