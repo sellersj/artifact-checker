@@ -18,7 +18,7 @@ public class App {
     public static final String DATA_CENTER_ICDC = "ICDC";
 
     /** The KED data center. */
-    public static final String DATA_CENTER_KED = "KED";
+    public static final String DATA_CENTER_KED = "KEDC";
 
     /** The key for name of the app. */
     public static final String APP_KEY = "APP";
