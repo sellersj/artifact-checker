@@ -16,7 +16,7 @@ n.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xs
     <maven.compiler.showWarnings>true</maven.compiler.showWarnings>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <jackson.version>2.13.4</jackson.version>
+    <jackson.version>2.14.0</jackson.version>
 
     <!-- used for the reports of other project -->
     <owasp.dependency.check.version>7.3.0</owasp.dependency.check.version>
