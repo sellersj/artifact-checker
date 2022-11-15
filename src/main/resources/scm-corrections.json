@@ -601,7 +601,7 @@
     "scmRepo": "ccd-barcode-generator",
     "groupId": "ca.gc.ic.cipo.ccd",
     "artifactId": "ccd-barcode-gen-service-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOCCD"
   },
   {
     "implementationTitle": "ccd-letter-gen-service-app",
@@ -609,7 +609,7 @@
     "scmRepo": "ccd-letter-gen",
     "groupId": "ca.gc.ic.cipo.ccd",
     "artifactId": "ccd-letter-gen-service-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOCCD"
   },
   {
     "implementationTitle": "CIPO-bsl-export-service-app",
