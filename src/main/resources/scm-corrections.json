@@ -593,7 +593,7 @@
     "scmRepo": "business-event-service",
     "groupId": "ca.gc.ic.cipo.com",
     "artifactId": "business-event-service-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOPWEB"
   },
   {
     "implementationTitle": "ccd-barcode-gen-service-app",
@@ -617,7 +617,7 @@
     "scmRepo": "cipo-bsl-export-service",
     "groupId": "ca.gc.ic.cipo.bsl",
     "artifactId": "CIPO-bsl-export-service-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOPWEB"
   },
   {
     "implementationTitle": "cipo-egrant-proxy-app",
@@ -625,7 +625,7 @@
     "scmRepo": "cipo-egrant-proxy",
     "groupId": "ca.gc.ic.cipo.egrant",
     "artifactId": "cipo-egrant-proxy-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOPEG"
   },
   {
     "implementationTitle": "CIPO-id-hague-console-app",
@@ -633,7 +633,7 @@
     "scmRepo": "cipo-id-hague-console",
     "groupId": "ca.gc.ic.cipo.id",
     "artifactId": "CIPO-id-hague-console-app",
-    "jiraKey": ""
+    "jiraKey": "IDHAGUE"
   },
   {
     "implementationTitle": "CIPO-id-hague-financial-fee-service-app",
@@ -641,7 +641,7 @@
     "scmRepo": "cipo-id-hague-financial-fee-service",
     "groupId": "ca.gc.ic.cipo.id",
     "artifactId": "CIPO-id-hague-financial-fee-service-app",
-    "jiraKey": ""
+    "jiraKey": "IDHAGUE"
   },
   {
     "implementationTitle": "CIPO-id-hague-package-service-app",
@@ -649,7 +649,7 @@
     "scmRepo": "cipo-id-hague-package-service",
     "groupId": "ca.gc.ic.cipo.id",
     "artifactId": "CIPO-id-hague-package-service-app",
-    "jiraKey": ""
+    "jiraKey": "IDHAGUE"
   },
   {
     "implementationTitle": "CIPO-id-hague-transaction-service-app",
@@ -657,7 +657,7 @@
     "scmRepo": "cipo-id-hague-transaction-service",
     "groupId": "ca.gc.ic.cipo.id",
     "artifactId": "CIPO-id-hague-transaction-service-app",
-    "jiraKey": ""
+    "jiraKey": "IDHAGUE"
   },
   {
     "implementationTitle": "CIPO-id-hague-workflow-engine-app",
@@ -665,7 +665,7 @@
     "scmRepo": "cipo-id-hague-workflow-engine",
     "groupId": "ca.gc.ic.cipo.id",
     "artifactId": "CIPO-id-hague-workflow-engine-app",
-    "jiraKey": ""
+    "jiraKey": "IDHAGUE"
   },
   {
     "implementationTitle": "CIPO-patent-bulk-export-service-app",
@@ -673,7 +673,7 @@
     "scmRepo": "cipo-patent-bulk-export-service",
     "groupId": "ca.gc.ic.cipo.pbx",
     "artifactId": "CIPO-patent-bulk-export-service-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOPWEB"
   },
   {
     "implementationTitle": "cpd-site-app",
@@ -681,7 +681,7 @@
     "scmRepo": "cpd",
     "groupId": "ca.gc.ic.cipo.patents",
     "artifactId": "cpd-site-app",
-    "jiraKey": ""
+    "jiraKey": "CPD"
   },
   {
     "implementationTitle": "cpor-console-app",
@@ -689,7 +689,7 @@
     "scmRepo": "cpor",
     "groupId": "ca.gc.ic.cipo.cpr",
     "artifactId": "cpor-console-app",
-    "jiraKey": ""
+    "jiraKey": "CPOR"
   },
   {
     "implementationTitle": "cpor-custom-notice-service-app",
@@ -697,7 +697,7 @@
     "scmRepo": "cpor",
     "groupId": "ca.gc.ic.cipo.cpr",
     "artifactId": "cpor-custom-notice-service-app",
-    "jiraKey": ""
+    "jiraKey": "CPOR"
   },
   {
     "implementationTitle": "cpor-pct-fee-service-app",
@@ -705,7 +705,7 @@
     "scmRepo": "cpor",
     "groupId": "ca.gc.ic.cipo.cpr",
     "artifactId": "cpor-pct-fee-service-app",
-    "jiraKey": ""
+    "jiraKey": "CPOR"
   },
   {
     "implementationTitle": "cpor-publisher-service-app",
@@ -713,7 +713,7 @@
     "scmRepo": "cpor",
     "groupId": "ca.gc.ic.cipo.cpr",
     "artifactId": "cpor-publisher-service-app",
-    "jiraKey": ""
+    "jiraKey": "CPOR"
   },
   {
     "implementationTitle": "cpor-site-app",
@@ -721,7 +721,7 @@
     "scmRepo": "cpor",
     "groupId": "ca.gc.ic.cipo.cpr",
     "artifactId": "cpor-site-app",
-    "jiraKey": ""
+    "jiraKey": "CPOR"
   },
   {
     "implementationTitle": "cpor-template-service-app",
@@ -729,7 +729,7 @@
     "scmRepo": "cpor",
     "groupId": "ca.gc.ic.cipo.cpr",
     "artifactId": "cpor-template-service-app",
-    "jiraKey": ""
+    "jiraKey": "CPOR"
   },
   {
     "implementationTitle": "cpor-weekly-batch-app",
@@ -737,7 +737,7 @@
     "scmRepo": "cpor",
     "groupId": "ca.gc.ic.cipo.cpr",
     "artifactId": "cpor-weekly-batch-app",
-    "jiraKey": ""
+    "jiraKey": "CPOR"
   },
   {
     "implementationTitle": "cpor-weekly-publication-service-app",
@@ -745,7 +745,7 @@
     "scmRepo": "cpor",
     "groupId": "ca.gc.ic.cipo.cpr",
     "artifactId": "cpor-weekly-publication-service-app",
-    "jiraKey": ""
+    "jiraKey": "CPOR"
   },
   {
     "implementationTitle": "data-transfer-facility-app",
@@ -753,7 +753,7 @@
     "scmRepo": "data-transfer-facility",
     "groupId": "ca.gc.ic.cipo.dtf",
     "artifactId": "data-transfer-facility-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOFTC"
   },
   {
     "implementationTitle": "document-conversion-service-app",
@@ -761,7 +761,7 @@
     "scmRepo": "document-conversion-service",
     "groupId": "ca.gc.ic.cipo.conversion",
     "artifactId": "document-conversion-service-app",
-    "jiraKey": ""
+    "jiraKey": "CIPODCS"
   },
   {
     "implementationTitle": "file-transfer-console-app",
@@ -769,7 +769,7 @@
     "scmRepo": "file-transfer-console",
     "groupId": "ca.gc.ic.cipo.ftc",
     "artifactId": "file-transfer-console-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOFTC"
   },
   {
     "implementationTitle": "id-dissemination-app",
@@ -777,7 +777,7 @@
     "scmRepo": "id-dissemination",
     "groupId": "ca.gc.ic.cipo.id",
     "artifactId": "id-dissemination-app",
-    "jiraKey": ""
+    "jiraKey": "IDDISS"
   },
   {
     "implementationTitle": "import-export-component-app",
@@ -785,7 +785,7 @@
     "scmRepo": "import-export-component",
     "groupId": "ca.gc.ic.cipo.iec",
     "artifactId": "import-export-component-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOPWEB"
   },
   {
     "implementationTitle": "intellect-app",
@@ -793,7 +793,7 @@
     "scmRepo": "intellect",
     "groupId": "ca.gc.ic.cipo.patents",
     "artifactId": "intellect-app",
-    "jiraKey": ""
+    "jiraKey": "INTELLEC"
   },
   {
     "implementationTitle": "interapp-sectionhead-service-app",
@@ -801,7 +801,7 @@
     "scmRepo": "interapp-sectionhead-service",
     "groupId": "ca.gc.ic.cipo.com",
     "artifactId": "interapp-sectionhead-service-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOPWEB"
   },
   {
     "implementationTitle": "patent-document-component-app",
@@ -809,7 +809,7 @@
     "scmRepo": "patent-document-component",
     "groupId": "ca.gc.ic.cipo.pdc",
     "artifactId": "patent-document-component-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOPWEB"
   },
   {
     "implementationTitle": "patent-document-retrieval-service-app",
@@ -817,7 +817,7 @@
     "scmRepo": "patent-document-retrieval-service",
     "groupId": "ca.gc.ic.cipo.pdrs",
     "artifactId": "patent-document-retrieval-service-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOPWEB"
   },
   {
     "implementationTitle": "patent-image-retrieval-service-app",
@@ -825,7 +825,7 @@
     "scmRepo": "patent-image-retrieval-service",
     "groupId": "ca.gc.ic.cipo.pirs",
     "artifactId": "patent-image-retrieval-service-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOPWEB"
   },
   {
     "implementationTitle": "patent-list-service-app",
@@ -833,7 +833,7 @@
     "scmRepo": "patent-list-service",
     "groupId": "ca.gc.ic.cipo.pab",
     "artifactId": "patent-list-service-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOPWEB"
   },
   {
     "implementationTitle": "pctsafe-service-app",
@@ -841,7 +841,7 @@
     "scmRepo": "pctsafe-service",
     "groupId": "ca.gc.ic.cipo.psws",
     "artifactId": "pctsafe-service-app",
-    "jiraKey": ""
+    "jiraKey": "PCT"
   },
   {
     "implementationTitle": "qc-parameters-ear",
@@ -849,7 +849,7 @@
     "scmRepo": "qc-parameters",
     "groupId": "ca.gc.ic.cipo.qc",
     "artifactId": "qc-parameters-ear",
-    "jiraKey": ""
+    "jiraKey": "CIPOPWEB"
   },
   {
     "implementationTitle": "release-management-system-app",
@@ -857,7 +857,7 @@
     "scmRepo": "release-management-system",
     "groupId": "ca.gc.ic.cipo.rms",
     "artifactId": "release-management-system-app",
-    "jiraKey": ""
+    "jiraKey": "CIPORMS"
   },
   {
     "implementationTitle": "report-generation-service-app",
@@ -865,7 +865,7 @@
     "scmRepo": "report-generation-service",
     "groupId": "ca.gc.ic.cipo.report",
     "artifactId": "report-generation-service-app",
-    "jiraKey": ""
+    "jiraKey": "CIPORGS"
   },
   {
     "implementationTitle": "session-recovery-service-app",
@@ -873,7 +873,7 @@
     "scmRepo": "session-recovery-service",
     "groupId": "ca.gc.ic.cipo.com",
     "artifactId": "session-recovery-service-app",
-    "jiraKey": ""
+    "jiraKey": "INTELLEC"
   },
   {
     "implementationTitle": "solr-patent-indexer-app",
@@ -881,7 +881,7 @@
     "scmRepo": "solr-patent-indexer",
     "groupId": "ca.gc.ic.cipo.patents",
     "artifactId": "solr-patent-indexer-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOPWEB"
   },
   {
     "implementationTitle": "system-codes-service-app",
@@ -889,7 +889,7 @@
     "scmRepo": "system-codes-service",
     "groupId": "ca.gc.ic.cipo.scs",
     "artifactId": "system-codes-service-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOPWEB"
   },
   {
     "implementationTitle": "tm-dissemination-app",
@@ -897,7 +897,7 @@
     "scmRepo": "tm-dissemination",
     "groupId": "ca.gc.ic.cipo.tm",
     "artifactId": "tm-dissemination-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOTI"
   },
   {
     "implementationTitle": "tm-media-conversion-app",
@@ -905,7 +905,7 @@
     "scmRepo": "tm-media-conversion",
     "groupId": "ca.gc.ic.cipo.tm",
     "artifactId": "tm-media-conversion-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOTI"
   },
   {
     "implementationTitle": "tm-nice-classification-app",
@@ -913,7 +913,7 @@
     "scmRepo": "tm-nice-classification",
     "groupId": "ca.gc.ic.cipo.tm",
     "artifactId": "tm-nice-classification-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOTI"
   },
   {
     "implementationTitle": "tm-repository-index-builder-app",
@@ -921,7 +921,7 @@
     "scmRepo": "tm-repository-index-builder",
     "groupId": "ca.gc.ic.cipo.tm",
     "artifactId": "tm-repository-index-builder-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOTI"
   },
   {
     "implementationTitle": "tm-service-console-app",
@@ -929,7 +929,7 @@
     "scmRepo": "tm-service-console",
     "groupId": "ca.gc.ic.cipo.sc",
     "artifactId": "tm-service-console-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOTI"
   },
   {
     "implementationTitle": "tm-synchronization-app",
@@ -937,7 +937,7 @@
     "scmRepo": "tm-synchronization",
     "groupId": "ca.gc.ic.cipo.tm",
     "artifactId": "tm-synchronization-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOTI"
   },
   {
     "implementationTitle": "trademarks-document-retrieval-service-app",
@@ -945,7 +945,7 @@
     "scmRepo": "trademarks-document-retrieval-service",
     "groupId": "ca.gc.ic.cipo.tm",
     "artifactId": "trademarks-document-retrieval-service-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOTI"
   },
   {
     "implementationTitle": "trademarks-journal-app",
@@ -953,7 +953,7 @@
     "scmRepo": "trademarks-journal",
     "groupId": "ca.gc.ic.cipo.trademarks",
     "artifactId": "trademarks-journal-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOTI"
   },
   {
     "implementationTitle": "user-authorize-service-app",
@@ -961,6 +961,6 @@
     "scmRepo": "user-authorize-service",
     "groupId": "ca.gc.ic.cipo.stf",
     "artifactId": "user-authorize-service-app",
-    "jiraKey": ""
+    "jiraKey": "ECJAV"
   }
 ]
