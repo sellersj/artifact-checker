@@ -312,14 +312,14 @@
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-payment",
     "artifactId": "CIPO-ec-payment-app",
-    "jiraKey": "ECOMMCP"
+    "jiraKey": "CIPOECOM"
   },
   {
     "implementationTitle": "CIPO-ec-payment-ws-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-payment-ws",
     "artifactId": "CIPO-ec-payment-ws-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOECOM"
   },
   {
     "implementationTitle": "CIPO-ec-pb-pct-filing-app",
