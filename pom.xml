@@ -19,7 +19,7 @@ n.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xs
     <jackson.version>2.14.1</jackson.version>
 
     <!-- used for the reports of other project -->
-    <owasp.dependency.check.version>7.3.2</owasp.dependency.check.version>
+    <owasp.dependency.check.version>7.4.0</owasp.dependency.check.version>
     <maven.dependency.plugin.version>3.4.0</maven.dependency.plugin.version>
     <tabulator-tables.version>5.4.2</tabulator-tables.version>
 
