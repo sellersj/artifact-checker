@@ -71,7 +71,7 @@ n.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xs
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-params</artifactId>
-      <version>5.9.1</version>
+      <version>5.9.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
