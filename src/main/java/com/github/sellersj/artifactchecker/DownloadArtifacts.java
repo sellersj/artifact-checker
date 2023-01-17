@@ -3,9 +3,12 @@
  */
 package com.github.sellersj.artifactchecker;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.ProcessBuilder.Redirect;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -21,12 +24,13 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.StopWatch;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.owasp.Analysis;
 import com.github.sellersj.artifactchecker.model.owasp.Dependency;
@@ -400,7 +404,7 @@ public class DownloadArtifacts {
 
     public void processDependencyCheckInfo(ArtifactAttributes gav, File projectDir) {
         // let's check if the file exists before trying to parse it
-        File file = new File(projectDir.getAbsolutePath() + "/target/dependency-check-report.json");
+        File file = new File(projectDir.getAbsolutePath() + "/target/dependency-check-report.xml");
         if (!file.exists()) {
             System.err
                 .println("Could not find the owasp file on path " + file.getAbsolutePath() + ". Not gathering info.");
@@ -411,11 +415,14 @@ public class DownloadArtifacts {
     }
 
     public List<Vulnerability> parseDependencyCheckReport(File file) {
+
         // gather all the vul's and add them to the artifact
-        ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         List<Vulnerability> vulnerabilities = new ArrayList<>();
         try {
-            Analysis check = mapper.readValue(file, Analysis.class);
+            JAXBContext context = JAXBContext.newInstance(Analysis.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            Analysis check = (Analysis) unmarshaller.unmarshal(
+                new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)));
 
             // guard against not having any dependencies
             List<Dependency> dependencies = check.getDependencies().getDependency();
