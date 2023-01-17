@@ -428,20 +428,23 @@ public class DownloadArtifacts {
             List<Dependency> dependencies = check.getDependencies().getDependency();
             if (null != dependencies) {
                 for (Dependency dep : dependencies) {
-                    List<Vulnerability> depsVuls = dep.getVulnerabilities().getVulnerability();
 
-                    if (null != depsVuls) {
-                        vulnerabilities.addAll(depsVuls);
-                    }
+                    if (null != dep.getVulnerabilities()) {
+                        List<Vulnerability> depsVuls = dep.getVulnerabilities().getVulnerability();
 
-                    // now let's remove any suppressed issues where the name matches
-                    if (null != dep.getVulnerabilities().getSuppressedVulnerability()) {
-                        for (Iterator<Vulnerability> iterator = vulnerabilities.iterator(); iterator.hasNext();) {
-                            Vulnerability vul = iterator.next();
+                        if (null != depsVuls) {
+                            vulnerabilities.addAll(depsVuls);
+                        }
 
-                            for (Vulnerability suppressed : dep.getVulnerabilities().getSuppressedVulnerability()) {
-                                if (vul.getName().equals(suppressed.getName())) {
-                                    iterator.remove();
+                        // now let's remove any suppressed issues where the name matches
+                        if (null != dep.getVulnerabilities().getSuppressedVulnerability()) {
+                            for (Iterator<Vulnerability> iterator = vulnerabilities.iterator(); iterator.hasNext();) {
+                                Vulnerability vul = iterator.next();
+
+                                for (Vulnerability suppressed : dep.getVulnerabilities().getSuppressedVulnerability()) {
+                                    if (vul.getName().equals(suppressed.getName())) {
+                                        iterator.remove();
+                                    }
                                 }
                             }
                         }
