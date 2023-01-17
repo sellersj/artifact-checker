@@ -25,6 +25,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.StopWatch;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.owasp.Analysis;
@@ -411,7 +412,7 @@ public class DownloadArtifacts {
 
     public List<Vulnerability> parseDependencyCheckReport(File file) {
         // gather all the vul's and add them to the artifact
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         List<Vulnerability> vulnerabilities = new ArrayList<>();
         try {
             Analysis check = mapper.readValue(file, Analysis.class);
