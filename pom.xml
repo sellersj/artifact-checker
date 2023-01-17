@@ -1,13 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <groupId>com.github.sellersj</groupId>
   <artifactId>artifact-checker</artifactId>
   <version>1.0.0-SNAPSHOT</version>
-
   <name>Artifact checker</name>
   <packaging>jar</packaging>
-
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
@@ -16,18 +13,15 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <jackson.version>2.14.1</jackson.version>
-
     <!-- used for the reports of other project -->
     <owasp.dependency.check.version>7.4.4</owasp.dependency.check.version>
     <maven.dependency.plugin.version>3.5.0</maven.dependency.plugin.version>
     <tabulator-tables.version>5.4.3</tabulator-tables.version>
-
     <!-- to try to address -->
     <!-- https://issues.apache.org/jira/browse/SUREFIRE-1788 -->
     <!-- https://stackoverflow.com/a/61936537/2055199 -->
     <surefire.plugin.version>3.0.0-M8</surefire.plugin.version>
   </properties>
-
   <dependencies>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -79,7 +73,6 @@
       <version>2.0.6</version>
     </dependency>
   </dependencies>
-
   <build>
     <pluginManagement>
       <plugins>
@@ -121,7 +114,6 @@
             </lifecycleMappingMetadata>
           </configuration>
         </plugin>
-
         <!-- these are here so we can easily check that they are updated and the versions can be resolved before the java 
           code tries to run. These are used in the DownloadArtifacts class. -->
         <plugin>
@@ -199,27 +191,55 @@
           </execution>
         </executions>
       </plugin>
-
-      <!-- Use this with json output file to generate the classes. -->
-      <!-- TODO figure it out how to do this with the schema -->
-      <!-- <plugin> -->
-      <!-- <groupId>org.jsonschema2pojo</groupId> -->
-      <!-- <artifactId>jsonschema2pojo-maven-plugin</artifactId> -->
-      <!-- <version>1.0.1</version> -->
-      <!-- <configuration> -->
-      <!-- <sourceDirectory>${basedir}/src/main/resources/schema</sourceDirectory> -->
-      <!-- <sourceType>json</sourceType> -->
-      <!-- <useDoubleNumbers>false</useDoubleNumbers> -->
-      <!-- <targetPackage>com.github.sellersj.artifactchecker.model.owasp</targetPackage> -->
-      <!-- </configuration> -->
-      <!-- <executions> -->
-      <!-- <execution> -->
-      <!-- <goals> -->
-      <!-- <goal>generate</goal> -->
-      <!-- </goals> -->
-      <!-- </execution> -->
-      <!-- </executions> -->
-      <!-- </plugin> -->
+      <!-- generate java code that matches dependency check to deal with the model -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.owasp</groupId>
+                  <artifactId>dependency-check-core</artifactId>
+                  <version>${owasp.dependency.check.version}</version>
+                  <type>jar</type>
+                </artifactItem>
+              </artifactItems>
+              <includes>**/*.xsd</includes>
+              <overWriteReleases>true</overWriteReleases>
+              <overWriteSnapshots>true</overWriteSnapshots>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>jaxb2-maven-plugin</artifactId>
+        <!-- 3.x is for the jakarta namespace -->
+        <!-- <version>3.1.0</version> -->
+        <version>2.5.0</version>
+        <executions>
+          <execution>
+            <id>xjc</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>xjc</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <packageName>com.github.sellersj.artifactchecker.model.owasp</packageName>
+          <sources>
+            <source>${project.build.directory}/dependency/schema/dependency-check.2.5.xsd</source>
+          </sources>
+        </configuration>
+      </plugin>
     </plugins>
     <!-- used to set the version of tabulator -->
     <resources>

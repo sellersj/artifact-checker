@@ -31,8 +31,9 @@ import org.junit.jupiter.api.Test;
 import com.github.sellersj.artifactchecker.model.App;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.MavenGAV;
-import com.github.sellersj.artifactchecker.model.owasp.Cvssv2;
-import com.github.sellersj.artifactchecker.model.owasp.Cvssv3;
+import com.github.sellersj.artifactchecker.model.owasp.CvssV2;
+import com.github.sellersj.artifactchecker.model.owasp.CvssV3;
+import com.github.sellersj.artifactchecker.model.owasp.Severity;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
 public class InventoryFileUtilTest {
@@ -216,19 +217,21 @@ public class InventoryFileUtilTest {
         vul.setDescription("Fake cve goes " + RandomStringUtils.randomAlphanumeric(0, 100));
 
         BigDecimal score = new BigDecimal(RANDOM.nextFloat() * 10.0f).setScale(1, RoundingMode.HALF_UP);
-        Float cvsScore = Float.valueOf(score.floatValue());
+        BigDecimal cvsScore = BigDecimal.valueOf(score.floatValue());
         if (RANDOM.nextBoolean()) {
-            Cvssv3 cvssv3 = new Cvssv3();
+            CvssV3 cvssv3 = new CvssV3();
             cvssv3.setBaseScore(cvsScore);
-            vul.setCvssv3(cvssv3);
+            vul.setCvssV3(cvssv3);
         } else {
-            Cvssv2 cvssv2 = new Cvssv2();
+            CvssV2 cvssv2 = new CvssV2();
             cvssv2.setScore(cvsScore);
-            vul.setCvssv2(cvssv2);
+            vul.setCvssV2(cvssv2);
         }
 
         // get a random severity
-        vul.setSeverity(SEVERITY_CHOICES.get(RANDOM.nextInt(SEVERITY_CHOICES.size())));
+        Severity severity = new Severity();
+        severity.setValue(SEVERITY_CHOICES.get(RANDOM.nextInt(SEVERITY_CHOICES.size())));
+        vul.setSeverity(severity);
 
         return vul;
     }

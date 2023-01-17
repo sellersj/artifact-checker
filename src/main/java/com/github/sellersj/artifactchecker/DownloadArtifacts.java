@@ -27,9 +27,8 @@ import org.apache.commons.lang3.time.StopWatch;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
+import com.github.sellersj.artifactchecker.model.owasp.Analysis;
 import com.github.sellersj.artifactchecker.model.owasp.Dependency;
-import com.github.sellersj.artifactchecker.model.owasp.DependencyCheckReport;
-import com.github.sellersj.artifactchecker.model.owasp.SuppressedVulnerability;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
 /**
@@ -415,24 +414,24 @@ public class DownloadArtifacts {
         ObjectMapper mapper = new ObjectMapper();
         List<Vulnerability> vulnerabilities = new ArrayList<>();
         try {
-            DependencyCheckReport check = mapper.readValue(file, DependencyCheckReport.class);
+            Analysis check = mapper.readValue(file, Analysis.class);
 
             // guard against not having any dependencies
-            List<Dependency> dependencies = check.getDependencies();
+            List<Dependency> dependencies = check.getDependencies().getDependency();
             if (null != dependencies) {
                 for (Dependency dep : dependencies) {
-                    List<Vulnerability> depsVuls = dep.getVulnerabilities();
+                    List<Vulnerability> depsVuls = dep.getVulnerabilities().getVulnerability();
 
                     if (null != depsVuls) {
                         vulnerabilities.addAll(depsVuls);
                     }
 
                     // now let's remove any suppressed issues where the name matches
-                    if (null != dep.getSuppressedVulnerabilities()) {
+                    if (null != dep.getVulnerabilities().getSuppressedVulnerability()) {
                         for (Iterator<Vulnerability> iterator = vulnerabilities.iterator(); iterator.hasNext();) {
                             Vulnerability vul = iterator.next();
 
-                            for (SuppressedVulnerability suppressed : dep.getSuppressedVulnerabilities()) {
+                            for (Vulnerability suppressed : dep.getVulnerabilities().getSuppressedVulnerability()) {
                                 if (vul.getName().equals(suppressed.getName())) {
                                     iterator.remove();
                                 }
