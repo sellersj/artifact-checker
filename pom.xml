@@ -14,7 +14,11 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <jackson.version>2.14.1</jackson.version>
     <!-- used for the reports of other project -->
+    <!-- when updating, check the xsd file to use -->
+    <!-- https://github.com/jeremylong/DependencyCheck/tree/main/core/src/main/resources/schema -->
     <owasp.dependency.check.version>7.4.4</owasp.dependency.check.version>
+    <owasp.dependency.check.xsd.file>dependency-check.2.5.xsd</owasp.dependency.check.xsd.file>
+    
     <maven.dependency.plugin.version>3.5.0</maven.dependency.plugin.version>
     <tabulator-tables.version>5.4.3</tabulator-tables.version>
     <!-- to try to address -->
@@ -236,7 +240,7 @@
         <configuration>
           <packageName>com.github.sellersj.artifactchecker.model.owasp</packageName>
           <sources>
-            <source>${project.build.directory}/dependency/schema/dependency-check.2.5.xsd</source>
+            <source>${project.build.directory}/dependency/schema/${owasp.dependency.check.xsd.file}</source>
           </sources>
         </configuration>
       </plugin>
