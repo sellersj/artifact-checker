@@ -52,11 +52,12 @@
       <artifactId>opencsv</artifactId>
       <version>5.7.1</version>
     </dependency>
-    <dependency>
-      <groupId>jakarta.xml.bind</groupId>
-      <artifactId>jakarta.xml.bind-api</artifactId>
-      <version>4.0.0</version>
-    </dependency>
+    <!-- uncomment when moving to java 11+ -->
+    <!--    <dependency>-->
+    <!--      <groupId>jakarta.xml.bind</groupId>-->
+    <!--      <artifactId>jakarta.xml.bind-api</artifactId>-->
+    <!--      <version>4.0.0</version>-->
+    <!--    </dependency>-->
     <!-- used to figure out when a new version is available -->
     <dependency>
       <groupId>org.webjars.npm</groupId>
@@ -246,6 +247,19 @@
             <source>${project.build.directory}/dependency/schema/${owasp.dependency.check.xsd.file}</source>
           </sources>
         </configuration>
+        <!-- force javax classes that are available in java 8. When moving to java 11+ remove these -->
+        <dependencies>
+          <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-xjc</artifactId>
+            <version>2.3.2</version>
+          </dependency>
+          <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-jxc</artifactId>
+            <version>2.3.2</version>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
     <!-- used to set the version of tabulator -->
