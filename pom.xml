@@ -229,7 +229,7 @@
         <artifactId>jaxb2-maven-plugin</artifactId>
         <!-- 3.x is for the jakarta namespace -->
         <!-- <version>3.1.0</version> -->
-        <version>2.5.0</version>
+        <version>3.1.0</version>
         <executions>
           <execution>
             <id>xjc</id>
