@@ -227,8 +227,6 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>jaxb2-maven-plugin</artifactId>
-        <!-- 3.x is for the jakarta namespace -->
-        <!-- <version>3.1.0</version> -->
         <version>3.1.0</version>
         <executions>
           <execution>
