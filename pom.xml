@@ -18,14 +18,12 @@
     <!-- https://github.com/jeremylong/DependencyCheck/tree/main/core/src/main/resources/schema -->
     <owasp.dependency.check.version>7.4.4</owasp.dependency.check.version>
     <owasp.dependency.check.xsd.file>dependency-check.2.5.xsd</owasp.dependency.check.xsd.file>
-    
     <maven.dependency.plugin.version>3.5.0</maven.dependency.plugin.version>
     <tabulator-tables.version>5.4.3</tabulator-tables.version>
     <!-- to try to address -->
     <!-- https://issues.apache.org/jira/browse/SUREFIRE-1788 -->
     <!-- https://stackoverflow.com/a/61936537/2055199 -->
     <surefire.plugin.version>3.0.0-M8</surefire.plugin.version>
-    
     <junit.version>5.9.2</junit.version>
   </properties>
   <dependencies>
@@ -53,6 +51,11 @@
       <groupId>com.opencsv</groupId>
       <artifactId>opencsv</artifactId>
       <version>5.7.1</version>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.xml.bind</groupId>
+      <artifactId>jakarta.xml.bind-api</artifactId>
+      <version>4.0.0</version>
     </dependency>
     <!-- used to figure out when a new version is available -->
     <dependency>
