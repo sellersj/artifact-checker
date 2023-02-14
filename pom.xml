@@ -23,7 +23,7 @@
     <!-- to try to address -->
     <!-- https://issues.apache.org/jira/browse/SUREFIRE-1788 -->
     <!-- https://stackoverflow.com/a/61936537/2055199 -->
-    <surefire.plugin.version>3.0.0-M8</surefire.plugin.version>
+    <surefire.plugin.version>3.0.0-M9</surefire.plugin.version>
     <junit.version>5.9.2</junit.version>
   </properties>
   <dependencies>
