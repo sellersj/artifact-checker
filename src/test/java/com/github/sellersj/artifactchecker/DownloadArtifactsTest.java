@@ -54,6 +54,8 @@ public class DownloadArtifactsTest {
 
         DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
         downloadArtifacts.cloneAndCheckProject(gav);
+        
+        // if this test fails with a xsd error, check that the owasp.dependency.check.xsd.file property in the pom file matches what is being generated.
 
         // TODO check the content of the attributes
     }
