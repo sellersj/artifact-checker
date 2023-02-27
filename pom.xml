@@ -16,7 +16,7 @@
     <!-- used for the reports of other project -->
     <!-- when updating, check the xsd file to use -->
     <!-- https://github.com/jeremylong/DependencyCheck/tree/main/core/src/main/resources/schema -->
-    <owasp.dependency.check.version>8.1.0</owasp.dependency.check.version>
+    <owasp.dependency.check.version>8.1.1</owasp.dependency.check.version>
     <owasp.dependency.check.xsd.file>dependency-check.3.1.xsd</owasp.dependency.check.xsd.file>
     <maven.dependency.plugin.version>3.5.0</maven.dependency.plugin.version>
     <tabulator-tables.version>5.4.4</tabulator-tables.version>
