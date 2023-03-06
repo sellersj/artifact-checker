@@ -962,5 +962,21 @@
     "groupId": "ca.gc.ic.cipo.stf",
     "artifactId": "user-authorize-service-app",
     "jiraKey": "ECJAV"
+  },
+  {
+    "implementationTitle": "CIPO-ec-tm-ecorrespondence-app",
+    "scmProject": "CWP",
+    "scmRepo": "cipo-ec-tm-ecorrespondence",
+    "groupId": "ca.gc.ic.cipo.ec.tm",
+    "artifactId": "user-authorize-service-app",
+    "jiraKey": ""
+  },
+  {
+    "implementationTitle": "CIPO-tm-documents-search-retrieval-service-app",
+    "scmProject": "CWP",
+    "scmRepo": "cipo-tm-documents-search-retrieval-service",
+    "groupId": "ca.gc.ic.cipo.tm",
+    "artifactId": "CIPO-tm-documents-search-retrieval-service-app",
+    "jiraKey": ""
   }
 ]
