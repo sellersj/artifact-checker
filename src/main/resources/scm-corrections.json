@@ -968,7 +968,7 @@
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-tm-ecorrespondence",
     "groupId": "ca.gc.ic.cipo.ec.tm",
-    "artifactId": "user-authorize-service-app",
+    "artifactId": "CIPO-ec-tm-ecorrespondence-app",
     "jiraKey": ""
   },
   {
