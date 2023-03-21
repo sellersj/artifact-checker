@@ -978,5 +978,13 @@
     "groupId": "ca.gc.ic.cipo.tm",
     "artifactId": "CIPO-tm-documents-search-retrieval-service-app",
     "jiraKey": ""
+  },
+  {
+    "implementationTitle": "CIPO-ec-cpr-ws-app",
+    "scmProject": "CWP",
+    "scmRepo": "cipo-ec-cpr-ws",
+    "groupId": "ca.gc.ic.cipo.ec.cpr",
+    "artifactId": "CIPO-ec-cpr-ws-app",
+    "jiraKey": ""
   }
 ]
