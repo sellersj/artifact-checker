@@ -986,5 +986,37 @@
     "groupId": "ca.gc.ic.cipo.ec.cpr",
     "artifactId": "CIPO-ec-cpr-ws-app",
     "jiraKey": ""
+  },
+  {
+    "implementationTitle": "CIPO-quartz-service-app",
+    "scmProject": "CSP",
+    "scmRepo": "cipo-quartz-service",
+    "groupId": "ca.gc.ic.cipo",
+    "artifactId": "CIPO-quartz-service-app",
+    "jiraKey": ""
+  },
+  {
+    "implementationTitle": "CIPO-sandbox-test-app",
+    "scmProject": "CWP",
+    "scmRepo": "cipo-sandbox-test",
+    "groupId": "ca.gc.ic.cipo.test",
+    "artifactId": "CIPO-sandbox-test-app",
+    "jiraKey": ""
+  },
+  {
+    "implementationTitle": "CIPO-tm-conversion-processing-service-app",
+    "scmProject": "CWP",
+    "scmRepo": "cipo-tm-conversion-processing-service",
+    "groupId": "ca.ic.gc.cipo.tm",
+    "artifactId": "CIPO-tm-conversion-processing-service-app",
+    "jiraKey": ""
+  },
+  {
+    "implementationTitle": "CIPO-tm-documents-search-retrieval-service-app",
+    "scmProject": "CWP",
+    "scmRepo": "cipo-tm-documents-search-retrieval-service",
+    "groupId": "ca.gc.ic.cipo.tm",
+    "artifactId": "CIPO-tm-documents-search-retrieval-service-app",
+    "jiraKey": "CIPOTMDM"
   }
 ]
