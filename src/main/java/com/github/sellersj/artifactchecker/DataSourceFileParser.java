@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -72,7 +73,32 @@ public class DataSourceFileParser {
         }
         System.out.println(
             String.format("There are %s data sources not mapped to an application: %s", unmapped.size(), unmapped));
+        removeUnmappedDatasourceOnExceptionList(unmapped);
+
         return unmapped;
+    }
+
+    /**
+     *
+     * @param unmapped to be filtered
+     */
+    private void removeUnmappedDatasourceOnExceptionList(List<ParsedDataSource> unmapped) {
+        File file = InventoryFileUtil.getFileOnClasspath("/unmapped-datasources-ignore-list.txt");
+        try {
+            List<String> jndiNames = FileUtils.readLines(file, StandardCharsets.ISO_8859_1);
+            for (Iterator<ParsedDataSource> iterator = unmapped.iterator(); iterator.hasNext();) {
+                ParsedDataSource parsedDataSource = iterator.next();
+                if (jndiNames.contains(parsedDataSource.getJndiName())) {
+                    System.out.println(String.format(
+                        "We are removing %s from the list of unmapped datasources since it's on an exception list",
+                        parsedDataSource.getJndiName()));
+                    iterator.remove();
+                }
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException("could not read file " + file.getAbsolutePath(), e);
+        }
     }
 
     private ParsedDataSource getDataSource(String chunk) {
