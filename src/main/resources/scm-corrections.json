@@ -392,6 +392,13 @@
     "jiraKey": "CRRCC"
   },
   {
+    "implementationTitle": "CIPO-cr-request-correction-certificate-app - Enterprise Application",
+    "scmProject": "CWP",
+    "scmRepo": "cipo-cr-request-correction-certificate",
+    "artifactId": "CIPO-cr-request-correction-certificate-app",
+    "jiraKey": "CRRCC"
+  },
+  {
     "implementationTitle": "CIPO-ec-tm-add-name-list-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-tm-add-name-list",
