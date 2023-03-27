@@ -978,7 +978,7 @@
     "scmRepo": "cipo-tm-documents-search-retrieval-service",
     "groupId": "ca.gc.ic.cipo.tm",
     "artifactId": "CIPO-tm-documents-search-retrieval-service-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOTMDM"
   },
   {
     "implementationTitle": "CIPO-ec-cpr-ws-app",
@@ -1011,13 +1011,5 @@
     "groupId": "ca.ic.gc.cipo.tm",
     "artifactId": "CIPO-tm-conversion-processing-service-app",
     "jiraKey": ""
-  },
-  {
-    "implementationTitle": "CIPO-tm-documents-search-retrieval-service-app",
-    "scmProject": "CWP",
-    "scmRepo": "cipo-tm-documents-search-retrieval-service",
-    "groupId": "ca.gc.ic.cipo.tm",
-    "artifactId": "CIPO-tm-documents-search-retrieval-service-app",
-    "jiraKey": "CIPOTMDM"
   }
 ]
