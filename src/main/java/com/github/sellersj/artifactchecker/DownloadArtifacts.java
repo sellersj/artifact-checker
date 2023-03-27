@@ -37,8 +37,8 @@ import com.github.sellersj.artifactchecker.model.owasp.Dependency;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
 /**
- * If doing this on a computer that hasn't updated the owasp dependency check data, it be can be done by calling the
- * <code>org.owasp:dependency-check-maven:RELEASE:update-only</code>
+ * If doing this on a computer that hasn't updated the owasp dependency check data, it be can be
+ * done by calling the <code>org.owasp:dependency-check-maven:RELEASE:update-only</code>
  *
  * @author sellersj
  *
@@ -50,6 +50,9 @@ public class DownloadArtifacts {
 
     /** The version of maven-dependency-plugin to use. */
     private String mavenDepPluginVersion;
+
+    /** The version of help to use. */
+    private String mavenHelpPluginVersion;
 
     /**
      * We're dealing with mac giving a limited PATH to eclipse and linking directly to homebrew.
@@ -100,6 +103,7 @@ public class DownloadArtifacts {
             properties.load(is);
             owaspDepCheckVersion = properties.getProperty("owasp.dependency.check.version");
             mavenDepPluginVersion = properties.getProperty("maven.dependency.plugin.version");
+            mavenHelpPluginVersion = properties.getProperty("maven.help.plugin.version");
         } catch (IOException e) {
             System.err.println("Could not load " + filename + " to determine the versions of the plugins.");
         }
@@ -221,6 +225,16 @@ public class DownloadArtifacts {
         // find all possible login pages
         gav.getLoginPages().addAll(authUse.getLoginPageLines(projectDir));
 
+        // generate the effective-pom
+        String effectivePomFile = projectDir.getAbsolutePath() + "/effective-pom.xml";
+        ProcessBuilder mvnHelpEffective = new ProcessBuilder(osPrefix + "mvn" + osSuffix, "--batch-mode",
+            "org.apache.maven.plugins:maven-help-plugin:" + mavenHelpPluginVersion + ":effective-pom",
+            "-Doutput=" + effectivePomFile);
+        mvnHelpEffective.directory(projectDir);
+        if (0 != run(mvnHelpEffective)) {
+            System.out.println("Could not build an effective-pom for " + gav);
+        }
+
         // copy all required files we want to a different location
         copyFiles();
 
@@ -236,8 +250,8 @@ public class DownloadArtifacts {
     }
 
     /**
-     * For improperly deployed apps, the snapshots might not exist in the repo any more. So we're doing a maven install
-     * to be able to do the CVE checks.
+     * For improperly deployed apps, the snapshots might not exist in the repo any more. So we're
+     * doing a maven install to be able to do the CVE checks.
      *
      * @param gav to use
      * @param projectDir the directory that it's in
@@ -315,8 +329,8 @@ public class DownloadArtifacts {
     }
 
     /**
-     * try to get a list of the tags, see if we have 1 unique version that ends with the version, and then try to switch
-     * to that.
+     * try to get a list of the tags, see if we have 1 unique version that ends with the version,
+     * and then try to switch to that.
      *
      * @param gav to switch to
      * @param projectDir where the project is already cloned to
@@ -498,6 +512,7 @@ public class DownloadArtifacts {
             Files.walk(path)//
                 .filter(p -> p.getFileName().toString().startsWith("dependency-check-")
                     || "tree.txt".equals(p.getFileName().toString())
+                    || "effective-pom.xml".equals(p.getFileName().toString())
                     || Constants.TEMPLATE_MATCHING_LINE_FILENAME.equals(p.getFileName().toString())
                     || Constants.EPIC_MATCHING_LINE_FILENAME.equals(p.getFileName().toString())
                     || Constants.JAVA8_ISSUES_FILENAME.equals(p.getFileName().toString())
