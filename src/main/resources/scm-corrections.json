@@ -997,7 +997,7 @@
     "jiraKey": ""
   },
   {
-    "implementationTitle": "CIPO-sandbox-test-app",
+    "implementationTitle": "CIPO-sandbox-test-app - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-sandbox-test",
     "groupId": "ca.gc.ic.cipo.test",
@@ -1005,7 +1005,15 @@
     "jiraKey": ""
   },
   {
-    "implementationTitle": "CIPO-tm-conversion-processing-service-app",
+    "implementationTitle": "CIPO-tm-conversion-processing-service-app - Enterprise Application",
+    "scmProject": "CWP",
+    "scmRepo": "cipo-tm-conversion-processing-service",
+    "groupId": "ca.ic.gc.cipo.tm",
+    "artifactId": "CIPO-tm-conversion-processing-service-app",
+    "jiraKey": ""
+  },
+  {
+    "implementationTitle": "CIPO-Client-service-app - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-tm-conversion-processing-service",
     "groupId": "ca.ic.gc.cipo.tm",
