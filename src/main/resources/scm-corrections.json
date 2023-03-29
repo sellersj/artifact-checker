@@ -486,6 +486,7 @@
     "implementationTitle": "CIPO-tm-madrid-workflow-engine-app - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-tm-madrid-workflow-engine",
+    "groupId": "ca.gc.ic.cipo.tm.madrid",
     "artifactId": "CIPO-tm-madrid-workflow-engine-app",
     "jiraKey": ""
   },
