@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
+import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -658,11 +659,11 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** For the opencsv. */
     @CsvBindByName
-    private String applicationUrl;
+    private SortedSet<String> applicationUrls;
 
     /** The link to the app. */
-    public String getApplicationUrl() {
-        String url = null;
+    public SortedSet<String> getApplicationUrls() {
+        TreeSet<String> urls = new TreeSet<>();
         String contextRoot = getDeploymentInfo(App.CONTEXT_ROOT);
 
         if (StringUtils.isNotBlank(contextRoot)) {
@@ -673,10 +674,22 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
                 host = Constants.getSysOrEnvVariable(Constants.INTRANET_HOSTNAME);
             }
 
-            url = host + contextRoot;
+            urls.add(host + contextRoot);
         }
 
-        return url;
+        return urls;
+    }
+
+    /** The links to the apps. */
+    public List<String> getApplicationUrlsAsHtml() {
+        SortedSet<String> urls = getApplicationUrls();
+
+        ArrayList<String> markup = new ArrayList<>();
+        for (String url : urls) {
+            markup.add(String.format("<a href=\"%s\">url</a?", url));
+        }
+
+        return markup;
     }
 
     private String getDeploymentInfo(String key) {
