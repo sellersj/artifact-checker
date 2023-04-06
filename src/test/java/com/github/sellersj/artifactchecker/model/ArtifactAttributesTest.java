@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.SortedSet;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -269,8 +270,9 @@ public class ArtifactAttributesTest {
         // blank app, no context too
         art.setDeploymentInfo(new App());
 
-        String url = art.getApplicationUrl();
-        assertNull(url);
+        SortedSet<String> urls = art.getApplicationUrls();
+        assertNotNull(urls);
+        assertTrue(urls.isEmpty());
     }
 
     @Test
@@ -282,8 +284,12 @@ public class ArtifactAttributesTest {
         app.putItem(App.CONTEXT_ROOT, contextRoot);
         art.setDeploymentInfo(app);
 
-        String url = art.getApplicationUrl();
-        assertTrue(url.endsWith("/some/context/root"), url + "should have ended with " + contextRoot);
+        SortedSet<String> urls = art.getApplicationUrls();
+        assertNotNull(urls);
+        assertEquals(1, urls.size(), "not correct size for " + urls);
+        for (String url : urls) {
+            assertTrue(url.endsWith("/some/context/root"), url + "should have ended with " + contextRoot);
+        }
     }
 
     @Test
