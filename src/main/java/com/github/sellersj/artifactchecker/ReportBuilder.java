@@ -30,6 +30,7 @@ import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.MailSource;
 import com.github.sellersj.artifactchecker.model.MavenGAV;
 import com.github.sellersj.artifactchecker.model.ParsedDataSource;
+import com.github.sellersj.artifactchecker.model.owasp.KnownExploitedVulnerability;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 import com.github.sellersj.artifactchecker.model.security.ArtifactAttributesComparator;
 import com.github.sellersj.artifactchecker.model.security.SecurityVulnerability;
@@ -491,6 +492,13 @@ public class ReportBuilder {
             builder.append("Severity: " + entry.getKey().getSeverity() + "<br/>\n");
             builder
                 .append("Description: " + StringEscapeUtils.escapeHtml4(entry.getKey().getDescription()) + "<br/>\n");
+            KnownExploitedVulnerability knownExploitedVulnerability = entry.getKey().getKnownExploitedVulnerability();
+            if (null != knownExploitedVulnerability) {
+                builder
+                    .append("Known Exploited description: " + knownExploitedVulnerability.getDescription() + "<br/>\n");
+                builder.append(
+                    "Known Exploited required action: " + knownExploitedVulnerability.getRequiredAction() + "<br/>\n");
+            }
             builder.append("</p>\n");
 
             // what apps have the issue

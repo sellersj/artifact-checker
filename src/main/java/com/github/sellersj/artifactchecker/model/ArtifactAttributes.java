@@ -23,6 +23,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.sellersj.artifactchecker.Constants;
 import com.github.sellersj.artifactchecker.DateUtils;
+import com.github.sellersj.artifactchecker.model.owasp.KnownExploitedVulnerability;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 import com.opencsv.bean.CsvBindByName;
 
@@ -559,6 +560,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         int count = 0;
         for (Vulnerability vulnerability : vulnerabilities) {
             if ("Critical".equalsIgnoreCase(vulnerability.getSeverity().getValue())) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * @return the number of cve's that are known to be exploted.
+     */
+    public int getCveKnownExploitedVulnerabilityCount() {
+        int count = 0;
+        for (Vulnerability vulnerability : vulnerabilities) {
+            KnownExploitedVulnerability known = vulnerability.getKnownExploitedVulnerability();
+            if (null != known) {
                 count++;
             }
         }
