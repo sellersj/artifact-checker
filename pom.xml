@@ -12,7 +12,7 @@
     <maven.compiler.showWarnings>true</maven.compiler.showWarnings>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <jackson.version>2.14.2</jackson.version>
+    <jackson.version>2.15.0</jackson.version>
     <!-- used for the reports of other project -->
     <!-- when updating, check the xsd file to use -->
     <!-- https://github.com/jeremylong/DependencyCheck/tree/main/core/src/main/resources/schema -->
