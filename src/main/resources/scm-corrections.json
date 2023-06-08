@@ -584,7 +584,7 @@
   {
     "implementationTitle": "CIPO-accounts-ws-app",
     "scmProject": "CWP",
-    "scmRepo": "cipo-accounts",
+    "scmRepo": "cipo-accounts-ws",
     "artifactId": "CIPO-accounts-ws-app",
     "jiraKey": ""
   },
