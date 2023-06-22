@@ -224,8 +224,7 @@ public class DownloadArtifacts {
 
         // find places where a jndi name might be used
         CheckForJdbcUse jdbcUse = new CheckForJdbcUse();
-        jdbcUse.getEpicTemplateNames(projectDir);
-        jdbcUse.writeEpicUse(projectDir);
+        jdbcUse.getJdbcMatchingLines(projectDir);
 
         // find all possible login pages
         gav.getLoginPages().addAll(authUse.getLoginPageLines(projectDir));
