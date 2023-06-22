@@ -30,6 +30,8 @@ import javax.xml.bind.Unmarshaller;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.StopWatch;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.owasp.Analysis;
@@ -44,6 +46,9 @@ import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
  *
  */
 public class DownloadArtifacts {
+
+    /** A logger. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(DownloadArtifacts.class);
 
     /** The version of owasp dependency check to use. */
     private String owaspDepCheckVersion;
@@ -224,7 +229,10 @@ public class DownloadArtifacts {
 
         // find places where a jndi name might be used
         CheckForJdbcUse jdbcUse = new CheckForJdbcUse();
-        jdbcUse.getJdbcMatchingLines(projectDir);
+        // TODO set this into the gav where we can use it in other places.
+        Set<String> possibleJndiNames = jdbcUse.getJdbcMatchingLines(projectDir);
+        LOGGER.info(String.format("We found %s possible jndi names with this deployment and they are %s",
+            possibleJndiNames.size(), possibleJndiNames));
 
         // find all possible login pages
         gav.getLoginPages().addAll(authUse.getLoginPageLines(projectDir));

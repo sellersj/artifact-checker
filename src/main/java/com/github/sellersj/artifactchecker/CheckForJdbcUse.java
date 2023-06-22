@@ -4,13 +4,21 @@
 package com.github.sellersj.artifactchecker;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Properties;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.FileFilterUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,10 +36,52 @@ public class CheckForJdbcUse {
      * @param startingDir where the project is checked out
      * @return the epic template names
      */
-    public void getJdbcMatchingLines(File startingDir) {
+    public Set<String> getJdbcMatchingLines(File startingDir) {
         List<File> files = getFilesFiles(startingDir);
+        Set<String> possibleJndiNames = getJndiNames(files);
         List<String> matchingLines = getMatchingLines(startingDir, files);
         writeFileOfLinesFound(startingDir, Constants.JDBC_MATCHING_LINE_FILENAME, matchingLines);
+
+        return possibleJndiNames;
+    }
+
+    /**
+     * Do our best to figure out the jndi names so we can match it up.
+     *
+     * @param files to check
+     * @return a list of jdni names
+     */
+    private Set<String> getJndiNames(List<File> files) {
+        TreeSet<String> jndiNames = new TreeSet<>();
+        for (File file : files) {
+
+            String extension = FilenameUtils.getExtension(file.getName());
+            if ("properties".equals(extension)) {
+
+                try (InputStream input = new FileInputStream(file)) {
+
+                    Properties prop = new Properties();
+                    prop.load(input);
+
+                    for (Entry<Object, Object> entry : prop.entrySet()) {
+                        String value = StringUtils.trim((String) entry.getValue());
+                        if (StringUtils.startsWith(value, "comp/env/jdbc/") //
+                            || StringUtils.startsWith(value, "jdbc/")) {
+
+                            jndiNames.add(value);
+                        }
+                    }
+                } catch (IOException ex) {
+                    LOGGER.error(String.format("Could not read the properties file %s ", file.getAbsolutePath()), ex);
+                }
+
+            } else {
+                LOGGER.warn(String.format("We do not know how to parse file %s to look for a jndi name",
+                    file.getAbsoluteFile()));
+            }
+        }
+
+        return jndiNames;
     }
 
     public void writeFileOfLinesFound(File directory, String filename, List<String> lines) {
