@@ -54,6 +54,9 @@ public class Constants {
     /** The place to write the files from the report. */
     public static final String DEST_DIR_OVERRIDE = "DEST_DIR_OVERRIDE";
 
+    /** The name of the file we will put matching a possible jdbc usage lines. */
+    public static final String JDBC_MATCHING_LINE_FILENAME = "jdbc-lines.txt";
+
     /**
      * This will try to get the variable as a system var, if not falls back to env var. If it's still not found, it will
      * throw an exception.
