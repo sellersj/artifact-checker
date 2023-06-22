@@ -521,7 +521,8 @@ public class DownloadArtifacts {
                     || Constants.EPIC_MATCHING_LINE_FILENAME.equals(p.getFileName().toString())
                     || Constants.JAVA8_ISSUES_FILENAME.equals(p.getFileName().toString())
                     || Constants.WEB_DOT_XML_FILENAME.equals(p.getFileName().toString())
-                    || Constants.IBM_WEB_BINDING_FILENAME.equals(p.getFileName().toString()))
+                    || Constants.IBM_WEB_BINDING_FILENAME.equals(p.getFileName().toString())
+                    || Constants.JDBC_MATCHING_LINE_FILENAME.equals(p.getFileName().toString()))
                 // .peek(System.out::println) //
                 .forEach(p -> moveUnchecked(p));
 
