@@ -156,6 +156,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** The pages we think are login with the line numbers. */
     private Set<String> loginPages = new TreeSet<>();
 
+    /** Jndi names we found when parsing the source code. */
+    private Set<String> possibleJndiNames = new TreeSet<>();
+
     /** Default constructor. */
     public ArtifactAttributes() {
     }
@@ -1056,6 +1059,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public void setLoginPages(Set<String> loginPages) {
         this.loginPages = loginPages;
+    }
+
+    /**
+     * @return the possibleJndiNames
+     */
+    public Set<String> getPossibleJndiNames() {
+        return possibleJndiNames;
+    }
+
+    /**
+     * @param possibleJndiNames the possibleJndiNames to set
+     */
+    public void setPossibleJndiNames(Set<String> possibleJndiNames) {
+        this.possibleJndiNames = possibleJndiNames;
     }
 
 }

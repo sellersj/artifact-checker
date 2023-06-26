@@ -233,6 +233,7 @@ public class DownloadArtifacts {
         Set<String> possibleJndiNames = jdbcUse.getJdbcMatchingLines(projectDir);
         LOGGER.info(String.format("We found %s possible jndi names with this deployment and they are %s",
             possibleJndiNames.size(), possibleJndiNames));
+        gav.getPossibleJndiNames().addAll(possibleJndiNames);
 
         // find all possible login pages
         gav.getLoginPages().addAll(authUse.getLoginPageLines(projectDir));

@@ -278,11 +278,22 @@ public class ReportBuilder {
                                                     List<ParsedDataSource> dataSources) {
 
         for (ArtifactAttributes attributes : artifacts) {
-            for (ParsedDataSource app : dataSources) {
+            for (ParsedDataSource ds : dataSources) {
 
                 // match the data source info with the app
-                if (app.getAppNames().contains(attributes.getDeploymentName())) {
-                    attributes.getLinkedDataSources().add(app);
+                if (ds.getAppNames().contains(attributes.getDeploymentName())) {
+                    attributes.getLinkedDataSources().add(ds);
+                }
+            }
+
+            // TODO it might be better to swap this out to use a map
+            // now check the jndi names we have
+            for (String possibleJndiName : attributes.getPossibleJndiNames()) {
+                for (ParsedDataSource ds : dataSources) {
+                    // match the data source info with the app
+                    if (possibleJndiName.equals(ds.getJndiName())) {
+                        attributes.getLinkedDataSources().add(ds);
+                    }
                 }
             }
         }
