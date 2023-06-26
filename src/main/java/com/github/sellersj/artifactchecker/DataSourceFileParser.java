@@ -9,12 +9,15 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
+import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.ParsedDataSource;
 
 /**
@@ -62,12 +65,22 @@ public class DataSourceFileParser {
      * Get all the unmapped dataSources
      *
      * @param ds to check
+     * @param apps
      * @return all the ones that don't have apps mapped to them.
      */
-    public List<ParsedDataSource> getUnmappedDataSources(List<ParsedDataSource> ds) {
+    public List<ParsedDataSource> getUnmappedDataSources(List<ParsedDataSource> ds, Set<ArtifactAttributes> apps) {
+        // build a list of all the jndi names in use
+        HashSet<String> jndiNamesInUse = new HashSet<>();
+        for (ArtifactAttributes artifactAttributes : apps) {
+            jndiNamesInUse.addAll(artifactAttributes.getPossibleJndiNames());
+            for (ParsedDataSource pds : artifactAttributes.getLinkedDataSources()) {
+                jndiNamesInUse.add(pds.getJndiName());
+            }
+        }
+
         List<ParsedDataSource> unmapped = new ArrayList<>();
         for (ParsedDataSource pds : ds) {
-            if (pds.getAppNames().isEmpty()) {
+            if (pds.getAppNames().isEmpty() && !jndiNamesInUse.contains(pds.getJndiName())) {
                 unmapped.add(pds);
             }
         }

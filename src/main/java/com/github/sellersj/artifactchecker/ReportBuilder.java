@@ -124,7 +124,7 @@ public class ReportBuilder {
             ReportBuilder.buildCsvReportOfDataSources(parseDataSource, allDSTarget);
 
             // now let's write the unmapped files
-            List<ParsedDataSource> unmapped = dsParser.getUnmappedDataSources(parseDataSource);
+            List<ParsedDataSource> unmapped = dsParser.getUnmappedDataSources(parseDataSource, apps);
             File unmappedDSTarget = new File(DownloadArtifacts.FILES_GENERATED + "/unmapped-datasources.csv");
             ReportBuilder.buildCsvReportOfDataSources(unmapped, unmappedDSTarget);
         } else {
