@@ -65,6 +65,12 @@
       <artifactId>tabulator-tables</artifactId>
       <version>${tabulator-tables.version}</version>
     </dependency>
+    <!-- used to parse the effective pom -->
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-model</artifactId>
+      <version>3.8.8</version>
+    </dependency>
     <!-- keep the version in InventoryFileUtilTest#testWriteRead() in sync with this -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>

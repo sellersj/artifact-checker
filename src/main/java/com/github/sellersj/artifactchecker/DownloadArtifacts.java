@@ -6,6 +6,7 @@ package com.github.sellersj.artifactchecker;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -23,13 +24,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.StopWatch;
+import org.apache.maven.model.Model;
+import org.apache.maven.model.Plugin;
+import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
+import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,8 +46,8 @@ import com.github.sellersj.artifactchecker.model.owasp.Dependency;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
 /**
- * If doing this on a computer that hasn't updated the owasp dependency check data, it be can be done by calling the
- * <code>org.owasp:dependency-check-maven:RELEASE:update-only</code>
+ * If doing this on a computer that hasn't updated the owasp dependency check data, it be can be
+ * done by calling the <code>org.owasp:dependency-check-maven:RELEASE:update-only</code>
  *
  * @author sellersj
  *
@@ -246,6 +253,14 @@ public class DownloadArtifacts {
         mvnHelpEffective.directory(projectDir);
         if (0 != run(mvnHelpEffective)) {
             System.out.println("Could not build an effective-pom for " + gav);
+        } else {
+            Set<String> plugins = getPluginsFromEffectivePom(new File(effectivePomFile));
+            File effectivePlugins = new File(projectDir, "effective-pom-plugins.txt");
+            try {
+                FileUtils.writeLines(effectivePlugins, plugins);
+            } catch (IOException e) {
+                throw new RuntimeException("Could not write " + effectivePlugins.getAbsolutePath(), e);
+            }
         }
 
         // copy all required files we want to a different location
@@ -262,9 +277,27 @@ public class DownloadArtifacts {
 
     }
 
+    private Set<String> getPluginsFromEffectivePom(File file) {
+        Set<String> result = new TreeSet<>();
+
+        MavenXpp3Reader reader = new MavenXpp3Reader();
+
+        try {
+            Model model = reader.read(new FileReader(file));
+            for (Plugin plugin : model.getBuild().getPlugins()) {
+                result.add(plugin.getId());
+            }
+
+        } catch (IOException | XmlPullParserException e) {
+            throw new RuntimeException("Couldn't read effective pom file " + file, e);
+        }
+
+        return result;
+    }
+
     /**
-     * For improperly deployed apps, the snapshots might not exist in the repo any more. So we're doing a maven install
-     * to be able to do the CVE checks.
+     * For improperly deployed apps, the snapshots might not exist in the repo any more. So we're
+     * doing a maven install to be able to do the CVE checks.
      *
      * @param gav to use
      * @param projectDir the directory that it's in
@@ -342,8 +375,8 @@ public class DownloadArtifacts {
     }
 
     /**
-     * try to get a list of the tags, see if we have 1 unique version that ends with the version, and then try to switch
-     * to that.
+     * try to get a list of the tags, see if we have 1 unique version that ends with the version,
+     * and then try to switch to that.
      *
      * @param gav to switch to
      * @param projectDir where the project is already cloned to
