@@ -467,7 +467,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         if (null == baseUrl) {
             return "#";
         } // else
-        return baseUrl + "/tree.txt";
+        return baseUrl + "/" + Constants.TREE_TXT_FILE;
     }
 
     /**

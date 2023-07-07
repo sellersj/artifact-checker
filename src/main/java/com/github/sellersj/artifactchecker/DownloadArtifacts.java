@@ -181,7 +181,7 @@ public class DownloadArtifacts {
         mvnInstallIfSnapshot(gav, projectDir);
 
         // generate 1 tree file per project rather than 1 per module
-        String treeOutputFile = projectDir.getAbsolutePath() + "/tree.txt";
+        String treeOutputFile = projectDir.getAbsolutePath() + "/" + Constants.TREE_TXT_FILE;
         ProcessBuilder mvnDepTree = new ProcessBuilder(osPrefix + "mvn" + osSuffix, "--batch-mode",
             "org.apache.maven.plugins:maven-dependency-plugin:" + mavenDepPluginVersion + ":tree",
             "-DoutputFile=" + treeOutputFile, "-DappendOutput=true");
@@ -248,7 +248,7 @@ public class DownloadArtifacts {
         gav.getLoginPages().addAll(authUse.getLoginPageLines(projectDir));
 
         // generate the effective-pom
-        String effectivePomFile = projectDir.getAbsolutePath() + "/effective-pom.xml";
+        String effectivePomFile = projectDir.getAbsolutePath() + "/" + Constants.EFFECTIVE_POM_XML_FILE;
         ProcessBuilder mvnHelpEffective = new ProcessBuilder(osPrefix + "mvn" + osSuffix, "--batch-mode",
             "org.apache.maven.plugins:maven-help-plugin:" + mavenHelpPluginVersion + ":effective-pom",
             "-Doutput=" + effectivePomFile);
@@ -257,7 +257,7 @@ public class DownloadArtifacts {
             System.out.println("Could not build an effective-pom for " + gav);
         } else {
             Set<String> plugins = getPluginsFromEffectivePom(new File(effectivePomFile));
-            File effectivePlugins = new File(projectDir, "effective-pom-plugins.txt");
+            File effectivePlugins = new File(projectDir, Constants.EFFECTIVE_POM_PLUGINS);
             try {
                 FileUtils.writeLines(effectivePlugins, plugins);
             } catch (IOException e) {
@@ -581,8 +581,9 @@ public class DownloadArtifacts {
             Path path = Paths.get(WORKING_DIR);
             Files.walk(path)//
                 .filter(p -> p.getFileName().toString().startsWith("dependency-check-")
-                    || "tree.txt".equals(p.getFileName().toString())
-                    || "effective-pom.xml".equals(p.getFileName().toString())
+                    || Constants.TREE_TXT_FILE.equals(p.getFileName().toString())
+                    || Constants.EFFECTIVE_POM_XML_FILE.equals(p.getFileName().toString())
+                    || Constants.EFFECTIVE_POM_PLUGINS.equals(p.getFileName().toString())
                     || Constants.TEMPLATE_MATCHING_LINE_FILENAME.equals(p.getFileName().toString())
                     || Constants.EPIC_MATCHING_LINE_FILENAME.equals(p.getFileName().toString())
                     || Constants.JAVA8_ISSUES_FILENAME.equals(p.getFileName().toString())

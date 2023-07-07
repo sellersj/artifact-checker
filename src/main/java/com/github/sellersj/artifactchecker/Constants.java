@@ -57,6 +57,15 @@ public class Constants {
     /** The name of the file we will put matching a possible jdbc usage lines. */
     public static final String JDBC_MATCHING_LINE_FILENAME = "jdbc-lines.txt";
 
+    /** Where we have the tree file. */
+    public static final String TREE_TXT_FILE = "tree.txt";
+
+    /** The file for the maven effective pom for this project. */
+    public static final String EFFECTIVE_POM_XML_FILE = "effective-pom.xml";
+
+    /** The file for the maven plugins for this project. */
+    public static final String EFFECTIVE_POM_PLUGINS = "effective-pom-plugins.txt";
+
     /**
      * This will try to get the variable as a system var, if not falls back to env var. If it's still not found, it will
      * throw an exception.
