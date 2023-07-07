@@ -6,10 +6,10 @@ package com.github.sellersj.artifactchecker;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.lang.ProcessBuilder.Redirect;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -25,10 +25,13 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.StopWatch;
@@ -253,15 +256,13 @@ public class DownloadArtifacts {
         if (0 != run(mvnHelpEffective)) {
             System.out.println("Could not build an effective-pom for " + gav);
         } else {
-            // TODO fix this. Currently the above creates xml with a root object of projects and has multiple project
-            // sections inside. The maven parser expects a single project.
-            // Set<String> plugins = getPluginsFromEffectivePom(new File(effectivePomFile));
-            // File effectivePlugins = new File(projectDir, "effective-pom-plugins.txt");
-            // try {
-            // FileUtils.writeLines(effectivePlugins, plugins);
-            // } catch (IOException e) {
-            // throw new RuntimeException("Could not write " + effectivePlugins.getAbsolutePath(), e);
-            // }
+            Set<String> plugins = getPluginsFromEffectivePom(new File(effectivePomFile));
+            File effectivePlugins = new File(projectDir, "effective-pom-plugins.txt");
+            try {
+                FileUtils.writeLines(effectivePlugins, plugins);
+            } catch (IOException e) {
+                throw new RuntimeException("Could not write " + effectivePlugins.getAbsolutePath(), e);
+            }
         }
 
         // copy all required files we want to a different location
@@ -282,17 +283,35 @@ public class DownloadArtifacts {
 
     }
 
+    /**
+     * Reads the effective pom output file and pulls out the maven plugins in use.
+     *
+     * @param file from the effective pom
+     * @return a set of the maven plugins configured in this project
+     */
     private Set<String> getPluginsFromEffectivePom(File file) {
         Set<String> result = new TreeSet<>();
 
-        MavenXpp3Reader reader = new MavenXpp3Reader();
-
         try {
-            Model model = reader.read(new FileReader(file));
-            for (Plugin plugin : model.getBuild().getPlugins()) {
-                result.add(plugin.getId());
-            }
+            String rawContents = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
 
+            // the maven model parser expects a single project element, while the effective-pom is wrapping it all in a
+            // projects element. So we are breaking it into the subparts and using the maven parser on each section.
+            Pattern pattern = Pattern.compile("(<project .*>)([\\s\\S]*?)(<\\/project>)");
+            Matcher matcher = pattern.matcher(rawContents);
+            while (matcher.find()) {
+                // now wrap it into a project again. Do not bother with the namespace at this point.
+                String contents = "<project>\n" + matcher.group(2) + "\n</project>";
+
+                MavenXpp3Reader reader = new MavenXpp3Reader();
+                Model model = reader.read(new StringReader(contents));
+
+                LOGGER.info("We are looking at GAV: " + model.getId());
+                for (Plugin plugin : model.getBuild().getPlugins()) {
+                    result.add(plugin.getId());
+                }
+
+            }
         } catch (IOException | XmlPullParserException e) {
             throw new RuntimeException("Couldn't read effective pom file " + file, e);
         }
