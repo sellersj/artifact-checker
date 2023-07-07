@@ -29,7 +29,6 @@ import java.util.TreeSet;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.StopWatch;
@@ -46,8 +45,8 @@ import com.github.sellersj.artifactchecker.model.owasp.Dependency;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
 /**
- * If doing this on a computer that hasn't updated the owasp dependency check data, it be can be
- * done by calling the <code>org.owasp:dependency-check-maven:RELEASE:update-only</code>
+ * If doing this on a computer that hasn't updated the owasp dependency check data, it be can be done by calling the
+ * <code>org.owasp:dependency-check-maven:RELEASE:update-only</code>
  *
  * @author sellersj
  *
@@ -254,24 +253,30 @@ public class DownloadArtifacts {
         if (0 != run(mvnHelpEffective)) {
             System.out.println("Could not build an effective-pom for " + gav);
         } else {
-            Set<String> plugins = getPluginsFromEffectivePom(new File(effectivePomFile));
-            File effectivePlugins = new File(projectDir, "effective-pom-plugins.txt");
-            try {
-                FileUtils.writeLines(effectivePlugins, plugins);
-            } catch (IOException e) {
-                throw new RuntimeException("Could not write " + effectivePlugins.getAbsolutePath(), e);
-            }
+            // TODO fix this. Currently the above creates xml with a root object of projects and has multiple project
+            // sections inside. The maven parser expects a single project.
+            // Set<String> plugins = getPluginsFromEffectivePom(new File(effectivePomFile));
+            // File effectivePlugins = new File(projectDir, "effective-pom-plugins.txt");
+            // try {
+            // FileUtils.writeLines(effectivePlugins, plugins);
+            // } catch (IOException e) {
+            // throw new RuntimeException("Could not write " + effectivePlugins.getAbsolutePath(), e);
+            // }
         }
 
         // copy all required files we want to a different location
         copyFiles();
 
         // delete the repo to save space if it exists
-        try {
+        try
+
+        {
             System.out.println("Deleting " + repoWorkingDir);
             Files.walk(Paths.get(repoWorkingDir)).sorted(Comparator.reverseOrder()).map(Path::toFile)
                 .forEach(File::delete);
-        } catch (IOException e) {
+        } catch (
+
+        IOException e) {
             throw new RuntimeException("Couldnm't delete directory for cleanup " + repoWorkingDir, e);
         }
 
@@ -296,8 +301,8 @@ public class DownloadArtifacts {
     }
 
     /**
-     * For improperly deployed apps, the snapshots might not exist in the repo any more. So we're
-     * doing a maven install to be able to do the CVE checks.
+     * For improperly deployed apps, the snapshots might not exist in the repo any more. So we're doing a maven install
+     * to be able to do the CVE checks.
      *
      * @param gav to use
      * @param projectDir the directory that it's in
@@ -375,8 +380,8 @@ public class DownloadArtifacts {
     }
 
     /**
-     * try to get a list of the tags, see if we have 1 unique version that ends with the version,
-     * and then try to switch to that.
+     * try to get a list of the tags, see if we have 1 unique version that ends with the version, and then try to switch
+     * to that.
      *
      * @param gav to switch to
      * @param projectDir where the project is already cloned to
