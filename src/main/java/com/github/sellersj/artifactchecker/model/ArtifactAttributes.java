@@ -82,7 +82,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** The format from the output. */
     private static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    /** If this is a githug host. */
+    /** If this is a github host. */
     private boolean github = false;
 
     /** Our corrected scm project from a static file. */
