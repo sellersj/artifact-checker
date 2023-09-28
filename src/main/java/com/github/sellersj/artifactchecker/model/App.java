@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -52,8 +53,8 @@ public class App {
     private String dataCenter;
 
     /** The format from the other file we're parsing. */
-    private static final DateTimeFormatter APP_FILE_DATE_FORMAT = DateTimeFormatter
-        .ofPattern("EEE MMM d HH:mm:ss yyyy");
+    private static final DateTimeFormatter APP_FILE_DATE_FORMAT = DateTimeFormatter.ofPattern("EEE MMM d HH:mm:ss yyyy")
+        .withLocale(Locale.ENGLISH);
 
     /**
      * Adds an item to the list that is referenced by the key.
