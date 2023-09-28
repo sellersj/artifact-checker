@@ -189,6 +189,7 @@ public class DownloadArtifacts {
         if (0 != run(mvnDepTree)) {
             gav.setLibraryCheckedWorked(false);
         }
+        readBuiltArtifacts(gav, treeOutputFile);
 
         // run dependency tree
         // TODO figure out how to properly filter for java 8 issues here
@@ -281,6 +282,32 @@ public class DownloadArtifacts {
             throw new RuntimeException("Couldnm't delete directory for cleanup " + repoWorkingDir, e);
         }
 
+    }
+
+    /**
+     * This will attempt to find the artifacts build by the repo checked out based on the dependency tree file.
+     *
+     * @param gav to add the artifacts to
+     * @param treeOutputFile the file to read if possible
+     */
+    private void readBuiltArtifacts(ArtifactAttributes gav, String treeOutputFile) {
+        File file = new File(treeOutputFile);
+        if (!file.exists()) {
+            LOGGER.warn(String.format("The tree file %s does not exist ", file));
+        } else {
+            try {
+                List<String> lines = FileUtils.readLines(file, StandardCharsets.ISO_8859_1);
+                // find the lines that start with an alpha chars
+                Pattern pattern = Pattern.compile("^[a-zA-Z]");
+                for (String line : lines) {
+                    if (pattern.matcher(line).find()) {
+                        gav.getArtifactsBuiltByProject().add(line);
+                    }
+                }
+            } catch (IOException e) {
+                LOGGER.error("Could not read the file " + file.getAbsolutePath(), e);
+            }
+        }
     }
 
     /**

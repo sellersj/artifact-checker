@@ -159,6 +159,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** Jndi names we found when parsing the source code. */
     private Set<String> possibleJndiNames = new TreeSet<>();
 
+    /** What we think are the artifacts built by the project. */
+    private Set<String> artifactsBuiltByProject = new TreeSet<>();
+
     /** Default constructor. */
     public ArtifactAttributes() {
     }
@@ -1073,6 +1076,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public void setPossibleJndiNames(Set<String> possibleJndiNames) {
         this.possibleJndiNames = possibleJndiNames;
+    }
+
+    /**
+     * @return the artifactsBuiltByProject
+     */
+    public Set<String> getArtifactsBuiltByProject() {
+        return artifactsBuiltByProject;
+    }
+
+    /**
+     * @param artifactsBuiltByProject the artifactsBuiltByProject to set
+     */
+    public void setArtifactsBuiltByProject(Set<String> artifactsBuiltByProject) {
+        this.artifactsBuiltByProject = artifactsBuiltByProject;
     }
 
 }
