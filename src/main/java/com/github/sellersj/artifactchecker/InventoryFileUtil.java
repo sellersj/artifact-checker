@@ -155,7 +155,7 @@ public class InventoryFileUtil {
                         appMap.put(earArtifactName, attributes);
 
                         //
-                        // build date
+                        // actually the deploy date but we'll use it as a build date too for now
                         // convert the string to a date to convert to a date.
                         // TODO fix this since it's too silly for words
                         LocalDate date = LocalDate.parse(chunks[1]);
@@ -176,6 +176,7 @@ public class InventoryFileUtil {
                         // set the deployment info here
                         App deploymentInfo = new App();
                         deploymentInfo.setDataCenter(App.DATA_CENTER_KED);
+                        deploymentInfo.setDeploymentDate(DateUtils.asDate(date));
                         attributes.setDeploymentInfo(deploymentInfo);
                     }
 

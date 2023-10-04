@@ -52,6 +52,9 @@ public class App {
     /** The data center. */
     private String dataCenter;
 
+    /** The deployment date. */
+    private Date deploymentDate;
+
     /** The format from the other file we're parsing. */
     private static final DateTimeFormatter APP_FILE_DATE_FORMAT = DateTimeFormatter.ofPattern("EEE MMM d HH:mm:ss yyyy")
         .withLocale(Locale.ENGLISH);
@@ -124,20 +127,21 @@ public class App {
      * @return the deployment date if we have it.
      */
     public Date getDeploymentDate() {
-        Date result = null;
 
-        List<String> list = attributes.get(DEPLOY_DATE);
-        if (null != list && !list.isEmpty()) {
-            // default the result to the value in the app
-            String dateString = list.iterator().next();
+        if (null == deploymentDate) {
+            List<String> list = attributes.get(DEPLOY_DATE);
+            if (null != list && !list.isEmpty()) {
+                // default the result to the value in the app
+                String dateString = list.iterator().next();
 
-            // we're going to try to get around the variable number of spaces by just changing multiple spaces to a
-            // single space
-            dateString = dateString.replaceAll("  +", " ");
-            result = DateUtils.parseToDate(dateString, APP_FILE_DATE_FORMAT);
+                // we're going to try to get around the variable number of spaces by just changing multiple spaces to a
+                // single space
+                dateString = dateString.replaceAll("  +", " ");
+                deploymentDate = DateUtils.parseToDate(dateString, APP_FILE_DATE_FORMAT);
+            }
         }
 
-        return result;
+        return deploymentDate;
     }
 
     /**
@@ -210,6 +214,13 @@ public class App {
      */
     public void setDataCenter(String dataCenter) {
         this.dataCenter = dataCenter;
+    }
+
+    /**
+     * @param deploymentDate the deploymentDate to set
+     */
+    public void setDeploymentDate(Date deploymentDate) {
+        this.deploymentDate = deploymentDate;
     }
 
 }
