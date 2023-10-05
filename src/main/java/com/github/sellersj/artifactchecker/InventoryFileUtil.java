@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -31,9 +32,12 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.sellersj.artifactchecker.model.App;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
+import com.github.sellersj.artifactchecker.model.ArtifactInfoResourceResponseWorkAround;
 import com.github.sellersj.artifactchecker.model.MavenGAV;
 import com.github.sellersj.artifactchecker.model.ScmCorrection;
 import com.github.sellersj.artifactchecker.model.TechOwner;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientHandlerException;
 
 public class InventoryFileUtil {
 
@@ -154,13 +158,10 @@ public class InventoryFileUtil {
                         attributes = new ArtifactAttributes();
                         appMap.put(earArtifactName, attributes);
 
-                        //
-                        // actually the deploy date but we'll use it as a build date too for now
+                        // the deploy date
                         // convert the string to a date to convert to a date.
                         // TODO fix this since it's too silly for words
                         LocalDate date = LocalDate.parse(chunks[1]);
-                        attributes.getManifest().put(ArtifactAttributes.BUILD_TIME,
-                            ArtifactAttributes.MAVEN_DATE_FORMAT.format(date.atStartOfDay()));
 
                         // ear name
                         String artifactId = StringUtils.substringBeforeLast(earArtifactName, "-");
@@ -200,9 +201,56 @@ public class InventoryFileUtil {
         // fix any manifests we can find
         fillInMissingScmInfo(apps);
         fillInTechOwner(apps);
+        fillInBuildTimestamp(apps);
 
         return apps;
 
+    }
+
+    private static void fillInBuildTimestamp(HashSet<ArtifactAttributes> apps) {
+        String toolsHost = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST);
+        if (StringUtils.isBlank(toolsHost)) {
+            throw new RuntimeException("The 'TOOLS_HOST' env variable has to be set");
+        }
+
+        // TODO figure out how we should solve it if the data is in a different repo. Probably have to query it first
+        String repo = "internal-released";
+        String urlStart = "https://" + toolsHost + "/maven-proxy/service/local/repositories/" + repo + "/content/";
+        Client client = Client.create();
+
+        for (ArtifactAttributes artifact : apps) {
+
+            if (StringUtils.isAnyBlank(artifact.getGroupId(), artifact.getArtifactId(), artifact.getVersion())) {
+                LOGGER.info(String.format("Do not have enough info to query nexus for %s", artifact));
+            } else if (null == artifact.getBuildDate()) {
+                LOGGER.info(String.format("Build date not set for %s:%s:%s. Querying nexus to find it",
+                    artifact.getGroupId(), artifact.getArtifactId(), artifact.getVersion()));
+
+                String groupIdPath = String.join("/", artifact.getGroupId().split("\\."));
+                String url = urlStart + groupIdPath + "/" + artifact.getArtifactId() + "/" + artifact.getVersion() + "/"
+                    + artifact.getArtifactId() + "-" + artifact.getVersion() + ".ear";
+
+                ArtifactInfoResourceResponseWorkAround response = null;
+                try {
+
+                    // a way that sort of works
+                    response = client.resource(url) //
+                        .queryParam("describe", "info") //
+                        .get(ArtifactInfoResourceResponseWorkAround.class);
+
+                    LocalDateTime buildDate = DateUtils.asLocalDateTime(response.getData().getLastChanged());
+                    artifact.getManifest().put(ArtifactAttributes.BUILD_TIME,
+                        ArtifactAttributes.MAVEN_DATE_FORMAT.format(buildDate));
+
+                } catch (ClientHandlerException e) {
+                    // re-throw with more info
+                    throw new IllegalArgumentException(
+                        "Couldn't find artifact by groupId using url: " + url + " for groupId: " + artifact, e);
+                }
+            }
+        }
+        // cleanup
+        client.destroy();
     }
 
     /**
