@@ -28,7 +28,11 @@ public class DateUtils {
     }
 
     public static LocalDate asLocalDate(Date date) {
-        return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+        return asLocalDate(date.getTime());
+    }
+
+    public static LocalDate asLocalDate(long milli) {
+        return Instant.ofEpochMilli(milli).atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
     public static LocalDateTime asLocalDateTime(Date date) {

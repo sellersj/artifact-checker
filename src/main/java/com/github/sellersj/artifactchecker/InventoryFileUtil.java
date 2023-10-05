@@ -26,6 +26,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sonatype.nexus.rest.model.ArtifactInfoResourceResponse;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,6 +35,8 @@ import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.MavenGAV;
 import com.github.sellersj.artifactchecker.model.ScmCorrection;
 import com.github.sellersj.artifactchecker.model.TechOwner;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientHandlerException;
 
 public class InventoryFileUtil {
 
@@ -154,13 +157,10 @@ public class InventoryFileUtil {
                         attributes = new ArtifactAttributes();
                         appMap.put(earArtifactName, attributes);
 
-                        //
-                        // actually the deploy date but we'll use it as a build date too for now
+                        // the deploy date
                         // convert the string to a date to convert to a date.
                         // TODO fix this since it's too silly for words
                         LocalDate date = LocalDate.parse(chunks[1]);
-                        attributes.getManifest().put(ArtifactAttributes.BUILD_TIME,
-                            ArtifactAttributes.MAVEN_DATE_FORMAT.format(date.atStartOfDay()));
 
                         // ear name
                         String artifactId = StringUtils.substringBeforeLast(earArtifactName, "-");
@@ -200,9 +200,57 @@ public class InventoryFileUtil {
         // fix any manifests we can find
         fillInMissingScmInfo(apps);
         fillInTechOwner(apps);
+        fillInBuildTimestamp(apps);
 
         return apps;
 
+    }
+
+    private static void fillInBuildTimestamp(HashSet<ArtifactAttributes> apps) {
+        String toolsHost = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST);
+        if (StringUtils.isBlank(toolsHost)) {
+            throw new RuntimeException("The 'TOOLS_HOST' env variable has to be set");
+        }
+
+        // TODO figure out how we should solve it if the data is in a different repo. Probably have to query it first
+        String repo = "internal-released";
+        String urlStart = "https://" + toolsHost + "/maven-proxy/service/local/repositories/" + repo + "/content/";
+        Client client = Client.create();
+
+        for (ArtifactAttributes artifact : apps) {
+
+            if (StringUtils.isNoneBlank(artifact.getGroupId(), artifact.getArtifactId(), artifact.getVersion())) {
+
+                String groupIdPath = String.join("/", artifact.getGroupId().split("\\."));
+                String url = urlStart + groupIdPath + "/" + artifact.getArtifactId() + "/" + artifact.getVersion() + "/"
+                    + artifact.getArtifactId() + "-" + artifact.getVersion() + ".ear";
+
+                ArtifactInfoResourceResponse response = null;
+                try {
+
+                    // a way that sort of works
+                    response = client.resource(url) //
+                        .queryParam("describe", "info") //
+                        .get(ArtifactInfoResourceResponse.class);
+
+                    LocalDate buildDate = DateUtils.asLocalDate(response.getData().getLastChanged());
+                    long lastChanged = response.getData().getLastChanged();
+                    System.out.println(lastChanged);
+                    // LocalDate buildDate = DateUtils.asLocalDate(response.getLastChanged());
+                    artifact.getManifest().put(ArtifactAttributes.BUILD_TIME,
+                        ArtifactAttributes.MAVEN_DATE_FORMAT.format(buildDate));
+
+                } catch (ClientHandlerException e) {
+                    // re-throw with more info
+                    throw new IllegalArgumentException(
+                        "Couldn't find artifact by groupId using url: " + url + " for groupId: " + artifact, e);
+                }
+            } else {
+                LOGGER.info(String.format("Do not have enough info to query nexus for %s", artifact));
+            }
+        }
+        // cleanup
+        client.destroy();
     }
 
     /**
