@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -26,12 +27,12 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.nexus.rest.model.ArtifactInfoResourceResponse;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.sellersj.artifactchecker.model.App;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
+import com.github.sellersj.artifactchecker.model.ArtifactInfoResourceResponseWorkAround;
 import com.github.sellersj.artifactchecker.model.MavenGAV;
 import com.github.sellersj.artifactchecker.model.ScmCorrection;
 import com.github.sellersj.artifactchecker.model.TechOwner;
@@ -219,24 +220,25 @@ public class InventoryFileUtil {
 
         for (ArtifactAttributes artifact : apps) {
 
-            if (StringUtils.isNoneBlank(artifact.getGroupId(), artifact.getArtifactId(), artifact.getVersion())) {
+            if (StringUtils.isAnyBlank(artifact.getGroupId(), artifact.getArtifactId(), artifact.getVersion())) {
+                LOGGER.info(String.format("Do not have enough info to query nexus for %s", artifact));
+            } else if (null == artifact.getBuildDate()) {
+                LOGGER.info(String.format("Build date not set for %s:%s:%s. Querying nexus to find it",
+                    artifact.getGroupId(), artifact.getArtifactId(), artifact.getVersion()));
 
                 String groupIdPath = String.join("/", artifact.getGroupId().split("\\."));
                 String url = urlStart + groupIdPath + "/" + artifact.getArtifactId() + "/" + artifact.getVersion() + "/"
                     + artifact.getArtifactId() + "-" + artifact.getVersion() + ".ear";
 
-                ArtifactInfoResourceResponse response = null;
+                ArtifactInfoResourceResponseWorkAround response = null;
                 try {
 
                     // a way that sort of works
                     response = client.resource(url) //
                         .queryParam("describe", "info") //
-                        .get(ArtifactInfoResourceResponse.class);
+                        .get(ArtifactInfoResourceResponseWorkAround.class);
 
-                    LocalDate buildDate = DateUtils.asLocalDate(response.getData().getLastChanged());
-                    long lastChanged = response.getData().getLastChanged();
-                    System.out.println(lastChanged);
-                    // LocalDate buildDate = DateUtils.asLocalDate(response.getLastChanged());
+                    LocalDateTime buildDate = DateUtils.asLocalDateTime(response.getData().getLastChanged());
                     artifact.getManifest().put(ArtifactAttributes.BUILD_TIME,
                         ArtifactAttributes.MAVEN_DATE_FORMAT.format(buildDate));
 
@@ -245,8 +247,6 @@ public class InventoryFileUtil {
                     throw new IllegalArgumentException(
                         "Couldn't find artifact by groupId using url: " + url + " for groupId: " + artifact, e);
                 }
-            } else {
-                LOGGER.info(String.format("Do not have enough info to query nexus for %s", artifact));
             }
         }
         // cleanup
