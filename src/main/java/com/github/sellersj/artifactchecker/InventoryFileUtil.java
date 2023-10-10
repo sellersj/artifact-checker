@@ -214,7 +214,7 @@ public class InventoryFileUtil {
         }
 
         // TODO figure out how we should solve it if the data is in a different repo. Probably have to query it first
-        String repo = "internal-released";
+        String repo = "all-released";
         String urlStart = "https://" + toolsHost + "/maven-proxy/service/local/repositories/" + repo + "/content/";
         Client client = Client.create();
 
