@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.File;
-import java.net.URL;
+import java.net.URI;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -54,8 +54,9 @@ public class DownloadArtifactsTest {
 
         DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
         downloadArtifacts.cloneAndCheckProject(gav);
-        
-        // if this test fails with a xsd error, check that the owasp.dependency.check.xsd.file property in the pom file matches what is being generated.
+
+        // if this test fails with a xsd error, check that the owasp.dependency.check.xsd.file property in the pom file
+        // matches what is being generated.
 
         // TODO check the content of the attributes
     }
@@ -166,7 +167,7 @@ public class DownloadArtifactsTest {
     public void parseDependencyCheckReport() throws Exception {
         String url = "https://.../dependency-check-report.xml";
         File tempFile = File.createTempFile("dependency-check-report", ".json");
-        FileUtils.copyURLToFile(new URL(url), tempFile);
+        FileUtils.copyURLToFile(URI.create(url).toURL(), tempFile);
 
         DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
         List<Vulnerability> vuls = downloadArtifacts.parseDependencyCheckReport(tempFile);

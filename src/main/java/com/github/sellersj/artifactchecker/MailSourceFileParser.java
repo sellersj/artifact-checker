@@ -6,7 +6,7 @@ package com.github.sellersj.artifactchecker;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class MailSourceFileParser {
 
     public List<MailSource> parseMailSourceFile(String url) {
 
-        try (InputStream in = new URL(url).openStream()) {
+        try (InputStream in = URI.create(url).toURL().openStream()) {
             String contents = IOUtils.toString(in, StandardCharsets.UTF_8);
             return parseAppContents(contents);
         } catch (Exception e) {

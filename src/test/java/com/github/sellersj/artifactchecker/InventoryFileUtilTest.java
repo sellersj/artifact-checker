@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.net.URL;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -176,7 +176,7 @@ public class InventoryFileUtilTest {
     public void testReadMergedPomFiles() throws Exception {
         String toolsHost = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST);
         Set<MavenGAV> gavs = InventoryFileUtil
-            .readMergedPomFiles(new URL("https://" + toolsHost + "/deployed-to/pom-info-combined.txt"));
+            .readMergedPomFiles(URI.create("https://" + toolsHost + "/deployed-to/pom-info-combined.txt").toURL());
 
         // TODO assert not empty
         assertFalse(gavs.isEmpty(), "gav list should not be empty");
@@ -194,7 +194,7 @@ public class InventoryFileUtilTest {
     public void testReadMergedApplicationListing() throws Exception {
         String appHost = Constants.getSysOrEnvVariable(Constants.WAS_CIPO_HOST);
         Set<ArtifactAttributes> attributes = InventoryFileUtil
-            .readMergedApplicationListing(new URL("https://" + appHost + "/app_version.txt"));
+            .readMergedApplicationListing(URI.create("https://" + appHost + "/app_version.txt").toURL());
 
         assertFalse(attributes.isEmpty(), "gav list should not be empty");
 

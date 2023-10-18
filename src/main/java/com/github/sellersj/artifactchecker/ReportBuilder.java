@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -424,7 +425,7 @@ public class ReportBuilder {
     public static Set<ArtifactAttributes> generateAppInventory(String location) {
         URL url;
         try {
-            url = new URL(location);
+            url = URI.create(location).toURL();
         } catch (MalformedURLException e) {
             throw new RuntimeException("Couldn't make a url from " + location, e);
         }
@@ -436,7 +437,7 @@ public class ReportBuilder {
     public static void repairArtifactList(String pomCombined, Set<ArtifactAttributes> apps) {
         URL url;
         try {
-            url = new URL(pomCombined);
+            url = URI.create(pomCombined).toURL();
         } catch (MalformedURLException e) {
             throw new RuntimeException("Couldn't make a url from " + pomCombined, e);
         }
