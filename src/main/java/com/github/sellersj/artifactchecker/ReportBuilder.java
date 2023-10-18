@@ -74,8 +74,8 @@ public class ReportBuilder {
         String location = "https://" + toolsHost + "/deployed-to/manifest-combined.txt";
         Set<ArtifactAttributes> apps = ReportBuilder.generateAppInventory(location);
         try {
-            apps.addAll(
-                InventoryFileUtil.readMergedApplicationListing(new URL("https://" + cipoHost + "/app_version.txt")));
+            apps.addAll(InventoryFileUtil
+                .readMergedApplicationListing(URI.create("https://" + cipoHost + "/app_version.txt").toURL()));
         } catch (MalformedURLException e1) {
             throw new RuntimeException("Could not read the ked app file", e1);
         }
