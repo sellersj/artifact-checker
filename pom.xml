@@ -18,13 +18,13 @@
     <!-- https://github.com/jeremylong/DependencyCheck/tree/main/core/src/main/resources/schema -->
     <owasp.dependency.check.version>8.4.2</owasp.dependency.check.version>
     <owasp.dependency.check.xsd.file>dependency-check.3.1.xsd</owasp.dependency.check.xsd.file>
-    <maven.dependency.plugin.version>3.6.0</maven.dependency.plugin.version>
+    <maven.dependency.plugin.version>3.6.1</maven.dependency.plugin.version>
     <maven.help.plugin.version>3.4.0</maven.help.plugin.version>
     <tabulator-tables.version>5.5.2</tabulator-tables.version>
     <!-- to try to address -->
     <!-- https://issues.apache.org/jira/browse/SUREFIRE-1788 -->
     <!-- https://stackoverflow.com/a/61936537/2055199 -->
-    <surefire.plugin.version>3.1.2</surefire.plugin.version>
+    <surefire.plugin.version>3.2.1</surefire.plugin.version>
     <junit.version>5.10.0</junit.version>
     <nexus.version>2.15.1-02</nexus.version>
   </properties>
