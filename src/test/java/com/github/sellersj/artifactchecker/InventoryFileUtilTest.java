@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
@@ -49,9 +50,12 @@ public class InventoryFileUtilTest {
 
     @Test
     public void testWriteRead() throws Exception {
-        // this version should be kept in sync with what's in the pom
-        // this will probably fail if maven repo in different location
-        String junitVersion = "5.10.0";
+        // load the junit version from the properties as captured in the pom
+        DownloadArtifacts da = new DownloadArtifacts();
+        Properties mavenProperties = da.getMavenProperties();
+
+        String junitVersion = mavenProperties.getProperty("junit.version");
+        assertNotNull(junitVersion, "The junit version as captured from the pom should not be null");
         String fileName = System.getProperty("user.home") + //
             "/.m2/repository/org/junit/jupiter/junit-jupiter-engine/" //
             + junitVersion + "/junit-jupiter-engine-" + junitVersion + ".jar";

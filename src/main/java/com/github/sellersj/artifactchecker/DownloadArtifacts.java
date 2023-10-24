@@ -110,17 +110,26 @@ public class DownloadArtifacts {
         }
 
         // load the versions of the plugins to use
+        Properties properties = getMavenProperties();
+        owaspDepCheckVersion = properties.getProperty("owasp.dependency.check.version");
+        mavenDepPluginVersion = properties.getProperty("maven.dependency.plugin.version");
+        mavenHelpPluginVersion = properties.getProperty("maven.help.plugin.version");
+    }
+
+    /**
+     * @return properties from a file that was generated at compile time from the maven pom
+     */
+    public Properties getMavenProperties() {
         String filename = "properties-from-pom.properties";
         InputStream is = getClass().getClassLoader().getResourceAsStream(filename);
         Properties properties = new Properties();
         try {
             properties.load(is);
-            owaspDepCheckVersion = properties.getProperty("owasp.dependency.check.version");
-            mavenDepPluginVersion = properties.getProperty("maven.dependency.plugin.version");
-            mavenHelpPluginVersion = properties.getProperty("maven.help.plugin.version");
         } catch (IOException e) {
             System.err.println("Could not load " + filename + " to determine the versions of the plugins.");
         }
+
+        return properties;
     }
 
     private void buildJava8Issues(ArtifactAttributes gav, String treeOutputFile) {
