@@ -205,7 +205,8 @@ public class InventoryFileUtilTest {
         for (ArtifactAttributes att : attributes) {
             assertNotNull(att.getTitle(), "title");
             assertFalse(att.getNodes().isEmpty(), "node list");
-            assertNotNull(att.getBuildDate(), "build date");
+            assertNotNull(att.getBuildDate(),
+                "build date for " + att + " check if this has enough info to look up in nexus");
             assertNotNull(att.getArtifactId(), "artifactId");
             assertNotNull(att.getVersion(), "version");
             assertEquals(App.DATA_CENTER_KED, att.getDeploymentInfo().getDataCenter(), "data center");
