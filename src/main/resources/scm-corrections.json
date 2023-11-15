@@ -1027,5 +1027,13 @@
     "groupId": "ca.ic.gc.cipo.tm",
     "artifactId": "CIPO-tm-conversion-processing-service-app",
     "jiraKey": ""
+  },
+  {
+    "implementationTitle": "cipo-map-id-app",
+    "scmProject": "CIPO",
+    "scmRepo": "cipo-map-id",
+    "groupId": "ca.gc.ic.cipo.sc",
+    "artifactId": "cipo-map-id-app",
+    "jiraKey": ""
   }
 ]
