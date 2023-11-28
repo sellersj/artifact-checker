@@ -196,20 +196,6 @@
     "jiraKey": ""
   },
   {
-    "implementationTitle": "RFAXAPI - IC_RightFax_ProxyEAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "rfaxapi-rightfax-api",
-    "artifactId": "IC_RightFax_ProxyEAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "RFAXAPID - IC RightFax - Proxy Demo - Client Demo EAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "rfaxapi-rightfax-api-demo-app",
-    "artifactId": "IC_RightFax_ClientDemo_EAR",
-    "jiraKey": ""
-  },
-  {
     "implementationTitle": "RGOFLDOC - CORP_RGCDocRepositoryEAR",
     "scmProject": "ICAPPS",
     "scmRepo": "rgofldoc-corp-registrar-general-of-canada-official-document-repo",
