@@ -112,31 +112,6 @@
           <artifactId>maven-failsafe-plugin</artifactId>
           <version>${surefire.plugin.version}</version>
         </plugin>
-        <plugin>
-          <groupId>org.eclipse.m2e</groupId>
-          <artifactId>lifecycle-mapping</artifactId>
-          <version>1.0.0</version>
-          <configuration>
-            <lifecycleMappingMetadata>
-              <pluginExecutions>
-                <pluginExecution>
-                  <pluginExecutionFilter>
-                    <groupId>com.github.koraktor</groupId>
-                    <artifactId>mavanagaiata</artifactId>
-                    <versionRange>[1.0.0,)</versionRange>
-                    <goals>
-                      <goal>commit</goal>
-                      <goal>branch</goal>
-                    </goals>
-                  </pluginExecutionFilter>
-                  <action>
-                    <ignore />
-                  </action>
-                </pluginExecution>
-              </pluginExecutions>
-            </lifecycleMappingMetadata>
-          </configuration>
-        </plugin>
         <!-- these are here so we can easily check that they are updated and the versions can be resolved before the java 
           code tries to run. These are used in the DownloadArtifacts class. -->
         <plugin>
@@ -166,6 +141,7 @@
         <version>1.0.1</version>
         <executions>
           <execution>
+            <?m2e ignore?>
             <id>load-git-branch</id>
             <goals>
               <goal>commit</goal>
