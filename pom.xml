@@ -80,8 +80,20 @@
     </dependency>
     <dependency>
       <groupId>org.sonatype.nexus.plugins</groupId>
-      <artifactId>nexus-indexer-lucene-model</artifactId>
+      <artifactId>nexus-indexer-lucene-client</artifactId>
       <version>${nexus.version}</version>
+    </dependency>
+    <!-- updated depedendency from nexus client -->
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>16.0.1</version>
+    </dependency>
+    <!-- updated depedendency from nexus client -->
+    <dependency>
+      <groupId>com.thoughtworks.xstream</groupId>
+      <artifactId>xstream</artifactId>
+      <version>1.4.19</version>
     </dependency>
     <!-- keep the version in InventoryFileUtilTest#testWriteRead() in sync with this -->
     <dependency>
