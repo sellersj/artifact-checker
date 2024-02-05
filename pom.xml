@@ -80,7 +80,7 @@
     </dependency>
     <dependency>
       <groupId>org.sonatype.nexus.plugins</groupId>
-      <artifactId>nexus-indexer-lucene-client</artifactId>
+      <artifactId>nexus-indexer-lucene-model</artifactId>
       <version>${nexus.version}</version>
     </dependency>
     <!-- keep the version in InventoryFileUtilTest#testWriteRead() in sync with this -->
