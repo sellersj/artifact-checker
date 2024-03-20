@@ -20,7 +20,7 @@
     <owasp.dependency.check.xsd.file>dependency-check.4.0.xsd</owasp.dependency.check.xsd.file>
     <maven.dependency.plugin.version>3.6.1</maven.dependency.plugin.version>
     <maven.help.plugin.version>3.4.0</maven.help.plugin.version>
-    <tabulator-tables.version>5.6.1</tabulator-tables.version>
+    <tabulator-tables.version>6.0.1</tabulator-tables.version>
     <!-- to try to address -->
     <!-- https://issues.apache.org/jira/browse/SUREFIRE-1788 -->
     <!-- https://stackoverflow.com/a/61936537/2055199 -->
