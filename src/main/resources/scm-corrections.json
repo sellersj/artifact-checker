@@ -280,6 +280,10 @@
     "jiraKey": ""
   },
   {
+    "implementationTitle": "TDS - tds-lits-osb-license-insolvency-trustee-search-ear",
+    "jiraKey": "OSBEFTR"
+  },
+  {
     "implementationTitle": "MCR - MC_RandomSamplingEAR",
     "scmProject": "ICAPPS",
     "scmRepo": "mcr-pseudo-random-sampling-application",
