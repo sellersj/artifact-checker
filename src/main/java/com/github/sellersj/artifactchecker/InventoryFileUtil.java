@@ -340,7 +340,14 @@ public class InventoryFileUtil {
     /** Fills in scm info that's missing for a best guess. */
     public static void fillInMissingScmInfo(Set<ArtifactAttributes> apps) {
 
-        Map<String, ScmCorrection> mapOfCorrections = getCorrections();
+        List<ScmCorrection> corrections = getCorrections();
+        // make a map, keyed on if their is an
+        Map<String, ScmCorrection> mapOfCorrections = new HashMap<>();
+        for (ScmCorrection scmCorrection : corrections) {
+            if (StringUtils.isNotBlank(scmCorrection.getImplementationTitle())) {
+                mapOfCorrections.put(scmCorrection.getImplementationTitle(), scmCorrection);
+            }
+        }
 
         Collection<String> unneededCorrections = getUnneededCorrections(apps, mapOfCorrections);
         if (!unneededCorrections.isEmpty()) {
@@ -450,15 +457,11 @@ public class InventoryFileUtil {
         return unneeded;
     }
 
-    private static Map<String, ScmCorrection> getCorrections() {
+    private static List<ScmCorrection> getCorrections() {
         File file = getFileOnClasspath("/scm-corrections.json");
         List<ScmCorrection> correction = readScmCorrection(file);
-        Map<String, ScmCorrection> mapOfCorrections = new HashMap<>();
-        for (ScmCorrection scmCorrection : correction) {
-            mapOfCorrections.put(scmCorrection.getImplementationTitle(), scmCorrection);
-        }
 
-        return mapOfCorrections;
+        return correction;
     }
 
     private static Map<String, TechOwner> getTechOwners() {
