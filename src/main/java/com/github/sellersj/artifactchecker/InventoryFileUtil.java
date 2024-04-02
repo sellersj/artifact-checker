@@ -35,6 +35,7 @@ import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.ArtifactInfoResourceResponseWorkAround;
 import com.github.sellersj.artifactchecker.model.MavenGAV;
 import com.github.sellersj.artifactchecker.model.ScmCorrection;
+import com.github.sellersj.artifactchecker.model.ScmMigration;
 import com.github.sellersj.artifactchecker.model.TechOwner;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientHandlerException;
@@ -58,6 +59,16 @@ public class InventoryFileUtil {
     public static List<ScmCorrection> readScmCorrection(File file) {
         try {
             List<ScmCorrection> corrections = mapper.readValue(file, new TypeReference<List<ScmCorrection>>() {
+            });
+            return corrections;
+        } catch (IOException e) {
+            throw new RuntimeException("Couldn't read file: " + file, e);
+        }
+    }
+
+    public static List<ScmMigration> readScmMigration(File file) {
+        try {
+            List<ScmMigration> corrections = mapper.readValue(file, new TypeReference<List<ScmMigration>>() {
             });
             return corrections;
         } catch (IOException e) {
@@ -349,6 +360,14 @@ public class InventoryFileUtil {
             }
         }
 
+        // make a map based on the git project and repo so we can quickly index
+        List<ScmMigration> migration = getMigration();
+        Map<String, ScmMigration> mapOfScmMigrations = new HashMap<>();
+        for (ScmMigration scmMigration : migration) {
+            mapOfScmMigrations.put(String.join(":", scmMigration.getOldScmProject(), scmMigration.getOldScmRepo()),
+                scmMigration);
+        }
+
         Collection<String> unneededCorrections = getUnneededCorrections(apps, mapOfCorrections);
         if (!unneededCorrections.isEmpty()) {
             System.err.println("******************************");
@@ -389,6 +408,24 @@ public class InventoryFileUtil {
                     System.out
                         .println("Adding corrected jira key for " + app.getTitle() + " to " + correction.getJiraKey());
                     app.setCorrectedJiraKey(correction.getJiraKey());
+                }
+            }
+
+            String gitRepoRelocationKey = String.join(":", app.getScmProject(), app.getScmRepo());
+            if (mapOfScmMigrations.containsKey(gitRepoRelocationKey)) {
+                ScmMigration scmMigration = mapOfScmMigrations.get(gitRepoRelocationKey);
+
+                app.setCloudBitbucket(true);
+
+                if (StringUtils.isBlank(scmMigration.getNewScmProject())) {
+                    System.out.println("Setting corrected scm project for " + app.getTitle() + " to "
+                        + scmMigration.getNewScmProject());
+                    app.setCorrectedScmProject(scmMigration.getNewScmProject());
+                }
+                if (StringUtils.isBlank(scmMigration.getNewScmRepo())) {
+                    System.out.println(
+                        "Setting corrected scm repo for " + app.getTitle() + " to " + scmMigration.getNewScmRepo());
+                    app.setCorrectedScmRepo(scmMigration.getNewScmRepo());
                 }
             }
         }
@@ -460,6 +497,13 @@ public class InventoryFileUtil {
     private static List<ScmCorrection> getCorrections() {
         File file = getFileOnClasspath("/scm-corrections.json");
         List<ScmCorrection> correction = readScmCorrection(file);
+
+        return correction;
+    }
+
+    private static List<ScmMigration> getMigration() {
+        File file = getFileOnClasspath("/scm-migration.json");
+        List<ScmMigration> correction = readScmMigration(file);
 
         return correction;
     }

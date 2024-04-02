@@ -20,6 +20,11 @@ public class Constants {
     public static final String CORRECTED_JIRA_HOST = "CORRECTED_JIRA_HOST";
 
     /**
+     * Host where cloud bitbucket is.
+     */
+    public static final String CLOUD_BITBUCKET_HOST = "CLOUD_BITBUCKET_HOST";
+
+    /**
      * Skip the clone and checks against the actual project.
      */
     public static final String SKIP_CLONE = "SKIP_CLONE";
