@@ -85,6 +85,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** If this is a github host. */
     private boolean github = false;
 
+    /** If this is a migrated bitbucket host. */
+    private boolean cloudBitbucket = false;
+
     /** Our corrected scm project from a static file. */
     private String correctedScmProject;
 
@@ -173,6 +176,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         // any time a new field is added, it will have to be added to this list
 
         this.github = source.github;
+        this.cloudBitbucket = source.cloudBitbucket;
         this.correctedScmProject = source.correctedScmProject;
         this.correctedScmRepo = source.correctedScmRepo;
         this.correctedArtifactId = source.correctedArtifactId;
@@ -227,6 +231,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
         if (github) {
             cloneUrl = "git@github.com:" + getScmProject() + "/" + getScmRepo() + ".git";
+        } else if (cloudBitbucket) {
+            String cloudBitbucketHost = Constants.getSysOrEnvVariable(Constants.CLOUD_BITBUCKET_HOST);
+            cloneUrl = String.format("https://%s/scm/%s/%s.git", cloudBitbucketHost, getScmProject(), getScmRepo());
         } else {
             String toolsHost = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST);
             if (StringUtils.isBlank(toolsHost)) {
@@ -285,8 +292,14 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         if (StringUtils.isNotBlank(getScmProject()) && //
             StringUtils.isNotBlank(getScmRepo())) {
 
-            String toolsHost = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST);
-            url = "https://" + toolsHost + "/scm/projects/" + getScmProject() + "/repos/" + getScmRepo();
+            // TODO put in something here if we use github
+            String hostAndPath = null;
+            if (cloudBitbucket) {
+                hostAndPath = Constants.getSysOrEnvVariable(Constants.CLOUD_BITBUCKET_HOST);
+            } else {
+                hostAndPath = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST) + "/scm/";
+            }
+            url = "https://" + hostAndPath + "/projects/" + getScmProject() + "/repos/" + getScmRepo();
 
             if (StringUtils.isNotBlank(getScmHash())) {
                 url += "/commits/" + getScmHash();
@@ -1090,6 +1103,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public void setArtifactsBuiltByProject(Set<String> artifactsBuiltByProject) {
         this.artifactsBuiltByProject = artifactsBuiltByProject;
+    }
+
+    /**
+     * @return the cloudBitbucket
+     */
+    public boolean isCloudBitbucket() {
+        return cloudBitbucket;
+    }
+
+    /**
+     * @param cloudBitbucket the cloudBitbucket to set
+     */
+    public void setCloudBitbucket(boolean cloudBitbucket) {
+        this.cloudBitbucket = cloudBitbucket;
     }
 
 }
