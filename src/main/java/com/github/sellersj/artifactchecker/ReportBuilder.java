@@ -93,8 +93,8 @@ public class ReportBuilder {
             System.out.println(String.format("Going to attempt to clone out %s projects", size));
             int count = 1;
             for (ArtifactAttributes gav : filtered) {
-                System.out.println(String.format("Clone project %s of %s which is %s %s", count++, size,
-                    gav.getScmProject(), gav.getScmRepo()));
+                System.out.println(String.format("Clone project %s of %s which is %s %s from %s", count++, size,
+                    gav.getScmProject(), gav.getScmRepo(), gav.getScmUrl()));
 
                 downloadArtifacts.cloneAndCheckProject(gav);
             }
