@@ -292,8 +292,14 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         if (StringUtils.isNotBlank(getScmProject()) && //
             StringUtils.isNotBlank(getScmRepo())) {
 
-            String toolsHost = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST);
-            url = "https://" + toolsHost + "/scm/projects/" + getScmProject() + "/repos/" + getScmRepo();
+            // TODO put in something here if we use github
+            String hostAndPath = null;
+            if (cloudBitbucket) {
+                hostAndPath = Constants.getSysOrEnvVariable(Constants.CLOUD_BITBUCKET_HOST);
+            } else {
+                hostAndPath = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST) + "/scm/";
+            }
+            url = "https://" + hostAndPath + "/projects/" + getScmProject() + "/repos/" + getScmRepo();
 
             if (StringUtils.isNotBlank(getScmHash())) {
                 url += "/commits/" + getScmHash();
