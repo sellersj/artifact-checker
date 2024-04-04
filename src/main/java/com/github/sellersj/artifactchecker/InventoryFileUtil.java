@@ -419,12 +419,12 @@ public class InventoryFileUtil {
 
                 app.setCloudBitbucket(true);
 
-                if (StringUtils.isBlank(scmMigration.getNewScmProject())) {
+                if (StringUtils.isNotBlank(scmMigration.getNewScmProject())) {
                     System.out.println("Setting corrected scm project for " + app.getTitle() + " to "
                         + scmMigration.getNewScmProject());
                     app.setCorrectedScmProject(scmMigration.getNewScmProject());
                 }
-                if (StringUtils.isBlank(scmMigration.getNewScmRepo())) {
+                if (StringUtils.isNotBlank(scmMigration.getNewScmRepo())) {
                     System.out.println(
                         "Setting corrected scm repo for " + app.getTitle() + " to " + scmMigration.getNewScmRepo());
                     app.setCorrectedScmRepo(scmMigration.getNewScmRepo());
