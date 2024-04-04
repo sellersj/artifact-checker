@@ -171,6 +171,7 @@ public class DownloadArtifacts {
 
             if (0 != run(gitClone)) {
                 System.err.println("Could not clone project: " + gav);
+                gav.setLibraryCheckedWorked(false);
                 return;
             }
 
