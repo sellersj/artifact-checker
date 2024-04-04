@@ -364,7 +364,8 @@ public class InventoryFileUtil {
         List<ScmMigration> migration = getMigration();
         Map<String, ScmMigration> mapOfScmMigrations = new HashMap<>();
         for (ScmMigration scmMigration : migration) {
-            mapOfScmMigrations.put(String.join(":", scmMigration.getOldScmProject(), scmMigration.getOldScmRepo()),
+            mapOfScmMigrations.put(
+                StringUtils.lowerCase(String.join(":", scmMigration.getOldScmProject(), scmMigration.getOldScmRepo())),
                 scmMigration);
         }
 
@@ -411,7 +412,8 @@ public class InventoryFileUtil {
                 }
             }
 
-            String gitRepoRelocationKey = String.join(":", app.getScmProject(), app.getScmRepo());
+            String gitRepoRelocationKey = StringUtils
+                .lowerCase(String.join(":", app.getScmProject(), app.getScmRepo()));
             if (mapOfScmMigrations.containsKey(gitRepoRelocationKey)) {
                 ScmMigration scmMigration = mapOfScmMigrations.get(gitRepoRelocationKey);
 
