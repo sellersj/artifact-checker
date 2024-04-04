@@ -11,8 +11,13 @@
     "newScmProject": "icapps",
     "newScmRepo": "airr-automated-inspection-results-reporting"
   },
-    {
+  {
     "oldScmProject": "icapps",
     "oldScmRepo": "cid-cipo-industrial-design"
+  },
+  {
+    "oldScmProject": "SIS",
+    "oldScmRepo": "swu-shared-web-utilities",
+    "newScmProject": "icapps"
   }
 ]
