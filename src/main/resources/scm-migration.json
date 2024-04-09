@@ -35,5 +35,9 @@
   {
     "oldScmProject": "icapps",
     "oldScmRepo": "cws-cipo-goods-and-services-external"
+  },
+  {
+    "oldScmProject": "icapps",
+    "oldScmRepo": "cipoqbs-cipo-querium"
   }
 ]
