@@ -27,5 +27,13 @@
   {
     "oldScmProject": "icapps",
     "oldScmRepo": "poimap-cmb-ic-points-of-interest-interactive-map"
+  },
+  {
+    "oldScmProject": "icapps",
+    "oldScmRepo": "cws-cipo-goods-and-services-webapi"
+  },
+  {
+    "oldScmProject": "icapps",
+    "oldScmRepo": "cws-cipo-goods-and-services-external"
   }
 ]
