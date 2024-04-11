@@ -44,7 +44,7 @@ public class App {
 
     /** The possible suffixes that apps use. */
     public static final List<String> DEPLOYMENT_SUFFIX_LIST = Arrays.asList(//
-        "__PUBLIC", "__INTRA", "_UTF8-Intra", "-Solr_PUBLIC", "_Training", "-training", "_SOLR", "__PRD");
+        "__PUBLIC", "__INTRA", "_UTF8-Intra", "-Solr_PUBLIC", "_Training", "-training", "_SOLR", "__PRD", "_INTRA");
 
     /** A way to flag what apps are tracked / linked to our other list. */
     private boolean appLinked = false;
