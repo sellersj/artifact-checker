@@ -48,5 +48,13 @@
     "oldScmProject": "SIS",
     "oldScmRepo": "sis-crm-odata-proxy",
     "newScmProject": "icapps"
+  },
+  {
+    "oldScmProject": "icapps",
+    "oldScmRepo": "fdopdfs-feddev-ontario-pdf-submissions"
+  },
+  {
+    "oldScmProject": "SIS",
+    "oldScmRepo": "fednorcoms-fednor-case-and-office-management-solution"
   }
 ]
