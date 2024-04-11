@@ -13,6 +13,10 @@
   },
   {
     "oldScmProject": "icapps",
+    "oldScmRepo": "mccl-mc-common-library"
+  },
+  {
+    "oldScmProject": "icapps",
     "oldScmRepo": "cid-cipo-industrial-design"
   },
   {
@@ -39,5 +43,10 @@
   {
     "oldScmProject": "icapps",
     "oldScmRepo": "cipoqbs-cipo-querium"
+  },
+  {
+    "oldScmProject": "SIS",
+    "oldScmRepo": "sis-crm-odata-proxy",
+    "newScmProject": "icapps"
   }
 ]
