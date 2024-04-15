@@ -56,5 +56,13 @@
   {
     "oldScmProject": "icapps",
     "oldScmRepo": "fednorcoms-fednor-case-and-office-management-solution"
+  },
+  {
+    "oldScmProject": "icapps",
+    "oldScmRepo": "nac-mc---notice-of-approval-api"
+  },
+  {
+    "oldScmProject": "icapps",
+    "oldScmRepo": "nac-mc---notice-of-approval-web-web"
   }
 ]
