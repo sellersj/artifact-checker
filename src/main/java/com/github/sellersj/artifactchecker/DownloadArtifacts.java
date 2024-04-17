@@ -241,6 +241,7 @@ public class DownloadArtifacts {
         CheckForTemplatingUse templatingUse = new CheckForTemplatingUse();
         gav.setEpicTemplatingNames(templatingUse.getEpicTemplateNames(projectDir));
         templatingUse.writeEpicUse(projectDir);
+        templatingUse.writeEnvVarUse(projectDir);
 
         // find any CMA container managed authentication based on the web.xml
         CheckForAuthUse authUse = new CheckForAuthUse();
