@@ -44,6 +44,9 @@ public class Constants {
     /** The name of the file we will put matching epic usage lines. */
     public static final String EPIC_MATCHING_LINE_FILENAME = "epic-resource-lines.txt";
 
+    /** The name of the file we will put matching env var usage lines. */
+    public static final String ENV_VAR_MATCHING_LINE_FILENAME = "env-var-lines.txt";
+
     /** So we can use to figure out resource mapping. */
     public static final String WEB_DOT_XML_FILENAME = "web.xml";
 

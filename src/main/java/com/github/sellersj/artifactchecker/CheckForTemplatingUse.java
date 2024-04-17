@@ -5,8 +5,10 @@ package com.github.sellersj.artifactchecker;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -49,8 +51,53 @@ public class CheckForTemplatingUse {
      */
     public void writeEpicUse(File startingDir) {
         List<File> jspFiles = getMainFiles(startingDir);
-        List<String> matchingLines = getEpicTemplating(startingDir, jspFiles);
+        List<String> matchingLines = getLinesMatching(startingDir, jspFiles, Arrays.asList("/eic/", "/epic/"));
         writeFileOfLinesFound(startingDir, Constants.EPIC_MATCHING_LINE_FILENAME, matchingLines);
+    }
+
+    /**
+     * Find all the places with the matching env var use
+     *
+     * @param startingDir
+     */
+    public void writeEnvVarUse(File startingDir) {
+        List<File> files = getMainFiles(startingDir);
+        List<String> matchingLines = getLinesMatching(startingDir, files, getCachedEnvVarsInUse());
+        writeFileOfLinesFound(startingDir, Constants.ENV_VAR_MATCHING_LINE_FILENAME, matchingLines);
+    }
+
+    /**
+     * Try to download the env var file.
+     *
+     * @return the contents of the env var file so we can check the files
+     */
+    private List<String> getCachedEnvVarsInUse() {
+        File file = new File("target/env-vars-prod.txt");
+
+        // cache the file if we don't have it
+        if (!file.exists()) {
+            // we don't have the file yet. Download it
+            URL url = null;
+            try {
+                String toolsHost = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST);
+                url = new URL(
+                    String.format("https://%s/projectsites/websphere-inventory/env-vars-prod.txt", toolsHost));
+                int timeout = 30;
+                FileUtils.copyURLToFile(url, file, timeout, timeout);
+            } catch (Exception e) {
+                throw new RuntimeException("Could not download the env var file " + url, e);
+            }
+        }
+
+        // read the file from disk
+        List<String> envVars;
+        try {
+            envVars = FileUtils.readLines(file, StandardCharsets.ISO_8859_1);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not read the cached env var file " + file.getAbsolutePath(), e);
+        }
+
+        return envVars;
     }
 
     public Set<String> getTemplateNames(List<String> lines) {
@@ -116,9 +163,10 @@ public class CheckForTemplatingUse {
      *
      * @param startingdir to know relatively what path we will need
      * @param files to check
+     * @param containsAny any matching string
      * @return a list of matching lines
      */
-    public List<String> getEpicTemplating(File startingdir, List<File> files) {
+    public List<String> getLinesMatching(File startingdir, List<File> files, List<String> containsAny) {
         ArrayList<String> lines = new ArrayList<>();
 
         for (File file : files) {
@@ -127,7 +175,8 @@ public class CheckForTemplatingUse {
                 int count = 0;
                 for (String line : fileLines) {
                     count++;
-                    if (line.contains("/eic/") || line.contains("/epic/")) {
+
+                    if (containsAny.stream().anyMatch(line::contains)) {
                         // we don't care where it is on the disk, so we're trying to get the relative path
                         String location = file.getAbsolutePath().substring(startingdir.getAbsolutePath().length() + 1);
                         lines.add(location + ":" + count + ":" + line);
