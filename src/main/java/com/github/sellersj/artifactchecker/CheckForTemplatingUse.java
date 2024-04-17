@@ -84,6 +84,8 @@ public class CheckForTemplatingUse {
                     String.format("https://%s/projectsites/websphere-inventory/env-vars-prod.txt", toolsHost));
                 int timeout = 30;
                 FileUtils.copyURLToFile(url, file, timeout, timeout);
+                LOGGER.info(
+                    String.format("Done downloading to cache env var file %s to %s", url, file.getAbsolutePath()));
             } catch (Exception e) {
                 throw new RuntimeException("Could not download the env var file " + url, e);
             }
