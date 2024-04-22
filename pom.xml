@@ -175,7 +175,7 @@
       <!-- https://bugs.eclipse.org/bugs/show_bug.cgi?id=547340 -->
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>3.4.0</version>
+        <version>3.4.1</version>
         <configuration>
           <archive>
             <manifest>
