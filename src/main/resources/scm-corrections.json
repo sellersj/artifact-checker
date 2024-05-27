@@ -361,7 +361,7 @@
     "jiraKey": "CIPOFITT"
   },
   {
-    "implementationTitle": "CIPO-app-status-app",
+    "implementationTitle": "CIPO-app-status-app - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-app-status",
     "artifactId": "CIPO-app-status-app",
