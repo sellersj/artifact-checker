@@ -165,6 +165,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** What we think are the artifacts built by the project. */
     private Set<String> artifactsBuiltByProject = new TreeSet<>();
 
+    /** Places where we think the legacy logging path is. */
+    private Set<String> loggingLegacyLocation = new TreeSet<>();
+
     /** Default constructor. */
     public ArtifactAttributes() {
     }
@@ -1117,6 +1120,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public void setCloudBitbucket(boolean cloudBitbucket) {
         this.cloudBitbucket = cloudBitbucket;
+    }
+
+    /**
+     * @return the loggingLegacyLocation
+     */
+    public Set<String> getLoggingLegacyLocation() {
+        return loggingLegacyLocation;
+    }
+
+    /**
+     * @param loggingLegacyLocation the loggingLegacyLocation to set
+     */
+    public void setLoggingLegacyLocation(Set<String> loggingLegacyLocation) {
+        this.loggingLegacyLocation = loggingLegacyLocation;
     }
 
 }

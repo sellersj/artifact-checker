@@ -259,6 +259,9 @@ public class DownloadArtifacts {
         // find all possible login pages
         gav.getLoginPages().addAll(authUse.getLoginPageLines(projectDir));
 
+        CheckForLoggingUse loggingUse = new CheckForLoggingUse();
+        gav.getLoggingLegacyLocation().addAll(loggingUse.getLogConfigedToLegacyLocation(projectDir));
+
         // generate the effective-pom
         String effectivePomFile = projectDir.getAbsolutePath() + "/" + Constants.EFFECTIVE_POM_XML_FILE;
         ProcessBuilder mvnHelpEffective = new ProcessBuilder(osPrefix + "mvn" + osSuffix, "--batch-mode",
