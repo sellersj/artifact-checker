@@ -68,6 +68,9 @@ public class DownloadArtifacts {
     /** The version of help to use. */
     private String mavenHelpPluginVersion;
 
+    /** The version of cyclonedx-maven-plugin to use. */
+    private String cyclonedxMavenPluginVersion;
+
     /**
      * We're dealing with mac giving a limited PATH to eclipse and linking directly to homebrew.
      */
@@ -114,6 +117,7 @@ public class DownloadArtifacts {
         owaspDepCheckVersion = properties.getProperty("owasp.dependency.check.version");
         mavenDepPluginVersion = properties.getProperty("maven.dependency.plugin.version");
         mavenHelpPluginVersion = properties.getProperty("maven.help.plugin.version");
+        cyclonedxMavenPluginVersion = properties.getProperty("cyclonedx.maven.plugin.version");
     }
 
     /**
@@ -237,6 +241,8 @@ public class DownloadArtifacts {
         // gather the info we want from the owasp dependency check
         processDependencyCheckInfo(gav, projectDir);
 
+        generateSbomReport(gav, projectDir);
+
         // check for the templating here
         CheckForTemplatingUse templatingUse = new CheckForTemplatingUse();
         gav.setEpicTemplatingNames(templatingUse.getEpicTemplateNames(projectDir));
@@ -296,6 +302,24 @@ public class DownloadArtifacts {
             throw new RuntimeException("Couldnm't delete directory for cleanup " + repoWorkingDir, e);
         }
 
+    }
+
+    /**
+     * @param gav to do this check against
+     * @param projectDir to start
+     */
+    private void generateSbomReport(ArtifactAttributes gav, File projectDir) {
+        List<String> command = new ArrayList<>();
+        command.addAll(Arrays.asList(osPrefix + "mvn" + osSuffix, "--batch-mode",
+            "org.cyclonedx:cyclonedx-maven-plugin:" + cyclonedxMavenPluginVersion + ":makeAggregateBom", //
+            "-DprojectType=application"));
+
+        // run owasp dependency check
+        ProcessBuilder process = new ProcessBuilder(command);
+        process.directory(projectDir);
+        if (0 != run(process)) {
+            gav.setLibraryCheckedWorked(false);
+        }
     }
 
     /**
@@ -631,7 +655,9 @@ public class DownloadArtifacts {
                     || Constants.JAVA8_ISSUES_FILENAME.equals(p.getFileName().toString())
                     || Constants.WEB_DOT_XML_FILENAME.equals(p.getFileName().toString())
                     || Constants.IBM_WEB_BINDING_FILENAME.equals(p.getFileName().toString())
-                    || Constants.JDBC_MATCHING_LINE_FILENAME.equals(p.getFileName().toString()))
+                    || Constants.JDBC_MATCHING_LINE_FILENAME.equals(p.getFileName().toString())
+                    || Constants.SBOM_JSON.equals(p.getFileName().toString())
+                    || Constants.SBOM_XML.equals(p.getFileName().toString()))
                 // .peek(System.out::println) //
                 .forEach(p -> moveUnchecked(p));
 

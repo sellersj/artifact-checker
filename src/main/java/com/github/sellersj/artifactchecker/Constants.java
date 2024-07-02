@@ -53,6 +53,12 @@ public class Constants {
     /** So we can use to figure out resource mapping. */
     public static final String IBM_WEB_BINDING_FILENAME = "ibm-web-bnd.xml";
 
+    /** A generated sbom in json format. */
+    public static final String SBOM_JSON = "bom.json";
+
+    /** A generated sbom in xml format. */
+    public static final String SBOM_XML = "bom.xml";
+
     /** The hostname of the public facing apps. */
     public static final String PUBLIC_HOSTNAME = "PUBLIC_HOSTNAME";
 
