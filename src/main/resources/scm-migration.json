@@ -20,9 +20,8 @@
     "oldScmRepo": "cid-cipo-industrial-design"
   },
   {
-    "oldScmProject": "SIS",
-    "oldScmRepo": "swu-shared-web-utilities",
-    "newScmProject": "icapps"
+    "oldScmProject": "icapps",
+    "oldScmRepo": "swu-shared-web-utilities"
   },
   {
     "oldScmProject": "icapps",
