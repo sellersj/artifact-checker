@@ -166,7 +166,7 @@ public class DownloadArtifactsTest {
     @Disabled
     public void parseDependencyCheckReport() throws Exception {
         String url = "https://.../dependency-check-report.xml";
-        File tempFile = File.createTempFile("dependency-check-report", ".json");
+        File tempFile = ReportBuilderTest.createTempFile("dependency-check-report", ".json");
         FileUtils.copyURLToFile(URI.create(url).toURL(), tempFile);
 
         DownloadArtifacts downloadArtifacts = new DownloadArtifacts();

@@ -66,7 +66,7 @@ public class InventoryFileUtilTest {
         Set<ArtifactAttributes> appInventory = new TreeSet<>();
         appInventory.add(attributes);
 
-        File file = File.createTempFile("appInventory", ".json");
+        File file = ReportBuilderTest.createTempFile("appInventory", ".json");
         InventoryFileUtil.write(file, appInventory);
 
         String contents = FileUtils.readFileToString(file, StandardCharsets.UTF_8);

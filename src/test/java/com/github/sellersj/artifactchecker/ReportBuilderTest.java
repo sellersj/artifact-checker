@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,6 +22,24 @@ import com.github.sellersj.artifactchecker.model.ScmCorrection;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
 public class ReportBuilderTest {
+
+    /**
+     * Use this to get the temp file since it will make sure things are cleaned up in the end.
+     *
+     * @param prefix of the file
+     * @param suffix of the file
+     * @return the file that will delete on normal jvm exit
+     */
+    public static final File createTempFile(String prefix, String suffix) {
+        try {
+            File file = File.createTempFile(prefix, suffix);
+            file.deleteOnExit();
+            return file;
+        } catch (IOException e) {
+            throw new RuntimeException("Could not create a temp file", e);
+        }
+
+    }
 
     private String toolsHost;
 
@@ -69,7 +88,7 @@ public class ReportBuilderTest {
 
     @Test
     public void buildJsonReport() throws Exception {
-        File target = File.createTempFile("app-inventory-", ".json");
+        File target = createTempFile("app-inventory-", ".json");
         target.deleteOnExit();
 
         Set<ArtifactAttributes> apps = InventoryFileUtilTest.getTestAppInventory();
@@ -78,7 +97,7 @@ public class ReportBuilderTest {
 
     @Test
     public void buildCsvReport() throws Exception {
-        File target = File.createTempFile("app-inventory-", ".csv");
+        File target = createTempFile("app-inventory-", ".csv");
         // System.out.println(target.getAbsolutePath());
         target.deleteOnExit();
 
@@ -134,8 +153,7 @@ public class ReportBuilderTest {
 
     @Test
     public void generateCveFile_PositivePath() throws Exception {
-        File target = File.createTempFile("security-report-", ".html");
-        // target.deleteOnExit();
+        File target = createTempFile("security-report-", ".html");
         System.out.println("cve file is: " + target.getAbsolutePath());
 
         Set<ArtifactAttributes> apps = InventoryFileUtilTest.getTestAppInventory();
