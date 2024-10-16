@@ -219,7 +219,8 @@ public class InventoryFileUtilTest {
         // make fake CVE
         vul.setName(String.format("CVE-201%s-010%s", RANDOM.nextInt(3), RANDOM.nextInt(9)));
 
-        vul.setDescription("Fake cve goes " + RandomStringUtils.randomAlphanumeric(0, 100));
+        // RandomStringUtils.insecure().ra;
+        vul.setDescription("Fake cve goes " + RandomStringUtils.secure().nextAlphanumeric(0, 100));
 
         BigDecimal score = new BigDecimal(RANDOM.nextFloat() * 10.0f).setScale(1, RoundingMode.HALF_UP);
         BigDecimal cvsScore = BigDecimal.valueOf(score.floatValue());
