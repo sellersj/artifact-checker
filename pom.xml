@@ -60,6 +60,11 @@
       <artifactId>jakarta.xml.bind-api</artifactId>
       <version>4.0.2</version>
     </dependency>
+    <dependency>
+      <groupId>com.sun.xml.bind</groupId>
+      <artifactId>jaxb-impl</artifactId>
+      <version>4.0.5</version>
+    </dependency>
     <!-- used to figure out when a new version is available -->
     <dependency>
       <groupId>org.webjars.npm</groupId>
