@@ -28,6 +28,9 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -43,9 +46,6 @@ import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.owasp.Analysis;
 import com.github.sellersj.artifactchecker.model.owasp.Dependency;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
-
-import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.Unmarshaller;
 
 /**
  * If doing this on a computer that hasn't updated the owasp dependency check data, it be can be done by calling the

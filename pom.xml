@@ -6,8 +6,8 @@
   <name>Artifact checker</name>
   <packaging>jar</packaging>
   <properties>
-    <maven.compiler.source>21</maven.compiler.source>
-    <maven.compiler.target>21</maven.compiler.target>
+    <maven.compiler.source>8</maven.compiler.source>
+    <maven.compiler.target>8</maven.compiler.target>
     <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
     <maven.compiler.showWarnings>true</maven.compiler.showWarnings>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -56,11 +56,11 @@
       <version>5.9</version>
     </dependency>
     <!-- uncomment when moving to java 11+ -->
-    <dependency>
-      <groupId>jakarta.xml.bind</groupId>
-      <artifactId>jakarta.xml.bind-api</artifactId>
-      <version>4.0.2</version>
-    </dependency>
+    <!--    <dependency>-->
+    <!--      <groupId>jakarta.xml.bind</groupId>-->
+    <!--      <artifactId>jakarta.xml.bind-api</artifactId>-->
+    <!--      <version>4.0.0</version>-->
+    <!--    </dependency>-->
     <!-- used to figure out when a new version is available -->
     <dependency>
       <groupId>org.webjars.npm</groupId>
@@ -265,18 +265,18 @@
           </sources>
         </configuration>
         <!-- force javax classes that are available in java 8. When moving to java 11+ remove these -->
-<!--        <dependencies>-->
-<!--          <dependency>-->
-<!--            <groupId>org.glassfish.jaxb</groupId>-->
-<!--            <artifactId>jaxb-xjc</artifactId>-->
-<!--            <version>2.3.2</version>-->
-<!--          </dependency>-->
-<!--          <dependency>-->
-<!--            <groupId>org.glassfish.jaxb</groupId>-->
-<!--            <artifactId>jaxb-jxc</artifactId>-->
-<!--            <version>2.3.2</version>-->
-<!--          </dependency>-->
-<!--        </dependencies>-->
+        <dependencies>
+          <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-xjc</artifactId>
+            <version>2.3.2</version>
+          </dependency>
+          <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-jxc</artifactId>
+            <version>2.3.2</version>
+          </dependency>
+        </dependencies>
       </plugin>
       <!-- jaxb m2e connector isn't available right now so adding this instead -->
       <plugin>
