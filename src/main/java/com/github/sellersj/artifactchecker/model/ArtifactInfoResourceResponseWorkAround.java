@@ -10,8 +10,8 @@ import org.sonatype.nexus.rest.model.ArtifactInfoResourceResponse;
  * We are using the class name instead of "artifact-info"
  */
 @SuppressWarnings("all")
-@javax.xml.bind.annotation.XmlRootElement(name = "org.sonatype.nexus.rest.model.ArtifactInfoResourceResponse")
-@javax.xml.bind.annotation.XmlAccessorType(javax.xml.bind.annotation.XmlAccessType.FIELD)
+@jakarta.xml.bind.annotation.XmlRootElement(name = "org.sonatype.nexus.rest.model.ArtifactInfoResourceResponse")
+@jakarta.xml.bind.annotation.XmlAccessorType(jakarta.xml.bind.annotation.XmlAccessType.FIELD)
 public class ArtifactInfoResourceResponseWorkAround extends ArtifactInfoResourceResponse {
 
 }
