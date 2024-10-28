@@ -18,7 +18,7 @@
     <!-- https://github.com/jeremylong/DependencyCheck/tree/main/core/src/main/resources/schema -->
     <owasp.dependency.check.version>10.0.4</owasp.dependency.check.version>
     <owasp.dependency.check.xsd.file>dependency-check.4.0.xsd</owasp.dependency.check.xsd.file>
-    <maven.dependency.plugin.version>3.8.0</maven.dependency.plugin.version>
+    <maven.dependency.plugin.version>3.8.1</maven.dependency.plugin.version>
     <maven.help.plugin.version>3.5.1</maven.help.plugin.version>
     <tabulator-tables.version>6.3.0</tabulator-tables.version>
     <cyclonedx.maven.plugin.version>2.8.0</cyclonedx.maven.plugin.version>
