@@ -6,7 +6,11 @@ package com.github.sellersj.artifactchecker;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,6 +25,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.jar.Manifest;
+
+import javax.ws.rs.core.UriBuilder;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -37,8 +43,6 @@ import com.github.sellersj.artifactchecker.model.MavenGAV;
 import com.github.sellersj.artifactchecker.model.ScmCorrection;
 import com.github.sellersj.artifactchecker.model.ScmMigration;
 import com.github.sellersj.artifactchecker.model.TechOwner;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientHandlerException;
 
 public class InventoryFileUtil {
 
@@ -227,7 +231,6 @@ public class InventoryFileUtil {
         // TODO figure out how we should solve it if the data is in a different repo. Probably have to query it first
         String repo = "all-released";
         String urlStart = "https://" + toolsHost + "/maven-proxy/service/local/repositories/" + repo + "/content/";
-        Client client = Client.create();
 
         for (ArtifactAttributes artifact : apps) {
 
@@ -241,27 +244,30 @@ public class InventoryFileUtil {
                 String url = urlStart + groupIdPath + "/" + artifact.getArtifactId() + "/" + artifact.getVersion() + "/"
                     + artifact.getArtifactId() + "-" + artifact.getVersion() + ".ear";
 
-                ArtifactInfoResourceResponseWorkAround response = null;
-                try {
+                try (HttpClient httpClient = HttpClient.newHttpClient();) {
+                    URI uri = UriBuilder.fromUri(url).queryParam("describe", "info").build();
 
-                    // a way that sort of works
-                    response = client.resource(url) //
-                        .queryParam("describe", "info") //
-                        .get(ArtifactInfoResourceResponseWorkAround.class);
+                    HttpRequest request = HttpRequest.newBuilder() //
+                        .header("Accept", "application/json") //
+                        .header("Accept-Charset", StandardCharsets.ISO_8859_1.toString()) //
+                        .uri(uri).build();
+
+                    HttpResponse<String> value = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+                    ArtifactInfoResourceResponseWorkAround response = mapper.readValue(value.body(),
+                        ArtifactInfoResourceResponseWorkAround.class);
 
                     LocalDateTime buildDate = DateUtils.asLocalDateTime(response.getData().getLastChanged());
                     artifact.getManifest().put(ArtifactAttributes.BUILD_TIME,
                         ArtifactAttributes.MAVEN_DATE_FORMAT.format(buildDate));
 
-                } catch (ClientHandlerException e) {
+                } catch (Exception e) {
                     // re-throw with more info
                     throw new IllegalArgumentException(
                         "Couldn't find artifact by groupId using url: " + url + " for groupId: " + artifact, e);
                 }
             }
         }
-        // cleanup
-        client.destroy();
     }
 
     /**
