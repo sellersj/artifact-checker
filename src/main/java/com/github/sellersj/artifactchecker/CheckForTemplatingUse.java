@@ -5,7 +5,7 @@ package com.github.sellersj.artifactchecker;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -77,17 +77,17 @@ public class CheckForTemplatingUse {
         // cache the file if we don't have it
         if (!file.exists()) {
             // we don't have the file yet. Download it
-            URL url = null;
+            URI uri = null;
             try {
                 String toolsHost = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST);
-                url = new URL(
-                    String.format("https://%s/projectsites/websphere-inventory/env-vars-prod.txt", toolsHost));
+                uri = URI
+                    .create(String.format("https://%s/projectsites/websphere-inventory/env-vars-prod.txt", toolsHost));
                 int timeout = 30;
-                FileUtils.copyURLToFile(url, file, timeout, timeout);
+                FileUtils.copyURLToFile(uri.toURL(), file, timeout, timeout);
                 LOGGER.info(
-                    String.format("Done downloading to cache env var file %s to %s", url, file.getAbsolutePath()));
+                    String.format("Done downloading to cache env var file %s to %s", uri, file.getAbsolutePath()));
             } catch (Exception e) {
-                throw new RuntimeException("Could not download the env var file " + url, e);
+                throw new RuntimeException("Could not download the env var file " + uri, e);
             }
         }
 
