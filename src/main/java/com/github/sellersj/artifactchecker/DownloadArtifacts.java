@@ -168,19 +168,36 @@ public class DownloadArtifacts {
         if (new File(repoWorkingDir).exists()) {
             System.out.println("Directory '" + repoWorkingDir + "' already exists. Not going to try to clone again. ");
         } else {
-            StopWatch watch = new StopWatch();
-            watch.start();
-            ProcessBuilder gitClone = new ProcessBuilder(osPrefix + "git", "clone", gav.buildGitCloneUrl());
-            gitClone.directory(new File(repoWorkingDir));
 
-            if (0 != run(gitClone)) {
-                System.err.println("Could not clone project: " + gav);
-                gav.setLibraryCheckedWorked(false);
-                return;
+            int count = 0;
+            int maxTries = 3;
+            int processReturnCode = -1;
+
+            while (count < maxTries && 0 != processReturnCode) {
+
+                StopWatch watch = new StopWatch();
+                watch.start();
+                ProcessBuilder gitClone = new ProcessBuilder(osPrefix + "git", "clone", gav.buildGitCloneUrl());
+                gitClone.directory(new File(repoWorkingDir));
+
+                processReturnCode = run(gitClone);
+
+                if (0 != processReturnCode) {
+                    System.err.println(
+                        String.format("Could not clone project: %s on attempt %s of %s", gav, count, maxTries));
+                    gav.setLibraryCheckedWorked(false);
+                } else {
+                    gav.setLibraryCheckedWorked(true);
+                }
+
+                watch.stop();
+                System.out.println("Clone for " + gav.getScmProject() + " " + gav.getScmRepo() + " took " + watch);
             }
 
-            watch.stop();
-            System.out.println("Clone for " + gav.getScmProject() + " " + gav.getScmRepo() + " took " + watch);
+            if (!gav.isLibraryCheckedWorked()) {
+                System.err.println(String.format("Exceded the max tries to clone project: %s. Giving up.", gav));
+                return;
+            }
         }
 
         // the directory of the actual project
