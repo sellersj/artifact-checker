@@ -309,9 +309,7 @@ public class DownloadArtifacts {
         copyFiles();
 
         // delete the repo to save space if it exists
-        try
-
-        {
+        try {
             System.out.println("Deleting " + repoWorkingDir);
             Files.walk(Paths.get(repoWorkingDir)).sorted(Comparator.reverseOrder()).map(Path::toFile)
                 .forEach(File::delete);
