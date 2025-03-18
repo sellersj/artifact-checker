@@ -214,6 +214,7 @@ public class DownloadArtifacts {
         // generate 1 tree file per project rather than 1 per module
         String treeOutputFile = projectDir.getAbsolutePath() + "/" + Constants.TREE_TXT_FILE;
         ProcessBuilder mvnDepTree = new ProcessBuilder(osPrefix + "mvn" + osSuffix, "--batch-mode",
+            "-Dmaven.plugin.validation=VERBOSE",
             "org.apache.maven.plugins:maven-dependency-plugin:" + mavenDepPluginVersion + ":tree",
             "-DoutputFile=" + treeOutputFile, "-DappendOutput=true");
         mvnDepTree.directory(projectDir);
@@ -227,7 +228,7 @@ public class DownloadArtifacts {
         buildJava8Issues(gav, treeOutputFile);
 
         List<String> command = new ArrayList<>();
-        command.addAll(Arrays.asList(osPrefix + "mvn" + osSuffix, "--batch-mode",
+        command.addAll(Arrays.asList(osPrefix + "mvn" + osSuffix, "--batch-mode", "-Dmaven.plugin.validation=VERBOSE",
             "org.owasp:dependency-check-maven:" + owaspDepCheckVersion + ":check", //
             "org.owasp:dependency-check-maven:" + owaspDepCheckVersion + ":aggregate", //
             "-Dformat=ALL", //
@@ -288,6 +289,7 @@ public class DownloadArtifacts {
         // generate the effective-pom
         String effectivePomFile = projectDir.getAbsolutePath() + "/" + Constants.EFFECTIVE_POM_XML_FILE;
         ProcessBuilder mvnHelpEffective = new ProcessBuilder(osPrefix + "mvn" + osSuffix, "--batch-mode",
+            "-Dmaven.plugin.validation=VERBOSE",
             "org.apache.maven.plugins:maven-help-plugin:" + mavenHelpPluginVersion + ":effective-pom",
             "-Doutput=" + effectivePomFile);
         mvnHelpEffective.directory(projectDir);
@@ -327,7 +329,7 @@ public class DownloadArtifacts {
      */
     private void generateSbomReport(ArtifactAttributes gav, File projectDir) {
         List<String> command = new ArrayList<>();
-        command.addAll(Arrays.asList(osPrefix + "mvn" + osSuffix, "--batch-mode",
+        command.addAll(Arrays.asList(osPrefix + "mvn" + osSuffix, "--batch-mode", "-Dmaven.plugin.validation=VERBOSE",
             "org.cyclonedx:cyclonedx-maven-plugin:" + cyclonedxMavenPluginVersion + ":makeAggregateBom", //
             "-DprojectType=application"));
 
@@ -416,8 +418,8 @@ public class DownloadArtifacts {
             System.err.println("Running maven install without tests so the other checks can be done.");
             System.err.println("*****************");
 
-            ProcessBuilder mvnInstall = new ProcessBuilder(osPrefix + "mvn" + osSuffix, "--batch-mode", "install",
-                "-DskipTests");
+            ProcessBuilder mvnInstall = new ProcessBuilder(osPrefix + "mvn" + osSuffix, "--batch-mode",
+                "-Dmaven.plugin.validation=VERBOSE", "install", "-DskipTests");
             mvnInstall.directory(projectDir);
             run(mvnInstall);
         }
