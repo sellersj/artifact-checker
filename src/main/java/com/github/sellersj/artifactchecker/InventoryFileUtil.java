@@ -14,6 +14,7 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -152,7 +153,8 @@ public class InventoryFileUtil {
             String contents = IOUtils.toString(in, StandardCharsets.UTF_8);
 
             String[] lines = contents.split("\n");
-            for (String line : lines) {
+            for (String original : lines) {
+                String line = original.replace(" - WARNING deployed:", "");
 
                 if (StringUtils.isNotBlank(line) && !line.trim().startsWith("#") && line.trim().endsWith(".ear")) {
                     // these should only be the ear listing
@@ -176,7 +178,14 @@ public class InventoryFileUtil {
                         // the deploy date
                         // convert the string to a date to convert to a date.
                         // TODO fix this since it's too silly for words
-                        LocalDate date = LocalDate.parse(chunks[1]);
+                        LocalDate date = null;
+                        // wrap this in a try until they fix the date of the report
+                        try {
+                            date = LocalDate.parse(chunks[1]);
+                        } catch (DateTimeParseException e) {
+                            LOGGER.warn(String.format("Could not parse date '%s' from line '%s' in cipo report",
+                                chunks[1], original));
+                        }
 
                         // ear name
                         String artifactId = StringUtils.substringBeforeLast(earArtifactName, "-");
@@ -192,7 +201,9 @@ public class InventoryFileUtil {
                         // set the deployment info here
                         App deploymentInfo = new App();
                         deploymentInfo.setDataCenter(App.DATA_CENTER_KED);
-                        deploymentInfo.setDeploymentDate(DateUtils.asDate(date));
+                        if (null != date) {
+                            deploymentInfo.setDeploymentDate(DateUtils.asDate(date));
+                        }
                         attributes.setDeploymentInfo(deploymentInfo);
                     }
 
