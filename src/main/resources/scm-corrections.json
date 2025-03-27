@@ -1024,6 +1024,6 @@
     "scmRepo": "cipo-map-id",
     "groupId": "ca.gc.ic.cipo.sc",
     "artifactId": "cipo-map-id-app",
-    "jiraKey": ""
+    "jiraKey": "CIPOPL"
   }
 ]
