@@ -187,6 +187,11 @@ public class InventoryFileUtil {
                                 chunks[1], original));
                         }
 
+                        // in case it's partially sunset, mark it as to be decommissioned
+                        if (original.contains("WARNING deployed")) {
+                            attributes.setToDecomission(true);
+                        }
+
                         // ear name
                         String artifactId = StringUtils.substringBeforeLast(earArtifactName, "-");
                         attributes.getManifest().put(ArtifactAttributes.ARTIFACT_ID, artifactId);
