@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedMap;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.ScmCorrection;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
+import com.github.sellersj.artifactchecker.model.security.SecurityVulnerability;
 
 public class ReportBuilderTest {
 
@@ -153,14 +155,16 @@ public class ReportBuilderTest {
 
     @Test
     public void generateCveFile_PositivePath() throws Exception {
-        File target = createTempFile("security-report-", ".html");
-        System.out.println("cve file is: " + target.getAbsolutePath());
+        File targetHtml = createTempFile("security-report-", ".html");
+        File targetJson = createTempFile("security-report-", ".json");
+        System.out.println("cve file is: " + targetHtml.getAbsolutePath());
 
         Set<ArtifactAttributes> apps = InventoryFileUtilTest.getTestAppInventory();
 
         // TODO put in a check here to make sure that there are some vulnerabilities
-
-        ReportBuilder.generateCveFile(apps, target);
+        SortedMap<SecurityVulnerability, Set<ArtifactAttributes>> mapAppsToCve = ReportBuilder.mapAppsToCve(apps);
+        ReportBuilder.generateCveHtmlFile(mapAppsToCve, targetHtml);
+        ReportBuilder.generateCveJsonFile(mapAppsToCve, targetJson);
     }
 
     @Test

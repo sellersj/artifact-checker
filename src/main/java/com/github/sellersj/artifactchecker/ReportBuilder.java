@@ -137,7 +137,8 @@ public class ReportBuilder {
 
         // generate a file that's a vulnerability first view
         File securityReportFile = new File(DownloadArtifacts.FILES_GENERATED + "/security-report.html");
-        generateCveFile(apps, securityReportFile);
+        SortedMap<SecurityVulnerability, Set<ArtifactAttributes>> mapAppsToCve = mapAppsToCve(apps);
+        generateCveHtmlFile(mapAppsToCve, securityReportFile);
 
         // make the output json
         File target = new File(DownloadArtifacts.FILES_GENERATED + "/app-inventory.json");
@@ -465,14 +466,11 @@ public class ReportBuilder {
      *
      * TODO this would be much better using a template / json output to separate data from view
      *
-     * @param apps that are found
+     * @param maps that are found
      * @param securityReportFile the file to write to
      */
-    public static void generateCveFile(Set<ArtifactAttributes> apps, File securityReportFile) {
-        // for all the maps, make a map using the vulnerabilities and all the apps that have been
-        // flagged for that
-        SortedMap<SecurityVulnerability, Set<ArtifactAttributes>> map = mapAppsToCve(apps);
-
+    public static void generateCveHtmlFile(SortedMap<SecurityVulnerability, Set<ArtifactAttributes>> map,
+                                           File securityReportFile) {
         StringBuilder builder = new StringBuilder();
         builder.append("<!DOCTYPE html>\n<html lang='en'><head><meta charset=\"UTF-8\">"
             + "<title>Security View of Applications in production</title>\n");
@@ -570,6 +568,15 @@ public class ReportBuilder {
         }
     }
 
+    /**
+     * @param map of security issues
+     * @param securityReportFile to write it to
+     */
+    public static void generateCveJsonFile(SortedMap<SecurityVulnerability, Set<ArtifactAttributes>> map,
+                                           File securityReportFile) {
+        InventoryFileUtil.write(securityReportFile, map);
+    }
+
     private static void td(StringBuilder builder, boolean start) {
         if (start) {
             builder.append("<td>\n");
@@ -583,7 +590,7 @@ public class ReportBuilder {
      *
      * @param apps to map
      */
-    private static SortedMap<SecurityVulnerability, Set<ArtifactAttributes>> mapAppsToCve(Set<ArtifactAttributes> apps) {
+    public static SortedMap<SecurityVulnerability, Set<ArtifactAttributes>> mapAppsToCve(Set<ArtifactAttributes> apps) {
         SortedMap<SecurityVulnerability, Set<ArtifactAttributes>> map = new TreeMap<>();
 
         // sort the artifacts. Can remove this if switching to ui sorting
