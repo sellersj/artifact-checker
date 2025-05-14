@@ -115,7 +115,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** The manifest associated with this artifact. */
     private SortedMap<String, String> manifest = new TreeMap<>();
 
-    /** A list of all the vulnerabilties found with this artifact. */
+    /** A list of all the vulnerabilities found with this artifact. */
     @JsonIgnore
     private List<Vulnerability> vulnerabilities = new ArrayList<>();
 
