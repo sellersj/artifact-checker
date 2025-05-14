@@ -136,9 +136,9 @@ public class ReportBuilder {
         InventoryFileUtil.fillInDecomissionedInfo(apps);
 
         // generate a file that's a vulnerability first view
-        File securityReportFile = new File(DownloadArtifacts.FILES_GENERATED + "/security-report.html");
         SortedMap<SecurityVulnerability, Set<ArtifactAttributes>> mapAppsToCve = mapAppsToCve(apps);
-        generateCveHtmlFile(mapAppsToCve, securityReportFile);
+        generateCveHtmlFile(mapAppsToCve, new File(DownloadArtifacts.FILES_GENERATED + "/security-report.html"));
+        generateCveJsonFile(mapAppsToCve, new File(DownloadArtifacts.FILES_GENERATED + "/security-report.json"));
 
         // make the output json
         File target = new File(DownloadArtifacts.FILES_GENERATED + "/app-inventory.json");
