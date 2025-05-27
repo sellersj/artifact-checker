@@ -517,9 +517,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     private String jiraUrl;
 
     public String getJiraUrl() {
-        String url = manifest.get(ISSUE_TRACKING);
+        String url = "";
 
-        if (StringUtils.isBlank(url)) {
+        if (StringUtils.isNotBlank(getJiraKey())) {
             String jiraHost = Constants.getSysOrEnvVariable(Constants.CORRECTED_JIRA_HOST);
             url = jiraHost + "/browse/" + getJiraKey();
         }
