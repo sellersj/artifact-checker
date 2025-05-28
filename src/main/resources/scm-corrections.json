@@ -186,7 +186,7 @@
     "scmProject": "ICAPPS",
     "scmRepo": "oud-osb---unclaimed-dividends",
     "artifactId": "OSB_UnclaimedDividendsEAR",
-    "jiraKey": ""
+    "jiraKey": "OSBUAUD"
   },
   {
     "implementationTitle": "PCOCDD - PCO_CabinetDocumentsDatabaseEAR",
@@ -242,7 +242,7 @@
     "scmProject": "ICAPPS",
     "scmRepo": "ccr-cipo-copyright-dd",
     "artifactId": "CIPO_CopyrightDDEAR",
-    "jiraKey": ""
+    "jiraKey": "CIPOCPR"
   },
   {
     "implementationTitle": "MCG - MC Gravity Calculator EAR",
@@ -282,6 +282,18 @@
   {
     "implementationTitle": "TDS - tds-lits-osb-license-insolvency-trustee-search-ear",
     "jiraKey": "OSBEFTR"
+  },
+  {
+    "implementationTitle": "TRUSTLIC - trustlic-osb-trustee-licensing-ear",
+    "jiraKey": "OSBLAA"
+  },
+  {
+    "implementationTitle": "INS - OSB - Insolvency Name Search EAR",
+    "jiraKey": "OSBINS"
+  },
+  {
+    "implementationTitle": "CID - CIPO - Industrial Design EAR",
+    "jiraKey": "CIPOID"
   },
   {
     "implementationTitle": "MCR - MC_RandomSamplingEAR",
