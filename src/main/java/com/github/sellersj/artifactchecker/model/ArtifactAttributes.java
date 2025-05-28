@@ -442,17 +442,16 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     private String jiraKey;
 
     public String getJiraKey() {
-        String url = manifest.get(ISSUE_TRACKING);
+        String manifestKey = manifest.get(ISSUE_TRACKING);
         String key = "";
 
-        if (StringUtils.isNotBlank(url)) {
-            key = url.substring(url.lastIndexOf("/") + 1);
-        }
-
-        // we don't have a value from the manifest
-        if (StringUtils.isBlank(key)) {
+        // always use the corrected key if we have it
+        if (StringUtils.isNotBlank(correctedJiraKey)) {
             key = correctedJiraKey;
+        } else if (StringUtils.isNotBlank(manifestKey)) {
+            key = manifestKey.substring(manifestKey.lastIndexOf("/") + 1);
         }
+        // else use the default of blank
 
         return key;
     }
