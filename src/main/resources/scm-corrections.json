@@ -323,14 +323,14 @@
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-tm-filing",
     "artifactId": "CIPO-ec-tm-filing-app",
-    "jiraKey": "TMEEF"
+    "jiraKey": "CIPOTM"
   },
   {
     "implementationTitle": "CIPO-ec-tm-reg-renewal-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-tm-reg-renewal",
     "artifactId": "CIPO-ec-tm-reg-renewal-app",
-    "jiraKey": "TMRDU"
+    "jiraKey": "CIPOTM"
   },
   {
     "implementationTitle": "CIPO-ec-tm-ws-app",
@@ -442,7 +442,7 @@
     "scmProject": "CWP",
     "scmRepo": "cipo-tm-madrid-console",
     "artifactId": "CIPO-tm-madrid-console-app",
-    "jiraKey": "TMMADCON"
+    "jiraKey": "CIPOTM"
   },
   {
     "implementationTitle": "CIPO-tm-information-retrieval-service-app - Enterprise Application",
@@ -976,7 +976,7 @@
     "scmRepo": "cipo-tm-documents-search-retrieval-service",
     "groupId": "ca.gc.ic.cipo.tm",
     "artifactId": "CIPO-tm-documents-search-retrieval-service-app",
-    "jiraKey": "CIPOTMDM"
+    "jiraKey": "CIPOTM"
   },
   {
     "implementationTitle": "CIPO-ec-cpr-ws-app",
