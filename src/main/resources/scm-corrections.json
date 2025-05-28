@@ -109,7 +109,7 @@
     "scmProject": "ICAPPS",
     "scmRepo": "fdopdfs-feddev-ontario-pdf-submissions",
     "artifactId": "FDOGC_PDFSubmissionEAR",
-    "jiraKey": ""
+    "jiraKey": "OPS"
   },
   {
     "implementationTitle": "FDORPD - FedDev Ontario Reclassification Proactive Disclosure Admin EAR",
