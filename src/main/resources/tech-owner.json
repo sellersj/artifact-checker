@@ -1,350 +1,70 @@
 [
-	{
-		"jiraKey": "AGS",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "ALSC",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "ART",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "BBCS",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "CASS",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "CBSL",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "CCR",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "CDB",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "CEBE",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "CIPOID",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "CIPOQBS",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "CTR",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "CWS",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "ECOMCPP",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "ECOMCPPR",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "EPTT",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "ETDS",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "FDOCPD",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "FDOGCPD",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "FDOPDFS",
-		"techOwner": "AMIS"
-	},
+  {
+    "jiraKey": "ALSC",
+    "techOwner": "AMIS"
+  },
+  {
+    "jiraKey": "CCR",
+    "techOwner": "AMIS"
+  },
+  {
+    "jiraKey": "CIPOID",
+    "techOwner": "AMIS"
+  },
+  {
+    "jiraKey": "CIPOQBS",
+    "techOwner": "AMIS"
+  },
+  {
+    "jiraKey": "CWS",
+    "techOwner": "AMIS"
+  },
   {
     "jiraKey": "OPS",
     "techOwner": "AMIS"
   },
-	{
-		"jiraKey": "FDORPD",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "FDOTHD",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "ICGCPD",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "ICPDC",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "ICR",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "MSD",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "ODE",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "OHW",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "PCOCDD",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "PDFCNVTR",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "POIMAP",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "QPAY",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "RFAXAPI",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "RFAXAPID",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "RGOFLDOC",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "RPD",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "SIS",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "SPNDSMRT",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "SWU",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "THD",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "MCOTHER",
-		"techOwner": "MC"
-	},
-	{
-		"jiraKey": "MCASPS",
-		"techOwner": "MC"
-	},
-	{
-		"jiraKey": "AIRR",
-		"techOwner": "MC"
-	},
-	{
-		"jiraKey": "MCCATS",
-		"techOwner": "MC"
-	},
-	{
-		"jiraKey": "MCCL",
-		"techOwner": "MC"
-	},
-	{
-		"jiraKey": "MCCRS",
-		"techOwner": "MC"
-	},
-	{
-		"jiraKey": "MCDTCS",
-		"techOwner": "MC"
-	},
-	{
-		"jiraKey": "MCEGDD",
-		"techOwner": "MC"
-	},
-	{
-		"jiraKey": "MCEDR",
-		"techOwner": "MC"
-	},
-	{
-		"jiraKey": "MCG",
-		"techOwner": "MC"
-	},
-	{
-		"jiraKey": "MASSCOMP",
-		"techOwner": "MC"
-	},
-	{
-		"jiraKey": "MCASPIS",
-		"techOwner": "MC"
-	},
-	{
-		"jiraKey": "NOANB",
-		"techOwner": "MC"
-	},
-	{
-		"jiraKey": "NAC",
-		"techOwner": "MC"
-	},
-	{
-		"jiraKey": "MCR",
-		"techOwner": "MC"
-	},
-	{
-		"jiraKey": "MCSTARS",
-		"techOwner": "MC"
-	},
-	{
-		"jiraKey": "BIMS",
-		"techOwner": "CB"
-	},
-	{
-		"jiraKey": "ADU",
-		"techOwner": "CB"
-	},
-	{
-		"jiraKey": "CAN",
-		"techOwner": "CB"
-	},
-	{
-		"jiraKey": "CBW",
-		"techOwner": "SBB"
-	},
-	{
-		"jiraKey": "CCCAPI",
-		"techOwner": "SBB"
-	},
-	{
-		"jiraKey": "CDNID",
-		"techOwner": "SBB"
-	},
-	{
-		"jiraKey": "CIS",
-		"techOwner": "SBB"
-	},
-	{
-		"jiraKey": "SPP",
-		"techOwner": "SBB"
-	},
-	{
-		"jiraKey": "IMSUSNTD",
-		"techOwner": "SBB"
-	},
-	{
-		"jiraKey": "CIODSIPS",
-		"techOwner": "SBB"
-	},
-	{
-		"jiraKey": "BBMAP",
-		"techOwner": "BLSD - STS"
-	},
-	{
-		"jiraKey": "OSBCCAA",
-		"techOwner": "BLSD - OSB"
-	},
-	{
-		"jiraKey": "CCDEV",
-		"techOwner": "BLSD - Corp"
-	},
-	{
-		"jiraKey": "CRMSRI",
-		"techOwner": "ADPD - SF"
-	},
-	{
-		"jiraKey": "FEDNORCOMS",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "IBW",
-		"techOwner": "AMIS"
-	},
-	{
-		"jiraKey": "IDM",
-		"techOwner": "BLSD"
-	},
-	{
-		"jiraKey": "OSBINS",
-		"techOwner": "BLSD - OSB"
-	},
-	{
-		"jiraKey": "intake",
-		"techOwner": "ADPD - SF"
-	},
-	{
-		"jiraKey": "ISCWP",
-		"techOwner": "DDID"
-	},
-	{
-		"jiraKey": "ISEDBNAPI",
-		"techOwner": "BLSD"
-	},
-	{
-		"jiraKey": "OSBEFTR",
-		"techOwner": "BLSD - OSB"
-	},
-	{
-		"jiraKey": "OSBFCONV",
-		"techOwner": "BLSD - OSB"
-	},
-	{
-		"jiraKey": "OSBTR",
-		"techOwner": "BLSD - OSB"
-	},
-	{
-		"jiraKey": "OSBUAUD",
-		"techOwner": "BLSD - OSB"
-	},
-	{
-		"jiraKey": "SBF",
-		"techOwner": "BLSD - CSBFP"
-	},
-	{
-		"jiraKey": "SITTIBC",
-		"techOwner": "BLSD - STS"
-	},
   {
-    "jiraKey": "STSIDCR",
-    "techOwner": "BLSD - STS"
+    "jiraKey": "POIMAP",
+    "techOwner": "AMIS"
   },
-	{
-		"jiraKey": "TDS",
-		"techOwner": "BLSD - OSB"
-	},
-	{
-		"jiraKey": "OSBLAA",
-		"techOwner": "BLSD - OSB"
-	}
+  {
+    "jiraKey": "QPAY",
+    "techOwner": "AMIS"
+  },
+  {
+    "jiraKey": "SWU",
+    "techOwner": "AMIS"
+  },
+  {
+    "jiraKey": "AIRR",
+    "techOwner": "MC"
+  },
+  {
+    "jiraKey": "IMSUSNTD",
+    "techOwner": "SBB"
+  },
+  {
+    "jiraKey": "OSBCCAA",
+    "techOwner": "BLSD - OSB"
+  },
+  {
+    "jiraKey": "OSBINS",
+    "techOwner": "BLSD - OSB"
+  },
+  {
+    "jiraKey": "OSBEFTR",
+    "techOwner": "BLSD - OSB"
+  },
+  {
+    "jiraKey": "OSBFCONV",
+    "techOwner": "BLSD - OSB"
+  },
+  {
+    "jiraKey": "OSBUAUD",
+    "techOwner": "BLSD - OSB"
+  },
+  {
+    "jiraKey": "OSBLAA",
+    "techOwner": "BLSD - OSB"
+  }
 ]
