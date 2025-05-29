@@ -3,15 +3,7 @@
     "implementationTitle": "ALSC - ALSC_AdminEAR",
     "scmProject": "SIS",
     "scmRepo": "alsc-alsc-admin",
-    "artifactId": "ALSC_AdminEAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "CASS - CASS-EAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "cass-ic-co-operative-administrative-and-statistical-system",
-    "artifactId": "CASS-EAR",
-    "jiraKey": ""
+    "artifactId": "ALSC_AdminEAR"
   },
   {
     "implementationTitle": "CCAA - OSB - Companies Creditors Arrangement Act (CCAA) Internal EAR",
@@ -28,81 +20,10 @@
     "jiraKey": "OSBCCAA"
   },
   {
-    "implementationTitle": "CDB - OCA_ConsumerResearchDBAdminEAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "cdb-oca-consumer-research-database",
-    "artifactId": "OCA_ConsumerResearchDBAdminEAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "CDB - OCA_ConsumerResearchDBPublicEAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "cdb-oca-consumer-research-database",
-    "artifactId": "OCA_ConsumerResearchDBPublicEAR",
-    "jiraKey": ""
-  },
-  {
     "implementationTitle": "CIPOQBS - CIPO - Querium Term Translator EAR",
     "scmProject": "ICAPPS",
     "scmRepo": "cipoqbs-cipo-querium",
-    "artifactId": "CIPO_QueriumEAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "ECOMCPP - ASB Ecommerce Postback config EAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "ecomcpp-ic-e-commerce-common-payment-processing-system",
-    "artifactId": "ASB_Ecommerce_PostbackConfigEAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "ECOMCPP - ASB_Ecommerce_ListenerEAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "ecomcpp-ic-e-commerce-common-payment-processing-system",
-    "artifactId": "ASB_Ecommerce_ListenerEAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "ECOMCPP - ASB_Ecommerce_RedirectEAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "ecomcpp-ic-e-commerce-common-payment-processing-system",
-    "artifactId": "ASB_Ecommerce_RedirectEAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "EPTT - SITT - Event Participation Tracking Tool EAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "eptt-sitt-event-participation-tracking-tool",
-    "artifactId": "SITT_EPTT_EAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "FDOCPD - FedDev Ontario Proactive Disclosure Contracts Admin EAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "fdocpd-feddev-ontario-proactive-disclosure-contracts",
-    "artifactId": "FDO_ContractingActivitiesReportingAdminEAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "FDOCPD - FedDev Ontario Proactive Disclosure Contracts Public EAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "fdocpd-feddev-ontario-proactive-disclosure-contracts",
-    "artifactId": "FDO_ContractingActivitiesReportingPublicEAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "FDOGCPD - Fed Dev Ontario Proactive Disclosure Grants And Contributions Admin EAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "fdogcpd-feddev-ontario-proactive-disclosure-grants-contributions",
-    "artifactId": "FDO_GC_ProactiveDisclosureAdminEAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "FDOGCPD - Fed Dev Ontario Proactive Disclosure Grants And Contributions Public EAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "fdogcpd-feddev-ontario-proactive-disclosure-grants-contributions",
-    "artifactId": "FDO_GC_ProactiveDisclosurePublicEAR",
-    "jiraKey": ""
+    "artifactId": "CIPO_QueriumEAR"
   },
   {
     "implementationTitle": "FDOPDFS - FDOGC_PDFSubmissionEAR",
@@ -112,76 +33,6 @@
     "jiraKey": "OPS"
   },
   {
-    "implementationTitle": "FDORPD - FedDev Ontario Reclassification Proactive Disclosure Admin EAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "fdorpd-feddev-ontario-reclassification-proactive-disclosure",
-    "artifactId": "FDO_ReclassificationProactiveDisclosureAdminEAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "FDORPD - FedDev Ontario Reclassification Proactive Disclosure Public EAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "fdorpd-feddev-ontario-reclassification-proactive-disclosure",
-    "artifactId": "FDO_ReclassificationProactiveDisclosurePublicEAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "FDOTHD - FDOTHD - FedDev Ontario Travel And Hospitality Disclosure Admin EAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "fdothd-feddev-ontario-travel-hospitality-disclosure",
-    "artifactId": "FDO_TravelHospitalityDisclosureAdminEAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "ICGCPD - IC_GC_ProactiveDisclosure Admin EAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "icgcpd-cas-ic-proactive-disclosure-gs-and-cs",
-    "artifactId": "IC_GC_ProactiveDisclosureAdminEAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "ICGCPD - IC_GC_ProactiveDisclosure Public EAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "icgcpd-cas-ic-proactive-disclosure-gs-and-cs",
-    "artifactId": "IC_GC_ProactiveDisclosurePublicEAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "ICPDC - IC Contracting Activities Reporting External EAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "icgcpd-cas-ic-proactive-disclosure-gs-and-cs",
-    "artifactId": "IC_ContractingActivitiesReporting_External_EAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "ICPDC - IC Contracting Activities Reporting Internal EAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "icpdc-cas-proactive-disclosure-contracts",
-    "artifactId": "IC_ContractingActivitiesReporting_Internal_EAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "MSD - CBSC -  Multi-Channel Service Delivery Assistant Ear",
-    "scmProject": "ICAPPS",
-    "scmRepo": "msd-sdp-cbsc-msda",
-    "artifactId": "CBSC_MSDAEar",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "OHW - FM OHWS OnLine Training EAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "ohw-cas-facilities-management-ohws-training",
-    "artifactId": "FM_OHWSTrainingEar",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "OSBTR - OSB_TrusteeRenewalEAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "osbtr-trustee-renewal",
-    "artifactId": "OSB_TrusteeRenewalEAR",
-    "jiraKey": ""
-  },
-  {
     "implementationTitle": "OUD - OSB_UnclaimedDividendsEAR",
     "scmProject": "ICAPPS",
     "scmRepo": "oud-osb---unclaimed-dividends",
@@ -189,95 +40,11 @@
     "jiraKey": "OSBUAUD"
   },
   {
-    "implementationTitle": "PCOCDD - PCO_CabinetDocumentsDatabaseEAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "pcocdd-cabinet-documents-database",
-    "artifactId": "PCO_CabinetDocumentsDatabaseEAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "RGOFLDOC - CORP_RGCDocRepositoryEAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "rgofldoc-corp-registrar-general-of-canada-official-document-repo",
-    "artifactId": "CORP_RGCDocRepositoryEAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "RGOFLDOC - CORP_RGCDocRepositoryPublicEAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "rgofldoc-corp-registrar-general-of-canada-official-document-repo",
-    "artifactId": "CORP_RGCDocRepositoryPublicEAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "RPD - HRB Reclassification Proactive Disclosure Admin EAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "rpd-hrb-reclassification-proactive-disclosure",
-    "artifactId": "HRB_ReclassificationProactiveDisclosureAdminEAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "RPD - HRB Reclassification Proactive Disclosure Public EAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "rpd-hrb-reclassification-proactive-disclosure",
-    "artifactId": "HRB_ReclassificationProactiveDisclosurePublicEAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "THD - CFO Travel Hospitality Disclosure Admin EAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "thd-cas-cfo-travel-hospitality-disclosure",
-    "artifactId": "CFO_TravelHospitalityDisclosureAdminEAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "THD - CFO Travel Hospitality Disclosure Public EAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "thd-cas-cfo-travel-hospitality-disclosure",
-    "artifactId": "CFO_TravelHospitalityDisclosurePublicEAR",
-    "jiraKey": ""
-  },
-  {
     "implementationTitle": "CCR - CIPO - Copyright DD EAR",
     "scmProject": "ICAPPS",
     "scmRepo": "ccr-cipo-copyright-dd",
     "artifactId": "CIPO_CopyrightDDEAR",
     "jiraKey": "CCR"
-  },
-  {
-    "implementationTitle": "MCG - MC Gravity Calculator EAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "mcg-mc-gravity-calculator",
-    "artifactId": "MC_Gravity_Calculator_EAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "ICR - IC_Registration_InternalEAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "icr-asd---ic-registration",
-    "artifactId": "IC_Registration_InternalEAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "SPNDSMRT - OCA_Spending_Smarter_CalculatorsEAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "spndsmrt-oca-spending-smarter-calculators",
-    "artifactId": "OCA_Spending_Smarter_CalculatorsEAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "SPNDSMRT - OCA_Spending_Smarter_CalculatorsEAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "spndsmrt-oca-spending-smarter-calculators",
-    "artifactId": "OCA_Spending_Smarter_CalculatorsEAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "TDS - OSB_Trustee_Directory_SearchEAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "tds-osb-trustee-directory",
-    "artifactId": "OSB_Trustee_Directory_SearchEAR",
-    "jiraKey": ""
   },
   {
     "implementationTitle": "TDS - tds-lits-osb-license-insolvency-trustee-search-ear",
@@ -298,20 +65,6 @@
   {
     "implementationTitle": "CID - CIPO - Industrial Design EAR",
     "jiraKey": "CID"
-  },
-  {
-    "implementationTitle": "MCR - MC_RandomSamplingEAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "mcr-pseudo-random-sampling-application",
-    "artifactId": "MC_RandomSamplingEAR",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "ODE - TPC - Online Document Exchange EAR",
-    "scmProject": "ICAPPS",
-    "scmRepo": "ode-ito-online-document-exchange",
-    "artifactId": "TPC_OnlineDocumentExchangePublicEar",
-    "jiraKey": ""
   },
   {
     "implementationTitle": "CIPO-ec-payment-app",
@@ -349,18 +102,10 @@
     "jiraKey": "CIPOTM"
   },
   {
-    "implementationTitle": "CIPO-ec-tm-ws-app",
-    "scmProject": "CWP",
-    "scmRepo": "cipo-ec-tm-ws",
-    "artifactId": "CIPO-ec-tm-ws-app",
-    "jiraKey": ""
-  },
-  {
     "implementationTitle": "CIPO-ec-wet-common-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-wet-common",
-    "artifactId": "CIPO-ec-wet-common-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-ec-wet-common-app"
   },
   {
     "implementationTitle": "CIPO-filing-a-grant-of-interest-app - Enterprise Application",
@@ -380,8 +125,7 @@
     "implementationTitle": "CIPO-app-status-app - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-app-status",
-    "artifactId": "CIPO-app-status-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-app-status-app"
   },
   {
     "implementationTitle": "General Correspondence - Enterprise Application",
@@ -398,13 +142,6 @@
     "jiraKey": "CIPOCPR"
   },
   {
-    "implementationTitle": "CIPO-cr-request-correction-certificate-app - Enterprise Application",
-    "scmProject": "CWP",
-    "scmRepo": "cipo-cr-request-correction-certificate",
-    "artifactId": "CIPO-cr-request-correction-certificate-app",
-    "jiraKey": "CIPOCPR"
-  },
-  {
     "implementationTitle": "CIPO-ec-tm-add-name-list-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-tm-add-name-list",
@@ -415,43 +152,37 @@
     "implementationTitle": "CIPO-id-information-retrieval-service-app - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-id-information-retrieval-service",
-    "artifactId": "CIPO-id-information-retrieval-service-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-id-information-retrieval-service-app"
   },
   {
     "implementationTitle": "CIPO-fee-service-app - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-fee-service",
-    "artifactId": "CIPO-fee-service-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-fee-service-app"
   },
   {
     "implementationTitle": "CIPO-id-transaction-processing-service-app - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-id-transaction-processing-service",
-    "artifactId": "CIPO-id-transaction-processing-service-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-id-transaction-processing-service-app"
   },
   {
     "implementationTitle": "CIPO-fee-console-app - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-fee-console",
-    "artifactId": "CIPO-fee-console-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-fee-console-app"
   },
   {
     "implementationTitle": "CIPO-ec-id-filing-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-id-filing",
-    "artifactId": "CIPO-ec-id-filing-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-ec-id-filing-app"
   },
   {
     "implementationTitle": "CIPO-ec-id-maintfee-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-id-maintfee",
-    "artifactId": "CIPO-ec-id-maintfee-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-ec-id-maintfee-app"
   },
   {
     "implementationTitle": "CIPO-tm-madrid-console-app",
@@ -464,143 +195,123 @@
     "implementationTitle": "CIPO-tm-information-retrieval-service-app - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-tm-information-retrieval-service",
-    "artifactId": "CIPO-tm-information-retrieval-service-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-tm-information-retrieval-service-app"
   },
   {
     "implementationTitle": "CIPO-tm-madrid-financial-service-app - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-tm-madrid-financial-service",
-    "artifactId": "CIPO-tm-madrid-financial-service-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-tm-madrid-financial-service-app"
   },
   {
     "implementationTitle": "CIPO-tm-madrid-package-service-app - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-tm-madrid-package-service",
-    "artifactId": "CIPO-tm-madrid-package-service-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-tm-madrid-package-service-app"
   },
   {
     "implementationTitle": "CIPO-tm-madrid-transaction-service-app - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-tm-madrid-transaction-service",
-    "artifactId": "CIPO-tm-madrid-transaction-service-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-tm-madrid-transaction-service-app"
   },
   {
     "implementationTitle": "CIPO-tm-madrid-workflow-engine-app - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-tm-madrid-workflow-engine",
     "groupId": "ca.gc.ic.cipo.tm.madrid",
-    "artifactId": "CIPO-tm-madrid-workflow-engine-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-tm-madrid-workflow-engine-app"
   },
   {
     "implementationTitle": "CIPO-tm-transaction-processing-service-app - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-tm-transaction-processing-service",
-    "artifactId": "CIPO-tm-transaction-processing-service-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-tm-transaction-processing-service-app"
   },
   {
     "implementationTitle": "CIPO-tm-user-profile-service-app - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-tm-user-profile-service",
-    "artifactId": "CIPO-tm-user-profile-service-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-tm-user-profile-service-app"
   },
   {
     "implementationTitle": "IRPI Web Service - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-tm-irpi-service",
-    "artifactId": "CIPO-tm-irpi-service-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-tm-irpi-service-app"
   },
   {
     "implementationTitle": "CIPO-ec-tm-client-admin-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-tm-client-admin",
-    "artifactId": "CIPO-ec-tm-client-admin-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-ec-tm-client-admin-app"
   },
   {
     "implementationTitle": "CIPO-ec-tm-oppBoard-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-tm-oppboard",
-    "artifactId": "CIPO-ec-tm-oppBoard-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-ec-tm-oppBoard-app"
   },
   {
     "implementationTitle": "Patent Electronic Filing - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-patent-efiling",
-    "artifactId": "CIPO-patent-efiling-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-patent-efiling-app"
   },
   {
     "implementationTitle": "CIPO-ec-id-eaccess-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-id-eaccess",
-    "artifactId": "CIPO-ec-id-eaccess-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-ec-id-eaccess-app"
   },
   {
     "implementationTitle": "CIPO-ec-id-mailbox-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-id-mailbox",
-    "artifactId": "CIPO-ec-id-mailbox-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-ec-id-mailbox-app"
   },
   {
     "implementationTitle": "CIPO-ec-pb-maintfee-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-pb-maintfee",
-    "artifactId": "CIPO-ec-pb-maintfee-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-ec-pb-maintfee-app"
   },
   {
     "implementationTitle": "CIPO-ec-profile-ws-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-profile-ws",
-    "artifactId": "CIPO-ec-profile-ws-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-ec-profile-ws-app"
   },
   {
     "implementationTitle": "CIPO-ec-cpr-filing-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-cpr-filing",
-    "artifactId": "CIPO-ec-cpr-filing-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-ec-cpr-filing-app"
   },
   {
     "implementationTitle": "CIPO-ec-online-statements-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-online-statements",
-    "artifactId": "CIPO-ec-online-statements-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-ec-online-statements-app"
   },
   {
     "implementationTitle": "CIPO-agent-college-register-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-agent-college-register",
-    "artifactId": "CIPO-agent-college-register-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-agent-college-register-app"
   },
   {
     "implementationTitle": "CIPO-accounts-ws-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-accounts-ws",
-    "artifactId": "CIPO-accounts-ws-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-accounts-ws-app"
   },
   {
     "implementationTitle": "CIPO-tm-documents-processing-service-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-tm-documents-processing-service",
     "groupId": "ca.gc.ic.cipo.tm",
-    "artifactId": "CIPO-tm-documents-processing-service-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-tm-documents-processing-service-app"
   },
   {
     "implementationTitle": "business-event-service-app",
@@ -625,22 +336,6 @@
     "groupId": "ca.gc.ic.cipo.ccd",
     "artifactId": "ccd-letter-gen-service-app",
     "jiraKey": "CIPOCSC"
-  },
-  {
-    "implementationTitle": "CIPO-bsl-export-service-app",
-    "scmProject": "CIPO",
-    "scmRepo": "cipo-bsl-export-service",
-    "groupId": "ca.gc.ic.cipo.bsl",
-    "artifactId": "CIPO-bsl-export-service-app",
-    "jiraKey": "CIPOPWEB"
-  },
-  {
-    "implementationTitle": "cipo-egrant-proxy-app",
-    "scmProject": "CIPITM",
-    "scmRepo": "cipo-egrant-proxy",
-    "groupId": "ca.gc.ic.cipo.egrant",
-    "artifactId": "cipo-egrant-proxy-app",
-    "jiraKey": "CIPOPWEB"
   },
   {
     "implementationTitle": "CIPO-id-hague-console-app",
@@ -683,14 +378,6 @@
     "jiraKey": "CIPOID"
   },
   {
-    "implementationTitle": "CIPO-patent-bulk-export-service-app",
-    "scmProject": "CIPO",
-    "scmRepo": "cipo-patent-bulk-export-service",
-    "groupId": "ca.gc.ic.cipo.pbx",
-    "artifactId": "CIPO-patent-bulk-export-service-app",
-    "jiraKey": "CIPOPWEB"
-  },
-  {
     "implementationTitle": "cpd-site-app",
     "scmProject": "CIPO",
     "scmRepo": "cpd",
@@ -707,59 +394,11 @@
     "jiraKey": "CIPOPWEB"
   },
   {
-    "implementationTitle": "cpor-custom-notice-service-app",
-    "scmProject": "CIPO",
-    "scmRepo": "cpor",
-    "groupId": "ca.gc.ic.cipo.cpr",
-    "artifactId": "cpor-custom-notice-service-app",
-    "jiraKey": "CIPOPWEB"
-  },
-  {
-    "implementationTitle": "cpor-pct-fee-service-app",
-    "scmProject": "CIPO",
-    "scmRepo": "cpor",
-    "groupId": "ca.gc.ic.cipo.cpr",
-    "artifactId": "cpor-pct-fee-service-app",
-    "jiraKey": "CIPOPWEB"
-  },
-  {
-    "implementationTitle": "cpor-publisher-service-app",
-    "scmProject": "CIPO",
-    "scmRepo": "cpor",
-    "groupId": "ca.gc.ic.cipo.cpr",
-    "artifactId": "cpor-publisher-service-app",
-    "jiraKey": "CIPOPWEB"
-  },
-  {
     "implementationTitle": "cpor-site-app",
     "scmProject": "CIPO",
     "scmRepo": "cpor",
     "groupId": "ca.gc.ic.cipo.cpr",
     "artifactId": "cpor-site-app",
-    "jiraKey": "CIPOPWEB"
-  },
-  {
-    "implementationTitle": "cpor-template-service-app",
-    "scmProject": "CIPO",
-    "scmRepo": "cpor",
-    "groupId": "ca.gc.ic.cipo.cpr",
-    "artifactId": "cpor-template-service-app",
-    "jiraKey": "CIPOPWEB"
-  },
-  {
-    "implementationTitle": "cpor-weekly-batch-app",
-    "scmProject": "CIPO",
-    "scmRepo": "cpor",
-    "groupId": "ca.gc.ic.cipo.cpr",
-    "artifactId": "cpor-weekly-batch-app",
-    "jiraKey": "CIPOPWEB"
-  },
-  {
-    "implementationTitle": "cpor-weekly-publication-service-app",
-    "scmProject": "CIPO",
-    "scmRepo": "cpor",
-    "groupId": "ca.gc.ic.cipo.cpr",
-    "artifactId": "cpor-weekly-publication-service-app",
     "jiraKey": "CIPOPWEB"
   },
   {
@@ -827,30 +466,6 @@
     "jiraKey": "CIPOPWEB"
   },
   {
-    "implementationTitle": "patent-document-retrieval-service-app",
-    "scmProject": "CIPO",
-    "scmRepo": "patent-document-retrieval-service",
-    "groupId": "ca.gc.ic.cipo.pdrs",
-    "artifactId": "patent-document-retrieval-service-app",
-    "jiraKey": "CIPOPWEB"
-  },
-  {
-    "implementationTitle": "patent-image-retrieval-service-app",
-    "scmProject": "CIPO",
-    "scmRepo": "patent-image-retrieval-service",
-    "groupId": "ca.gc.ic.cipo.pirs",
-    "artifactId": "patent-image-retrieval-service-app",
-    "jiraKey": "CIPOPWEB"
-  },
-  {
-    "implementationTitle": "patent-list-service-app",
-    "scmProject": "CIPO",
-    "scmRepo": "patent-list-service",
-    "groupId": "ca.gc.ic.cipo.pab",
-    "artifactId": "patent-list-service-app",
-    "jiraKey": "CIPOPWEB"
-  },
-  {
     "implementationTitle": "pctsafe-service-app",
     "scmProject": "CIPO",
     "scmRepo": "pctsafe-service",
@@ -881,22 +496,6 @@
     "groupId": "ca.gc.ic.cipo.report",
     "artifactId": "report-generation-service-app",
     "jiraKey": "CIPOCOMS"
-  },
-  {
-    "implementationTitle": "session-recovery-service-app",
-    "scmProject": "CIPO",
-    "scmRepo": "session-recovery-service",
-    "groupId": "ca.gc.ic.cipo.com",
-    "artifactId": "session-recovery-service-app",
-    "jiraKey": "CIPOPWEB"
-  },
-  {
-    "implementationTitle": "solr-patent-indexer-app",
-    "scmProject": "CIPO",
-    "scmRepo": "solr-patent-indexer",
-    "groupId": "ca.gc.ic.cipo.patents",
-    "artifactId": "solr-patent-indexer-app",
-    "jiraKey": "CIPOPWEB"
   },
   {
     "implementationTitle": "system-codes-service-app",
@@ -983,8 +582,7 @@
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-tm-ecorrespondence",
     "groupId": "ca.gc.ic.cipo.ec.tm",
-    "artifactId": "CIPO-ec-tm-ecorrespondence-app",
-    "jiraKey": ""
+    "artifactId": "CIPO-ec-tm-ecorrespondence-app"
   },
   {
     "implementationTitle": "CIPO-tm-documents-search-retrieval-service-app",
@@ -999,47 +597,6 @@
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-cpr-ws",
     "groupId": "ca.gc.ic.cipo.ec.cpr",
-    "artifactId": "CIPO-ec-cpr-ws-app",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "CIPO-quartz-service-app",
-    "scmProject": "CSP",
-    "scmRepo": "cipo-quartz-service",
-    "groupId": "ca.gc.ic.cipo",
-    "artifactId": "CIPO-quartz-service-app",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "CIPO-sandbox-test-app - Enterprise Application",
-    "scmProject": "CWP",
-    "scmRepo": "cipo-sandbox-test",
-    "groupId": "ca.gc.ic.cipo.test",
-    "artifactId": "CIPO-sandbox-test-app",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "CIPO-tm-conversion-processing-service-app - Enterprise Application",
-    "scmProject": "CWP",
-    "scmRepo": "cipo-tm-conversion-processing-service",
-    "groupId": "ca.ic.gc.cipo.tm",
-    "artifactId": "CIPO-tm-conversion-processing-service-app",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "CIPO-Client-service-app - Enterprise Application",
-    "scmProject": "CWP",
-    "scmRepo": "cipo-tm-conversion-processing-service",
-    "groupId": "ca.ic.gc.cipo.tm",
-    "artifactId": "CIPO-tm-conversion-processing-service-app",
-    "jiraKey": ""
-  },
-  {
-    "implementationTitle": "cipo-map-id-app",
-    "scmProject": "CIPO",
-    "scmRepo": "cipo-map-id",
-    "groupId": "ca.gc.ic.cipo.sc",
-    "artifactId": "cipo-map-id-app",
-    "jiraKey": "CIPOPL"
+    "artifactId": "CIPO-ec-cpr-ws-app"
   }
 ]
