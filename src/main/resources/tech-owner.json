@@ -24,7 +24,7 @@
 		"techOwner": "AMIS"
 	},
 	{
-		"jiraKey": "CCR",
+		"jiraKey": "CIPOCPR",
 		"techOwner": "AMIS"
 	},
 	{
@@ -36,7 +36,7 @@
 		"techOwner": "AMIS"
 	},
 	{
-		"jiraKey": "CID",
+		"jiraKey": "CIPOID",
 		"techOwner": "AMIS"
 	},
 	{
@@ -79,6 +79,10 @@
 		"jiraKey": "FDOPDFS",
 		"techOwner": "AMIS"
 	},
+  {
+    "jiraKey": "OPS",
+    "techOwner": "AMIS"
+  },
 	{
 		"jiraKey": "FDORPD",
 		"techOwner": "AMIS"
@@ -296,7 +300,7 @@
 		"techOwner": "BLSD"
 	},
 	{
-		"jiraKey": "INS",
+		"jiraKey": "OSBINS",
 		"techOwner": "BLSD - OSB"
 	},
 	{
@@ -324,7 +328,7 @@
 		"techOwner": "BLSD - OSB"
 	},
 	{
-		"jiraKey": "OUD",
+		"jiraKey": "OSBUAUD",
 		"techOwner": "BLSD - OSB"
 	},
 	{
@@ -344,7 +348,7 @@
 		"techOwner": "BLSD - OSB"
 	},
 	{
-		"jiraKey": "TRUSTLIC",
+		"jiraKey": "OSBLAA",
 		"techOwner": "BLSD - OSB"
 	}
 ]
