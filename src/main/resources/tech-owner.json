@@ -268,10 +268,6 @@
 		"techOwner": "SBB"
 	},
 	{
-		"jiraKey": "CIODSIPS",
-		"techOwner": "SIPS"
-	},
-	{
 		"jiraKey": "BBMAP",
 		"techOwner": "BLSD - STS"
 	},
