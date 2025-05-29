@@ -518,7 +518,7 @@ public class InventoryFileUtil {
         return unneeded;
     }
 
-    private static List<ScmCorrection> getCorrections() {
+    public static List<ScmCorrection> getCorrections() {
         File file = getFileOnClasspath("/scm-corrections.json");
         List<ScmCorrection> correction = readScmCorrection(file);
 
