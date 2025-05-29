@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -20,6 +21,7 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.apache.commons.io.FileUtils;
@@ -32,6 +34,7 @@ import org.junit.jupiter.api.Test;
 import com.github.sellersj.artifactchecker.model.App;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.MavenGAV;
+import com.github.sellersj.artifactchecker.model.TechOwner;
 import com.github.sellersj.artifactchecker.model.owasp.CvssV2;
 import com.github.sellersj.artifactchecker.model.owasp.CvssV3;
 import com.github.sellersj.artifactchecker.model.owasp.Severity;
@@ -210,6 +213,29 @@ public class InventoryFileUtilTest {
             assertNotNull(att.getArtifactId(), "artifactId");
             assertNotNull(att.getVersion(), "version");
             assertEquals(App.DATA_CENTER_KED, att.getDeploymentInfo().getDataCenter(), "data center");
+        }
+    }
+
+    @Test
+    public void readTechOwner_SanityCheck() {
+        File file = InventoryFileUtil.getFileOnClasspath("/tech-owner.json");
+        List<TechOwner> techOwner = InventoryFileUtil.readTechOwner(file);
+
+        // find any places in use
+        TreeMap<String, List<TechOwner>> found = new TreeMap<>();
+        for (TechOwner owner : techOwner) {
+            if (!found.containsKey(owner.getJiraKey())) {
+                found.put(owner.getJiraKey(), new ArrayList<TechOwner>());
+            }
+
+            found.get(owner.getJiraKey()).add(owner);
+        }
+
+        for (Entry<String, List<TechOwner>> entry : found.entrySet()) {
+            if (entry.getValue().size() > 1) {
+                fail(String.format("SHould not have %s duplicate enteries for key %s with tech owner but was %s",
+                    entry.getValue().size(), entry.getKey(), entry.getValue()));
+            }
         }
     }
 
