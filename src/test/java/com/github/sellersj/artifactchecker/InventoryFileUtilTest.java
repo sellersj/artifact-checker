@@ -217,9 +217,9 @@ public class InventoryFileUtilTest {
     }
 
     @Test
-    public void readTechOwner_SanityCheck() {
+    public void readTechOwners_SanityCheck() {
         File file = InventoryFileUtil.getFileOnClasspath("/tech-owner.json");
-        List<TechOwner> techOwner = InventoryFileUtil.readTechOwner(file);
+        List<TechOwner> techOwner = InventoryFileUtil.readTechOwners(file);
 
         // find any places in use
         TreeMap<String, List<TechOwner>> found = new TreeMap<>();

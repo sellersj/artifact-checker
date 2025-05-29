@@ -81,7 +81,7 @@ public class InventoryFileUtil {
         }
     }
 
-    public static List<TechOwner> readTechOwner(File file) {
+    public static List<TechOwner> readTechOwners(File file) {
         try {
             List<TechOwner> techOwners = mapper.readValue(file, new TypeReference<List<TechOwner>>() {
             });
@@ -534,7 +534,7 @@ public class InventoryFileUtil {
 
     private static Map<String, TechOwner> getTechOwners() {
         File file = getFileOnClasspath("/tech-owner.json");
-        List<TechOwner> techOwner = readTechOwner(file);
+        List<TechOwner> techOwner = readTechOwners(file);
         Map<String, TechOwner> mapOfTechOwners = new HashMap<>();
         for (TechOwner owner : techOwner) {
             mapOfTechOwners.put(owner.getJiraKey(), owner);
