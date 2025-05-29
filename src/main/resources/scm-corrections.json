@@ -284,6 +284,10 @@
     "jiraKey": "OSBEFTR"
   },
   {
+    "implementationTitle": "OSBFCONV - osbfc-osb-file-conversion-ear",
+    "jiraKey": "OSBEFTR"
+  },
+  {
     "implementationTitle": "TRUSTLIC - trustlic-osb-trustee-licensing-ear",
     "jiraKey": "OSBLAA"
   },
