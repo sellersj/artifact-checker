@@ -5,11 +5,11 @@
   },
   {
     "jiraKey": "CCR",
-    "techOwner": "AMIS"
+    "techOwner": "CIPO"
   },
   {
     "jiraKey": "CID",
-    "techOwner": "AMIS"
+    "techOwner": "CIPO"
   },
   {
     "jiraKey": "CIPOID",
@@ -17,11 +17,11 @@
   },
   {
     "jiraKey": "CIPOQBS",
-    "techOwner": "AMIS"
+    "techOwner": "CIPO"
   },
   {
     "jiraKey": "CWS",
-    "techOwner": "AMIS"
+    "techOwner": "CIPO"
   },
   {
     "jiraKey": "OPS",
