@@ -242,7 +242,7 @@
     "scmProject": "ICAPPS",
     "scmRepo": "ccr-cipo-copyright-dd",
     "artifactId": "CIPO_CopyrightDDEAR",
-    "jiraKey": "CIPOCPR"
+    "jiraKey": "CCR"
   },
   {
     "implementationTitle": "MCG - MC Gravity Calculator EAR",
