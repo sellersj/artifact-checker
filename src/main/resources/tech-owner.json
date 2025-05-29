@@ -8,8 +8,12 @@
     "techOwner": "AMIS"
   },
   {
-    "jiraKey": "CIPOID",
+    "jiraKey": "CID",
     "techOwner": "AMIS"
+  },
+  {
+    "jiraKey": "CIPOID",
+    "techOwner": "CIPO"
   },
   {
     "jiraKey": "CIPOQBS",
