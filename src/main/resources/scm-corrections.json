@@ -30,7 +30,7 @@
     "scmProject": "ICAPPS",
     "scmRepo": "fdopdfs-feddev-ontario-pdf-submissions",
     "artifactId": "FDOGC_PDFSubmissionEAR",
-    "jiraKey": "OPS"
+    "jiraKey": "FDOPDFS"
   },
   {
     "implementationTitle": "OUD - OSB_UnclaimedDividendsEAR",
