@@ -14,7 +14,7 @@
     <jackson.version>2.20</jackson.version>
     <!-- used for the reports of other project -->
     <!-- when updating, check the xsd file to use -->
-    <!-- https://github.com/jeremylong/DependencyCheck/tree/main/core/src/main/resources/schema -->
+    <!-- https://github.com/dependency-check/DependencyCheck/tree/main/core/src/main/resources/schema -->
     <owasp.dependency.check.version>12.1.6</owasp.dependency.check.version>
     <owasp.dependency.check.xsd.file>dependency-check.4.1.xsd</owasp.dependency.check.xsd.file>
     <maven.dependency.plugin.version>3.8.1</maven.dependency.plugin.version>
