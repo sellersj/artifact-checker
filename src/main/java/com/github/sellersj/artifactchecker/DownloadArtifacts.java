@@ -242,7 +242,8 @@ public class DownloadArtifacts {
             "-DrubygemsAnalyzerEnabled=false", //
             "-DbundleAuditAnalyzerEnabled=false", //
             "-DnodeAuditSkipDevDependencies=true", //
-            "-DyarnAuditAnalyzerEnabled=false"));
+            "-DyarnAuditAnalyzerEnabled=false", //
+            "-Djdk.util.zip.disableZip64ExtraFieldValidation=true"));
 
         // if we have a nexus url, use it
         if (StringUtils.isNotBlank(nexusUrl)) {
