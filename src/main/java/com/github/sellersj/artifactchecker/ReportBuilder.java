@@ -34,6 +34,7 @@ import com.github.sellersj.artifactchecker.model.ParsedDataSource;
 import com.github.sellersj.artifactchecker.model.owasp.KnownExploitedVulnerability;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 import com.github.sellersj.artifactchecker.model.security.ArtifactAttributesComparator;
+import com.github.sellersj.artifactchecker.model.security.SecurityVulnerabilityPair;
 import com.github.sellersj.artifactchecker.model.security.SecurityVulnerability;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
@@ -574,7 +575,16 @@ public class ReportBuilder {
      */
     public static void generateCveJsonFile(SortedMap<SecurityVulnerability, Set<ArtifactAttributes>> map,
                                            File securityReportFile) {
-        InventoryFileUtil.write(securityReportFile, map);
+
+        List<SecurityVulnerabilityPair> pairs = new ArrayList<>();
+        for (Entry<SecurityVulnerability, Set<ArtifactAttributes>> entry : map.entrySet()) {
+            SecurityVulnerabilityPair p = new SecurityVulnerabilityPair();
+            p.setKey(entry.getKey());
+            p.setValue(entry.getValue());
+            pairs.add(p);
+        }
+
+        InventoryFileUtil.write(securityReportFile, pairs);
     }
 
     private static void td(StringBuilder builder, boolean start) {
