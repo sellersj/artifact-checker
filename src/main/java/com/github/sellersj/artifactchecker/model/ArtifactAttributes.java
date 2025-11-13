@@ -21,6 +21,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.sellersj.artifactchecker.Constants;
 import com.github.sellersj.artifactchecker.DateUtils;
 import com.github.sellersj.artifactchecker.model.owasp.KnownExploitedVulnerability;
@@ -35,6 +36,7 @@ import com.opencsv.bean.CsvBindByName;
  *
  * @author sellersj
  */
+@JsonIgnoreProperties(value = {"nodeHostnames", "nodeUrls", "applicationUrlsAsHtml"}, allowGetters = true)
 public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     public static final String ISSUE_TRACKING = "Issue-Tracking";
