@@ -105,7 +105,8 @@
     "implementationTitle": "CIPO-ec-wet-common-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-wet-common",
-    "artifactId": "CIPO-ec-wet-common-app"
+    "artifactId": "CIPO-ec-wet-common-app",
+    "jiraKey": "CIPOCOMS"
   },
   {
     "implementationTitle": "CIPO-filing-a-grant-of-interest-app - Enterprise Application",
