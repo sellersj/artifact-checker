@@ -170,19 +170,22 @@
     "implementationTitle": "CIPO-fee-console-app - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-fee-console",
-    "artifactId": "CIPO-fee-console-app"
+    "artifactId": "CIPO-fee-console-app",
+    "jiraKey": "CIPOTM"
   },
   {
     "implementationTitle": "CIPO-ec-id-filing-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-id-filing",
-    "artifactId": "CIPO-ec-id-filing-app"
+    "artifactId": "CIPO-ec-id-filing-app",
+    "jiraKey": "CIPOID"
   },
   {
     "implementationTitle": "CIPO-ec-id-maintfee-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-id-maintfee",
-    "artifactId": "CIPO-ec-id-maintfee-app"
+    "artifactId": "CIPO-ec-id-maintfee-app",
+    "jiraKey": "CIPOID"
   },
   {
     "implementationTitle": "CIPO-tm-madrid-console-app",
@@ -201,26 +204,30 @@
     "implementationTitle": "CIPO-tm-madrid-financial-service-app - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-tm-madrid-financial-service",
-    "artifactId": "CIPO-tm-madrid-financial-service-app"
+    "artifactId": "CIPO-tm-madrid-financial-service-app",
+    "jiraKey": "CIPOTM"
   },
   {
     "implementationTitle": "CIPO-tm-madrid-package-service-app - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-tm-madrid-package-service",
-    "artifactId": "CIPO-tm-madrid-package-service-app"
+    "artifactId": "CIPO-tm-madrid-package-service-app",
+    "jiraKey": "CIPOTM"
   },
   {
     "implementationTitle": "CIPO-tm-madrid-transaction-service-app - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-tm-madrid-transaction-service",
-    "artifactId": "CIPO-tm-madrid-transaction-service-app"
+    "artifactId": "CIPO-tm-madrid-transaction-service-app",
+    "jiraKey": "CIPOTM"
   },
   {
     "implementationTitle": "CIPO-tm-madrid-workflow-engine-app - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-tm-madrid-workflow-engine",
     "groupId": "ca.gc.ic.cipo.tm.madrid",
-    "artifactId": "CIPO-tm-madrid-workflow-engine-app"
+    "artifactId": "CIPO-tm-madrid-workflow-engine-app",
+    "jiraKey": "CIPOTM"
   },
   {
     "implementationTitle": "CIPO-tm-transaction-processing-service-app - Enterprise Application",
@@ -244,13 +251,15 @@
     "implementationTitle": "CIPO-ec-tm-client-admin-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-tm-client-admin",
-    "artifactId": "CIPO-ec-tm-client-admin-app"
+    "artifactId": "CIPO-ec-tm-client-admin-app",
+    "jiraKey": "CIPOTM"
   },
   {
     "implementationTitle": "CIPO-ec-tm-oppBoard-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-tm-oppboard",
-    "artifactId": "CIPO-ec-tm-oppBoard-app"
+    "artifactId": "CIPO-ec-tm-oppBoard-app",
+    "jiraKey": "CIPOTM"
   },
   {
     "implementationTitle": "Patent Electronic Filing - Enterprise Application",
@@ -262,13 +271,15 @@
     "implementationTitle": "CIPO-ec-id-eaccess-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-id-eaccess",
-    "artifactId": "CIPO-ec-id-eaccess-app"
+    "artifactId": "CIPO-ec-id-eaccess-app",
+    "jiraKey": "CIPOID"
   },
   {
     "implementationTitle": "CIPO-ec-id-mailbox-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-id-mailbox",
-    "artifactId": "CIPO-ec-id-mailbox-app"
+    "artifactId": "CIPO-ec-id-mailbox-app",
+    "jiraKey": "CIPOID"
   },
   {
     "implementationTitle": "CIPO-ec-pb-maintfee-app",
@@ -286,19 +297,22 @@
     "implementationTitle": "CIPO-ec-cpr-filing-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-cpr-filing",
-    "artifactId": "CIPO-ec-cpr-filing-app"
+    "artifactId": "CIPO-ec-cpr-filing-app",
+    "jiraKey": "CIPOCPR"
   },
   {
     "implementationTitle": "CIPO-ec-online-statements-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-online-statements",
-    "artifactId": "CIPO-ec-online-statements-app"
+    "artifactId": "CIPO-ec-online-statements-app",
+    "jiraKey": "CIPOFITT2"
   },
   {
     "implementationTitle": "CIPO-agent-college-register-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-agent-college-register",
-    "artifactId": "CIPO-agent-college-register-app"
+    "artifactId": "CIPO-agent-college-register-app",
+    "jiraKey": "CIPOTM"
   },
   {
     "implementationTitle": "CIPO-accounts-ws-app",
@@ -582,7 +596,8 @@
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-tm-ecorrespondence",
     "groupId": "ca.gc.ic.cipo.ec.tm",
-    "artifactId": "CIPO-ec-tm-ecorrespondence-app"
+    "artifactId": "CIPO-ec-tm-ecorrespondence-app",
+    "jiraKey": "CIPOTM"
   },
   {
     "implementationTitle": "CIPO-tm-documents-search-retrieval-service-app",
