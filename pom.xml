@@ -191,7 +191,10 @@
       <!-- https://bugs.eclipse.org/bugs/show_bug.cgi?id=547340 -->
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>3.5.0</version>
+        <!-- can't use 5.0.0 at this time -->
+        <!-- https://github.com/eclipse-m2e/m2e-core/issues/2084 -->
+        <!-- https://github.com/apache/maven-jar-plugin/issues/506 -->
+        <version>3.4.2</version>
         <configuration>
           <archive>
             <manifest>
