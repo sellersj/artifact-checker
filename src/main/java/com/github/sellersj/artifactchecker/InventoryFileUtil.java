@@ -27,8 +27,6 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.jar.Manifest;
 
-import javax.ws.rs.core.UriBuilder;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -258,10 +256,10 @@ public class InventoryFileUtil {
 
                 String groupIdPath = String.join("/", artifact.getGroupId().split("\\."));
                 String url = urlStart + groupIdPath + "/" + artifact.getArtifactId() + "/" + artifact.getVersion() + "/"
-                    + artifact.getArtifactId() + "-" + artifact.getVersion() + ".ear";
+                    + artifact.getArtifactId() + "-" + artifact.getVersion() + ".ear?describe=info";
 
                 try (HttpClient httpClient = HttpClient.newHttpClient();) {
-                    URI uri = UriBuilder.fromUri(url).queryParam("describe", "info").build();
+                    URI uri = new URI(url);
 
                     HttpRequest request = HttpRequest.newBuilder() //
                         .header("Accept", "application/json") //
