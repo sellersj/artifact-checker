@@ -85,7 +85,7 @@
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-pb-pct-filing",
     "artifactId": "CIPO-ec-pb-pct-filing-app",
-    "jiraKey": "CIPOPWEB"
+    "jiraKey": "CITMNGPT"
   },
   {
     "implementationTitle": "CIPO-ec-tm-filing-app",
@@ -334,7 +334,7 @@
     "scmRepo": "business-event-service",
     "groupId": "ca.gc.ic.cipo.com",
     "artifactId": "business-event-service-app",
-    "jiraKey": "CIPOPWEB"
+    "jiraKey": "CITMNGPT"
   },
   {
     "implementationTitle": "ccd-barcode-gen-service-app",
@@ -398,7 +398,7 @@
     "scmRepo": "cpd",
     "groupId": "ca.gc.ic.cipo.patents",
     "artifactId": "cpd-site-app",
-    "jiraKey": "CIPOPWEB"
+    "jiraKey": "CITMNGPT"
   },
   {
     "implementationTitle": "cpor-console-app",
@@ -406,7 +406,7 @@
     "scmRepo": "cpor",
     "groupId": "ca.gc.ic.cipo.cpr",
     "artifactId": "cpor-console-app",
-    "jiraKey": "CIPOPWEB"
+    "jiraKey": "CITMNGPT"
   },
   {
     "implementationTitle": "cpor-site-app",
@@ -414,7 +414,7 @@
     "scmRepo": "cpor",
     "groupId": "ca.gc.ic.cipo.cpr",
     "artifactId": "cpor-site-app",
-    "jiraKey": "CIPOPWEB"
+    "jiraKey": "CITMNGPT"
   },
   {
     "implementationTitle": "data-transfer-facility-app",
@@ -454,7 +454,7 @@
     "scmRepo": "import-export-component",
     "groupId": "ca.gc.ic.cipo.iec",
     "artifactId": "import-export-component-app",
-    "jiraKey": "CIPOPWEB"
+    "jiraKey": "CITMNGPT"
   },
   {
     "implementationTitle": "intellect-app",
@@ -462,7 +462,7 @@
     "scmRepo": "intellect",
     "groupId": "ca.gc.ic.cipo.patents",
     "artifactId": "intellect-app",
-    "jiraKey": "CIPOPWEB"
+    "jiraKey": "CITMNGPT"
   },
   {
     "implementationTitle": "interapp-sectionhead-service-app",
@@ -470,7 +470,7 @@
     "scmRepo": "interapp-sectionhead-service",
     "groupId": "ca.gc.ic.cipo.com",
     "artifactId": "interapp-sectionhead-service-app",
-    "jiraKey": "CIPOPWEB"
+    "jiraKey": "CITMNGPT"
   },
   {
     "implementationTitle": "patent-document-component-app",
@@ -478,7 +478,7 @@
     "scmRepo": "patent-document-component",
     "groupId": "ca.gc.ic.cipo.pdc",
     "artifactId": "patent-document-component-app",
-    "jiraKey": "CIPOPWEB"
+    "jiraKey": "CITMNGPT"
   },
   {
     "implementationTitle": "pctsafe-service-app",
@@ -486,7 +486,7 @@
     "scmRepo": "pctsafe-service",
     "groupId": "ca.gc.ic.cipo.psws",
     "artifactId": "pctsafe-service-app",
-    "jiraKey": "CIPOPWEB"
+    "jiraKey": "CITMNGPT"
   },
   {
     "implementationTitle": "qc-parameters-ear",
@@ -494,7 +494,7 @@
     "scmRepo": "qc-parameters",
     "groupId": "ca.gc.ic.cipo.qc",
     "artifactId": "qc-parameters-ear",
-    "jiraKey": "CIPOPWEB"
+    "jiraKey": "CITMNGPT"
   },
   {
     "implementationTitle": "release-management-system-app",
@@ -518,7 +518,7 @@
     "scmRepo": "system-codes-service",
     "groupId": "ca.gc.ic.cipo.scs",
     "artifactId": "system-codes-service-app",
-    "jiraKey": "CIPOPWEB"
+    "jiraKey": "CITMNGPT"
   },
   {
     "implementationTitle": "tm-dissemination-app",
