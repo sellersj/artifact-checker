@@ -266,7 +266,8 @@
     "implementationTitle": "Patent Electronic Filing - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-patent-efiling",
-    "artifactId": "CIPO-patent-efiling-app"
+    "artifactId": "CIPO-patent-efiling-app",
+    "jiraKey": "CITMNGPT"
   },
   {
     "implementationTitle": "CIPO-ec-id-eaccess-app",
@@ -286,7 +287,8 @@
     "implementationTitle": "CIPO-ec-pb-maintfee-app",
     "scmProject": "CWP",
     "scmRepo": "cipo-ec-pb-maintfee",
-    "artifactId": "CIPO-ec-pb-maintfee-app"
+    "artifactId": "CIPO-ec-pb-maintfee-app",
+    "jiraKey": "CITMNGPT"
   },
   {
     "implementationTitle": "CIPO-ec-profile-ws-app",
