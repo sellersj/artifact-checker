@@ -19,6 +19,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,8 +66,8 @@ public class CheckForJdbcUse {
 
                     for (Entry<Object, Object> entry : prop.entrySet()) {
                         String value = StringUtils.trim((String) entry.getValue());
-                        if (StringUtils.startsWith(value, "comp/env/jdbc/") //
-                            || StringUtils.startsWith(value, "jdbc/")) {
+                        if (Strings.CS.startsWith(value, "comp/env/jdbc/") //
+                            || Strings.CS.startsWith(value, "jdbc/")) {
 
                             jndiNames.add(value);
                         }
