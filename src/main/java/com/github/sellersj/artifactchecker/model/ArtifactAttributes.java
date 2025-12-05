@@ -302,7 +302,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
             if (cloudBitbucket) {
                 hostAndPath = Constants.getSysOrEnvVariable(Constants.CLOUD_BITBUCKET_HOST);
             } else {
-                hostAndPath = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST) + "/scm/";
+                hostAndPath = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST) + "/scm";
             }
             url = "https://" + hostAndPath + "/projects/" + getScmProject() + "/repos/" + getScmRepo();
 
