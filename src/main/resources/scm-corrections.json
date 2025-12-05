@@ -165,7 +165,8 @@
     "implementationTitle": "CIPO-id-transaction-processing-service-app - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-id-transaction-processing-service",
-    "artifactId": "CIPO-id-transaction-processing-service-app"
+    "artifactId": "CIPO-id-transaction-processing-service-app",
+    "jiraKey": "CIPOID"
   },
   {
     "implementationTitle": "CIPO-fee-console-app - Enterprise Application",
@@ -246,7 +247,8 @@
     "implementationTitle": "IRPI Web Service - Enterprise Application",
     "scmProject": "CWP",
     "scmRepo": "cipo-tm-irpi-service",
-    "artifactId": "CIPO-tm-irpi-service-app"
+    "artifactId": "CIPO-tm-irpi-service-app",
+    "jiraKey": "CIPOTM"
   },
   {
     "implementationTitle": "CIPO-ec-tm-client-admin-app",
