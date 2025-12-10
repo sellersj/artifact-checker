@@ -37,6 +37,9 @@ public class ParsedDataSource implements Comparable<ParsedDataSource> {
     /** The database user name. */
     private String databaseUsername;
 
+    /** Was console host. */
+    private String consoleHost;
+
     /** The names of apps that are mapped to this data source. */
     private final Set<String> appNames = new TreeSet<>();
 
@@ -48,6 +51,7 @@ public class ParsedDataSource implements Comparable<ParsedDataSource> {
         builder.append(getJndiName(), o.getJndiName());
         builder.append(getDatabaseUsername(), o.getDatabaseUsername());
         builder.append(getAppNames(), o.getAppNames());
+        builder.append(getConsoleHost(), o.getConsoleHost());
 
         return builder.toComparison();
     }
@@ -114,6 +118,20 @@ public class ParsedDataSource implements Comparable<ParsedDataSource> {
      */
     public Set<String> getAppNames() {
         return appNames;
+    }
+
+    /**
+     * @return the consoleHost
+     */
+    public String getConsoleHost() {
+        return consoleHost;
+    }
+
+    /**
+     * @param consoleHost the consoleHost to set
+     */
+    public void setConsoleHost(String consoleHost) {
+        this.consoleHost = consoleHost;
     }
 
 }

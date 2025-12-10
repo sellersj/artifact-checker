@@ -44,7 +44,7 @@
            <label><input type="checkbox" checked="checked" value="java8Ready java8Url" />Java 8 Ready</label>
            <label><input type="checkbox" checked="checked" value="jiraKey" />JIRA</label>
            <label><input type="checkbox" checked="checked" value="techOwner" />Tech Owner</label>
-           <label><input type="checkbox" checked="checked" value="deploymentInfo.dataCenter deploymentName cluster nodeUrls databaseUserNames public deploymentDate applicationUrl clusterJava8" />Deployment</label>
+           <label><input type="checkbox" checked="checked" value="was8 deploymentInfo.dataCenter deploymentName cluster nodeUrls databaseUserNames public deploymentDate applicationUrl clusterJava8" />Deployment</label>
            <label><input type="checkbox" checked="checked" value="buildDateFormatted" />Build Date</label>
        </fieldset>
        <!-- button id="redraw">Redraw table</button  -->
@@ -99,6 +99,7 @@
                {title:"Deployment",
                  columns:[
                    {title:"DC", field:"deploymentInfo.dataCenter", headerFilter:"input"},
+                   {title:"Was 8.5", field:"was8", formatter:"tickCross", headerFilter:"input", width:50},
                    {title:"Name", field:"deploymentName", headerFilter:"input"},
                    {title:"Cluster", field:"cluster", headerFilter:"input"},
                    {title:"Nodes", field:"nodeUrls", headerFilter:"input", formatter:function(cell, formatterParams) {

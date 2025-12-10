@@ -80,6 +80,9 @@ public class Constants {
     /** The file for the maven plugins for this project. */
     public static final String EFFECTIVE_POM_PLUGINS = "effective-pom-plugins.txt";
 
+    /** The WAS 8.5 console. */
+    public static final String WAS_85_CONSOLE = "was-vm-prod-admin";
+
     /**
      * This will try to get the variable as a system var, if not falls back to env var. If it's still not found, it will
      * throw an exception.

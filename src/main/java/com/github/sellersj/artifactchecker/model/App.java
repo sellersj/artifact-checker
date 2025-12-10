@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import com.github.sellersj.artifactchecker.Constants;
 import com.github.sellersj.artifactchecker.DateUtils;
 
 public class App {
@@ -54,6 +55,9 @@ public class App {
 
     /** The deployment date. */
     private Date deploymentDate;
+
+    /** Was console host. */
+    private String consoleHost;
 
     /** The format from the other file we're parsing. */
     private static final DateTimeFormatter APP_FILE_DATE_FORMAT = DateTimeFormatter.ofPattern("EEE MMM d HH:mm:ss yyyy")
@@ -169,6 +173,13 @@ public class App {
         }
     }
 
+    /**
+     * @return if this is a WAS 8.5 host.
+     */
+    public boolean isWas8() {
+        return Constants.WAS_85_CONSOLE.equals(getConsoleHost());
+    }
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
@@ -221,6 +232,20 @@ public class App {
      */
     public void setDeploymentDate(Date deploymentDate) {
         this.deploymentDate = deploymentDate;
+    }
+
+    /**
+     * @return the consoleHost
+     */
+    public String getConsoleHost() {
+        return consoleHost;
+    }
+
+    /**
+     * @param consoleHost the consoleHost to set
+     */
+    public void setConsoleHost(String consoleHost) {
+        this.consoleHost = consoleHost;
     }
 
 }

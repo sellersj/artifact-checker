@@ -53,6 +53,9 @@ public class DataSourceFileParser {
         for (String chunk : chunks) {
             ParsedDataSource app = getDataSource(chunk);
 
+            // set the console host
+            app.setConsoleHost(Constants.WAS_85_CONSOLE);
+
             result.add(app);
         }
 

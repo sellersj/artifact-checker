@@ -28,6 +28,9 @@ public class MailSource implements Comparable<MailSource> {
     /** The app names. */
     private Set<String> appNames = new TreeSet<>();
 
+    /** Was console host. */
+    private String consoleHost;
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
@@ -88,6 +91,20 @@ public class MailSource implements Comparable<MailSource> {
      */
     public void setAppNames(Set<String> appNames) {
         this.appNames = appNames;
+    }
+
+    /**
+     * @return the consoleHost
+     */
+    public String getConsoleHost() {
+        return consoleHost;
+    }
+
+    /**
+     * @param consoleHost the consoleHost to set
+     */
+    public void setConsoleHost(String consoleHost) {
+        this.consoleHost = consoleHost;
     }
 
 }

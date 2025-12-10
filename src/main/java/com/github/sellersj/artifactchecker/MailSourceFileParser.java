@@ -48,6 +48,10 @@ public class MailSourceFileParser {
 
         for (String chunk : chunks) {
             MailSource app = getApp(chunk);
+
+            // hardcode the console host
+            app.setConsoleHost(Constants.WAS_85_CONSOLE);
+
             result.add(app);
         }
 
