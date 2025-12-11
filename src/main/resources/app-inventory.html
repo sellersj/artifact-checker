@@ -99,7 +99,7 @@
                {title:"Deployment",
                  columns:[
                    {title:"DC", field:"deploymentInfo.dataCenter", headerFilter:"input"},
-                   {title:"Was 8.5", field:"was8", formatter:"tickCross", headerFilter:"input", width:50},
+                   {title:"Was 8.5", field:"deploymentInfo.was8", formatter:"tickCross", headerFilter:"input", width:50},
                    {title:"Name", field:"deploymentName", headerFilter:"input"},
                    {title:"Cluster", field:"cluster", headerFilter:"input"},
                    {title:"Nodes", field:"nodeUrls", headerFilter:"input", formatter:function(cell, formatterParams) {
