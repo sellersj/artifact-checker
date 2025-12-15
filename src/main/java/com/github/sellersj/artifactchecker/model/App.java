@@ -177,7 +177,8 @@ public class App {
      * @return if this is a WAS 8.5 host.
      */
     public boolean isWas8() {
-        return Constants.WAS_85_CONSOLE.equals(getConsoleHost());
+        return Constants.WAS_85_CONSOLE.equals(getConsoleHost()) //
+            || DATA_CENTER_KED.equals(getDataCenter());
     }
 
     @Override
