@@ -24,7 +24,7 @@
     <!-- to try to address -->
     <!-- https://issues.apache.org/jira/browse/SUREFIRE-1788 -->
     <!-- https://stackoverflow.com/a/61936537/2055199 -->
-    <surefire.plugin.version>3.5.4</surefire.plugin.version>
+    <surefire.plugin.version>3.5.5</surefire.plugin.version>
     <junit.version>6.0.3</junit.version>
     <nexus.version>2.15.1-02</nexus.version>
   </properties>
