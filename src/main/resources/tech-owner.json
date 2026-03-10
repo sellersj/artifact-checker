@@ -28,18 +28,6 @@
     "techOwner": "BLSD - SAC"
   },
   {
-    "jiraKey": "POIMAP",
-    "techOwner": "AMIS"
-  },
-  {
-    "jiraKey": "QPAY",
-    "techOwner": "AMIS"
-  },
-  {
-    "jiraKey": "SWU",
-    "techOwner": "AMIS"
-  },
-  {
     "jiraKey": "AIRR",
     "techOwner": "MC"
   },
