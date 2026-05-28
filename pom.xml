@@ -69,7 +69,7 @@
     <dependency>
       <groupId>com.sun.xml.bind</groupId>
       <artifactId>jaxb-impl</artifactId>
-      <version>4.0.8</version>
+      <version>4.0.9</version>
     </dependency>
     <!-- used to figure out when a new version is available -->
     <dependency>
