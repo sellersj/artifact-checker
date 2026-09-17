@@ -66,6 +66,36 @@ The code uses an env var called `WAS_INFO_HOST` where it pulls deployment info. 
 * deploys
 * mailSourceData
 
+## Generate model objects for the main source of info
+
+Done using https://github.com/joelittlejohn/jsonschema2pojo/wiki/Getting-Started
+
+```
+mkdir -p ~/git/artifact-checker/target/jsonsources
+cd ~/git/artifact-checker/target/jsonsources
+
+# if the host isn't set
+# export TOOLS_HOST=https://example.com
+
+echo 'download the data'
+curl -LO $TOOLS_HOST/projectsites/websphere-inventory/all-envs-datadrivers.json
+curl -LO $TOOLS_HOST/projectsites/websphere-inventory/all-envs-datasources.json
+curl -LO $TOOLS_HOST/projectsites/websphere-inventory/all-envs-inventory.json
+curl -LO $TOOLS_HOST/projectsites/websphere-inventory/all-envs-mailsources.json
+curl -LO $TOOLS_HOST/projectsites/websphere-inventory/all-envs-servers.json
+
+echo 'generate the classes'
+cd ~/git/artifact-checker/
+
+mvn org.jsonschema2pojo:jsonschema2pojo-maven-plugin:RELEASE:generate \
+  -Djsonschema2pojo.sourceType=json -Djsonschema2pojo.sourcePaths=./target/jsonsources/ \
+  -Djsonschema2pojo.targetPackage=com.github.sellersj.artifactchecker.model.inventory
+
+mv target/generated-sources/jsonschema2pojo/com/github/sellersj/artifactchecker/model/inventory \
+   src/main/java/com/github/sellersj/artifactchecker/model/
+
+```
+
 ## Data used to generate Deployment from other data center
 The code uses an env var called `WAS_CIPO_HOST`
 
