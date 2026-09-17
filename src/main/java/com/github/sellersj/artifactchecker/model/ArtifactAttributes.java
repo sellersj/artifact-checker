@@ -1,5 +1,6 @@
 package com.github.sellersj.artifactchecker.model;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -67,13 +68,6 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** The old maven date format. */
     private static final DateTimeFormatter MAVEN_OLD_DATE_FORMAT = DateTimeFormatter.ofPattern("yyyyMMdd-HHmm");
 
-    /** We keep on finding different date formats. */
-    private static final List<DateTimeFormatter> BUILD_TIME_DATE_FORMATS = Arrays.asList( //
-        MAVEN_DATE_FORMAT, //
-        MAVEN_OLD_DATE_FORMAT, //
-        DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm") // another date format that we've found
-    );
-
     /** The ISO 8601 date format used by git. */
     private static final DateTimeFormatter GIT_DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss Z");
 
@@ -82,6 +76,17 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** The format from the output. */
     private static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    /** The format from the output. */
+    private static final DateTimeFormatter DATE_TIME_FORMAT_FROM_WAS = DateTimeFormatter
+        .ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+
+    /** We keep on finding different date formats. */
+    private static final List<DateTimeFormatter> BUILD_TIME_DATE_FORMATS = Arrays.asList( //
+        MAVEN_DATE_FORMAT, //
+        MAVEN_OLD_DATE_FORMAT, //
+        DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm"), // another date format that we've found
+        DATE_TIME_FORMAT_FROM_WAS);
 
     /** The info from the other inventory system. */
     private AllEnvsInventory wasInventory;
@@ -364,7 +369,6 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         }
 
         Date date = null;
-
         if (StringUtils.isNotBlank(string)) {
 
             // try all the date formats, until we find one that works
@@ -398,12 +402,18 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public String getDeploymentDate() {
         String result = "";
-        if (null != deploymentInfo) {
-            Date date = deploymentInfo.getDeploymentDate();
-            if (null != date) {
-                LocalDateTime dateTime = DateUtils.asLocalDateTime(date);
-                result = DATE_TIME_FORMAT.format(dateTime);
-            }
+
+        Date date = null;
+        if (null != wasInventory && StringUtils.isNotBlank(wasInventory.getDeploymentDate())) {
+            date = Date.from(Instant.from(DATE_TIME_FORMAT_FROM_WAS.parse(wasInventory.getDeploymentDate())));
+        }
+        if (null == date && null != deploymentInfo) {
+            date = deploymentInfo.getDeploymentDate();
+        }
+
+        if (null != date) {
+            LocalDateTime dateTime = DateUtils.asLocalDateTime(date);
+            result = DATE_TIME_FORMAT.format(dateTime);
         }
         return result;
     }
