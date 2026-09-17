@@ -815,7 +815,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     public boolean isPublic() {
         boolean result = false;
 
-        if (null != wasInventory) {
+        if (StringUtils.isNotBlank(getDeploymentName())) {
             // TODO might need to do this on hostname rather than naming convention
             result = getDeploymentName().toLowerCase().contains("public");
         } else {
