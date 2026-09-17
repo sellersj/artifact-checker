@@ -360,7 +360,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     public Date getBuildDate() {
         String string = null;
         if (null != wasInventory && null != wasInventory.getManifest()) {
-            string = cleanHash(wasInventory.getManifest().getBuildTime());
+            string = wasInventory.getManifest().getBuildTime();
         }
 
         Date date = null;
