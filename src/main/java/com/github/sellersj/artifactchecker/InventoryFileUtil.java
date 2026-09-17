@@ -14,10 +14,12 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -192,14 +194,14 @@ public class InventoryFileUtil {
 
                         // ear name
                         String artifactId = StringUtils.substringBeforeLast(earArtifactName, "-");
-                        attributes.getManifest().put(ArtifactAttributes.ARTIFACT_ID, artifactId);
+                        attributes.setCorrectedArtifactId(artifactId);
 
                         // set the title to the ear name until we have something better
-                        attributes.getManifest().put(ArtifactAttributes.IMPLEMENTATION_TITLE, artifactId);
+                        attributes.setCorrectedTitle(artifactId);
 
                         String version = StringUtils
                             .substringBeforeLast(StringUtils.substringAfterLast(earArtifactName, "-"), ".");
-                        attributes.getManifest().put(ArtifactAttributes.VERSION, version);
+                        attributes.setCorrectedVersion(version);
 
                         // set the deployment info here
                         App deploymentInfo = new App();
@@ -272,8 +274,7 @@ public class InventoryFileUtil {
                         ArtifactInfoResourceResponseWorkAround.class);
 
                     LocalDateTime buildDate = DateUtils.asLocalDateTime(response.getData().getLastChanged());
-                    artifact.getManifest().put(ArtifactAttributes.BUILD_TIME,
-                        ArtifactAttributes.MAVEN_DATE_FORMAT.format(buildDate));
+                    artifact.setCorrectedBuildDate(Date.from(buildDate.atZone(ZoneId.systemDefault()).toInstant()));
 
                 } catch (Exception e) {
                     // re-throw with more info
@@ -310,6 +311,7 @@ public class InventoryFileUtil {
      * @param contents to read
      * @return a filled out list.
      */
+    @Deprecated
     public static Set<ArtifactAttributes> readMergedManifests(String contents) {
 
         Set<ArtifactAttributes> apps = new HashSet<>();
@@ -327,7 +329,7 @@ public class InventoryFileUtil {
                 ArtifactAttributes attributes = new ArtifactAttributes();
 
                 for (Entry<Object, Object> entry : manifest.getMainAttributes().entrySet()) {
-                    attributes.getManifest().put(String.valueOf(entry.getKey()), String.valueOf(entry.getValue()));
+                    // attributes.getManifest().put(String.valueOf(entry.getKey()), String.valueOf(entry.getValue()));
                 }
 
                 apps.add(attributes);

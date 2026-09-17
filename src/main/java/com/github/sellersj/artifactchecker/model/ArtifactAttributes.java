@@ -6,11 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.SortedMap;
 import java.util.SortedSet;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.apache.commons.lang3.StringUtils;
@@ -118,9 +115,6 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** If the library checks (dependency, owasp, etc) worked. */
     private boolean libraryCheckedWorked = true;
 
-    /** The manifest associated with this artifact. */
-    private SortedMap<String, String> manifest = new TreeMap<>();
-
     /** A list of all the vulnerabilities found with this artifact. */
     @JsonIgnore
     private List<Vulnerability> vulnerabilities = new ArrayList<>();
@@ -140,6 +134,15 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** Our corrected jira key from a static file. */
     private String correctedJiraKey = "";
+
+    /** Our corrected info if we don't have it. */
+    private String correctedTitle = "";
+
+    /** Our corrected info if we don't have it. */
+    private String correctedVersion = "";
+
+    /** Our corrected info if we don't have it. */
+    private Date correctedBuildDate = null;
 
     /** Our tech owner from a static file. */
     @CsvBindByName
@@ -192,12 +195,14 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         this.alreadyTrackedByAnother = source.alreadyTrackedByAnother;
         this.java8Ready = source.java8Ready;
         this.libraryCheckedWorked = source.libraryCheckedWorked;
-        this.manifest = source.manifest;
         this.vulnerabilities = source.vulnerabilities;
         this.scmTag = source.scmTag;
         this.scmAuthorDate = source.scmAuthorDate;
         this.deploymentInfo = source.deploymentInfo;
         this.correctedJiraKey = source.correctedJiraKey;
+        this.correctedTitle = source.correctedTitle;
+        this.correctedVersion = source.correctedVersion;
+        this.correctedBuildDate = source.correctedBuildDate;
         this.techOwner = source.techOwner;
         this.toDecomission = source.toDecomission;
         this.linkedDataSources = source.linkedDataSources;
@@ -255,7 +260,10 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     }
 
     public String getScmProject() {
-        String scmProject = manifest.get(SCM_PROJECT);
+        String scmProject = null;
+        if (null != wasInventory) {
+            scmProject = wasInventory.getScmProjectName();
+        }
 
         if (StringUtils.isNotBlank(correctedScmProject)) {
             scmProject = correctedScmProject;
@@ -272,7 +280,10 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     }
 
     public String getScmRepo() {
-        String repo = manifest.get(SCM_REPO);
+        String repo = null;
+        if (null != wasInventory) {
+            repo = wasInventory.getScmRepoName();
+        }
 
         if (StringUtils.isNotBlank(correctedScmRepo)) {
             repo = correctedScmRepo;
@@ -282,11 +293,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     }
 
     public String getScmHash() {
-        return cleanHash(manifest.get(SCM_HASH));
+        String result = null;
+        if (null != wasInventory && null != wasInventory.getManifest()) {
+            result = cleanHash(wasInventory.getManifest().getScmSha1());
+        }
+
+        return result;
     }
 
     public String getScmHashAbbrev() {
-        return cleanHash(manifest.get("Scm-Sha1-Abbrev"));
+        String result = null;
+        if (null != wasInventory && null != wasInventory.getManifest()) {
+            result = cleanHash(wasInventory.getManifest().getScmSha1Abbrev());
+        }
+        return result;
     }
 
     /**
@@ -337,7 +357,11 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      * @return the build date if it exists and is parsable.
      */
     public Date getBuildDate() {
-        String string = manifest.get(BUILD_TIME);
+        String string = null;
+        if (null != wasInventory && null != wasInventory.getManifest()) {
+            string = cleanHash(wasInventory.getManifest().getBuildTime());
+        }
+
         Date date = null;
 
         if (StringUtils.isNotBlank(string)) {
@@ -401,9 +425,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     }
 
     public String getGroupId() {
-        String groupId = manifest.get("Maven-Project-GroupId");
-        if (StringUtils.isBlank(groupId)) {
-            groupId = manifest.get("Implementation-Vendor-Id");
+        String groupId = null;
+        if (null != wasInventory) {
+            groupId = wasInventory.getMavenGroupId();
         }
 
         // if it's still blank, try to use the corrected one
@@ -418,7 +442,10 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      * @return the artifactId if we have it in the manifest, or the corrected one otherwise.
      */
     public String getArtifactId() {
-        String artifactId = manifest.get(ARTIFACT_ID);
+        String artifactId = null;
+        if (null != wasInventory) {
+            artifactId = wasInventory.getMavenGroupId();
+        }
 
         if (StringUtils.isBlank(artifactId)) {
             artifactId = correctedArtifactId;
@@ -432,7 +459,13 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     private String version;
 
     public String getVersion() {
-        return manifest.get(VERSION);
+        String result = null;
+        if (null != wasInventory) {
+            result = wasInventory.getManifestImplementationVersion();
+        } else {
+            result = correctedVersion;
+        }
+        return result;
     }
 
     /** For the opencsv. */
@@ -440,7 +473,13 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     private String title;
 
     public String getTitle() {
-        return manifest.get(IMPLEMENTATION_TITLE);
+        String result = null;
+        if (null != wasInventory && null != wasInventory.getManifest()) {
+            result = wasInventory.getManifest().getImplementationTitle();
+        } else {
+            result = correctedTitle;
+        }
+        return result;
     }
 
     /** For the opencsv. */
@@ -448,7 +487,11 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     private String jiraKey;
 
     public String getJiraKey() {
-        String manifestKey = manifest.get(ISSUE_TRACKING);
+        String manifestKey = null;
+        if (null != wasInventory && null != wasInventory.getManifest()) {
+            manifestKey = wasInventory.getManifest().getIssueTracking();
+        }
+
         String key = "";
 
         // always use the corrected key if we have it
@@ -789,20 +832,6 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     @Override
     public int compareTo(ArtifactAttributes o) {
         return CompareToBuilder.reflectionCompare(this, o);
-    }
-
-    /**
-     * @return the manifest
-     */
-    public Map<String, String> getManifest() {
-        return manifest;
-    }
-
-    /**
-     * @param manifest the manifest to set
-     */
-    public void setManifest(SortedMap<String, String> manifest) {
-        this.manifest = manifest;
     }
 
     /**
@@ -1147,6 +1176,30 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     public void setWasInventory(AllEnvsInventory wasInventory) {
         this.wasInventory = wasInventory;
+    }
+
+    public String getCorrectedTitle() {
+        return correctedTitle;
+    }
+
+    public void setCorrectedTitle(String correctedTitle) {
+        this.correctedTitle = correctedTitle;
+    }
+
+    public String getCorrectedVersion() {
+        return correctedVersion;
+    }
+
+    public void setCorrectedVersion(String correctedVersion) {
+        this.correctedVersion = correctedVersion;
+    }
+
+    public Date getCorrectedBuildDate() {
+        return correctedBuildDate;
+    }
+
+    public void setCorrectedBuildDate(Date correctedBuildDate) {
+        this.correctedBuildDate = correctedBuildDate;
     }
 
 }

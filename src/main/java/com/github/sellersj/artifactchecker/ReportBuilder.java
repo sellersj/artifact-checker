@@ -258,7 +258,7 @@ public class ReportBuilder {
                     attribute = new ArtifactAttributes();
                     // fake out the manifest title with the WAS app name
                     String appName = app.getAttributes().get(App.APP_KEY).get(0);
-                    attribute.getManifest().put(ArtifactAttributes.IMPLEMENTATION_TITLE, appName);
+                    attribute.setCorrectedTitle(appName);
                     attribute.setLibraryCheckedWorked(false);
 
                     // set the tech owner for the very old apps where we don't have the other info

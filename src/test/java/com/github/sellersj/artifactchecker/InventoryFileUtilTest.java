@@ -33,8 +33,11 @@ import org.junit.jupiter.api.Test;
 
 import com.github.sellersj.artifactchecker.model.App;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
+import com.github.sellersj.artifactchecker.model.ArtifactAttributesTest;
 import com.github.sellersj.artifactchecker.model.MavenGAV;
 import com.github.sellersj.artifactchecker.model.TechOwner;
+import com.github.sellersj.artifactchecker.model.inventory.AllEnvsInventory;
+import com.github.sellersj.artifactchecker.model.inventory.Manifest;
 import com.github.sellersj.artifactchecker.model.owasp.CvssV2;
 import com.github.sellersj.artifactchecker.model.owasp.CvssV3;
 import com.github.sellersj.artifactchecker.model.owasp.Severity;
@@ -63,8 +66,9 @@ public class InventoryFileUtilTest {
             "/.m2/repository/org/junit/jupiter/junit-jupiter-engine/" //
             + junitVersion + "/junit-jupiter-engine-" + junitVersion + ".jar";
 
-        ArtifactAttributes attributes = new ArtifactAttributes();
-        attributes.setManifest(GetManifest.getMainAttributes(fileName));
+        ArtifactAttributes attributes = ArtifactAttributesTest.getTestArtifactAttributes();
+        // TODO fix this with the attributes from the file
+        // attributes.setManifest(GetManifest.getMainAttributes(fileName));
 
         Set<ArtifactAttributes> appInventory = new TreeSet<>();
         appInventory.add(attributes);
@@ -123,15 +127,15 @@ public class InventoryFileUtilTest {
 
             // the app should have _at least one_ value in the manifest for us to not ignore it
             boolean hasValues = false;
-            for (Entry<String, String> entry : artifactAttributes.getManifest().entrySet()) {
-
-                // ignore the manifest declaration
-                if (!"Manifest-Version".equals(entry.getKey()) && //
-                    StringUtils.isNotBlank(entry.getValue())) {
-                    // System.out.println(entry.getValue());
-                    hasValues = true;
-                }
-            }
+            // for (Entry<String, String> entry : artifactAttributes.getManifest().entrySet()) {
+            //
+            // // ignore the manifest declaration
+            // if (!"Manifest-Version".equals(entry.getKey()) && //
+            // StringUtils.isNotBlank(entry.getValue())) {
+            // // System.out.println(entry.getValue());
+            // hasValues = true;
+            // }
+            // }
 
             assertTrue(hasValues, "should have found at least one entry in the manifest: " + artifactAttributes);
         }
@@ -162,7 +166,12 @@ public class InventoryFileUtilTest {
             for (ArtifactAttributes artifactAttributes : apps) {
                 // jria key
                 if (StringUtils.isBlank(artifactAttributes.getJiraKey())) {
-                    artifactAttributes.getManifest().put(ArtifactAttributes.ISSUE_TRACKING, "FAKE");
+                    AllEnvsInventory wasInventory = new AllEnvsInventory();
+                    artifactAttributes.setWasInventory(wasInventory);
+                    Manifest man = new Manifest();
+                    wasInventory.setManifest(man);
+
+                    artifactAttributes.getWasInventory().getManifest().setIssueTracking("FAKE");
                 }
 
                 int numberOfVul = RANDOM.nextInt(vuls.size() / 2) + 2;
@@ -171,7 +180,7 @@ public class InventoryFileUtilTest {
                 }
 
                 // set a build time
-                artifactAttributes.getManifest().put(ArtifactAttributes.BUILD_TIME, getMockBuildDate());
+                artifactAttributes.getWasInventory().getManifest().setBuildTime(getMockBuildDate());
             }
             return apps;
         } catch (Exception e) {

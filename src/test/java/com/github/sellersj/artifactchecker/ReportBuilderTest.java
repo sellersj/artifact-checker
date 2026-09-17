@@ -19,6 +19,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
+import com.github.sellersj.artifactchecker.model.ArtifactAttributesTest;
 import com.github.sellersj.artifactchecker.model.ScmCorrection;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 import com.github.sellersj.artifactchecker.model.security.SecurityVulnerability;
@@ -51,6 +52,7 @@ public class ReportBuilderTest {
         toolsHost = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST);
     }
 
+    @Deprecated
     @Test
     public void generateAppInventory() {
         String location = "https://" + toolsHost + "/deployed-to/manifest-combined.txt";
@@ -72,7 +74,7 @@ public class ReportBuilderTest {
                 System.out.println(artifactAttributes);
 
                 ScmCorrection correction = new ScmCorrection();
-                correction.setImplementationTitle(artifactAttributes.getManifest().get("Implementation-Title"));
+                // correction.setImplementationTitle(artifactAttributes.getManifest().get("Implementation-Title"));
                 titles.add(correction);
             }
         }
@@ -115,12 +117,12 @@ public class ReportBuilderTest {
         String scmHash = "3447763c6149c832408ad292ec8f4657ef9c879b";
 
         for (int i = 0; i < 2; i++) {
-            ArtifactAttributes app = new ArtifactAttributes();
-            app.getManifest().put(ArtifactAttributes.SCM_PROJECT, scmProject);
-            app.getManifest().put(ArtifactAttributes.SCM_REPO, scmRepo);
-            app.getManifest().put(ArtifactAttributes.SCM_HASH, scmHash);
+            ArtifactAttributes app = ArtifactAttributesTest.getTestArtifactAttributes();
 
-            app.getManifest().put(ArtifactAttributes.IMPLEMENTATION_TITLE, "myAppTitle" + i);
+            app.getWasInventory().getManifest().setScmProjectId(scmProject);
+            app.getWasInventory().getManifest().setScmRepoName(scmRepo);
+            app.getWasInventory().getManifest().setScmSha1(scmHash);
+            app.getWasInventory().getManifest().setImplementationTitle("myAppTitle" + i);
 
             apps.add(app);
         }
@@ -137,14 +139,14 @@ public class ReportBuilderTest {
         String scmHash = "3447763c6149c832408ad292ec8f4657ef9c879b";
 
         for (int i = 0; i < 2; i++) {
-            ArtifactAttributes app = new ArtifactAttributes();
-            app.getManifest().put(ArtifactAttributes.SCM_PROJECT, scmProject);
-            app.getManifest().put(ArtifactAttributes.SCM_REPO, scmRepo);
+            ArtifactAttributes app = ArtifactAttributesTest.getTestArtifactAttributes();
+            app.getWasInventory().getManifest().setScmProjectId(scmProject);
+            app.getWasInventory().getManifest().setScmRepoName(scmRepo);
 
             // set a different hash per loop
-            app.getManifest().put(ArtifactAttributes.SCM_HASH, scmHash + i);
+            app.getWasInventory().getManifest().setScmSha1(scmHash + i);
 
-            app.getManifest().put(ArtifactAttributes.IMPLEMENTATION_TITLE, "myAppTitle" + i);
+            app.getWasInventory().getManifest().setImplementationTitle("myAppTitle" + i);
 
             apps.add(app);
         }
@@ -172,10 +174,10 @@ public class ReportBuilderTest {
         Set<ArtifactAttributes> apps = new HashSet<>();
 
         for (int i = 0; i < 2; i++) {
-            ArtifactAttributes app1 = new ArtifactAttributes();
+            ArtifactAttributes app1 = ArtifactAttributesTest.getTestArtifactAttributes();
             app1.setCorrectedScmProject("myProject");
             app1.setCorrectedScmRepo("myRepo");
-            app1.getManifest().put(ArtifactAttributes.SCM_HASH, "12348");
+            app1.getWasInventory().getManifest().setScmSha1("12348");
 
             if (0 == i) {
                 app1.setAlreadyTrackedByAnother(true);
@@ -205,10 +207,10 @@ public class ReportBuilderTest {
         Set<ArtifactAttributes> apps = new HashSet<>();
 
         for (int i = 0; i < 2; i++) {
-            ArtifactAttributes app1 = new ArtifactAttributes();
+            ArtifactAttributes app1 = ArtifactAttributesTest.getTestArtifactAttributes();
             app1.setCorrectedScmProject("myProject");
             app1.setCorrectedScmRepo("myRepo");
-            app1.getManifest().put(ArtifactAttributes.VERSION, "1.2.3");
+            app1.getWasInventory().getManifest().setImplementationVersion("1.2.3");
 
             if (0 == i) {
                 app1.setAlreadyTrackedByAnother(true);

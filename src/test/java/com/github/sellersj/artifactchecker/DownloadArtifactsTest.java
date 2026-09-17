@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
+import com.github.sellersj.artifactchecker.model.ArtifactAttributesTest;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 
 public class DownloadArtifactsTest {
@@ -33,11 +34,12 @@ public class DownloadArtifactsTest {
     @Test
     @Disabled("ignore for now. CI server has trouble reading this for some reason.")
     public void testcloneAndCheckProject() {
-        ArtifactAttributes gav = new ArtifactAttributes();
+        ArtifactAttributes gav = ArtifactAttributesTest.getTestArtifactAttributes();
         gav.setGithub(true);
-        gav.getManifest().put(ArtifactAttributes.SCM_PROJECT, "sellersj");
-        gav.getManifest().put(ArtifactAttributes.SCM_REPO, "tomcat-extractor");
-        gav.getManifest().put(ArtifactAttributes.SCM_HASH, "e507b001c2a170c6f7c50169a48aaa76ad3b4c3f");
+
+        gav.getWasInventory().getManifest().setScmProjectId("sellersj");
+        gav.getWasInventory().getManifest().setScmRepoName("tomcat-extractor");
+        gav.getWasInventory().getManifest().setScmSha1("e507b001c2a170c6f7c50169a48aaa76ad3b4c3f");
 
         DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
         downloadArtifacts.cloneAndCheckProject(gav);
@@ -47,10 +49,10 @@ public class DownloadArtifactsTest {
 
     @Test
     public void testcloneAndCheckProjectTestProject() {
-        ArtifactAttributes gav = new ArtifactAttributes();
-        gav.getManifest().put(ArtifactAttributes.SCM_PROJECT, "sandbox");
-        gav.getManifest().put(ArtifactAttributes.SCM_REPO, "sis-test-project");
-        gav.getManifest().put(ArtifactAttributes.SCM_HASH, "c8e6aa1828945fb7db31762f1c39dccd16cd3e34");
+        ArtifactAttributes gav = ArtifactAttributesTest.getTestArtifactAttributes();
+        gav.getWasInventory().getManifest().setScmProjectId("sandbox");
+        gav.getWasInventory().getManifest().setScmRepoName("sis-test-project");
+        gav.getWasInventory().getManifest().setScmSha1("c8e6aa1828945fb7db31762f1c39dccd16cd3e34");
 
         DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
         downloadArtifacts.cloneAndCheckProject(gav);
@@ -68,11 +70,11 @@ public class DownloadArtifactsTest {
             return;
         }
 
-        ArtifactAttributes gav = new ArtifactAttributes();
+        ArtifactAttributes gav = ArtifactAttributesTest.getTestArtifactAttributes();
         gav.setGithub(true);
-        gav.getManifest().put(ArtifactAttributes.SCM_PROJECT, "wet-boew");
-        gav.getManifest().put(ArtifactAttributes.SCM_REPO, "spring-boot-thymeleaf");
-        gav.getManifest().put(ArtifactAttributes.VERSION, "4.0.26.2");
+        gav.getWasInventory().getManifest().setScmProjectId("wet-boew");
+        gav.getWasInventory().getManifest().setScmRepoName("spring-boot-thymeleaf");
+        gav.getWasInventory().getManifest().setImplementationVersion("4.0.26.2");
 
         DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
         downloadArtifacts.cloneAndCheckProject(gav);
@@ -114,7 +116,7 @@ public class DownloadArtifactsTest {
         }
 
         ArtifactAttributes gav = new ArtifactAttributes();
-        gav.getManifest().put(ArtifactAttributes.VERSION, "1.5.11");
+        gav.getWasInventory().getManifest().setImplementationVersion("1.5.11");
 
         DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
         downloadArtifacts.switchToCommit(gav, directory);
