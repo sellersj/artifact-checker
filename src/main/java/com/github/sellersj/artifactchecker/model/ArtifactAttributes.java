@@ -487,6 +487,11 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         } else {
             result = correctedTitle;
         }
+
+        if (StringUtils.isBlank(result)) {
+            result = getDeploymentName();
+        }
+
         return result;
     }
 
