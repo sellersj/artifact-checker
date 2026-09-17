@@ -667,7 +667,15 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** The deployment cluster. */
     public String getDeploymentName() {
-        return getDeploymentInfo("APP");
+        String result = null;
+
+        if (null != wasInventory) {
+            result = wasInventory.getName();
+        } else {
+            result = getDeploymentInfo("APP");
+        }
+
+        return result;
     }
 
     /** For the opencsv. */
@@ -676,7 +684,15 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** The deployment cluster. */
     public String getCluster() {
-        return getDeploymentInfo("SERVER");
+        String result = null;
+
+        if (null != wasInventory) {
+            result = wasInventory.getClusterTarget();
+        } else {
+            result = getDeploymentInfo("SERVER");
+        }
+
+        return result;
     }
 
     /** For the opencsv. */
@@ -695,7 +711,16 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** The deployment nodes. */
     public String getNodes() {
-        return getDeploymentInfo("NODE");
+        String result = null;
+
+        if (null != wasInventory) {
+            // result = wasInventory.;
+            // TODO figure out if we have node info
+        } else {
+            result = getDeploymentInfo("NODE");
+        }
+
+        return result;
     }
 
     /** Makes links right into the logging location. */
@@ -715,6 +740,37 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
             }
             return nodeUrls;
         }
+    }
+
+    /**
+     * @return the data center
+     */
+    public String getDataCenter() {
+        String result = null;
+
+        if (null != wasInventory) {
+            result = App.DATA_CENTER_ICDC;
+
+        } else if (null != deploymentInfo) {
+            result = deploymentInfo.getDataCenter();
+        }
+
+        return result;
+    }
+
+    /**
+     * @return if this is WAS 8
+     */
+    public boolean isWas8() {
+        boolean result = false;
+
+        if (null != wasInventory) {
+            result = "8.5".equals(wasInventory.getConsoleVersion());
+        } else if (null != deploymentInfo) {
+            result = deploymentInfo.isWas8();
+        }
+
+        return result;
     }
 
     public String nodeLogLocationCorrection(String node) {
