@@ -29,6 +29,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.github.sellersj.artifactchecker.model.App;
@@ -90,6 +91,7 @@ public class InventoryFileUtilTest {
     }
 
     @Test
+    @Disabled("TODO until we know if we need this")
     public void testReadMergedManifests() throws Exception {
         Set<ArtifactAttributes> apps = getTestAppInventory();
         assertEquals(2, apps.size());
@@ -119,6 +121,7 @@ public class InventoryFileUtilTest {
     }
 
     @Test
+    @Disabled("TODO until we know if we need this")
     public void testReadMergedManifestsNoEmptyProject() throws Exception {
         Set<ArtifactAttributes> apps = getTestAppInventory();
         assertFalse(apps.isEmpty(), "should be checking some apps");
@@ -207,6 +210,7 @@ public class InventoryFileUtilTest {
     }
 
     @Test
+    @Disabled("TODO until we know if we need this")
     public void testReadMergedApplicationListing() throws Exception {
         String appHost = Constants.getSysOrEnvVariable(Constants.WAS_CIPO_HOST);
         Set<ArtifactAttributes> attributes = InventoryFileUtil

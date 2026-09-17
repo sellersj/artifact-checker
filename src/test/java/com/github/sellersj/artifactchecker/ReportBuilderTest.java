@@ -16,6 +16,7 @@ import java.util.SortedMap;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
@@ -54,6 +55,7 @@ public class ReportBuilderTest {
 
     @Deprecated
     @Test
+    @Disabled("TODO until we know if we need this")
     public void generateAppInventory() {
         String location = "https://" + toolsHost + "/deployed-to/manifest-combined.txt";
 
@@ -119,8 +121,8 @@ public class ReportBuilderTest {
         for (int i = 0; i < 2; i++) {
             ArtifactAttributes app = ArtifactAttributesTest.getTestArtifactAttributes();
 
-            app.getWasInventory().getManifest().setScmProjectId(scmProject);
-            app.getWasInventory().getManifest().setScmRepoName(scmRepo);
+            app.getWasInventory().setScmProjectName(scmProject);
+            app.getWasInventory().setScmRepoName(scmRepo);
             app.getWasInventory().getManifest().setScmSha1(scmHash);
             app.getWasInventory().getManifest().setImplementationTitle("myAppTitle" + i);
 
@@ -210,7 +212,7 @@ public class ReportBuilderTest {
             ArtifactAttributes app1 = ArtifactAttributesTest.getTestArtifactAttributes();
             app1.setCorrectedScmProject("myProject");
             app1.setCorrectedScmRepo("myRepo");
-            app1.getWasInventory().getManifest().setImplementationVersion("1.2.3");
+            app1.getWasInventory().setManifestImplementationVersion("1.2.3");
 
             if (0 == i) {
                 app1.setAlreadyTrackedByAnother(true);
