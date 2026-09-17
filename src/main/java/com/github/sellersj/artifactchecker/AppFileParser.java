@@ -19,8 +19,10 @@ import com.github.sellersj.artifactchecker.model.App;
 /**
  * @author sellersj
  */
+@Deprecated
 public class AppFileParser {
 
+    @Deprecated
     public List<App> parseAppFile(String url) {
         try (InputStream in = URI.create(url).toURL().openStream()) {
             String contents = IOUtils.toString(in, StandardCharsets.UTF_8);
@@ -30,6 +32,7 @@ public class AppFileParser {
         }
     }
 
+    @Deprecated
     public List<App> parseAppFile(File file) {
         try {
             String contents = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
@@ -39,6 +42,7 @@ public class AppFileParser {
         }
     }
 
+    @Deprecated
     public List<App> parseAppContents(String contents) {
         ArrayList<App> result = new ArrayList<>();
 

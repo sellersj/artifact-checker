@@ -23,8 +23,10 @@ import com.github.sellersj.artifactchecker.model.ParsedDataSource;
 /**
  * @author sellersj
  */
+@Deprecated
 public class DataSourceFileParser {
 
+    @Deprecated
     public List<ParsedDataSource> parseDataSourceFile(String url) {
 
         try (InputStream in = URI.create(url).toURL().openStream()) {
@@ -35,6 +37,7 @@ public class DataSourceFileParser {
         }
     }
 
+    @Deprecated
     public List<ParsedDataSource> parseDataSourceFile(File file) {
         try {
             String contents = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
@@ -44,6 +47,7 @@ public class DataSourceFileParser {
         }
     }
 
+    @Deprecated
     public List<ParsedDataSource> parseDataSourceContents(String contents) {
         ArrayList<ParsedDataSource> result = new ArrayList<>();
 
@@ -71,6 +75,7 @@ public class DataSourceFileParser {
      * @param apps
      * @return all the ones that don't have apps mapped to them.
      */
+    @Deprecated
     public List<ParsedDataSource> getUnmappedDataSources(List<ParsedDataSource> ds, Set<ArtifactAttributes> apps) {
         // build a list of all the jndi names in use
         HashSet<String> jndiNamesInUse = new HashSet<>();

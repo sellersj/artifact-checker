@@ -19,8 +19,10 @@ import com.github.sellersj.artifactchecker.model.MailSource;
 /**
  * @author sellersj
  */
+@Deprecated
 public class MailSourceFileParser {
 
+    @Deprecated
     public List<MailSource> parseMailSourceFile(String url) {
 
         try (InputStream in = URI.create(url).toURL().openStream()) {
@@ -31,6 +33,7 @@ public class MailSourceFileParser {
         }
     }
 
+    @Deprecated
     public List<MailSource> parseMailSourceFile(File file) {
         try {
             String contents = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
@@ -40,6 +43,7 @@ public class MailSourceFileParser {
         }
     }
 
+    @Deprecated
     public List<MailSource> parseAppContents(String contents) {
         List<MailSource> result = new ArrayList<>();
 
