@@ -813,7 +813,16 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** If this app is public facing. */
     public boolean isPublic() {
-        return getDeploymentInfo("TYPE").contains("Public");
+        boolean result = false;
+
+        if (null != wasInventory) {
+            // TODO might need to do this on hostname rather than naming convention
+            result = getDeploymentName().toLowerCase().contains("public");
+        } else {
+            result = getDeploymentInfo("TYPE").contains("Public");
+        }
+
+        return result;
     }
 
     /** For the opencsv. */
