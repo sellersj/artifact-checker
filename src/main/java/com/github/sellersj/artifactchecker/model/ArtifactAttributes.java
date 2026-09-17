@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.sellersj.artifactchecker.Constants;
 import com.github.sellersj.artifactchecker.DateUtils;
+import com.github.sellersj.artifactchecker.model.inventory.AllEnvsInventory;
 import com.github.sellersj.artifactchecker.model.owasp.KnownExploitedVulnerability;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 import com.opencsv.bean.CsvBindByName;
@@ -83,6 +84,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** The format from the output. */
     private static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    /** The info from the other inventory system. */
+    private AllEnvsInventory wasInventory;
 
     /** If this is a github host. */
     private boolean github = false;
@@ -1135,6 +1139,14 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public void setLoggingLegacyLocation(Set<String> loggingLegacyLocation) {
         this.loggingLegacyLocation = loggingLegacyLocation;
+    }
+
+    public AllEnvsInventory getWasInventory() {
+        return wasInventory;
+    }
+
+    public void setWasInventory(AllEnvsInventory wasInventory) {
+        this.wasInventory = wasInventory;
     }
 
 }

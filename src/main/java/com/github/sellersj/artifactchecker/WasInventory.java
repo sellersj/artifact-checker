@@ -2,10 +2,13 @@ package com.github.sellersj.artifactchecker;
 
 import java.io.InputStream;
 import java.net.URI;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.inventory.AllEnvsDatasource;
 import com.github.sellersj.artifactchecker.model.inventory.AllEnvsInventory;
 import com.github.sellersj.artifactchecker.model.inventory.AllEnvsMailsource;
@@ -18,6 +21,23 @@ public class WasInventory {
     private static final String INVENTORY_PATH = "/projectsites/websphere-inventory/";
 
     private static ObjectMapper MAPPER = new ObjectMapper();
+
+    /**
+     * Putting the inventory into a wrapper class.
+     *
+     * @param wasInventory the source
+     * @return the wrapped classes
+     */
+    public static Set<ArtifactAttributes> prodInventoryToArtifactAttributes(List<AllEnvsInventory> wasInventory) {
+        Set<ArtifactAttributes> result = new HashSet<>();
+        for (AllEnvsInventory inventory : wasInventory) {
+            ArtifactAttributes att = new ArtifactAttributes();
+            att.setWasInventory(inventory);
+            result.add(att);
+        }
+
+        return result;
+    }
 
     /**
      * @return only our apps that are in prod

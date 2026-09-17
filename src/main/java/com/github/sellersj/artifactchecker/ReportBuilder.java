@@ -34,8 +34,8 @@ import com.github.sellersj.artifactchecker.model.ParsedDataSource;
 import com.github.sellersj.artifactchecker.model.owasp.KnownExploitedVulnerability;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 import com.github.sellersj.artifactchecker.model.security.ArtifactAttributesComparator;
-import com.github.sellersj.artifactchecker.model.security.SecurityVulnerabilityPair;
 import com.github.sellersj.artifactchecker.model.security.SecurityVulnerability;
+import com.github.sellersj.artifactchecker.model.security.SecurityVulnerabilityPair;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 
@@ -72,8 +72,11 @@ public class ReportBuilder {
             return;
         }
 
-        String location = "https://" + toolsHost + "/deployed-to/manifest-combined.txt";
-        Set<ArtifactAttributes> apps = ReportBuilder.generateAppInventory(location);
+        // TODO remove
+        // String location = "https://" + toolsHost + "/deployed-to/manifest-combined.txt";
+        // Set<ArtifactAttributes> apps = ReportBuilder.generateAppInventory(location);
+        Set<ArtifactAttributes> apps = WasInventory.prodInventoryToArtifactAttributes(WasInventory.readProdInventory());
+
         try {
             apps.addAll(InventoryFileUtil
                 .readMergedApplicationListing(URI.create("https://" + cipoHost + "/app_version.txt").toURL()));
@@ -81,8 +84,9 @@ public class ReportBuilder {
             throw new RuntimeException("Could not read the ked app file", e1);
         }
 
-        String pomCombined = "https://" + toolsHost + "/deployed-to/pom-info-combined.txt";
-        ReportBuilder.repairArtifactList(pomCombined, apps);
+        // TODO remove
+        // String pomCombined = "https://" + toolsHost + "/deployed-to/pom-info-combined.txt";
+        // ReportBuilder.repairArtifactList(pomCombined, apps);
 
         DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
 
@@ -424,6 +428,7 @@ public class ReportBuilder {
         }
     }
 
+    @Deprecated
     public static Set<ArtifactAttributes> generateAppInventory(String location) {
         URL url;
         try {
@@ -436,6 +441,7 @@ public class ReportBuilder {
         return apps;
     }
 
+    @Deprecated
     public static void repairArtifactList(String pomCombined, Set<ArtifactAttributes> apps) {
         URL url;
         try {
