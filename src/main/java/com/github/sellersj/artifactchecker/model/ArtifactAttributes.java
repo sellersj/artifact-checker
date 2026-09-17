@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.sellersj.artifactchecker.Constants;
 import com.github.sellersj.artifactchecker.DateUtils;
 import com.github.sellersj.artifactchecker.model.inventory.AllEnvsInventory;
+import com.github.sellersj.artifactchecker.model.inventory.AppServer;
 import com.github.sellersj.artifactchecker.model.owasp.KnownExploitedVulnerability;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 import com.opencsv.bean.CsvBindByName;
@@ -713,9 +714,14 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     public String getNodes() {
         String result = "";
 
-        if (null != wasInventory) {
-            // result = wasInventory.;
-            // TODO figure out if we have node info
+        if (null != wasInventory && null != wasInventory.getAppServers()) {
+            TreeSet<String> nodes = new TreeSet<>();
+            for (AppServer appServer : wasInventory.getAppServers()) {
+                nodes.add(appServer.getNode());
+            }
+
+            result = String.join(" ", nodes);
+
         } else {
             result = getDeploymentInfo("NODE");
         }

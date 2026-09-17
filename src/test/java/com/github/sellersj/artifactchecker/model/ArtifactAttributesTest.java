@@ -331,6 +331,7 @@ public class ArtifactAttributesTest {
         System.setProperty(Constants.PROD_LOG_HOST, logHost);
 
         ArtifactAttributes art = getTestArtifactAttributes();
+        art.setWasInventory(null);
         art.setDeploymentInfo(new App());
         art.getDeploymentInfo().putItem("NODE", "Was_In2 Was_In1");
 
