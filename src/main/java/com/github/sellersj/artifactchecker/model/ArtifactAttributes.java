@@ -506,7 +506,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         }
 
         String key = "";
-        if (null != wasInventory) {
+        if (null != wasInventory && StringUtils.isNotBlank(wasInventory.getJiraKey())) {
             key = wasInventory.getJiraKey();
         }
 
