@@ -108,36 +108,6 @@ public class ReportBuilder {
         // populate the artifacts that we've not actually cloned
         updateAppsTrackedByAnotherArtifact(apps);
 
-        // merge the info from what's deployed
-        String wasInfoUrl = Constants.getSysOrEnvVariable(Constants.WAS_INFO_HOST, false);
-        if (StringUtils.isNotBlank(wasInfoUrl)) {
-            AppFileParser parser = new AppFileParser();
-            List<App> deployedApp = parser.parseAppFile(wasInfoUrl + "applications");
-            mergeInfoFromProd(apps, deployedApp);
-
-            // get the datasource info
-            DataSourceFileParser dsParser = new DataSourceFileParser();
-            List<ParsedDataSource> parseDataSource = dsParser.parseDataSourceFile(wasInfoUrl + "dataSources");
-            mergeDataSourceInfoFromProd(apps, parseDataSource);
-
-            // get the mailSource info
-            MailSourceFileParser msParser = new MailSourceFileParser();
-            List<MailSource> mailSources = msParser.parseMailSourceFile(wasInfoUrl + "mailSourceData");
-            mergMailSourceInfoFromProd(apps, mailSources);
-
-            // write all the data sources
-            File allDSTarget = new File(DownloadArtifacts.FILES_GENERATED + "/datasources.csv");
-            ReportBuilder.buildCsvReportOfDataSources(parseDataSource, allDSTarget);
-
-            // now let's write the unmapped files
-            List<ParsedDataSource> unmapped = dsParser.getUnmappedDataSources(parseDataSource, apps);
-            File unmappedDSTarget = new File(DownloadArtifacts.FILES_GENERATED + "/unmapped-datasources.csv");
-            ReportBuilder.buildCsvReportOfDataSources(unmapped, unmappedDSTarget);
-        } else {
-            System.err.println("Url of the application url is not set. Not going to merge deployment info. Set "
-                + Constants.WAS_INFO_HOST + " env variable for this to work.");
-        }
-
         InventoryFileUtil.fillInDecomissionedInfo(apps);
 
         // generate a file that's a vulnerability first view
@@ -201,6 +171,7 @@ public class ReportBuilder {
      * @param artifacts to check
      * @param deployedApp with info to see if we can merge it
      */
+    @Deprecated
     private static void mergeInfoFromProd(Set<ArtifactAttributes> artifacts, List<App> deployedApp) {
 
         for (ArtifactAttributes attributes : artifacts) {
