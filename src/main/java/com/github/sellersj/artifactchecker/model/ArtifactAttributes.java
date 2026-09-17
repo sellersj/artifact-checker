@@ -506,11 +506,14 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         }
 
         String key = "";
+        if (null != wasInventory) {
+            key = wasInventory.getJiraKey();
+        }
 
         // always use the corrected key if we have it
         if (StringUtils.isNotBlank(correctedJiraKey)) {
             key = correctedJiraKey;
-        } else if (StringUtils.isNotBlank(manifestKey)) {
+        } else if (StringUtils.isNotBlank(manifestKey) && StringUtils.isBlank(key)) {
             key = manifestKey.substring(manifestKey.lastIndexOf("/") + 1);
         }
         // else use the default of blank
