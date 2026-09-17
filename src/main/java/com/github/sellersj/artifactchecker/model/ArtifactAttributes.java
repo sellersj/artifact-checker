@@ -711,7 +711,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** The deployment nodes. */
     public String getNodes() {
-        String result = null;
+        String result = "";
 
         if (null != wasInventory) {
             // result = wasInventory.;
