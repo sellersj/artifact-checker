@@ -6,22 +6,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedMap;
 
-import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributesTest;
-import com.github.sellersj.artifactchecker.model.ScmCorrection;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 import com.github.sellersj.artifactchecker.model.security.SecurityVulnerability;
 
@@ -51,45 +46,6 @@ public class ReportBuilderTest {
     public void setToolsHost() {
         ConstantsTest.setTestValues();
         toolsHost = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST);
-    }
-
-    @Deprecated
-    @Test
-    @Disabled("TODO until we know if we need this")
-    public void generateAppInventory() {
-        String location = "https://" + toolsHost + "/deployed-to/manifest-combined.txt";
-
-        Set<ArtifactAttributes> apps = ReportBuilder.generateAppInventory(location);
-        assertFalse(apps.isEmpty(), "inventory should have a bunch of manifest files");
-
-        int appSize = apps.size();
-        int appFilteredSize = ReportBuilder.getAppsFilteredByCloneUrlAndHash(apps).size();
-        assertTrue(appSize > appFilteredSize,
-            "The filtering should have removed some apps. Comparing " + appSize + " to " + appFilteredSize);
-
-        System.out.println("Number of apps: " + apps.size());
-
-        List<ScmCorrection> titles = new ArrayList<ScmCorrection>();
-        for (ArtifactAttributes artifactAttributes : apps) {
-
-            if (!artifactAttributes.hasRequiredGitInfo() && StringUtils.isNotBlank(artifactAttributes.getScmHash())) {
-                System.out.println(artifactAttributes);
-
-                ScmCorrection correction = new ScmCorrection();
-                // correction.setImplementationTitle(artifactAttributes.getManifest().get("Implementation-Title"));
-                titles.add(correction);
-            }
-        }
-
-        System.out.println("Size is apps missing titles: " + titles.size());
-        Collections.sort(titles);
-        for (ScmCorrection correction : titles) {
-            System.out.println(correction.getImplementationTitle());
-        }
-
-        File output = new File("target/scm-corrections.json");
-        System.out.println("writing file with corrections to: " + output.getAbsolutePath());
-        InventoryFileUtil.write(output, titles);
     }
 
     @Test

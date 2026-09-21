@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -26,10 +25,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.StopWatch;
 import org.apache.commons.text.StringEscapeUtils;
 
-import com.github.sellersj.artifactchecker.model.App;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
-import com.github.sellersj.artifactchecker.model.MailSource;
-import com.github.sellersj.artifactchecker.model.MavenGAV;
 import com.github.sellersj.artifactchecker.model.ParsedDataSource;
 import com.github.sellersj.artifactchecker.model.owasp.KnownExploitedVulnerability;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
@@ -163,137 +159,6 @@ public class ReportBuilder {
     }
 
     /**
-     * This will try to map the values scraped from the manifests with the values we get out of the env
-     *
-     * @param artifacts to check
-     * @param deployedApp with info to see if we can merge it
-     */
-    @Deprecated
-    private static void mergeInfoFromProd(Set<ArtifactAttributes> artifacts, List<App> deployedApp) {
-
-        for (ArtifactAttributes attributes : artifacts) {
-
-            for (App app : deployedApp) {
-
-                // match on the artifactId and the version
-                if (app.getPossibleArtifactIds().contains(attributes.getArtifactId())
-                    && app.containsVersion(attributes.getVersion())) {
-
-                    System.out.println("Matching " + attributes.buildGitCloneUrl() + " with deployment " + app);
-                    attributes.setDeploymentInfo(app);
-
-                    // track which apps were matched
-                    app.setAppLinked(true);
-                    break;
-                }
-            }
-
-            if (null == attributes.getDeploymentInfo()) {
-                System.out.println("Couldn't find deployment info for artifactId " + attributes.getArtifactId()
-                    + " version " + attributes.getVersion());
-            }
-        }
-
-        // TODO here's where we'd match an app for the missing ones... how?
-
-        System.out.println("Applications deployed that are not linked to maven application are:");
-        for (App app : deployedApp) {
-            if (!app.isAppLinked()) {
-                System.out.println(app);
-
-                // we are going to keep track of the artifact to
-                ArtifactAttributes attribute = null;
-
-                // now go through all the apps that we have, and check for one that matches, then copy all the info
-                // over. This is in case of another deployment that matches the info
-                for (ArtifactAttributes artifactToCheck : artifacts) {
-                    if (app.getPossibleArtifactIds().contains(artifactToCheck.getArtifactId())
-                        && app.containsVersion(artifactToCheck.getVersion())) {
-
-                        System.out.println(
-                            "Matching Extra app " + artifactToCheck.buildGitCloneUrl() + " with deployment " + app);
-
-                        attribute = new ArtifactAttributes(artifactToCheck);
-                        // clear out the deployment info
-                        attribute.setDeploymentInfo(null);
-                    }
-                }
-
-                if (null == attribute) {
-                    // if we had not found anything at all, make a placeholder entry with the deployment name as the
-                    // title.
-
-                    attribute = new ArtifactAttributes();
-                    // fake out the manifest title with the WAS app name
-                    String appName = app.getAttributes().get(App.APP_KEY).get(0);
-                    attribute.setCorrectedTitle(appName);
-                    attribute.setLibraryCheckedWorked(false);
-
-                    // set the tech owner for the very old apps where we don't have the other info
-                    if (appName.startsWith("CIPO")) {
-                        attribute.setTechOwner("CIPO");
-                    }
-                }
-
-                // now make sure that we add back in the deployment info, because that's actually what's different
-                attribute.setDeploymentInfo(app);
-
-                artifacts.add(attribute);
-            }
-        }
-    }
-
-    /**
-     * This will try to map the values scraped from the manifests with the values we get out of the env
-     *
-     * @param artifacts to check
-     * @param dataSources with info to see if we can merge it
-     */
-    private static void mergeDataSourceInfoFromProd(Set<ArtifactAttributes> artifacts,
-                                                    List<ParsedDataSource> dataSources) {
-
-        for (ArtifactAttributes attributes : artifacts) {
-            for (ParsedDataSource ds : dataSources) {
-
-                // match the data source info with the app
-                if (ds.getAppNames().contains(attributes.getDeploymentName())) {
-                    attributes.getLinkedDataSources().add(ds);
-                }
-            }
-
-            // TODO it might be better to swap this out to use a map
-            // now check the jndi names we have
-            for (String possibleJndiName : attributes.getPossibleJndiNames()) {
-                for (ParsedDataSource ds : dataSources) {
-                    // match the data source info with the app
-                    if (possibleJndiName.equals(ds.getJndiName())) {
-                        attributes.getLinkedDataSources().add(ds);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * This will try to map the values scraped from the manifests with the values we get out of the env
-     *
-     * @param artifacts to check
-     * @param mailSources with info to see if we can merge it
-     */
-    private static void mergMailSourceInfoFromProd(Set<ArtifactAttributes> artifacts, List<MailSource> mailSources) {
-
-        for (ArtifactAttributes attributes : artifacts) {
-            for (MailSource mailSource : mailSources) {
-
-                // match the data source info with the app
-                if (mailSource.getAppNames().contains(attributes.getDeploymentName())) {
-                    attributes.getLinkedMailSources().add(mailSource);
-                }
-            }
-        }
-    }
-
-    /**
      * This will check the apps that are marked as being covered by another artifact, and then find it and copy their
      * reports (cve, java 8, etc) over.
      *
@@ -393,46 +258,6 @@ public class ReportBuilder {
             beanToCsv.write(unmapped);
         } catch (Exception e) {
             throw new RuntimeException(String.format("Could not write the csv file %s for datasources ", outFile), e);
-        }
-    }
-
-    @Deprecated
-    public static Set<ArtifactAttributes> generateAppInventory(String location) {
-        URL url;
-        try {
-            url = URI.create(location).toURL();
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("Couldn't make a url from " + location, e);
-        }
-
-        Set<ArtifactAttributes> apps = InventoryFileUtil.readMergedManifests(url);
-        return apps;
-    }
-
-    @Deprecated
-    public static void repairArtifactList(String pomCombined, Set<ArtifactAttributes> apps) {
-        URL url;
-        try {
-            url = URI.create(pomCombined).toURL();
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("Couldn't make a url from " + pomCombined, e);
-        }
-
-        Set<MavenGAV> gavs = InventoryFileUtil.readMergedPomFiles(url);
-        for (ArtifactAttributes artifactAttributes : apps) {
-            if (StringUtils.isBlank(artifactAttributes.getGroupId())) {
-                System.out.println("Going to repair " + artifactAttributes);
-
-                // match it against the correct artifactId and version
-                for (MavenGAV gav : gavs) {
-                    if (gav.getArtifactId().equals(artifactAttributes.getCorrectedArtifactId()) && //
-                        gav.getVersion().equals(artifactAttributes.getVersion())) {
-
-                        System.out.println("Setting the groupId to " + gav.getGroupId());
-                        artifactAttributes.setCorrectedGroupId(gav.getGroupId());
-                    }
-                }
-            }
         }
     }
 

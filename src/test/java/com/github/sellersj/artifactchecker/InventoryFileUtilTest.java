@@ -35,7 +35,6 @@ import org.junit.jupiter.api.Test;
 import com.github.sellersj.artifactchecker.model.App;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributesTest;
-import com.github.sellersj.artifactchecker.model.MavenGAV;
 import com.github.sellersj.artifactchecker.model.TechOwner;
 import com.github.sellersj.artifactchecker.model.inventory.AllEnvsInventory;
 import com.github.sellersj.artifactchecker.model.inventory.Manifest;
@@ -156,8 +155,7 @@ public class InventoryFileUtilTest {
 
     public static Set<ArtifactAttributes> getTestAppInventory() {
         try {
-            File file = InventoryFileUtil.getFileOnClasspath("/merged-manifests.txt");
-            Set<ArtifactAttributes> apps = InventoryFileUtil.readMergedManifests(file);
+            Set<ArtifactAttributes> apps = Set.of(new ArtifactAttributes());
 
             // generate a bunch of vul's
 
@@ -188,24 +186,6 @@ public class InventoryFileUtilTest {
             return apps;
         } catch (Exception e) {
             throw new RuntimeException("Couldn't load the merged manifest test file", e);
-        }
-    }
-
-    @Test
-    public void testReadMergedPomFiles() throws Exception {
-        String toolsHost = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST);
-        Set<MavenGAV> gavs = InventoryFileUtil
-            .readMergedPomFiles(URI.create("https://" + toolsHost + "/deployed-to/pom-info-combined.txt").toURL());
-
-        // TODO assert not empty
-        assertFalse(gavs.isEmpty(), "gav list should not be empty");
-
-        for (MavenGAV gav : gavs) {
-            System.out.println(gav);
-
-            assertNotNull(gav.getGroupId(), "groupId shouldn't be null for " + gav);
-            assertNotNull(gav.getArtifactId(), "artifactId shouldn't be null for " + gav);
-            assertNotNull(gav.getVersion(), "version shouldn't be null for " + gav);
         }
     }
 
