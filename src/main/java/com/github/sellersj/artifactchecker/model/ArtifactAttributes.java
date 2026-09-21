@@ -365,7 +365,10 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         }
 
         Date date = null;
-        if (StringUtils.isNotBlank(string)) {
+
+        if (null != correctedBuildDate) {
+            date = correctedBuildDate;
+        } else if (StringUtils.isNotBlank(string)) {
 
             // try all the date formats, until we find one that works
             for (DateTimeFormatter dateFormat : BUILD_TIME_DATE_FORMATS) {
