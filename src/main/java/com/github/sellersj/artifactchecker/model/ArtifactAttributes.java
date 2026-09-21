@@ -455,7 +455,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     public String getArtifactId() {
         String artifactId = null;
         if (null != wasInventory) {
-            artifactId = wasInventory.getMavenGroupId();
+            artifactId = wasInventory.getMavenArtifactId();
         }
 
         if (StringUtils.isBlank(artifactId)) {
