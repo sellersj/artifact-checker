@@ -14,20 +14,19 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.jar.Manifest;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -38,7 +37,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.sellersj.artifactchecker.model.App;
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
 import com.github.sellersj.artifactchecker.model.ArtifactInfoResourceResponseWorkAround;
-import com.github.sellersj.artifactchecker.model.MavenGAV;
 import com.github.sellersj.artifactchecker.model.ScmCorrection;
 import com.github.sellersj.artifactchecker.model.ScmMigration;
 import com.github.sellersj.artifactchecker.model.TechOwner;
@@ -86,52 +84,6 @@ public class InventoryFileUtil {
             return techOwners;
         } catch (IOException e) {
             throw new RuntimeException("Couldn't read file: " + file, e);
-        }
-    }
-
-    public static Set<ArtifactAttributes> readMergedManifests(URL url) {
-        try (InputStream in = url.openStream()) {
-            String contents = IOUtils.toString(in, StandardCharsets.UTF_8);
-            return readMergedManifests(contents);
-        } catch (Exception e) {
-            throw new RuntimeException("Could not download file from " + url, e);
-        }
-
-    }
-
-    public static Set<MavenGAV> readMergedPomFiles(URL url) {
-        try (InputStream in = url.openStream()) {
-            String contents = IOUtils.toString(in, StandardCharsets.UTF_8);
-            Set<MavenGAV> gavs = new HashSet<>();
-
-            // read the merged pom files and extract the GAV info
-            String[] lines = contents.split("\\r?\\n");
-            MavenGAV gav = new MavenGAV();
-            for (String line : lines) {
-                if (line.startsWith("#")) {
-                    continue;
-                }
-
-                if (line.startsWith("groupId=")) {
-                    gav.setGroupId(StringUtils.substringAfter(line, "groupId="));
-                } else if (line.startsWith("artifactId=")) {
-                    gav.setArtifactId(StringUtils.substringAfter(line, "artifactId="));
-                } else if (line.startsWith("version=")) {
-                    gav.setVersion(StringUtils.substringAfter(line, "version="));
-                }
-
-                // add it to the set and get ready for the next loop
-                if (gav.isFilledOut()) {
-                    gavs.add(gav);
-                    gav = new MavenGAV();
-                }
-
-                System.out.println(line);
-            }
-            return gavs;
-
-        } catch (Exception e) {
-            throw new RuntimeException("Could not download file from " + url, e);
         }
     }
 
@@ -192,14 +144,14 @@ public class InventoryFileUtil {
 
                         // ear name
                         String artifactId = StringUtils.substringBeforeLast(earArtifactName, "-");
-                        attributes.getManifest().put(ArtifactAttributes.ARTIFACT_ID, artifactId);
+                        attributes.setCorrectedArtifactId(artifactId);
 
                         // set the title to the ear name until we have something better
-                        attributes.getManifest().put(ArtifactAttributes.IMPLEMENTATION_TITLE, artifactId);
+                        attributes.setCorrectedTitle(artifactId);
 
                         String version = StringUtils
                             .substringBeforeLast(StringUtils.substringAfterLast(earArtifactName, "-"), ".");
-                        attributes.getManifest().put(ArtifactAttributes.VERSION, version);
+                        attributes.setCorrectedVersion(version);
 
                         // set the deployment info here
                         App deploymentInfo = new App();
@@ -236,7 +188,7 @@ public class InventoryFileUtil {
 
     }
 
-    private static void fillInBuildTimestamp(HashSet<ArtifactAttributes> apps) {
+    public static void fillInBuildTimestamp(Set<ArtifactAttributes> apps) {
         String toolsHost = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST);
         if (StringUtils.isBlank(toolsHost)) {
             throw new RuntimeException("The 'TOOLS_HOST' env variable has to be set");
@@ -272,8 +224,7 @@ public class InventoryFileUtil {
                         ArtifactInfoResourceResponseWorkAround.class);
 
                     LocalDateTime buildDate = DateUtils.asLocalDateTime(response.getData().getLastChanged());
-                    artifact.getManifest().put(ArtifactAttributes.BUILD_TIME,
-                        ArtifactAttributes.MAVEN_DATE_FORMAT.format(buildDate));
+                    artifact.setCorrectedBuildDate(Date.from(buildDate.atZone(ZoneId.systemDefault()).toInstant()));
 
                 } catch (Exception e) {
                     // re-throw with more info
@@ -282,90 +233,6 @@ public class InventoryFileUtil {
                 }
             }
         }
-    }
-
-    /**
-     * This will read a file of merged pom.properties from maven artifacts.
-     *
-     * It will return a list of partially filled apps, containing on their GAV info.
-     *
-     * @param file to read
-     * @return a filled out list.
-     */
-    public static Set<ArtifactAttributes> readMergedManifests(File file) {
-        try {
-            String contents = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
-            return readMergedManifests(contents);
-        } catch (IOException e) {
-            throw new RuntimeException("Couldn't read file: " + file, e);
-        }
-
-    }
-
-    /**
-     * This will read a file of merged pom.properties from maven artifacts.
-     *
-     * It will return a list of partially filled apps, containing on their GAV info.
-     *
-     * @param contents to read
-     * @return a filled out list.
-     */
-    public static Set<ArtifactAttributes> readMergedManifests(String contents) {
-
-        Set<ArtifactAttributes> apps = new HashSet<>();
-
-        // split the file on a the manifest header, while keeping the header
-        String[] chunks = contents.split("(?=Manifest-Version)");
-
-        for (String string : chunks) {
-
-            // read the chunk into a manifest object so it can deal with the manifest quirks
-            Manifest manifest = readToManifest(string);
-
-            if (doesManifestHaveValues(manifest)) {
-                // get the object to load
-                ArtifactAttributes attributes = new ArtifactAttributes();
-
-                for (Entry<Object, Object> entry : manifest.getMainAttributes().entrySet()) {
-                    attributes.getManifest().put(String.valueOf(entry.getKey()), String.valueOf(entry.getValue()));
-                }
-
-                apps.add(attributes);
-            }
-        }
-
-        // fix any manifests we can find
-        fillInMissingScmInfo(apps);
-
-        fillInTechOwner(apps);
-
-        return apps;
-    }
-
-    /**
-     * @param manifest to check
-     * @return true if any of the main values have values
-     */
-    public static boolean doesManifestHaveValues(Manifest manifest) {
-        // skip creating an artifact is there none of the manifest entries contain a value
-        boolean hasValues = false;
-
-        for (Entry<Object, Object> entry : manifest.getMainAttributes().entrySet()) {
-            String key = String.valueOf(entry.getKey());
-            String value = String.valueOf(entry.getValue());
-
-            if (!"Manifest-Version".equals(key) && //
-                StringUtils.isNotBlank(value)) {
-                hasValues = true;
-                break;
-            }
-        }
-
-        if (!hasValues) {
-            System.out.println("Ignoring an empty manifest");
-        }
-
-        return hasValues;
     }
 
     /** Fills in scm info that's missing for a best guess. */
@@ -550,15 +417,6 @@ public class InventoryFileUtil {
             return jiraKeys;
         } catch (IOException e) {
             throw new RuntimeException("Couldn't read file: " + file, e);
-        }
-    }
-
-    private static Manifest readToManifest(String string) {
-        try {
-            Manifest manifest = new Manifest(IOUtils.toInputStream(string, StandardCharsets.UTF_8));
-            return manifest;
-        } catch (IOException e) {
-            throw new RuntimeException("Couldn't read manifest chunk: " + string, e);
         }
     }
 

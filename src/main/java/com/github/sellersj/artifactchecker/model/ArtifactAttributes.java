@@ -1,16 +1,14 @@
 package com.github.sellersj.artifactchecker.model;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.SortedMap;
 import java.util.SortedSet;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.apache.commons.lang3.StringUtils;
@@ -24,6 +22,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.sellersj.artifactchecker.Constants;
 import com.github.sellersj.artifactchecker.DateUtils;
+import com.github.sellersj.artifactchecker.model.inventory.AllEnvsInventory;
+import com.github.sellersj.artifactchecker.model.inventory.AppServer;
 import com.github.sellersj.artifactchecker.model.owasp.KnownExploitedVulnerability;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 import com.opencsv.bean.CsvBindByName;
@@ -68,13 +68,6 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** The old maven date format. */
     private static final DateTimeFormatter MAVEN_OLD_DATE_FORMAT = DateTimeFormatter.ofPattern("yyyyMMdd-HHmm");
 
-    /** We keep on finding different date formats. */
-    private static final List<DateTimeFormatter> BUILD_TIME_DATE_FORMATS = Arrays.asList( //
-        MAVEN_DATE_FORMAT, //
-        MAVEN_OLD_DATE_FORMAT, //
-        DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm") // another date format that we've found
-    );
-
     /** The ISO 8601 date format used by git. */
     private static final DateTimeFormatter GIT_DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss Z");
 
@@ -83,6 +76,16 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** The format from the output. */
     private static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    /** We keep on finding different date formats. */
+    private static final List<DateTimeFormatter> BUILD_TIME_DATE_FORMATS = Arrays.asList( //
+        MAVEN_DATE_FORMAT, //
+        MAVEN_OLD_DATE_FORMAT, //
+        DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm") // another date format that we've found
+    );
+
+    /** The info from the other inventory system. */
+    private AllEnvsInventory wasInventory;
 
     /** If this is a github host. */
     private boolean github = false;
@@ -114,9 +117,6 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** If the library checks (dependency, owasp, etc) worked. */
     private boolean libraryCheckedWorked = true;
 
-    /** The manifest associated with this artifact. */
-    private SortedMap<String, String> manifest = new TreeMap<>();
-
     /** A list of all the vulnerabilities found with this artifact. */
     @JsonIgnore
     private List<Vulnerability> vulnerabilities = new ArrayList<>();
@@ -136,6 +136,15 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** Our corrected jira key from a static file. */
     private String correctedJiraKey = "";
+
+    /** Our corrected info if we don't have it. */
+    private String correctedTitle = "";
+
+    /** Our corrected info if we don't have it. */
+    private String correctedVersion = "";
+
+    /** Our corrected info if we don't have it. */
+    private Date correctedBuildDate = null;
 
     /** Our tech owner from a static file. */
     @CsvBindByName
@@ -188,12 +197,14 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         this.alreadyTrackedByAnother = source.alreadyTrackedByAnother;
         this.java8Ready = source.java8Ready;
         this.libraryCheckedWorked = source.libraryCheckedWorked;
-        this.manifest = source.manifest;
         this.vulnerabilities = source.vulnerabilities;
         this.scmTag = source.scmTag;
         this.scmAuthorDate = source.scmAuthorDate;
         this.deploymentInfo = source.deploymentInfo;
         this.correctedJiraKey = source.correctedJiraKey;
+        this.correctedTitle = source.correctedTitle;
+        this.correctedVersion = source.correctedVersion;
+        this.correctedBuildDate = source.correctedBuildDate;
         this.techOwner = source.techOwner;
         this.toDecomission = source.toDecomission;
         this.linkedDataSources = source.linkedDataSources;
@@ -251,7 +262,10 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     }
 
     public String getScmProject() {
-        String scmProject = manifest.get(SCM_PROJECT);
+        String scmProject = null;
+        if (null != wasInventory) {
+            scmProject = wasInventory.getScmProjectName();
+        }
 
         if (StringUtils.isNotBlank(correctedScmProject)) {
             scmProject = correctedScmProject;
@@ -268,7 +282,10 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     }
 
     public String getScmRepo() {
-        String repo = manifest.get(SCM_REPO);
+        String repo = null;
+        if (null != wasInventory) {
+            repo = wasInventory.getScmRepoName();
+        }
 
         if (StringUtils.isNotBlank(correctedScmRepo)) {
             repo = correctedScmRepo;
@@ -278,11 +295,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     }
 
     public String getScmHash() {
-        return cleanHash(manifest.get(SCM_HASH));
+        String result = null;
+        if (null != wasInventory && null != wasInventory.getManifest()) {
+            result = cleanHash(wasInventory.getManifest().getScmSha1());
+        }
+
+        return result;
     }
 
     public String getScmHashAbbrev() {
-        return cleanHash(manifest.get("Scm-Sha1-Abbrev"));
+        String result = null;
+        if (null != wasInventory && null != wasInventory.getManifest()) {
+            result = cleanHash(wasInventory.getManifest().getScmSha1Abbrev());
+        }
+        return result;
     }
 
     /**
@@ -333,10 +359,16 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      * @return the build date if it exists and is parsable.
      */
     public Date getBuildDate() {
-        String string = manifest.get(BUILD_TIME);
+        String string = null;
+        if (null != wasInventory && null != wasInventory.getManifest()) {
+            string = wasInventory.getManifest().getBuildTime();
+        }
+
         Date date = null;
 
-        if (StringUtils.isNotBlank(string)) {
+        if (null != correctedBuildDate && correctedBuildDate.getTime() > 0L) {
+            date = correctedBuildDate;
+        } else if (StringUtils.isNotBlank(string)) {
 
             // try all the date formats, until we find one that works
             for (DateTimeFormatter dateFormat : BUILD_TIME_DATE_FORMATS) {
@@ -369,12 +401,19 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public String getDeploymentDate() {
         String result = "";
-        if (null != deploymentInfo) {
-            Date date = deploymentInfo.getDeploymentDate();
-            if (null != date) {
-                LocalDateTime dateTime = DateUtils.asLocalDateTime(date);
-                result = DATE_TIME_FORMAT.format(dateTime);
-            }
+
+        Date date = null;
+        if (null != wasInventory && StringUtils.isNotBlank(wasInventory.getDeploymentDate())) {
+            LocalDateTime localDateTime = LocalDateTime.parse(wasInventory.getDeploymentDate());
+            date = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        }
+        if (null == date && null != deploymentInfo) {
+            date = deploymentInfo.getDeploymentDate();
+        }
+
+        if (null != date) {
+            LocalDateTime dateTime = DateUtils.asLocalDateTime(date);
+            result = DATE_TIME_FORMAT.format(dateTime);
         }
         return result;
     }
@@ -397,9 +436,9 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     }
 
     public String getGroupId() {
-        String groupId = manifest.get("Maven-Project-GroupId");
-        if (StringUtils.isBlank(groupId)) {
-            groupId = manifest.get("Implementation-Vendor-Id");
+        String groupId = null;
+        if (null != wasInventory) {
+            groupId = wasInventory.getMavenGroupId();
         }
 
         // if it's still blank, try to use the corrected one
@@ -414,7 +453,10 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      * @return the artifactId if we have it in the manifest, or the corrected one otherwise.
      */
     public String getArtifactId() {
-        String artifactId = manifest.get(ARTIFACT_ID);
+        String artifactId = null;
+        if (null != wasInventory) {
+            artifactId = wasInventory.getMavenArtifactId();
+        }
 
         if (StringUtils.isBlank(artifactId)) {
             artifactId = correctedArtifactId;
@@ -428,7 +470,16 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     private String version;
 
     public String getVersion() {
-        return manifest.get(VERSION);
+        String result = null;
+        if (null != wasInventory) {
+            result = wasInventory.getManifestImplementationVersion();
+            if (StringUtils.isBlank(result)) {
+                result = wasInventory.getMavenVersion();
+            }
+        } else {
+            result = correctedVersion;
+        }
+        return result;
     }
 
     /** For the opencsv. */
@@ -436,7 +487,18 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     private String title;
 
     public String getTitle() {
-        return manifest.get(IMPLEMENTATION_TITLE);
+        String result = null;
+        if (null != wasInventory && null != wasInventory.getManifest()) {
+            result = wasInventory.getManifest().getImplementationTitle();
+        } else {
+            result = correctedTitle;
+        }
+
+        if (StringUtils.isBlank(result)) {
+            result = getDeploymentName();
+        }
+
+        return result;
     }
 
     /** For the opencsv. */
@@ -444,13 +506,20 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     private String jiraKey;
 
     public String getJiraKey() {
-        String manifestKey = manifest.get(ISSUE_TRACKING);
+        String manifestKey = null;
+        if (null != wasInventory && null != wasInventory.getManifest()) {
+            manifestKey = wasInventory.getManifest().getIssueTracking();
+        }
+
         String key = "";
+        if (null != wasInventory && StringUtils.isNotBlank(wasInventory.getJiraKey())) {
+            key = wasInventory.getJiraKey();
+        }
 
         // always use the corrected key if we have it
         if (StringUtils.isNotBlank(correctedJiraKey)) {
             key = correctedJiraKey;
-        } else if (StringUtils.isNotBlank(manifestKey)) {
+        } else if (StringUtils.isNotBlank(manifestKey) && StringUtils.isBlank(key)) {
             key = manifestKey.substring(manifestKey.lastIndexOf("/") + 1);
         }
         // else use the default of blank
@@ -620,7 +689,15 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** The deployment cluster. */
     public String getDeploymentName() {
-        return getDeploymentInfo("APP");
+        String result = null;
+
+        if (null != wasInventory) {
+            result = wasInventory.getName();
+        } else {
+            result = getDeploymentInfo("APP");
+        }
+
+        return result;
     }
 
     /** For the opencsv. */
@@ -629,7 +706,15 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** The deployment cluster. */
     public String getCluster() {
-        return getDeploymentInfo("SERVER");
+        String result = null;
+
+        if (null != wasInventory) {
+            result = wasInventory.getClusterTarget();
+        } else {
+            result = getDeploymentInfo("SERVER");
+        }
+
+        return result;
     }
 
     /** For the opencsv. */
@@ -639,7 +724,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** The deployment cluster. */
     public boolean isClusterJava8() {
         String cluster = getCluster();
-        return StringUtils.isNotBlank(cluster) && cluster.contains("jdk8");
+        return isWas9() || StringUtils.isNotBlank(cluster) && cluster.contains("jdk8");
     }
 
     /** For the opencsv. */
@@ -648,7 +733,21 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** The deployment nodes. */
     public String getNodes() {
-        return getDeploymentInfo("NODE");
+        String result = "";
+
+        if (null != wasInventory && null != wasInventory.getAppServers()) {
+            TreeSet<String> nodes = new TreeSet<>();
+            for (AppServer appServer : wasInventory.getAppServers()) {
+                nodes.add(appServer.getNode());
+            }
+
+            result = String.join(" ", nodes);
+
+        } else {
+            result = getDeploymentInfo("NODE");
+        }
+
+        return result;
     }
 
     /** Makes links right into the logging location. */
@@ -668,6 +767,44 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
             }
             return nodeUrls;
         }
+    }
+
+    /**
+     * @return the data center
+     */
+    public String getDataCenter() {
+        String result = null;
+
+        if (null != wasInventory) {
+            result = App.DATA_CENTER_ICDC;
+
+        } else if (null != deploymentInfo) {
+            result = deploymentInfo.getDataCenter();
+        }
+
+        return result;
+    }
+
+    /**
+     * @return if this is WAS 8
+     */
+    public boolean isWas8() {
+        boolean result = false;
+
+        if (null != wasInventory) {
+            result = "8.5".equals(wasInventory.getConsoleVersion());
+        } else if (null != deploymentInfo) {
+            result = deploymentInfo.isWas8();
+        }
+
+        return result;
+    }
+
+    /**
+     * @return if this is WAS 9
+     */
+    public boolean isWas9() {
+        return !isWas8();
     }
 
     public String nodeLogLocationCorrection(String node) {
@@ -692,7 +829,16 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** If this app is public facing. */
     public boolean isPublic() {
-        return getDeploymentInfo("TYPE").contains("Public");
+        boolean result = false;
+
+        if (StringUtils.isNotBlank(getDeploymentName())) {
+            // TODO might need to do this on hostname rather than naming convention
+            result = getDeploymentName().toLowerCase().contains("public");
+        } else {
+            result = getDeploymentInfo("TYPE").contains("Public");
+        }
+
+        return result;
     }
 
     /** For the opencsv. */
@@ -715,6 +861,10 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
             urls.add(host + contextRoot);
         }
 
+        if (null != wasInventory) {
+            urls.addAll(wasInventory.getUrls());
+        }
+
         return urls;
     }
 
@@ -724,7 +874,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
         ArrayList<String> markup = new ArrayList<>();
         for (String url : urls) {
-            markup.add(String.format("<a href=\"%s\">url</a?", url));
+            markup.add(String.format("<a href=\"%s\">url</a>", url));
         }
 
         return markup;
@@ -742,20 +892,6 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         }
 
         return result;
-    }
-
-    /** For the opencsv. */
-    @CsvBindByName
-    private String databaseUserNames;
-
-    /** Build a space seperated list of oracle usernames used by this app. */
-    public String getDatabaseUserNames() {
-        Set<String> usernames = new TreeSet<>();
-
-        for (ParsedDataSource ds : getLinkedDataSources()) {
-            usernames.add(ds.getDatabaseUsername());
-        }
-        return String.join(" ", usernames);
     }
 
     /** For the opencsv. */
@@ -785,20 +921,6 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     @Override
     public int compareTo(ArtifactAttributes o) {
         return CompareToBuilder.reflectionCompare(this, o);
-    }
-
-    /**
-     * @return the manifest
-     */
-    public Map<String, String> getManifest() {
-        return manifest;
-    }
-
-    /**
-     * @param manifest the manifest to set
-     */
-    public void setManifest(SortedMap<String, String> manifest) {
-        this.manifest = manifest;
     }
 
     /**
@@ -1135,6 +1257,38 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
      */
     public void setLoggingLegacyLocation(Set<String> loggingLegacyLocation) {
         this.loggingLegacyLocation = loggingLegacyLocation;
+    }
+
+    public AllEnvsInventory getWasInventory() {
+        return wasInventory;
+    }
+
+    public void setWasInventory(AllEnvsInventory wasInventory) {
+        this.wasInventory = wasInventory;
+    }
+
+    public String getCorrectedTitle() {
+        return correctedTitle;
+    }
+
+    public void setCorrectedTitle(String correctedTitle) {
+        this.correctedTitle = correctedTitle;
+    }
+
+    public String getCorrectedVersion() {
+        return correctedVersion;
+    }
+
+    public void setCorrectedVersion(String correctedVersion) {
+        this.correctedVersion = correctedVersion;
+    }
+
+    public Date getCorrectedBuildDate() {
+        return correctedBuildDate;
+    }
+
+    public void setCorrectedBuildDate(Date correctedBuildDate) {
+        this.correctedBuildDate = correctedBuildDate;
     }
 
 }

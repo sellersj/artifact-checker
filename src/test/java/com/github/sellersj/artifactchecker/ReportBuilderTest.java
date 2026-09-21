@@ -6,20 +6,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedMap;
 
-import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.github.sellersj.artifactchecker.model.ArtifactAttributes;
-import com.github.sellersj.artifactchecker.model.ScmCorrection;
+import com.github.sellersj.artifactchecker.model.ArtifactAttributesTest;
 import com.github.sellersj.artifactchecker.model.owasp.Vulnerability;
 import com.github.sellersj.artifactchecker.model.security.SecurityVulnerability;
 
@@ -52,43 +49,6 @@ public class ReportBuilderTest {
     }
 
     @Test
-    public void generateAppInventory() {
-        String location = "https://" + toolsHost + "/deployed-to/manifest-combined.txt";
-
-        Set<ArtifactAttributes> apps = ReportBuilder.generateAppInventory(location);
-        assertFalse(apps.isEmpty(), "inventory should have a bunch of manifest files");
-
-        int appSize = apps.size();
-        int appFilteredSize = ReportBuilder.getAppsFilteredByCloneUrlAndHash(apps).size();
-        assertTrue(appSize > appFilteredSize,
-            "The filtering should have removed some apps. Comparing " + appSize + " to " + appFilteredSize);
-
-        System.out.println("Number of apps: " + apps.size());
-
-        List<ScmCorrection> titles = new ArrayList<ScmCorrection>();
-        for (ArtifactAttributes artifactAttributes : apps) {
-
-            if (!artifactAttributes.hasRequiredGitInfo() && StringUtils.isNotBlank(artifactAttributes.getScmHash())) {
-                System.out.println(artifactAttributes);
-
-                ScmCorrection correction = new ScmCorrection();
-                correction.setImplementationTitle(artifactAttributes.getManifest().get("Implementation-Title"));
-                titles.add(correction);
-            }
-        }
-
-        System.out.println("Size is apps missing titles: " + titles.size());
-        Collections.sort(titles);
-        for (ScmCorrection correction : titles) {
-            System.out.println(correction.getImplementationTitle());
-        }
-
-        File output = new File("target/scm-corrections.json");
-        System.out.println("writing file with corrections to: " + output.getAbsolutePath());
-        InventoryFileUtil.write(output, titles);
-    }
-
-    @Test
     public void buildJsonReport() throws Exception {
         File target = createTempFile("app-inventory-", ".json");
         target.deleteOnExit();
@@ -115,12 +75,12 @@ public class ReportBuilderTest {
         String scmHash = "3447763c6149c832408ad292ec8f4657ef9c879b";
 
         for (int i = 0; i < 2; i++) {
-            ArtifactAttributes app = new ArtifactAttributes();
-            app.getManifest().put(ArtifactAttributes.SCM_PROJECT, scmProject);
-            app.getManifest().put(ArtifactAttributes.SCM_REPO, scmRepo);
-            app.getManifest().put(ArtifactAttributes.SCM_HASH, scmHash);
+            ArtifactAttributes app = ArtifactAttributesTest.getTestArtifactAttributes();
 
-            app.getManifest().put(ArtifactAttributes.IMPLEMENTATION_TITLE, "myAppTitle" + i);
+            app.getWasInventory().setScmProjectName(scmProject);
+            app.getWasInventory().setScmRepoName(scmRepo);
+            app.getWasInventory().getManifest().setScmSha1(scmHash);
+            app.getWasInventory().getManifest().setImplementationTitle("myAppTitle" + i);
 
             apps.add(app);
         }
@@ -137,14 +97,14 @@ public class ReportBuilderTest {
         String scmHash = "3447763c6149c832408ad292ec8f4657ef9c879b";
 
         for (int i = 0; i < 2; i++) {
-            ArtifactAttributes app = new ArtifactAttributes();
-            app.getManifest().put(ArtifactAttributes.SCM_PROJECT, scmProject);
-            app.getManifest().put(ArtifactAttributes.SCM_REPO, scmRepo);
+            ArtifactAttributes app = ArtifactAttributesTest.getTestArtifactAttributes();
+            app.getWasInventory().getManifest().setScmProjectId(scmProject);
+            app.getWasInventory().getManifest().setScmRepoName(scmRepo);
 
             // set a different hash per loop
-            app.getManifest().put(ArtifactAttributes.SCM_HASH, scmHash + i);
+            app.getWasInventory().getManifest().setScmSha1(scmHash + i);
 
-            app.getManifest().put(ArtifactAttributes.IMPLEMENTATION_TITLE, "myAppTitle" + i);
+            app.getWasInventory().getManifest().setImplementationTitle("myAppTitle" + i);
 
             apps.add(app);
         }
@@ -172,10 +132,10 @@ public class ReportBuilderTest {
         Set<ArtifactAttributes> apps = new HashSet<>();
 
         for (int i = 0; i < 2; i++) {
-            ArtifactAttributes app1 = new ArtifactAttributes();
+            ArtifactAttributes app1 = ArtifactAttributesTest.getTestArtifactAttributes();
             app1.setCorrectedScmProject("myProject");
             app1.setCorrectedScmRepo("myRepo");
-            app1.getManifest().put(ArtifactAttributes.SCM_HASH, "12348");
+            app1.getWasInventory().getManifest().setScmSha1("12348");
 
             if (0 == i) {
                 app1.setAlreadyTrackedByAnother(true);
@@ -205,10 +165,10 @@ public class ReportBuilderTest {
         Set<ArtifactAttributes> apps = new HashSet<>();
 
         for (int i = 0; i < 2; i++) {
-            ArtifactAttributes app1 = new ArtifactAttributes();
+            ArtifactAttributes app1 = ArtifactAttributesTest.getTestArtifactAttributes();
             app1.setCorrectedScmProject("myProject");
             app1.setCorrectedScmRepo("myRepo");
-            app1.getManifest().put(ArtifactAttributes.VERSION, "1.2.3");
+            app1.getWasInventory().setManifestImplementationVersion("1.2.3");
 
             if (0 == i) {
                 app1.setAlreadyTrackedByAnother(true);
