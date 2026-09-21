@@ -861,6 +861,10 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
             urls.add(host + contextRoot);
         }
 
+        if (null != wasInventory) {
+            urls.addAll(wasInventory.getUrls());
+        }
+
         return urls;
     }
 
