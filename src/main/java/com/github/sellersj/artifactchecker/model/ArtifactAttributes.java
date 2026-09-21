@@ -874,7 +874,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
         ArrayList<String> markup = new ArrayList<>();
         for (String url : urls) {
-            markup.add(String.format("<a href=\"%s\">url</a?", url));
+            markup.add(String.format("<a href=\"%s\">url</a>", url));
         }
 
         return markup;
