@@ -76,6 +76,10 @@ public class ReportBuilder {
         // String location = "https://" + toolsHost + "/deployed-to/manifest-combined.txt";
         // Set<ArtifactAttributes> apps = ReportBuilder.generateAppInventory(location);
         Set<ArtifactAttributes> apps = WasInventory.prodInventoryToArtifactAttributes(WasInventory.readProdInventory());
+        // fix any manifests we can find
+        InventoryFileUtil.fillInMissingScmInfo(apps);
+        InventoryFileUtil.fillInTechOwner(apps);
+        InventoryFileUtil.fillInBuildTimestamp(apps);
 
         try {
             apps.addAll(InventoryFileUtil

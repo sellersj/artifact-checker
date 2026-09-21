@@ -238,7 +238,7 @@ public class InventoryFileUtil {
 
     }
 
-    private static void fillInBuildTimestamp(HashSet<ArtifactAttributes> apps) {
+    public static void fillInBuildTimestamp(Set<ArtifactAttributes> apps) {
         String toolsHost = Constants.getSysOrEnvVariable(Constants.TOOLS_HOST);
         if (StringUtils.isBlank(toolsHost)) {
             throw new RuntimeException("The 'TOOLS_HOST' env variable has to be set");
