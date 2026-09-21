@@ -724,7 +724,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     /** The deployment cluster. */
     public boolean isClusterJava8() {
         String cluster = getCluster();
-        return StringUtils.isNotBlank(cluster) && cluster.contains("jdk8");
+        return isWas9() || StringUtils.isNotBlank(cluster) && cluster.contains("jdk8");
     }
 
     /** For the opencsv. */
