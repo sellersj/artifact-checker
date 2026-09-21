@@ -72,9 +72,6 @@ public class ReportBuilder {
             return;
         }
 
-        // TODO remove
-        // String location = "https://" + toolsHost + "/deployed-to/manifest-combined.txt";
-        // Set<ArtifactAttributes> apps = ReportBuilder.generateAppInventory(location);
         Set<ArtifactAttributes> apps = WasInventory.prodInventoryToArtifactAttributes(WasInventory.readProdInventory());
         // fix any manifests we can find
         InventoryFileUtil.fillInMissingScmInfo(apps);
@@ -87,10 +84,6 @@ public class ReportBuilder {
         } catch (MalformedURLException e1) {
             throw new RuntimeException("Could not read the ked app file", e1);
         }
-
-        // TODO remove
-        // String pomCombined = "https://" + toolsHost + "/deployed-to/pom-info-combined.txt";
-        // ReportBuilder.repairArtifactList(pomCombined, apps);
 
         DownloadArtifacts downloadArtifacts = new DownloadArtifacts();
 

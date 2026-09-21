@@ -91,6 +91,7 @@ public class InventoryFileUtil {
         }
     }
 
+    @Deprecated
     public static Set<ArtifactAttributes> readMergedManifests(URL url) {
         try (InputStream in = url.openStream()) {
             String contents = IOUtils.toString(in, StandardCharsets.UTF_8);
@@ -101,6 +102,7 @@ public class InventoryFileUtil {
 
     }
 
+    @Deprecated
     public static Set<MavenGAV> readMergedPomFiles(URL url) {
         try (InputStream in = url.openStream()) {
             String contents = IOUtils.toString(in, StandardCharsets.UTF_8);
