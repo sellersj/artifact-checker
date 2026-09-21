@@ -366,7 +366,7 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
         Date date = null;
 
-        if (null != correctedBuildDate) {
+        if (null != correctedBuildDate && correctedBuildDate.getTime() > 0L) {
             date = correctedBuildDate;
         } else if (StringUtils.isNotBlank(string)) {
 
