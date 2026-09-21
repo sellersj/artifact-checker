@@ -472,7 +472,10 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
     public String getVersion() {
         String result = null;
         if (null != wasInventory) {
-            result = wasInventory.getMavenVersion();
+            result = wasInventory.getManifestImplementationVersion();
+            if (StringUtils.isBlank(result)) {
+                result = wasInventory.getMavenVersion();
+            }
         } else {
             result = correctedVersion;
         }
