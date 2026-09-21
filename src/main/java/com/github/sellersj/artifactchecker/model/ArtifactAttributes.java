@@ -800,6 +800,13 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
         return result;
     }
 
+    /**
+     * @return if this is WAS 9
+     */
+    public boolean isWas9() {
+        return !isWas8();
+    }
+
     public String nodeLogLocationCorrection(String node) {
         return node.toLowerCase() //
             .replace("was_osbp", "wasosbpublic") //
