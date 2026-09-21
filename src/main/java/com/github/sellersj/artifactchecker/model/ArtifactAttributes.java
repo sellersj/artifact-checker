@@ -892,20 +892,6 @@ public class ArtifactAttributes implements Comparable<ArtifactAttributes> {
 
     /** For the opencsv. */
     @CsvBindByName
-    private String databaseUserNames;
-
-    /** Build a space seperated list of oracle usernames used by this app. */
-    public String getDatabaseUserNames() {
-        Set<String> usernames = new TreeSet<>();
-
-        for (ParsedDataSource ds : getLinkedDataSources()) {
-            usernames.add(ds.getDatabaseUsername());
-        }
-        return String.join(" ", usernames);
-    }
-
-    /** For the opencsv. */
-    @CsvBindByName
     private Boolean sendsEmail;
 
     /** If this app is mapped to a mail source. */
